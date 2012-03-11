@@ -89,8 +89,8 @@ public class spaceInvaders extends BasicGame{
     			droite = true;
     	}
     	
-    	if(xTir > xEnnemi && xTir < (xEnnemi + ennemi.getWidth())
-    			&& yTir <= yEnnemi)
+    	if((xTir > xEnnemi && xTir < (xEnnemi + ennemi.getWidth()))
+    			&& yTir <= yEnnemi+(ennemi.getHeight()/2))
     	{
     		xExplo = xEnnemi;
     		yExplo = yEnnemi;
