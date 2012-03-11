@@ -1,4 +1,4 @@
-package nebula.core;
+package nebula.minigame.cropcircle;
 
 import java.awt.Point;
 import java.io.File;
@@ -31,7 +31,7 @@ public class SimpleGame extends BasicGame {
 		
 		path = new ArrayList<Point>();
 		imgPath = new Image("assets/braise.png");
-		land = new Image("assets/spritBlé.jpg");
+		land = new Image("assets/spritBleu.jpg");
 	}
 
 	@Override
