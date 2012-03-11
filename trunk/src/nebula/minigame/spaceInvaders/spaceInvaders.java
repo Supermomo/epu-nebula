@@ -1,5 +1,6 @@
-package nebula.game.spaceInvaders;
+package nebula.minigame.spaceInvaders;
 import org.newdawn.slick.*;
+
 
 public class spaceInvaders extends BasicGame{
 	
