@@ -1,4 +1,4 @@
-package nebula.minigame.cropcircle;
+package nebula.core;
 
 import java.awt.Point;
 import java.io.File;
@@ -30,7 +30,7 @@ public class SimpleGame extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		
 		path = new ArrayList<Point>();
-		imgPath = new Image("assets/Morrowind_Sign-2.png");
+		imgPath = new Image("assets/braise.png");
 		land = new Image("assets/spritBlé.jpg");
 	}
 
@@ -76,7 +76,7 @@ public class SimpleGame extends BasicGame {
 		gc.getGraphics().drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
 
 		for (Point p : path) {
-			imgPath.draw(p.x, p.y);
+			imgPath.draw(p.x-30, p.y-30);
 		}
 
 	}
