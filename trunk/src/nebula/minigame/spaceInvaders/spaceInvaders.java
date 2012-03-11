@@ -20,7 +20,8 @@ public class spaceInvaders extends BasicGame{
 	float yEnnemi = 50;
 	boolean droite = true;
 	// Image de la desctruction
-	Image explo = null;
+	SpriteSheet explo = null;
+	Animation explosion = null;
 	float xExplo = -100;
 	float yExplo = -100;
 	int time = 0;
@@ -37,7 +38,16 @@ public class spaceInvaders extends BasicGame{
     	tank = new Image("assets/spaceInvaders/Char.png");
     	tir = new Image("assets/spaceInvaders/tir.png");
     	ennemi = new Image("assets/spaceInvaders/ship.png");
-    	explo = new Image("assets/spaceInvaders/explo.png");
+    	explo = new SpriteSheet("assets/spaceInvaders/explosion17.png",64,64,0);
+    	explosion = new Animation();
+    	explosion.setAutoUpdate(true);
+    	for(int i =0; i < 5; i++)
+    	{
+    		for(int j=0; j < 5; j++)
+    			explosion.addFrame(explo.getSprite(i,j),75);
+    	}
+    	explosion.setLooping(false);
+    	
     }
  
     @Override
@@ -77,35 +87,41 @@ public class spaceInvaders extends BasicGame{
     	if(droite)
     	{
     		if(xEnnemi < gc.getWidth() - 120)
+    		{
     			xEnnemi += 0.2f * delta;
+    		}
     		else
+    		{
     			droite = false;
+    			yEnnemi += ennemi.getHeight();
+    		}
     	}
     	else
     	{
     		if(xEnnemi > 40)
+    		{
     			xEnnemi -= 0.2f * delta;
+    		}
     		else
+    		{
     			droite = true;
+    			yEnnemi += ennemi.getHeight();
+    		}
     	}
     	
-    	if((xTir > xEnnemi && xTir < (xEnnemi + ennemi.getWidth()))
+    	if(xTir + tir.getWidth()/2 > xEnnemi && xTir + tir.getWidth()/2 < (xEnnemi + ennemi.getWidth())
     			&& yTir <= yEnnemi+(ennemi.getHeight()/2))
     	{
     		xExplo = xEnnemi;
     		yExplo = yEnnemi;
-    		time = 100;
-    		xEnnemi = -100;
-    		yEnnemi = -100;
+    		xEnnemi = 800;
+    		yEnnemi = 600;
     		xTir = -100;
     		yTir = -100; 
     	}
     	
-    	if(time >= 0)
-    	{
-    		time --;
-    	}
-    	else
+    	
+    	if(explosion.isStopped())
     	{
     		xExplo = -100;
     		yExplo = -100;
@@ -121,7 +137,7 @@ public class spaceInvaders extends BasicGame{
     	tank.draw(x, y, scale);
     	tir.draw(xTir, yTir, scale);
     	ennemi.draw(xEnnemi, yEnnemi, scale);
-    	explo.draw(xExplo, yExplo, scale);
+    	g.drawAnimation(explosion, xExplo, yExplo);
     }
  
     public static void main(String[] args) 
