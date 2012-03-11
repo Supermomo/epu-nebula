@@ -1,4 +1,4 @@
-package nebula.game.cropcircle;
+package nebula.minigame.cropcircle;
 
 import java.awt.Point;
 import java.io.File;
