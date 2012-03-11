@@ -31,7 +31,7 @@ public class SimpleGame extends BasicGame {
 		
 		path = new ArrayList<Point>();
 		imgPath = new Image("assets/Morrowind_Sign-2.png");
-		land = new Image("assets/spritBlé.jpg");
+		land = new Image("assets/spritBleu.jpg");
 	}
 
 	@Override
