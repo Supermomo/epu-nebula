@@ -18,7 +18,7 @@ public class Ennemi
 	public boolean touche(Tir tir)
 	{
 		if(tir.getX() + tir.getImage().getWidth()/2 > this.getX() && 
-				tir.getX() + tir.getImage().getWidth()/2 < this.getX() + this.getImage().getWidth()/2
+				tir.getX() + tir.getImage().getWidth()/2 < this.getX() + this.getImage().getWidth()
     			&& tir.getY() <= this.getY() + this.getImage().getHeight() 
     			&& tir.getY() > this.getY())
 			return true;
