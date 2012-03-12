@@ -1,5 +1,7 @@
 package nebula.minigame.spaceInvaders;
 
+import nebula.core.helper.Collision;
+
 import org.newdawn.slick.*;
 
 public class Ennemi 
@@ -17,13 +19,14 @@ public class Ennemi
 	
 	public boolean touche(Tir tir)
 	{
-		if(tir.getX() + tir.getImage().getWidth()/2 > this.getX()
+		return Collision.rectangle(this.getX(),this.getY(), this.getImage().getWidth(), this.getImage().getHeight(), tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight()/3);
+		/*if(tir.getX() + tir.getImage().getWidth()/2 > this.getX()
 				&& tir.getX() + tir.getImage().getWidth()/2 < this.getX() + this.getImage().getWidth()
     			&& tir.getY() <= this.getY() + this.getImage().getHeight() 
     			&& tir.getY() >= this.getY())
 			return true;
 		else
-			return false;
+			return false;*/
 	}
 
 	public Image getImage() {

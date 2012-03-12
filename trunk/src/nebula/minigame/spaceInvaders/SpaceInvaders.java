@@ -25,6 +25,8 @@ public class SpaceInvaders extends BasicGame{
 	Random rand;
 	int seuil = 99999;
 	Image coeur = null;
+	int score = 0;
+	Image defaite = null;
 	
     public SpaceInvaders(int nbEnnemis)
     {
@@ -58,6 +60,7 @@ public class SpaceInvaders extends BasicGame{
     	}
     	rand = new Random();
     	coeur = new Image("assets/spaceInvaders/coeur.png");
+    	defaite = new Image("assets/spaceInvaders/defaite.png");
     }
  
     @Override
@@ -224,6 +227,8 @@ public class SpaceInvaders extends BasicGame{
     	}
     	if(nbEnnemis == 0)
     		victoire.draw(100,250);
+    	if(tank.vies == 0)
+    		defaite.draw(100,250);
     	g.drawAnimation(explosion, xExplo, yExplo);
     	for(int i = 0; i < tank.vies; i++)
     	{
