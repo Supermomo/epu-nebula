@@ -92,13 +92,14 @@ public class spaceInvaders extends BasicGame{
     	{
     		for(int j=0; j < 2; j++)
     		{
-	    		if(ennemi[i][j] != null)
-	    		{
-			    	if(droite)
-			    	{
-			    		if(ennemi[i][j].getX() < gc.getWidth() - 120)
+	    		
+		    	if(droite)
+		    	{
+		    		if(ennemi[3-i][1-j] != null)
+		    		{
+			    		if(ennemi[3-i][1-j].getX() < gc.getWidth() - 120)
 			    		{
-			    			ennemi[i][j].setX(ennemi[i][j].getX() + 0.2f * delta);
+			    			ennemi[3-i][1-j].setX(ennemi[3-i][1-j].getX() + 0.2f * delta);
 			    		}
 			    		else
 			    		{
@@ -112,9 +113,12 @@ public class spaceInvaders extends BasicGame{
 			    	    		}
 			    	    	}
 			    		}
-			    	}
-			    	else
-			    	{
+		    		}
+		    	}
+		    	else
+		    	{
+		    		if(ennemi[i][j] != null)
+		    		{
 			    		if(ennemi[i][j].getX() > 40)
 			    		{
 			    			ennemi[i][j].setX(ennemi[i][j].getX() - 0.2f * delta);
@@ -131,31 +135,30 @@ public class spaceInvaders extends BasicGame{
 			    	    		}
 			    	    	}
 			    		}
-			    	}
-	    	
-	    			if(ennemi[i][j].touche(tir))
-	    	    	{
-	    	    		xExplo = ennemi[i][j].getX();
-	    	    		yExplo = ennemi[i][j].getY();
-	    	    		if(explosion.isStopped())
-	    	    		{
-	    	    			explosion.restart();
-	    	    		}
-	    	    		ennemi[i][j] = null;
-	    	    		tir.setX(-100);
-	    	    		tir.setY(-100);
-	    	    		nbEnnemis--;
-	    	    	}
-	    		}
+		    		}
+		    	}
+		    	
+	    		if(ennemi[i][j] != null && ennemi[i][j].touche(tir))
+    	    	{
+    	    		xExplo = ennemi[i][j].getX();
+    	    		yExplo = ennemi[i][j].getY();
+    	    		if(explosion.isStopped())
+    	    		{
+    	    			explosion.restart();
+    	    		}
+    	    		ennemi[i][j] = null;
+    	    		nbEnnemis--;
+    	    		tir.setX(-100);
+    	    		tir.setY(-100);
+    	    		System.out.println(nbEnnemis);
+    	    	}
     		}
     	}
     	
     	if(nbEnnemis == 0)
     	{
     		
-    		
     	}
- 
     }
  
     public void render(GameContainer gc, Graphics g) 
@@ -182,7 +185,8 @@ public class spaceInvaders extends BasicGame{
 			new AppGameContainer(new spaceInvaders(8));
  
          app.setDisplayMode(800, 600, false);
+         app.setTargetFrameRate(600);
          app.start();
-         app.setTargetFrameRate(60);
+         
     }
 }
