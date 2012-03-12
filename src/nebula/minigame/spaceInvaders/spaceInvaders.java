@@ -7,10 +7,7 @@ public class spaceInvaders extends BasicGame{
 	Image land = null;
 	Boolean droite = true;
 	// Gestion du joueur avec position x,y et echelle
-	Image tank = null;
-	float x = 400;
-	float y = 480;
-	float scale = 1.0f;
+	Tank tank = null;
 	// Image de l'arme
 	Tir tir = null;
 	Tir tirEnnemi = null;
@@ -35,7 +32,7 @@ public class spaceInvaders extends BasicGame{
 			throws SlickException {
     	gc.setMinimumLogicUpdateInterval(20);
     	land = new Image("assets/spaceInvaders/fond.png");
-    	tank = new Image("assets/spaceInvaders/Char.png");
+    	tank = new Tank();
     	tir = new Tir();
     	victoire = new Image("assets/spaceInvaders/victoire.png");
     	explo = new SpriteSheet("assets/spaceInvaders/explosion17.png",64,64,0);
@@ -66,14 +63,14 @@ public class spaceInvaders extends BasicGame{
     	
     	if(input.isKeyDown(Input.KEY_RIGHT))
     	{
-    		if(x < gc.getWidth() - tank.getWidth())
-    			x+=0.4f * delta;
+    		if(tank.getX() < gc.getWidth() - tank.getImage().getWidth())
+    			tank.setX(tank.getX() + (0.4f * delta));
     	}
     	
     	if(input.isKeyDown(Input.KEY_LEFT))
     	{
-    		if(x > 0)
-    			x-=0.4f * delta;
+    		if(tank.getX() > 0)
+    			tank.setX(tank.getX() - (0.4f * delta));
     	}
     	
     	// ========================  GESTION DES TIRS ============================
@@ -81,8 +78,8 @@ public class spaceInvaders extends BasicGame{
     	{
     		if(tir.getY() < 0)
     		{
-    			tir.setX(x);
-    			tir.setY(y - tir.getImage().getHeight());
+    			tir.setX(tank.getX());
+    			tir.setY(tank.getY() - tir.getImage().getHeight());
     		}
     	}
     	
@@ -167,7 +164,7 @@ public class spaceInvaders extends BasicGame{
 			throws SlickException 
     {
     	land.draw(0, 0);
-    	tank.draw(x, y, scale);
+    	g.drawImage(tank.getImage(), tank.getX(), tank.getY());
     	g.drawImage(tir.getImage(), tir.getX(), tir.getY());
     	for(int i =0; i < 4; i++)
     	{
