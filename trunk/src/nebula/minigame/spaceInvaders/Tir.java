@@ -6,8 +6,8 @@ public class Tir
 {
 
 	private Image image = null;
-	private float x = 0;
-	private float y = 0;
+	private float x = -100;
+	private float y = -100;
 	
 	public Tir(int i) throws SlickException
 	{
