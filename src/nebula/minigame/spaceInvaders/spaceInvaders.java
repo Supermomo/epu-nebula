@@ -5,26 +5,21 @@ import org.newdawn.slick.*;
 public class spaceInvaders extends BasicGame{
 	
 	Image land = null;
+	Boolean droite = true;
 	// Gestion du joueur avec position x,y et echelle
 	Image tank = null;
 	float x = 400;
 	float y = 480;
 	float scale = 1.0f;
 	// Image de l'arme
-	Image tir = null;
-	float xTir = -100;
-	float yTir = -100;
+	Tir tir = null;
 	// Image de l'ennemi
-	Image ennemi = null;
-	float xEnnemi = 20;
-	float yEnnemi = 50;
-	boolean droite = true;
+	Ennemi ennemi[][] = new Ennemi[4][2];
 	// Image de la desctruction
 	SpriteSheet explo = null;
 	Animation explosion = null;
 	float xExplo = -100;
 	float yExplo = -100;
-	int time = 0;
  
     public spaceInvaders()
     {
@@ -36,8 +31,12 @@ public class spaceInvaders extends BasicGame{
 			throws SlickException {
     	land = new Image("assets/spaceInvaders/fond.png");
     	tank = new Image("assets/spaceInvaders/Char.png");
-    	tir = new Image("assets/spaceInvaders/tir.png");
-    	ennemi = new Image("assets/spaceInvaders/ship.png");
+    	tir = new Tir();
+    	for(int i =0; i < 4; i++)
+    	{
+    		for(int j=0; j < 2;j++)
+    			ennemi[i][j] = new Ennemi(i*80,j*42);
+    	}
     	explo = new SpriteSheet("assets/spaceInvaders/explosion17.png",64,64,0);
     	explosion = new Animation();
     	explosion.setAutoUpdate(true);
@@ -73,58 +72,80 @@ public class spaceInvaders extends BasicGame{
     	// ========================  GESTION DES TIRS ============================
     	if(input.isKeyDown(Input.KEY_SPACE))
     	{
-    		if(yTir < 0)
+    		if(tir.getY() < 0)
     		{
-    			xTir = x;
-    			yTir = y - tir.getHeight();
+    			tir.setX(x);
+    			tir.setY(y - tir.getImage().getHeight());
     		}
     	}
     	
-    	if(yTir > -100)
-    		yTir -= 0.4f * delta;
+    	if(tir.getY() > -100)
+    		tir.setY(tir.getY() - 0.4f * delta);
     	
     	// ======================== ENNEMIS ==============================
-    	if(droite)
+    	for(int i=0; i < 4; i++)
     	{
-    		if(xEnnemi < gc.getWidth() - 120)
+    		for(int j=0; j < 2; j++)
     		{
-    			xEnnemi += 0.2f * delta;
-    		}
-    		else
-    		{
-    			droite = false;
-    			yEnnemi += ennemi.getHeight();
-    		}
-    	}
-    	else
-    	{
-    		if(xEnnemi > 40)
-    		{
-    			xEnnemi -= 0.2f * delta;
-    		}
-    		else
-    		{
-    			droite = true;
-    			yEnnemi += ennemi.getHeight();
+	    		if(ennemi[i][j] != null)
+	    		{
+			    	if(droite)
+			    	{
+			    		if(ennemi[i][j].getX() < gc.getWidth() - 120)
+			    		{
+			    			ennemi[i][j].setX(ennemi[i][j].getX() + 0.2f * delta);
+			    		}
+			    		else
+			    		{
+			    			droite = false;
+			    			for(int lol=0; lol < 4; lol++)
+			    	    	{
+			    	    		for(int tg=0; tg < 2; tg++)
+			    	    		{
+			    	    			ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
+			    	    		}
+			    	    	}
+			    		}
+			    	}
+			    	else
+			    	{
+			    		if(ennemi[i][j].getX() > 40)
+			    		{
+			    			ennemi[i][j].setX(ennemi[i][j].getX() - 0.2f * delta);
+			    		}
+			    		else
+			    		{
+			    			droite = true;
+			    			for(int lol=0; lol < 4; lol++)
+			    	    	{
+			    	    		for(int tg=0; tg < 2; tg++)
+			    	    		{
+			    	    			ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
+			    	    		}
+			    	    	}
+			    		}
+			    	}
+	    	
+	    			if(ennemi[i][j].touche(tir))
+	    	    	{
+	    	    		xExplo = ennemi[i][j].getX();
+	    	    		yExplo = ennemi[i][j].getY();
+	    	    		explosion.restart();
+	    	    		ennemi[i][j].setX(800);
+	    	    		ennemi[i][j].setY(600);
+	    	    		tir.setX(-100);
+	    	    		tir.setY(-100); 
+	    	    	}
+	    		}
     		}
     	}
     	
-    	if(xTir + tir.getWidth()/2 > xEnnemi && xTir + tir.getWidth()/2 < (xEnnemi + ennemi.getWidth())
-    			&& yTir <= yEnnemi+(ennemi.getHeight()/2))
-    	{
-    		xExplo = xEnnemi;
-    		yExplo = yEnnemi;
-    		xEnnemi = 800;
-    		yEnnemi = 600;
-    		xTir = -100;
-    		yTir = -100; 
-    	}
     	
     	
     	if(explosion.isStopped())
     	{
-    		xExplo = -100;
-    		yExplo = -100;
+    		xExplo = 0;
+    		yExplo = 0;
     	}
     		
  
@@ -135,8 +156,12 @@ public class spaceInvaders extends BasicGame{
     {
     	land.draw(0, 0);
     	tank.draw(x, y, scale);
-    	tir.draw(xTir, yTir, scale);
-    	ennemi.draw(xEnnemi, yEnnemi, scale);
+    	g.drawImage(tir.getImage(), tir.getX(), tir.getY());
+    	for(int i =0; i < 4; i++)
+    	{
+    		for(int j=0; j < 2;j++)
+    			g.drawImage(ennemi[i][j].getImage(), ennemi[i][j].getX(), ennemi[i][j].getY());
+    	}
     	g.drawAnimation(explosion, xExplo, yExplo);
     }
  
