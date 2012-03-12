@@ -49,7 +49,7 @@ public class SpaceInvaders extends BasicGame{
     	for(int i =0; i < 5; i++)
     	{
     		for(int j=0; j < 5; j++)
-    			explosion.addFrame(explo.getSprite(i,j),75);
+    			explosion.addFrame(explo.getSprite(j,i),75);
     	}
     	explosion.setLooping(false);
     	explosion.stopAt(24);
