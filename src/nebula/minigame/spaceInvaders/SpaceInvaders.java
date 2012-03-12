@@ -2,7 +2,7 @@ package nebula.minigame.spaceInvaders;
 import org.newdawn.slick.*;
 
 
-public class spaceInvaders extends BasicGame{
+public class SpaceInvaders extends BasicGame{
 	
 	Image land = null;
 	Boolean droite = true;
@@ -21,7 +21,7 @@ public class spaceInvaders extends BasicGame{
 	int nbEnnemis;
 	Image victoire = null;
 	
-    public spaceInvaders(int nbEnnemis)
+    public SpaceInvaders(int nbEnnemis)
     {
         super("Space Invaders");
         this.nbEnnemis = nbEnnemis;
@@ -183,7 +183,7 @@ public class spaceInvaders extends BasicGame{
 			throws SlickException
     {
          AppGameContainer app = 
-			new AppGameContainer(new spaceInvaders(8));
+			new AppGameContainer(new SpaceInvaders(8));
  
          app.setDisplayMode(800, 600, false);
          app.setTargetFrameRate(600);
