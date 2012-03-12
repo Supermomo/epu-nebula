@@ -79,8 +79,8 @@ public class SimpleGame extends BasicGame {
 
 		Input input = gc.getInput();
 
-		 x = input.getMouseX();
-		 y = input.getMouseY();
+		 //x = input.getMouseX();
+		 //y = input.getMouseY();
 
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if ((path.size() >= 1 && path.get(path.size() - 1) != null && (Math
@@ -112,23 +112,23 @@ public class SimpleGame extends BasicGame {
 			}
 		}
 		
-		if (input.isKeyDown(Input.KEY_Q)) {
+		if (input.isKeyDown(Input.KEY_LEFT)) {
 			x--;
-			//x--;
+			x--;
 		}
 
-		if (input.isKeyDown(Input.KEY_D)) {
+		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			x++;
-			//x++;
+			x++;
 		}
 
-		if (input.isKeyDown(Input.KEY_Z)) {
+		if (input.isKeyDown(Input.KEY_UP)) {
 			y--;
-			//y--;
+			y--;
 		}
-		if (input.isKeyDown(Input.KEY_S)) {
+		if (input.isKeyDown(Input.KEY_DOWN)) {
 			y++;
-			//y++;
+			y++;
 		}
 	}
 
