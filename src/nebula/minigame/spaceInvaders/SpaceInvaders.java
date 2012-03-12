@@ -52,6 +52,7 @@ public class SpaceInvaders extends BasicGame{
     			explosion.addFrame(explo.getSprite(i,j),75);
     	}
     	explosion.setLooping(false);
+    	explosion.stopAt(24);
     	int multiple = nbEnnemis/4;
         for(int i =0; i < 4; i++)
     	{
@@ -178,8 +179,9 @@ public class SpaceInvaders extends BasicGame{
     	    		{
     	    			explosion.restart();
     	    		}
-    	    		ennemi[i][j] = null;
     	    		nbEnnemis--;
+    	    		score += ennemi[i][j].getPts();
+    	    		ennemi[i][j] = null;
     	    		tir.setX(-100);
     	    		tir.setY(-100);
     	    	}
