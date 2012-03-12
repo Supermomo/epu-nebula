@@ -9,9 +9,12 @@ public class Tir
 	private float x = 0;
 	private float y = 0;
 	
-	public Tir() throws SlickException
+	public Tir(int i) throws SlickException
 	{
-		image = new Image("assets/spaceInvaders/tir.png");
+		if(i==0)
+			image = new Image("assets/spaceInvaders/tir.png");
+		else
+			image = new Image("assets/spaceInvaders/tirEnnemi.png");
 	}
 
 	public Image getImage() {
