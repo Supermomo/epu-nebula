@@ -13,6 +13,7 @@ public class spaceInvaders extends BasicGame{
 	float scale = 1.0f;
 	// Image de l'arme
 	Tir tir = null;
+	Tir tirEnnemi = null;
 	// Image de l'ennemi
 	Ennemi ennemi[][] = new Ennemi[4][2];
 	// Image de la desctruction
@@ -20,23 +21,21 @@ public class spaceInvaders extends BasicGame{
 	Animation explosion = null;
 	float xExplo = -100;
 	float yExplo = -100;
- 
-    public spaceInvaders()
+	int nbEnnemis;
+	
+    public spaceInvaders(int nbEnnemis)
     {
         super("Space Invaders");
+        this.nbEnnemis = nbEnnemis;
     }
  
     @Override
     public void init(GameContainer gc) 
 			throws SlickException {
+    	gc.setMinimumLogicUpdateInterval(20);
     	land = new Image("assets/spaceInvaders/fond.png");
     	tank = new Image("assets/spaceInvaders/Char.png");
     	tir = new Tir();
-    	for(int i =0; i < 4; i++)
-    	{
-    		for(int j=0; j < 2;j++)
-    			ennemi[i][j] = new Ennemi(i*80,j*42);
-    	}
     	explo = new SpriteSheet("assets/spaceInvaders/explosion17.png",64,64,0);
     	explosion = new Animation();
     	explosion.setAutoUpdate(true);
@@ -46,6 +45,12 @@ public class spaceInvaders extends BasicGame{
     			explosion.addFrame(explo.getSprite(i,j),75);
     	}
     	explosion.setLooping(false);
+    	int multiple = nbEnnemis/4;
+        for(int i =0; i < 4; i++)
+    	{
+    		for(int j=0; j < multiple;j++)
+    			ennemi[i][j] = new Ennemi(i*100,j*84);
+    	}
     	
     }
  
@@ -102,7 +107,8 @@ public class spaceInvaders extends BasicGame{
 			    	    	{
 			    	    		for(int tg=0; tg < 2; tg++)
 			    	    		{
-			    	    			ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
+			    	    			if(ennemi[lol][tg] != null)
+			    	    				ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
 			    	    		}
 			    	    	}
 			    		}
@@ -120,7 +126,8 @@ public class spaceInvaders extends BasicGame{
 			    	    	{
 			    	    		for(int tg=0; tg < 2; tg++)
 			    	    		{
-			    	    			ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
+			    	    			if(ennemi[lol][tg] != null)
+			    	    				ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
 			    	    		}
 			    	    	}
 			    		}
@@ -130,24 +137,24 @@ public class spaceInvaders extends BasicGame{
 	    	    	{
 	    	    		xExplo = ennemi[i][j].getX();
 	    	    		yExplo = ennemi[i][j].getY();
-	    	    		explosion.restart();
-	    	    		ennemi[i][j].setX(800);
-	    	    		ennemi[i][j].setY(600);
+	    	    		if(explosion.isStopped())
+	    	    		{
+	    	    			explosion.restart();
+	    	    		}
+	    	    		ennemi[i][j] = null;
 	    	    		tir.setX(-100);
-	    	    		tir.setY(-100); 
+	    	    		tir.setY(-100);
+	    	    		nbEnnemis--;
 	    	    	}
 	    		}
     		}
     	}
     	
-    	
-    	
-    	if(explosion.isStopped())
+    	if(nbEnnemis == 0)
     	{
-    		xExplo = 0;
-    		yExplo = 0;
-    	}
     		
+    		
+    	}
  
     }
  
@@ -160,7 +167,10 @@ public class spaceInvaders extends BasicGame{
     	for(int i =0; i < 4; i++)
     	{
     		for(int j=0; j < 2;j++)
-    			g.drawImage(ennemi[i][j].getImage(), ennemi[i][j].getX(), ennemi[i][j].getY());
+    			if(ennemi[i][j] != null)
+    			{
+    				g.drawImage(ennemi[i][j].getImage(), ennemi[i][j].getX(), ennemi[i][j].getY());
+    			}
     	}
     	g.drawAnimation(explosion, xExplo, yExplo);
     }
@@ -169,9 +179,10 @@ public class spaceInvaders extends BasicGame{
 			throws SlickException
     {
          AppGameContainer app = 
-			new AppGameContainer(new spaceInvaders());
+			new AppGameContainer(new spaceInvaders(8));
  
          app.setDisplayMode(800, 600, false);
          app.start();
+         app.setTargetFrameRate(60);
     }
 }
