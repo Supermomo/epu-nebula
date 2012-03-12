@@ -9,12 +9,14 @@ public class Ennemi
 	private Image image = null;
 	private float x = 0;
 	private float y = 0;
+	private int pts = 0;
 	
 	public Ennemi(float x, float y) throws SlickException
 	{
 		image = new Image("assets/spaceInvaders/ship.png");
 		this.x = x;
 		this.y = y;
+		this.pts = 100;
 	}
 	
 	public boolean touche(Tir tir)
@@ -51,6 +53,10 @@ public class Ennemi
 
 	public void setY(float y) {
 		this.y = y;
+	}
+
+	public int getPts() {
+		return pts;
 	}
 
 	
