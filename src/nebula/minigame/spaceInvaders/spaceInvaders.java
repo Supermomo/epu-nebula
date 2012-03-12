@@ -22,6 +22,7 @@ public class spaceInvaders extends BasicGame{
 	float xExplo = -100;
 	float yExplo = -100;
 	int nbEnnemis;
+	Image victoire = null;
 	
     public spaceInvaders(int nbEnnemis)
     {
@@ -36,6 +37,7 @@ public class spaceInvaders extends BasicGame{
     	land = new Image("assets/spaceInvaders/fond.png");
     	tank = new Image("assets/spaceInvaders/Char.png");
     	tir = new Tir();
+    	victoire = new Image("assets/spaceInvaders/victoire.png");
     	explo = new SpriteSheet("assets/spaceInvaders/explosion17.png",64,64,0);
     	explosion = new Animation();
     	explosion.setAutoUpdate(true);
@@ -157,7 +159,7 @@ public class spaceInvaders extends BasicGame{
     	
     	if(nbEnnemis == 0)
     	{
-    		
+    		gc.pause();
     	}
     }
  
@@ -175,6 +177,8 @@ public class spaceInvaders extends BasicGame{
     				g.drawImage(ennemi[i][j].getImage(), ennemi[i][j].getX(), ennemi[i][j].getY());
     			}
     	}
+    	if(nbEnnemis == 0)
+    		victoire.draw(100,250);
     	g.drawAnimation(explosion, xExplo, yExplo);
     }
  
