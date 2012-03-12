@@ -12,7 +12,7 @@ public class Tank
 
 	public Tank() throws SlickException
 	{
-		image = new Image("assets/spaceInvaders/Char.png");
+		image = new Image("assets/spaceInvaders/char.png");
 		x = 300 - this.getImage().getWidth()/2;
 		y = 600 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;

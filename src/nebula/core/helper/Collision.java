@@ -9,8 +9,8 @@ public class Collision
      * Check a collision between two rectangles
      */
     public static boolean rectangle (
-        int x1, int y1, int w1, int h1,
-        int x2, int y2, int w2, int h2
+        float x1, float y1, int w1, int h1,
+        float x2, float y2, int w2, int h2
     )
     {
         return (!(y1+h1 < y2 || y1 > y2+h2 || x1+w1 < x2 || x1 > x2+w2));
@@ -20,8 +20,8 @@ public class Collision
      * Check a collsion between a point and a rectangle
      */
     public static boolean point (
-        int x1, int y1,
-        int x2, int y2, int w2, int h2
+        float x1, float y1,
+        float x2, float y2, int w2, int h2
     )
     {
         return (!(y1 < y2 || y1 > y2+h2 || x1 < x2 || x1 > x2+w2));
