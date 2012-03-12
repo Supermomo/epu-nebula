@@ -23,7 +23,8 @@ public class SpaceInvaders extends BasicGame{
 	int nbEnnemis;
 	Image victoire = null;
 	Random rand;
-	int seuil = 99;
+	int seuil = 99999;
+	Image coeur = null;
 	
     public SpaceInvaders(int nbEnnemis)
     {
@@ -56,6 +57,7 @@ public class SpaceInvaders extends BasicGame{
     			ennemi[i][j] = new Ennemi(i*100,j*84);
     	}
     	rand = new Random();
+    	coeur = new Image("assets/spaceInvaders/coeur.png");
     }
  
     @Override
@@ -91,8 +93,8 @@ public class SpaceInvaders extends BasicGame{
     	if(tir.getY() > -100)
     		tir.setY(tir.getY() - 0.4f * delta);
     	
-    	if(tirEnnemi.getY() < 550 )
-    		tirEnnemi.setY(tirEnnemi.getY() - 0.4f * delta);
+    	if(tirEnnemi.getY() < 700 )
+    		tirEnnemi.setY(tirEnnemi.getY() + 0.4f * delta);
     	
     	for(int i=0; i < 4; i++)
     	{
@@ -100,16 +102,16 @@ public class SpaceInvaders extends BasicGame{
     		{
     			if(ennemi[i][j] != null)
 				{
-	    			float tire = rand.nextInt(100);
+	    			float tire = rand.nextInt(100000);
 	    			if(tire >= seuil) 
 	    			{
     					tirEnnemi.setX(ennemi[i][j].getX());
         				tirEnnemi.setY(ennemi[i][j].getY() + tirEnnemi.getImage().getHeight());
-        				seuil = 99;
+        				seuil = 99999;
     				}
 	    			else
 	    			{
-	    				seuil-= 10;
+	    				seuil-= 1 * (8 - nbEnnemis);
 	    			}
     			}
     		}
@@ -198,6 +200,11 @@ public class SpaceInvaders extends BasicGame{
     	{
     		gc.pause();
     	}
+    	
+    	if(tank.vies == 0)
+    	{
+    		gc.pause();
+    	}
     }
  
     public void render(GameContainer gc, Graphics g) 
@@ -218,6 +225,10 @@ public class SpaceInvaders extends BasicGame{
     	if(nbEnnemis == 0)
     		victoire.draw(100,250);
     	g.drawAnimation(explosion, xExplo, yExplo);
+    	for(int i = 0; i < tank.vies; i++)
+    	{
+    		coeur.draw(10 + i * coeur.getWidth(), gc.getHeight() - coeur.getHeight());
+    	}
     }
  
     public static void main(String[] args) 

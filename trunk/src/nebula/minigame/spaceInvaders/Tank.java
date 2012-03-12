@@ -15,6 +15,7 @@ public class Tank
 		image = new Image("assets/spaceInvaders/Char.png");
 		x = 300 - this.getImage().getWidth()/2;
 		y = 600 - 2 * this.getImage().getHeight() + 10;
+		vies = 3;
 	}
 	
 	public boolean touche(Tir tir)
