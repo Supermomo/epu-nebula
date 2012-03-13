@@ -2,10 +2,12 @@ package nebula.minigame.cropcircle;
 
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import org.newdawn.slick.AppGameContainer;
@@ -23,8 +25,8 @@ public class Cropcircle extends BasicGame {
 	private Image land = null;
 	private float x = 400;
 	private float y = 300;
-	private ArrayList<ArrayList<Line>> loadedTracks;
-	private ArrayList<Line> track;
+	private ArrayList<ArrayList<MyLine>> loadedTracks;
+	private ArrayList<MyLine> track;
 	private Image imgPath;
 	private ArrayList<Vector2f> path;
 
@@ -34,14 +36,15 @@ public class Cropcircle extends BasicGame {
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		track = new ArrayList<Line>();
+		track = new ArrayList<MyLine>();
 		try {
-			Charger();
+			load();
+			System.out.println("size : "+loadedTracks.size()+"\n");
 			Random r=new Random();
 			track=loadedTracks.get(r.nextInt(loadedTracks.size()));
 			
 		} catch (Exception e) {
-			loadedTracks=new ArrayList<ArrayList<Line>>();
+			loadedTracks=new ArrayList<ArrayList<MyLine>>();
 		}
 
 		path = new ArrayList<Vector2f>();
@@ -74,21 +77,21 @@ public class Cropcircle extends BasicGame {
 
 		
 		if (input.isKeyDown(Input.KEY_ENTER)) {
-			ArrayList<Line> sav=new ArrayList<Line>();
-			Line l=new Line(250, 50, 250, 150);
+			ArrayList<MyLine> sav=new ArrayList<MyLine>();
+			MyLine l=new MyLine(250, 50, 250, 150);
 			sav.add(l);
-			l=new Line(350, 50, 350, 350);
+			l=new MyLine(350, 50, 350, 350);
 			sav.add(l);
-			l=new Line(300, 400, 400, 400);
+			l=new MyLine(300, 400, 400, 400);
 			sav.add(l);
-			l=new Line(200, 300, 300, 400);
+			l=new MyLine(200, 300, 300, 400);
 			sav.add(l);
-			l=new Line(400, 400, 500, 300);
+			l=new MyLine(400, 400, 500, 300);
 			sav.add(l);
 			
 			loadedTracks.add(sav);
 			try {
-				sauvegarder();
+				save();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -118,8 +121,9 @@ public class Cropcircle extends BasicGame {
 
 		land.draw(0, 0, 800, 600);
 		g.setColor(Color.white);
-
+		
 		for (Line p : track) {
+			g.setLineWidth(10);
 			g.drawLine(p.getX1(),p.getY1(),p.getX2(),p.getY2());
 		}
 
@@ -134,23 +138,28 @@ public class Cropcircle extends BasicGame {
 	private boolean validDistanceFromClosestLine(Vector2f vect){
 		int i=0;
 		Line line;
-		line=track.get(i);
-		while(line != null){
-			//TODO
-			if(Math.abs(line.distance(vect))<10){
-				return true;
-			}
-			i++;
+		try {
 			line=track.get(i);
+			while(line != null){
+				//TODO
+				if(Math.abs(line.distance(vect))<10){
+					return true;
+				}
+				i++;
+				line=track.get(i);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
 	
 
-	private void sauvegarder() throws ClassNotFoundException {
+	private void save() throws ClassNotFoundException {
 		String filename = "trackList.data";
 		FileOutputStream fis = null;
 		ObjectOutputStream oit = null;
+		
 		try {
 			fis = new FileOutputStream(filename);
 			oit = new ObjectOutputStream(fis);
@@ -163,14 +172,29 @@ public class Cropcircle extends BasicGame {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void Charger() throws ClassNotFoundException, IOException, Exception {
+	private void load() throws Exception {
 		String filename = "trackList.data";
-		FileInputStream fos = new FileInputStream(filename);
-		ObjectInputStream out = new ObjectInputStream(fos);
-		loadedTracks =  (ArrayList<ArrayList<Line>>) out.readObject();
-		out.close();
-	}
+		FileInputStream fos=null;
+		ObjectInputStream out=null;
 
+			fos = new FileInputStream(filename);
+			out = new ObjectInputStream(fos);
+			loadedTracks =  (ArrayList<ArrayList<MyLine>>) out.readObject();
+			out.close();
+
+	}
+	
+	private class MyLine extends Line implements Serializable{
+
+		private static final long serialVersionUID = 1L;
+
+		public MyLine(float x1, float y1, float x2, float y2) {
+			super(x1, y1, x2, y2);
+		}
+		
+	}
+	
+	
 	public static void main(String[] args) throws SlickException {
 
 		AppGameContainer app = new AppGameContainer(new Cropcircle());
