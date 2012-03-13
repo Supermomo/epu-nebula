@@ -20,6 +20,7 @@ public class Racket
     private float xmax;
     private float ymin;
     private float ymax;
+    private Ball ballAttached;
     private static Image image;
 
     public Racket (float xmin, float xmax,
@@ -41,18 +42,54 @@ public class Racket
     {
         x += n;
         if (x > xmax) x = xmax;
+        
+        updateBall();
     }
     
     public void goLeft (float n)
     {
         x -= n;
         if (x < xmin) x = xmin;
+        
+        updateBall();
     }
     
     public void goUp (float n)
     {
-        y -= n;
+        y -= n*(y-ymax)*0.04f;
         if (y < ymax) y = ymax;
+        
+        updateBall();
+    }
+    
+    public void goActivePosition ()
+    {
+        y = ymax;
+        updateBall();
+    }
+    
+    public void attachBall (Ball ball)
+    {
+        ballAttached = ball;
+        updateBall();
+    }
+    
+    public void detachBall ()
+    {
+        ballAttached = null;
+    }
+    
+    public boolean haveAttachedBall ()
+    {
+        return (ballAttached != null);
+    }
+    
+    public void updateBall ()
+    {
+        if (ballAttached == null) return;
+
+        ballAttached.setX(x+Racket.w/2-Ball.w/2);
+        ballAttached.setY(y-Ball.h);
     }
     
     public void resetPosition ()
@@ -64,5 +101,15 @@ public class Racket
     public void draw ()
     {
         image.draw(x, y, w, h);
+    }
+    
+    public float getX ()
+    {
+        return x;
+    }
+    
+    public float getY ()
+    {
+        return y;
     }
 }
