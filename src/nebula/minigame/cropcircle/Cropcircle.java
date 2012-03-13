@@ -47,6 +47,20 @@ public class Cropcircle extends BasicGame {
 			loadedTracks=new ArrayList<ArrayList<MyLine>>();
 		}
 
+		ArrayList<MyLine> sav=new ArrayList<MyLine>();
+		MyLine l=new MyLine(250, 50, 250, 150);
+		sav.add(l);
+		l=new MyLine(350, 50, 350, 350);
+		sav.add(l);
+		l=new MyLine(300, 400, 400, 400);
+		sav.add(l);
+		l=new MyLine(200, 300, 300, 400);
+		sav.add(l);
+		l=new MyLine(400, 400, 500, 300);
+		sav.add(l);
+		
+		track=sav;
+		
 		path = new ArrayList<Vector2f>();
 		imgPath = new Image("assets/cropCircle/braise.png");
 		land = new Image("assets/cropCircle/spritBleu.jpg");
@@ -111,6 +125,7 @@ public class Cropcircle extends BasicGame {
 			y--;
 			y--;
 		}
+		
 		if (input.isKeyDown(Input.KEY_DOWN)) {
 			y++;
 			y++;
@@ -119,7 +134,7 @@ public class Cropcircle extends BasicGame {
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 
-		land.draw(0, 0, 800, 600);
+		land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.white);
 		
 		for (Line p : track) {
@@ -199,7 +214,7 @@ public class Cropcircle extends BasicGame {
 
 		AppGameContainer app = new AppGameContainer(new Cropcircle());
 
-		app.setDisplayMode(800, 600, false);
+		app.setDisplayMode(800, 600, true);
 		app.start();
 	}
 }
