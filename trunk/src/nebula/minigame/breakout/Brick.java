@@ -12,7 +12,7 @@ public class Brick
     private float y;
     private float w;
     private float h;
-    private Image image;
+    private static Image image;
     
     public Brick (int r, int c, BricksField f) throws SlickException
     {
@@ -24,8 +24,9 @@ public class Brick
         x = f.getX() + c*w;
         y = f.getY() + r*h;
         
-        // Set brick image
-        image = new Image(Breakout.rccPath + "brick-red.png");
+        // Set brick image first time
+        if (image == null)
+            image = new Image(Breakout.rccPath + "brick-red.png");
     }
     
     public void draw ()
