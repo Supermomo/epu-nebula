@@ -1,6 +1,8 @@
 package nebula.minigame.spaceInvaders;
 import java.util.Random;
 
+import nebula.core.helper.Collision;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.effects.FireEmitter;
@@ -55,7 +57,7 @@ public class SpaceInvaders extends BasicGame{
     	for(int i =0; i < 5; i++)
     	{
     		for(int j=0; j < 5; j++)
-    			explosion.addFrame(explo.getSprite(j,i),25);
+    			explosion.addFrame(explo.getSprite(j,i),20);
     	}
     	explosion.setLooping(false);
     	explosion.stopAt(24);
@@ -195,6 +197,7 @@ public class SpaceInvaders extends BasicGame{
 	    			tank.kill();
 	    			gc.pause();
 	    		}
+
     		}
     	}
     	
@@ -223,6 +226,8 @@ public class SpaceInvaders extends BasicGame{
     		//sDefaite.play();
     		gc.pause();
     	}
+    	
+    	
     }
  
     public void render(GameContainer gc, Graphics g) 
