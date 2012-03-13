@@ -1,14 +1,13 @@
 package nebula.minigame.cropcircle;
 
-import java.awt.Point;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
+import java.util.Random;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -17,16 +16,17 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.*;
 
 public class SimpleGame extends BasicGame {
 
 	private Image land = null;
 	private float x = 400;
 	private float y = 300;
-	private ArrayList<ArrayList<Point>> loadedTracks;
-	private ArrayList<Point> track;
+	private ArrayList<ArrayList<Line>> loadedTracks;
+	private ArrayList<Line> track;
 	private Image imgPath;
-	private ArrayList<Point> path;
+	private ArrayList<Vector2f> path;
 
 	public SimpleGame() {
 		super("Slick2DPath2Glory - SimpleGame");
@@ -34,42 +34,17 @@ public class SimpleGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		track = new ArrayList<Point>();
+		track = new ArrayList<Line>();
 		try {
 			Charger();
-			track=loadedTracks.get(loadedTracks.size()-1);
+			Random r=new Random();
+			track=loadedTracks.get(r.nextInt(loadedTracks.size()));
+			
 		} catch (Exception e) {
-			loadedTracks=new ArrayList<ArrayList<Point>>();
+			loadedTracks=new ArrayList<ArrayList<Line>>();
 		}
-		/*Point p = new Point();
-		p.x = 200;
-		p.y = 200;
-		track.add(p);
-		p = new Point();
-		p.x = 205;
-		p.y = 200;
-		track.add(p);
-		p = new Point();
-		p.x = 210;
-		p.y = 200;
-		track.add(p);
-		p = new Point();
-		p.x = 220;
-		p.y = 200;
-		track.add(p);
-		p = new Point();
-		p.x = 240;
-		p.y = 200;
-		track.add(p);
-		p = new Point();
-		p.x = 260;
-		p.y = 200;
-		track.add(p);
-		p = new Point();
-		p.x = 280;
-		p.y = 200;
-		track.add(p);*/
-		path = new ArrayList<Point>();
+
+		path = new ArrayList<Vector2f>();
 		imgPath = new Image("assets/cropCircle/braise.png");
 		land = new Image("assets/cropCircle/spritBleu.jpg");
 	}
@@ -88,14 +63,9 @@ public class SimpleGame extends BasicGame {
 					.get(path.size() - 1).y
 					- y) > 30))
 					|| path.isEmpty()) {
-
-				int index = getIndexOfX((int) x);
-
-				if (index != -1 && Math.abs(track.get(index).y - y) < 20) {
-					Point p = new Point();
-					p.x = (int) x;
-					p.y = (int) y;
-
+			
+				Vector2f p = new Vector2f(x,y);
+				if (validDistanceFromClosestLine(p)) {
 					path.add(p);
 				}
 
@@ -104,7 +74,19 @@ public class SimpleGame extends BasicGame {
 
 		
 		if (input.isKeyDown(Input.KEY_ENTER)) {
-			loadedTracks.add(path);
+			ArrayList<Line> sav=new ArrayList<Line>();
+			Line l=new Line(250, 50, 250, 150);
+			sav.add(l);
+			l=new Line(350, 50, 350, 350);
+			sav.add(l);
+			l=new Line(300, 400, 400, 400);
+			sav.add(l);
+			l=new Line(200, 300, 300, 400);
+			sav.add(l);
+			l=new Line(400, 400, 500, 300);
+			sav.add(l);
+			
+			loadedTracks.add(sav);
 			try {
 				sauvegarder();
 			} catch (ClassNotFoundException e) {
@@ -135,26 +117,36 @@ public class SimpleGame extends BasicGame {
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 
 		land.draw(0, 0, 800, 600);
-		gc.getGraphics().setColor(Color.white);
-		for (Point p : track) {
-			gc.getGraphics().fillOval(p.x, p.y, 2, 2);
+		g.setColor(Color.white);
+		Line p;
+		for (int i=0;i<track.size();i++) {
+			p=track.get(i);
+			g.drawLine(p.getX1(),p.getY1(),p.getX2(),p.getY2());
 		}
 
-		for (Point p : path) {
-			imgPath.draw(p.x - 30, p.y - 30);
+		for (Vector2f v : path) {
+			imgPath.draw(v.x - 30, v.y - 30);
 		}
-		gc.getGraphics().setColor(Color.yellow);
-		gc.getGraphics().drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
-
+		g.setColor(Color.yellow);
+		g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
+		
 	}
 
-	private int getIndexOfX(int x) {
-		for (int i = 0; i < track.size(); i++) {
-			if (track.get(i).x == x)
-				return i;
+	private boolean validDistanceFromClosestLine(Vector2f vect){
+		int i=0;
+		Line line;
+		line=track.get(i);
+		while(line != null){
+			//TODO
+			if(Math.abs(line.distance(vect))<10){
+				return true;
+			}
+			i++;
+			line=track.get(i);
 		}
-		return -1;
+		return false;
 	}
+	
 
 	private void sauvegarder() throws ClassNotFoundException {
 		String filename = "trackList.data";
@@ -176,7 +168,7 @@ public class SimpleGame extends BasicGame {
 		String filename = "trackList.data";
 		FileInputStream fos = new FileInputStream(filename);
 		ObjectInputStream out = new ObjectInputStream(fos);
-		loadedTracks =  (ArrayList<ArrayList<Point>>) out.readObject();
+		loadedTracks =  (ArrayList<ArrayList<Line>>) out.readObject();
 		out.close();
 	}
 
