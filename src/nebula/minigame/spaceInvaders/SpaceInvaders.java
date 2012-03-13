@@ -27,6 +27,7 @@ public class SpaceInvaders extends BasicGame{
 	Image coeur = null;
 	int score = 0;
 	Image defaite = null;
+	Sound sTir = null;
 	
     public SpaceInvaders(int nbEnnemis)
     {
@@ -62,6 +63,7 @@ public class SpaceInvaders extends BasicGame{
     	rand = new Random();
     	coeur = new Image("assets/spaceInvaders/coeur.png");
     	defaite = new Image("assets/spaceInvaders/defaite.png");
+    	sTir = new Sound("assets/sound/spaceInvaders/tir.ogg");
     }
  
     @Override
@@ -91,6 +93,7 @@ public class SpaceInvaders extends BasicGame{
     		{
     			tir.setX(tank.getX());
     			tir.setY(tank.getY() - tir.getImage().getHeight());
+    			sTir.play();
     		}
     	}
     	
