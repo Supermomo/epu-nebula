@@ -2,6 +2,8 @@ package nebula.minigame.spaceInvaders;
 import java.util.Random;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.particles.ParticleSystem;
+import org.newdawn.slick.particles.effects.FireEmitter;
 
 
 public class SpaceInvaders extends BasicGame{
@@ -27,7 +29,8 @@ public class SpaceInvaders extends BasicGame{
 	Image coeur = null;
 	int score = 0;
 	Image defaite = null;
-	Sound sTir = null;
+	Sound sVictoire = null;
+	Sound sDefaite = null;
 	
     public SpaceInvaders(int nbEnnemis)
     {
@@ -39,18 +42,20 @@ public class SpaceInvaders extends BasicGame{
     public void init(GameContainer gc) 
 			throws SlickException {
     	gc.setMinimumLogicUpdateInterval(20);
-    	land = new Image("assets/spaceInvaders/fond.png");
+    	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
+    	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
+    	land = new Image("assets/images/spaceInvaders/fond.png");
     	tank = new Tank();
     	tir = new Tir(0);
     	tirEnnemi = new Tir(1);
-    	victoire = new Image("assets/spaceInvaders/victoire.png");
-    	explo = new SpriteSheet("assets/spaceInvaders/explosion17.png",64,64,0);
+    	victoire = new Image("assets/images/spaceInvaders/victoire.png");
+    	explo = new SpriteSheet("assets/images/spaceInvaders/explosion17.png",64,64,0);
     	explosion = new Animation();
     	explosion.setAutoUpdate(true);
     	for(int i =0; i < 5; i++)
     	{
     		for(int j=0; j < 5; j++)
-    			explosion.addFrame(explo.getSprite(j,i),75);
+    			explosion.addFrame(explo.getSprite(j,i),25);
     	}
     	explosion.setLooping(false);
     	explosion.stopAt(24);
@@ -61,9 +66,8 @@ public class SpaceInvaders extends BasicGame{
     			ennemi[i][j] = new Ennemi(i*100,j*84);
     	}
     	rand = new Random();
-    	coeur = new Image("assets/spaceInvaders/coeur.png");
-    	defaite = new Image("assets/spaceInvaders/defaite.png");
-    	sTir = new Sound("assets/sound/spaceInvaders/tir.ogg");
+    	coeur = new Image("assets/images/spaceInvaders/coeur.png");
+    	defaite = new Image("assets/images/spaceInvaders/defaite.png");
     }
  
     @Override
@@ -89,12 +93,7 @@ public class SpaceInvaders extends BasicGame{
     	// ========================  GESTION DES TIRS ============================
     	if(input.isKeyDown(Input.KEY_SPACE))
     	{
-    		if(tir.getY() < 0)
-    		{
-    			tir.setX(tank.getX());
-    			tir.setY(tank.getY() - tir.getImage().getHeight());
-    			sTir.play();
-    		}
+    		tank.tirer(tir);
     	}
     	
     	if(tir.getY() > -100)
@@ -114,6 +113,7 @@ public class SpaceInvaders extends BasicGame{
 	    			{
     					tirEnnemi.setX(ennemi[i][j].getX());
         				tirEnnemi.setY(ennemi[i][j].getY() + tirEnnemi.getImage().getHeight());
+        				tirEnnemi.getSon().play();
         				seuil = 99999;
     				}
 	    			else
@@ -184,10 +184,17 @@ public class SpaceInvaders extends BasicGame{
     	    		}
     	    		nbEnnemis--;
     	    		score += ennemi[i][j].getPts();
+    	    		ennemi[i][j].getSon().play();
     	    		ennemi[i][j] = null;
     	    		tir.setX(-100);
     	    		tir.setY(-100);
     	    	}
+	    		
+	    		if(ennemi[i][j] != null && ennemi[i][j].getY() + ennemi[i][j].getImage().getHeight() >= tank.getY())
+	    		{
+	    			tank.kill();
+	    			gc.pause();
+	    		}
     		}
     	}
     	
@@ -202,15 +209,18 @@ public class SpaceInvaders extends BasicGame{
     		}
     		tirEnnemi.setX(-100);
     		tirEnnemi.setY(-100);
+    		//feu.update(ps, 20);
     	}
     	
     	if(nbEnnemis == 0)
     	{
+    		//sVictoire.play();
     		gc.pause();
     	}
     	
-    	if(tank.vies == 0)
+    	if(tank.dead())
     	{
+    		//sDefaite.play();
     		gc.pause();
     	}
     }
@@ -231,11 +241,12 @@ public class SpaceInvaders extends BasicGame{
     			}
     	}
     	if(nbEnnemis == 0)
-    		victoire.draw(100,250);
-    	if(tank.vies == 0)
+    		victoire.draw(100, 250);
+    		
+    	if(tank.dead())
     		defaite.draw(100,250);
     	g.drawAnimation(explosion, xExplo, yExplo);
-    	for(int i = 0; i < tank.vies; i++)
+    	for(int i = 0; i < tank.getVies(); i++)
     	{
     		coeur.draw(10 + i * coeur.getWidth(), gc.getHeight() - coeur.getHeight());
     	}
@@ -248,8 +259,7 @@ public class SpaceInvaders extends BasicGame{
 			new AppGameContainer(new SpaceInvaders(8));
  
          app.setDisplayMode(800, 600, false);
-         app.setTargetFrameRate(600);
+         app.setTargetFrameRate(200);
          app.start();
-         
     }
 }
