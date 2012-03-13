@@ -23,7 +23,6 @@ public class BlockMap {
 		
 		// Construction de la matrice de collision
 		blocked = new boolean[map.getWidth()][map.getHeight()];
-		System.out.println("Taille : "+map.getWidth());
 		for (int xAxis=0;xAxis<map.getWidth(); xAxis++) {
 			for (int yAxis=0;yAxis<map.getHeight(); yAxis++) {
 				if (map.getTileId(xAxis, yAxis, 0)!=0) blocked[xAxis][yAxis] = true;
@@ -36,7 +35,6 @@ public class BlockMap {
 	}
 	
 	public boolean deplacementBloquant(int xAxis, int yAxis) {
-		System.out.println(xAxis+" "+yAxis);
 		return (map.getTileId(xAxis/tileWidth, yAxis/tileHeight, 0)!=0);
 	}
 }
