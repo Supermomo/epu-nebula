@@ -112,23 +112,19 @@ public class Cropcircle extends BasicGame {
 		}
 		
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			x--;
-			x--;
+			x-=(delta*0.5f);
 		}
 
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			x++;
-			x++;
+			x+=(delta*0.5f);;
 		}
 
 		if (input.isKeyDown(Input.KEY_UP)) {
-			y--;
-			y--;
+			y-=(delta*0.5f);;
 		}
 		
 		if (input.isKeyDown(Input.KEY_DOWN)) {
-			y++;
-			y++;
+			y+=(delta*0.5f);;
 		}
 	}
 
