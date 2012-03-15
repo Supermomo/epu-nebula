@@ -1,5 +1,6 @@
 package nebula.minigame.gravity;
 
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -34,7 +35,8 @@ public class BlockMap {
 		return map;
 	}
 	
-	public boolean deplacementBloquant(int xAxis, int yAxis) {
-		return (map.getTileId(xAxis/tileWidth, yAxis/tileHeight, 0)!=0);
+	public boolean deplacementBloquant(Point[] p) {
+		return blocked[(int) (p[0].getX()/tileWidth)][(int) (p[0].getY()/tileHeight)] && blocked[(int) (p[1].getX()/tileWidth)][(int) (p[1].getY()/tileHeight)];
 	}
+
 }

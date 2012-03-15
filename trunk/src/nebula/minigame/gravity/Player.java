@@ -1,13 +1,13 @@
 package nebula.minigame.gravity;
 
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public class Player {
-	private float x;
-	private float y;
+	Point position;
 	private SpriteSheet sheet;
 
 	private int isStill;
@@ -30,7 +30,7 @@ public class Player {
 	public Player(String reference,int nbrImages) throws SlickException {
 		this(reference,nbrImages,0,0);
 	}
-	public Player(String reference, int nbrImages, float x, float y) throws SlickException {
+	public Player(String reference, int nbrImages, int x, int y) throws SlickException {
 		this(new SpriteSheet(reference,
 							Sprite.HAUTEUR.getValue(), 
 							Sprite.LARGEUR.getValue(),
@@ -38,13 +38,12 @@ public class Player {
 				nbrImages, x, y);
 	}
 	/** Constructeur complet */
-	public Player(SpriteSheet ss, int nbrImages, float x, float y) {
+	public Player(SpriteSheet ss, int nbrImages, int x, int y) {
 		// Sprite Sheet Défaut
 		this.sheet = ss;
 		
 		// Emplacement du personnage
-		this.x = x;
-		this.y = y;
+		position = new Point(x,y);
 		
 		// Création des animations
 		// -- Animation Still
@@ -72,32 +71,74 @@ public class Player {
 	//---
 	// Accesseurs
 	/////////////
+	// Points du hero
+	// --- Position
 	public float getX() {
-		return x;
+		return (float) (position.getX());
 	}
 	public void setX(float x) {
-		this.x = x;
+		position.setLocation(x, getY());
 	}
+	
 	public float getY() {
-		return y;
+		return (float) (position.getY());
 	}
 	public void setY(float y) {
-		this.y = y;
+		position.setLocation(getX(), y);
 	}
+	// --- Coins
+	/*
+	 * Changer les coins permet de modifier à quelle distance le personnage détecte les murs
+	 */
+	public Point[] getBordGauche() {
+		Point p[] = {(Point) position.clone(),(Point) position.clone()};
+		p[0].translate(2f,2f);
+		p[1].translate(2f,13f);
+		return p;
+	}
+	public Point[] getBordDroit() {
+		Point p[] = {(Point) position.clone(),(Point) position.clone()};
+		p[0].translate(13f,2f);
+		p[1].translate(13f,13f);
+		return p;
+	}
+	public Point[] getBordHaut() {
+		Point p[] = {(Point) position.clone(),(Point) position.clone()};
+		p[0].translate(2f,2f);
+		p[1].translate(13f,2f);
+		return p;
+	}
+	public Point[] getBordBas() {
+		Point p[] = {(Point) position.clone(),(Point) position.clone()};
+		p[0].translate(2f,13f);
+		p[1].translate(13f,13f);
+		return p;
+	}
+	
+	// Images du hero
 	public Image getImage() {
 		return sheet;
 	}
 	public void setImage(SpriteSheet ss) {
 		this.sheet = ss;
 	}
+	
+	public int getSpriteHeight() {
+		return sheet.getHeight();
+	}
+	public int getSpriteWidth() {
+		return sheet.getWidth();
+	}
+	
+	// Animation et déplacement
 	public Animation getAnimation() {
 		return this.animation;
 	}
 	public void setAnimation(Animation a) {
 		this.animation = a;
 	}
+	// --- Statut d'immobilité
 	public int getStill() {
-		// A l'arret quand c'est égal à -1
 		return isStill;
 	}
 	public void incStill() {
@@ -106,12 +147,15 @@ public class Player {
 	public boolean isStill() {
 		return animation.equals(animStill);
 	}
+	// --- Vitesse
 	public float getVitesse() {
 		return vitesse;
 	}
 	public void setVitesse(float v) {
 		this.vitesse = v;
 	}
+
+	
 	//---
 	// toString
 	///////////
@@ -122,15 +166,18 @@ public class Player {
 	//---
 	// Gestion du déplacement
 	/////////////////////////
+	public void deplace() {
+		
+	}
 	public void intiPosition() {
 		setX(0);
 		setY(0);
 	}
-	public void moveX(float deltaX) {
-		setX(x+deltaX);
+	public void moveX(float dx) {
+		position.translate(dx*vitesse, 0);
 	}
-	public void moveY(float deltaY) {
-		setY(y+deltaY);
+	public void moveY(float dy) {
+		position.translate(0, dy*vitesse);
 	}
 	
 	//---

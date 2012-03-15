@@ -3,14 +3,13 @@ package nebula.minigame.gravity;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
 
 public class BaseJeu extends BasicGame {
 
-	Player hero;
-	BlockMap map;
+	ModeleJeu modeleJeu;
+	ControleJeu controleJeu;
 
 	public BaseJeu() {
 		super("Gravity");
@@ -18,77 +17,21 @@ public class BaseJeu extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		hero = new Player("assets/gravity/hero.png",6,30,30);
-		map = new BlockMap("assets/gravity/map.tmx");
+		modeleJeu = new ModeleJeu(new Player("assets/gravity/hero.png",6,30,30), new BlockMap("assets/gravity/map.tmx"));
+		controleJeu = new ControleJeu(modeleJeu);
 		container.setVSync(true);
 	}
 
 	@Override
-	public void update(GameContainer container, int delta) throws SlickException {
-		// -- Debut - déplacement Hero
-		float deplacement = hero.getVitesse()*delta;
-		// Déplacement à gauche
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-			if(	!map.deplacementBloquant(
-					((Float) (hero.getX()-deplacement)).intValue(), // Valeur modifiée
-					((Float) (hero.getY()+1)).intValue() )
-					&&
-					!map.deplacementBloquant(
-							((Float) (hero.getX()-deplacement)).intValue(), // Valeur modifiée
-							((Float) (hero.getY()+14)).intValue() ))
-			{
-				hero.moveX(-1*deplacement);
-				if(hero.isStill()) hero.setAnimGauche();
-			}
-		}
-		// Déplacement à droite
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-			if(!map.deplacementBloquant(
-					((Float) (hero.getX()+15+deplacement)).intValue(), // Valeur modifiée
-					((Float) (hero.getY()+1)).intValue() )
-					&&
-					!map.deplacementBloquant(
-							((Float) (hero.getX()+15+deplacement)).intValue(), // Valeur modifiée
-							((Float) (hero.getY()+14)).intValue() ))
-			{
-				hero.moveX(+1*deplacement);
-				if(hero.isStill()) hero.setAnimDroite();
-			}
-		}
-		// Déplacement en haut
-		if (container.getInput().isKeyDown(Input.KEY_UP)) {
-			if(!map.deplacementBloquant(
-					((Float) (hero.getX()+1)).intValue(),
-					((Float) (hero.getY()-deplacement)).intValue() )
-					&&
-					!map.deplacementBloquant(
-							((Float) (hero.getX()+14)).intValue(),
-							((Float) (hero.getY()-deplacement)).intValue() ))
-				hero.moveY(-1*deplacement);
-		}
-		// Déplacement en bas
-		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-			if(!map.deplacementBloquant(
-					((Float) (hero.getX()+1)).intValue(),
-					((Float) (hero.getY()+15+deplacement)).intValue() )
-					&&
-					!map.deplacementBloquant(
-							((Float) (hero.getX()+14)).intValue(),
-							((Float) (hero.getY()+15+deplacement)).intValue() ))
-				hero.moveY(+1*deplacement);
-		}
-		else {
-			// Le personnage s'arrête
-			if(!hero.isStill() && hero.getStill()<35) hero.incStill();
-			else if(hero.getStill()!=-1) hero.setAnimStill();
-		}
-		// -- Fin - déplacement Hero
+	public void update(GameContainer container, int delta) throws SlickException {		
+		controleJeu.inputJoueur(container.getInput(), delta);
+		modeleJeu.hero.deplace();
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		map.getTiledMap().render(0, 0);
-		g.drawAnimation(hero.getAnimation(), hero.getX(), hero.getY());
+		modeleJeu.getMap().getTiledMap().render(0, 0);
+		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX(), modeleJeu.getHero().getY());
 	}
 
 	public static void main(String[] args) {
