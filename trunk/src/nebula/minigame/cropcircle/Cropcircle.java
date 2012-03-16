@@ -85,7 +85,7 @@ public class Cropcircle extends BasicGame implements Serializable{
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-		(new QuickSort()).sort(path);
+
 		Input input = gc.getInput();
 
 		 //System.out.println("x : "+input.getMouseX()+"\n");
@@ -189,7 +189,7 @@ public class Cropcircle extends BasicGame implements Serializable{
 	
 
 	private void save() throws ClassNotFoundException {
-		String filename = "trackList.data";
+		String filename = "assets/cropCircle/trackList.data";
 		FileOutputStream fis = null;
 		ObjectOutputStream oit = null;
 		
@@ -206,7 +206,7 @@ public class Cropcircle extends BasicGame implements Serializable{
 
 	@SuppressWarnings("unchecked")
 	private void load() throws Exception {
-		String filename = "trackList.data";
+		String filename = "assets/cropCircle/trackList.data";
 		FileInputStream fos=null;
 		ObjectInputStream out=null;
 
