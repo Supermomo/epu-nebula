@@ -2,6 +2,7 @@ package nebula.minigame.breakout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import nebula.core.helper.Collision;
 
@@ -17,13 +18,18 @@ public class Breakout extends BasicGame
     static final String imgPath = "assets/images/breakout/";
     static final String sndPath = "assets/sound/breakout/";
     
+    private final float initialSpeed = 0.2f;
+    
     private float gameActiveCounter;
     private float whiteFadeAlpha;
-    private float[] ballSpeed = new float[2];
+    private SpeedVector ballSpeed = new SpeedVector();
     private Ball ball;
     private Racket racket;
+    private BricksField bricksField;
     private List<Brick> bricks = new ArrayList<Brick>();
     private Image bgImage;
+    
+    private static Random random = new Random();
     
 
     /**
@@ -48,15 +54,15 @@ public class Breakout extends BasicGame
         racket = new Racket(0, gc.getWidth(),
             gc.getHeight()+Racket.h, gc.getHeight()-Racket.h - 30);
         
-        racket.attachBall(ball);
+        racket.attachBall(ball, getRandomRPos());
         
         // Bricks
-        BricksField field
+        bricksField
             = new BricksField(0, 0, gc.getWidth(), gc.getHeight()/4, 3, 6);
         
-        for (int i = 0; i < field.getRow(); i++)
-            for (int j = 0; j < field.getColumn(); j++)
-                bricks.add(new Brick(i, j, field));
+        for (int i = 0; i < bricksField.getRow(); i++)
+            for (int j = 0; j < bricksField.getColumn(); j++)
+                bricks.add(new Brick(i, j, bricksField));
     }
 
     @Override
@@ -64,10 +70,99 @@ public class Breakout extends BasicGame
     {
         // Active game
         if (gameActiveCounter <= 0.0f)
-        {   
-            // Input events
+        {
+            // Pre update events
             Input input = gc.getInput();
-    
+
+            if (input.isKeyDown(Input.KEY_SPACE) && racket.haveAttachedBall())
+            {
+                ballSpeed.setX(0.0f);
+                ballSpeed.setY(initialSpeed);
+                racket.detachBall();
+            }
+            
+            
+            // Move ball
+            ball.setX(ball.getX()+ballSpeed.getX()*(float)delta);
+            ball.setY(ball.getY()+ballSpeed.getY()*(float)delta);
+            ballSpeed.increaseSpeed(delta * 0.1f);
+
+            // Collision with bottom
+            if (Collision.rectangle(
+                    ball.getX(), ball.getY(), Ball.w, Ball.h,
+                    0, gc.getHeight()+Ball.h/2, gc.getWidth(), 200))
+                invokeDefeat();
+            
+            // Collision with top
+            if (Collision.rectangle(
+                    ball.getX(), ball.getY(), Ball.w, Ball.h,
+                    0, -200, gc.getWidth(), 200))
+            {
+                ball.goPrevPosition();
+                ballSpeed.invertY();
+            }
+            
+            // Collision with right or left
+            if (Collision.rectangle(
+                    ball.getX(), ball.getY(), Ball.w, Ball.h,
+                    gc.getWidth(), 0, 200, gc.getHeight())
+                ||
+                Collision.rectangle(
+                    ball.getX(), ball.getY(), Ball.w, Ball.h,
+                    -200, 0, 200, gc.getHeight()))
+            {
+                ball.goPrevPosition();
+                ballSpeed.invertX();
+            }
+            
+            
+            // Collision with bricks
+            if (ball.getY() <= bricksField.getY()+bricksField.getHeight())
+            {
+                Brick bcollide = null;
+                List<Brick> brickToRemove = new ArrayList<Brick>();
+                
+                for (Brick b : bricks)
+                {
+                    if (Collision.rectangle(
+                        ball.getX(), ball.getY(), Ball.w, Ball.h,
+                        b.getX(), b.getY(), b.getWidth(), b.getHeight()))
+                    {
+                        if (bcollide == null) bcollide = b;
+                        brickToRemove.add(b);
+                    }
+                }
+                
+                bricks.removeAll(brickToRemove);
+                
+                if (bcollide != null)
+                {
+                    ball.goPrevPosition();
+                    ballSpeed.invertY(); // TODO : Improve collision
+                }
+            }
+            
+            // Collision with racket
+            if (Collision.rectangle(
+                    ball.getX(), ball.getY(), Ball.w, Ball.h,
+                    racket.getX(), racket.getY(), Racket.w, Racket.h))
+            {
+                ball.goPrevPosition();
+                
+                if (racket.getY()-ball.getY()-Ball.h < 0)
+                    invokeDefeat();
+                else
+                {
+                    float rpos = 
+                        (ball.getX()-(racket.getX()+Racket.w/2-Ball.w/2)) /
+                        (Racket.w/2 + Ball.w/2);
+                    
+                    ballSpeed.setAngle(-90.0f + 60.0f*rpos);
+                }
+            }
+            
+            
+            // Post update events    
             if (input.isKeyDown(Input.KEY_RIGHT))
             {
                 racket.goRight(Racket.hspeed * delta);
@@ -77,56 +172,6 @@ public class Breakout extends BasicGame
             {
                 racket.goLeft(Racket.hspeed * delta);
             }
-            
-            if (input.isKeyDown(Input.KEY_SPACE) && racket.haveAttachedBall())
-            {
-                ballSpeed[0] = 0.0f;
-                ballSpeed[1] = -0.8f;
-                racket.detachBall();
-            }
-            
-            // Speed ball
-            ball.setX(ball.getX()+ballSpeed[0]*(float)delta*0.5f);
-            ball.setY(ball.getY()+ballSpeed[1]*(float)delta*0.5f);
-            //ballSpeed[0] *= 1.0001f*(float)delta*0.1f;
-            //ballSpeed[1] *= 1.0001f*(float)delta*0.1f;
-            
-            // Collision with bricks
-            for (Brick b : bricks)
-            {
-                if (Collision.rectangle(
-                    ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    b.getX(), b.getY(), b.getWidth(), b.getHeight()))
-                {
-                    bricks.remove(b);
-                    ballSpeed[1] = -ballSpeed[1];
-                    break;
-                }
-            }
-            
-            // Collision with racket
-            if (Collision.rectangle(
-                    ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    racket.getX(), racket.getY(), Racket.w, Racket.h))
-            {
-                if (racket.getY()-ball.getY()-Ball.h+4 < 0)
-                    invokeDefeat();
-                else
-                    ballSpeed[1] = -ballSpeed[1];
-                
-            }
-            
-            // Collision with bottom
-            if (Collision.rectangle(
-                    ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    0, gc.getHeight()-10, gc.getWidth(), 10))
-                invokeDefeat();
-            
-            // Collision with top
-            if (Collision.rectangle(
-                    ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    0, 0, gc.getWidth(), 0))
-                ballSpeed[1] = -ballSpeed[1];
         }
         // Inactive game
         else
@@ -144,8 +189,7 @@ public class Breakout extends BasicGame
                 gameActiveCounter = 0.0f;
                 whiteFadeAlpha = 0.0f;
                 racket.goActivePosition();
-                ballSpeed[0] = 0.0f;
-                ballSpeed[1] = 0.0f;
+                ballSpeed.reset();
             }
         }
     }
@@ -158,12 +202,12 @@ public class Breakout extends BasicGame
             for (int y = 0; y < gc.getHeight(); y += bgImage.getHeight())
                 bgImage.draw(x, y);
         
+        // Render bricks
+        for (Brick b : bricks) b.draw();
+        
         // Render racket and ball
         racket.draw();
         ball.draw();
-        
-        // Render bricks
-        for (Brick b : bricks) b.draw();
         
         // Render white fade
         if (whiteFadeAlpha > 0.0f)
@@ -178,13 +222,18 @@ public class Breakout extends BasicGame
         gameActiveCounter = 1.0f;
         whiteFadeAlpha = 1.0f;
         racket.resetPosition();
-        racket.attachBall(ball);
+        racket.attachBall(ball, getRandomRPos());
+    }
+    
+    private float getRandomRPos ()
+    {
+        return random.nextFloat() * 0.6f - 0.3f;
     }
 
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
-        app.setDisplayMode(800, 600, false);
+        app.setDisplayMode(1024, 768, true);
         app.setTargetFrameRate(2000);
         app.start();
     }
