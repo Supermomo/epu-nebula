@@ -23,7 +23,7 @@ public class Ball
     {
         // Set ball image first time
         if (image == null)
-            image = new Image(Breakout.rccPath + "ball.png");
+            image = new Image(Breakout.imgPath + "ball.png");
     }
     
     public boolean collideBrick (Brick b)

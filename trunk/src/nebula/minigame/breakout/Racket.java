@@ -35,7 +35,7 @@ public class Racket
 
         // Set racket image first time
         if (image == null)
-            image = new Image(Breakout.rccPath + "racket.png");
+            image = new Image(Breakout.imgPath + "racket.png");
     }
     
     public void goRight (float n)
