@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import nebula.core.helper.Collision;
+import nebula.core.helper.Console;
 
 import org.newdawn.slick.*;
 
@@ -18,10 +19,11 @@ public class Breakout extends BasicGame
     static final String imgPath = "assets/images/breakout/";
     static final String sndPath = "assets/sound/breakout/";
     
-    private final float initialSpeed = 0.2f;
+    private final float initialSpeed = 0.3f;
     
-    private float gameActiveCounter;
+    private float gameCounter;
     private float whiteFadeAlpha;
+    private GameState gameState;
     private SpeedVector ballSpeed = new SpeedVector();
     private Ball ball;
     private Racket racket;
@@ -30,6 +32,8 @@ public class Breakout extends BasicGame
     private Image bgImage;
     
     private static Random random = new Random();
+    
+    private enum GameState {Inactive, Active, Ingame}
     
 
     /**
@@ -46,8 +50,10 @@ public class Breakout extends BasicGame
         // Load images
         bgImage = new Image(imgPath + "background.png");
         
-        gameActiveCounter = 1.0f;
+        // Game state and counters
+        gameCounter = 1.0f;
         whiteFadeAlpha = 0.0f;
+        gameState = GameState.Inactive;
         
         // Ball and racket
         ball = new Ball();
@@ -68,24 +74,15 @@ public class Breakout extends BasicGame
     @Override
     public void update (GameContainer gc, int delta) throws SlickException
     {
-        // Active game
-        if (gameActiveCounter <= 0.0f)
+        Input input = gc.getInput();
+        
+        // Ingame state
+        if (GameState.Ingame.equals(gameState))
         {
-            // Pre update events
-            Input input = gc.getInput();
-
-            if (input.isKeyDown(Input.KEY_SPACE) && racket.haveAttachedBall())
-            {
-                ballSpeed.setX(0.0f);
-                ballSpeed.setY(initialSpeed);
-                racket.detachBall();
-            }
-            
-            
             // Move ball
             ball.setX(ball.getX()+ballSpeed.getX()*(float)delta);
             ball.setY(ball.getY()+ballSpeed.getY()*(float)delta);
-            ballSpeed.increaseSpeed(delta * 0.1f);
+            ballSpeed.increaseSpeed(delta * 0.08f);
 
             // Collision with bottom
             if (Collision.rectangle(
@@ -160,9 +157,24 @@ public class Breakout extends BasicGame
                     ballSpeed.setAngle(-90.0f + 60.0f*rpos);
                 }
             }
-            
-            
-            // Post update events    
+        }
+        // Active state
+        else if (GameState.Active.equals(gameState))
+        {
+            // Launch ball event
+            if (input.isKeyDown(Input.KEY_SPACE) && racket.haveAttachedBall())
+            {
+                ballSpeed.setX(0.0f);
+                ballSpeed.setY(initialSpeed);
+                racket.detachBall();
+                gameState = GameState.Ingame;
+            }
+        }
+        // Active and ingame states
+        if (GameState.Active.equals(gameState) ||
+            GameState.Ingame.equals(gameState))
+        {
+            // Racket events
             if (input.isKeyDown(Input.KEY_RIGHT))
             {
                 racket.goRight(Racket.hspeed * delta);
@@ -173,21 +185,22 @@ public class Breakout extends BasicGame
                 racket.goLeft(Racket.hspeed * delta);
             }
         }
-        // Inactive game
-        else
-        {   
+        // Inactive state
+        if (GameState.Inactive.equals(gameState))
+        {
             // Decrease white fade alpha
             whiteFadeAlpha -= 0.0025f * delta;
             if (whiteFadeAlpha <= 0.0f) whiteFadeAlpha = 0.0f;
             
             racket.goUp(Racket.vspeed * delta);
             
-            // Decrease game active counter
-            gameActiveCounter -= 0.0018f * delta;
-            if (gameActiveCounter <= 0.0f)
+            // Decrease game counter
+            gameCounter -= 0.0018f * delta;
+            if (gameCounter <= 0.0f)
             {
-                gameActiveCounter = 0.0f;
+                gameCounter = 0.0f;
                 whiteFadeAlpha = 0.0f;
+                gameState = GameState.Active;
                 racket.goActivePosition();
                 ballSpeed.reset();
             }
@@ -219,10 +232,12 @@ public class Breakout extends BasicGame
     
     private void invokeDefeat ()
     {
-        gameActiveCounter = 1.0f;
+        gameState = GameState.Inactive;
+        gameCounter = 1.0f;
         whiteFadeAlpha = 1.0f;
         racket.resetPosition();
         racket.attachBall(ball, getRandomRPos());
+        Console.log("You failed");
     }
     
     private float getRandomRPos ()
@@ -233,7 +248,7 @@ public class Breakout extends BasicGame
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
-        app.setDisplayMode(1024, 768, true);
+        app.setDisplayMode(800, 600, false);
         app.setTargetFrameRate(2000);
         app.start();
     }
