@@ -9,10 +9,10 @@ import org.newdawn.slick.SlickException;
  */
 public class Racket
 {
-    public static final float w = 280;
-    public static final float h = 35;
-    public static final float hspeed = 0.8f;
-    public static final float vspeed = 0.2f;
+    static final float w = 280;
+    static final float h = 35;
+    static final float hspeed = 0.8f;
+    static final float vspeed = 0.2f;
     
     private float x;
     private float y;
@@ -20,6 +20,7 @@ public class Racket
     private float xmax;
     private float ymin;
     private float ymax;
+    private float ballRPos;
     private Ball ballAttached;
     private static Image image;
 
@@ -68,8 +69,9 @@ public class Racket
         updateBall();
     }
     
-    public void attachBall (Ball ball)
+    public void attachBall (Ball ball, float rpos)
     {
+        ballRPos = rpos;
         ballAttached = ball;
         updateBall();
     }
@@ -88,7 +90,8 @@ public class Racket
     {
         if (ballAttached == null) return;
 
-        ballAttached.setX(x+Racket.w/2-Ball.w/2);
+        ballAttached.setX(
+            (x+Racket.w/2-Ball.w/2) + ballRPos * (Racket.w/2 + Ball.w/2));
         ballAttached.setY(y-Ball.h);
     }
     
