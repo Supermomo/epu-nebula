@@ -14,7 +14,8 @@ import org.newdawn.slick.*;
  */
 public class Breakout extends BasicGame
 {
-    static final String rccPath = "assets/breakout/";
+    static final String imgPath = "assets/images/breakout/";
+    static final String sndPath = "assets/sound/breakout/";
     
     private float gameActiveCounter;
     private float whiteFadeAlpha;
@@ -37,7 +38,7 @@ public class Breakout extends BasicGame
     public void init (GameContainer gc) throws SlickException
     {
         // Load images
-        bgImage = new Image(rccPath + "background.png");
+        bgImage = new Image(imgPath + "background.png");
         
         gameActiveCounter = 1.0f;
         whiteFadeAlpha = 0.0f;

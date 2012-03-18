@@ -26,7 +26,7 @@ public class Brick
         
         // Set brick image first time
         if (image == null)
-            image = new Image(Breakout.rccPath + "brick-red.png");
+            image = new Image(Breakout.imgPath + "brick-red.png");
     }
     
     public void draw ()
