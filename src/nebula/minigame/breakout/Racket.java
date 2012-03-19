@@ -99,11 +99,7 @@ public class Racket
     {
         x = (xmax-xmin)/2;
         y = ymin;
-    }
-    
-    public void moveToBall (Ball ball, float offset)
-    {
-        x = ball.getX() + Ball.w/2 - Racket.w/2 + offset;
+        updateBall();
     }
 
     public void draw ()
@@ -111,9 +107,21 @@ public class Racket
         image.draw(x, y, w, h);
     }
     
+    public void setX (float x)
+    {
+        this.x = x;
+        updateBall();
+    }
+    
     public float getX ()
     {
         return x;
+    }
+    
+    public void setY (float y)
+    {
+        this.y = y;
+        updateBall();
     }
     
     public float getY ()
