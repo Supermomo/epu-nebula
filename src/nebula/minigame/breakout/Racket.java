@@ -100,6 +100,11 @@ public class Racket
         x = (xmax-xmin)/2;
         y = ymin;
     }
+    
+    public void moveToBall (Ball ball, float offset)
+    {
+        x = ball.getX() + Ball.w/2 - Racket.w/2 + offset;
+    }
 
     public void draw ()
     {
