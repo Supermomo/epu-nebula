@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import nebula.core.helper.Collision;
-import nebula.core.helper.Console;
 
 import org.newdawn.slick.*;
 
@@ -20,6 +19,7 @@ public class Breakout extends BasicGame
     static final String sndPath = "assets/sound/breakout/";
     
     private final float initialSpeed = 0.3f;
+    private int lifes = 3;
     
     private float gameCounter;
     private float whiteFadeAlpha;
@@ -30,6 +30,7 @@ public class Breakout extends BasicGame
     private BricksField bricksField;
     private List<Brick> bricks = new ArrayList<Brick>();
     private Image bgImage;
+    private Image lifeImage;
     
     private static Random random = new Random();
     
@@ -49,6 +50,7 @@ public class Breakout extends BasicGame
     {
         // Load images
         bgImage = new Image(imgPath + "background.png");
+        lifeImage = new Image(imgPath + "ball.png");
         
         // Game state and counters
         gameCounter = 1.0f;
@@ -220,6 +222,13 @@ public class Breakout extends BasicGame
             for (int y = 0; y < gc.getHeight(); y += bgImage.getHeight())
                 bgImage.draw(x, y);
         
+        // Render lifes
+        final float lifeImageSize = 20.0f;
+        for (int i = 0; i < lifes; i++)
+            lifeImage.draw(4.0f+i*(4.0f+lifeImageSize),
+                           (gc.getHeight()-lifeImageSize-4.0f),
+                           lifeImageSize, lifeImageSize);
+        
         // Render bricks
         for (Brick b : bricks) b.draw();
         
@@ -240,9 +249,9 @@ public class Breakout extends BasicGame
         gameState = GameState.Inactive;
         gameCounter = 1.0f;
         whiteFadeAlpha = 1.0f;
+        lifes--;
         racket.resetPosition();
         racket.attachBall(ball, getRandomRPos());
-        Console.log("You failed");
     }
     
     private float getRandomRPos ()
@@ -253,7 +262,7 @@ public class Breakout extends BasicGame
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
-        app.setDisplayMode(800, 600, true);
+        app.setDisplayMode(800, 600, false);
         app.setTargetFrameRate(2000);
         app.start();
     }
