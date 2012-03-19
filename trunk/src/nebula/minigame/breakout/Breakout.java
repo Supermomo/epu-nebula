@@ -18,12 +18,13 @@ public class Breakout extends BasicGame
     static final String imgPath = "assets/images/breakout/";
     static final String sndPath = "assets/sound/breakout/";
     
-    private final float initialSpeed = 0.3f;
+    private final float initialSpeed = 0.2f;
     private int lifes = 3;
     
     private float gameCounter;
     private float whiteFadeAlpha;
     private GameState gameState;
+    private boolean useMouse;
     private SpeedVector ballSpeed = new SpeedVector();
     private Ball ball;
     private Racket racket;
@@ -56,6 +57,7 @@ public class Breakout extends BasicGame
         gameCounter = 1.0f;
         whiteFadeAlpha = 0.0f;
         gameState = GameState.Inactive;
+        useMouse = false;
         
         // Ball and racket
         ball = new Ball();
@@ -84,7 +86,7 @@ public class Breakout extends BasicGame
             // Move ball
             ball.setX(ball.getX()+ballSpeed.getX()*(float)delta);
             ball.setY(ball.getY()+ballSpeed.getY()*(float)delta);
-            ballSpeed.increaseSpeed(delta * 0.08f);
+            ballSpeed.increaseSpeed(delta * 0.04f);
 
             // Collision with bottom
             if (Collision.rectangle(
@@ -169,7 +171,9 @@ public class Breakout extends BasicGame
         else if (GameState.Active.equals(gameState))
         {
             // Launch ball event
-            if (input.isKeyDown(Input.KEY_SPACE) && racket.haveAttachedBall())
+            if (racket.haveAttachedBall() &&
+                ((!useMouse && input.isKeyDown(Input.KEY_SPACE)) ||
+                 (useMouse && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))))
             {
                 ballSpeed.setX(0.0f);
                 ballSpeed.setY(initialSpeed);
@@ -191,6 +195,8 @@ public class Breakout extends BasicGame
             {
                 racket.goLeft(Racket.hspeed * delta);
             }
+            
+            if (useMouse) racket.setX(input.getAbsoluteMouseX()-Racket.w/2);
         }
         // Inactive state
         if (GameState.Inactive.equals(gameState))
@@ -211,6 +217,12 @@ public class Breakout extends BasicGame
                 racket.goActivePosition();
                 ballSpeed.reset();
             }
+        }
+        
+        // All states
+        if (input.isKeyPressed(Input.KEY_M))
+        {
+            useMouse = !useMouse;
         }
     }
 
