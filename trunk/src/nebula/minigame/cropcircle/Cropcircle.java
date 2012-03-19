@@ -43,9 +43,13 @@ public class Cropcircle extends BasicGame implements Serializable{
 	private ArrayList<ArrayList<Line>> loadedTracks;
 	/**The track to follow*/
 	private ArrayList<Line> track;
+	/**The imga printed on each poit of the path*/
 	private Image imgPath;
-	/**The pass that has been followed*/
-	private ArrayList<Vector2f> path;
+	/**The path that has been followed*/
+	private ArrayList<ArrayList<Vector2f>> path;
+	/**the last drawnPoint*/
+	private Vector2f lastPoint=new Vector2f(0,0);
+	private float pointerSpeed=0.3f;
 
 	public Cropcircle() {
 		super("DeVint - CropCircle");
@@ -78,40 +82,27 @@ public class Cropcircle extends BasicGame implements Serializable{
 		
 		track=sav;*/
 		
-		path = new ArrayList<Vector2f>();
+		path = new ArrayList<ArrayList<Vector2f>>();
+		for(Line l : track){
+			path.add(new ArrayList<Vector2f>());
+		}
 		imgPath = new Image("assets/cropCircle/braise.png");
 		land = new Image("assets/cropCircle/spritBleu.jpg");
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-
+		
 		Input input = gc.getInput();
 
 		 //System.out.println("x : "+input.getMouseX()+"\n");
 		 //System.out.println("y = "+input.getMouseY()+"\n");
-
-		if (input.isKeyDown(Input.KEY_SPACE)) {
-			if ((path.size() >= 1 && path.get(path.size() - 1) != null && (Math
-					.abs(path.get(path.size() - 1).x - x) > imgRadius || Math.abs(path
-					.get(path.size() - 1).y
-					- y) > imgRadius))
-					|| path.isEmpty()) {
-			
-				Vector2f p = new Vector2f(x,y);
-				if (validDistanceFromClosestLine(p)) {
-					path.add(p);
-				}
-				else{
-					malusTank++;
-				}
-
-			}
-		}
+				
 
 		if (input.isKeyDown(Input.KEY_M)) {
-			(new QuickSort()).sort(path);
-			System.out.println(malusTank*malusTankCoef+getTrackMalus()*malusScoreCoef);
+
+
+			System.out.println("TankMalus "+malusTank*malusTankCoef+"\n track malus "+getTrackMalus()*malusScoreCoef);
 		}
 		
 		if (input.isKeyDown(Input.KEY_ENTER)) {
@@ -122,11 +113,7 @@ public class Cropcircle extends BasicGame implements Serializable{
 			sav.add(l);
 			l=new Line(350, 50, 350, 150);
 			sav.add(l);
-			l=new Line(250, 400, 350, 400);
-			sav.add(l);
-			l=new Line(150, 300, 250, 400);
-			sav.add(l);
-			l=new Line(350, 400, 450, 300);
+			l=new Line(200, 350, 400, 350);
 			sav.add(l);
 			
 			loadedTracks.add(sav);
@@ -138,19 +125,33 @@ public class Cropcircle extends BasicGame implements Serializable{
 		}
 		
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			x-=(delta*0.3f);
+			x-=(delta*pointerSpeed);
 		}
 
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			x+=(delta*0.3f);;
+			x+=(delta*pointerSpeed);;
 		}
 
 		if (input.isKeyDown(Input.KEY_UP)) {
-			y-=(delta*0.3f);;
+			y-=(delta*pointerSpeed);;
 		}
 		
 		if (input.isKeyDown(Input.KEY_DOWN)) {
-			y+=(delta*0.3f);;
+			y+=(delta*pointerSpeed);;
+		}
+		
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+			
+			if (validDistanceFromLastPoint()) {
+
+				Vector2f p = new Vector2f(x,y);
+				if (!addToClosestLines(p)) {
+					malusTank++;
+				}
+				else{
+					lastPoint=new Vector2f(x,y);
+				}
+			}
 		}
 	}
 
@@ -164,28 +165,16 @@ public class Cropcircle extends BasicGame implements Serializable{
 			g.drawLine(p.getX1(),p.getY1(),p.getX2(),p.getY2());
 		}
 
-		for (Vector2f v : path) {
-			imgPath.draw(v.x - imgRadius, v.y - imgRadius);
+		for (ArrayList<Vector2f> v : path) {
+			for(Vector2f vect:v){
+				imgPath.draw(vect.x - imgRadius, vect.y - imgRadius);
+			}	
 		}
 		g.setColor(Color.yellow);
 		g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
 		
 	}
 
-	private boolean validDistanceFromClosestLine(Vector2f vect){
-
-		try {
-			
-			for(Line line : track){
-				if(Math.abs(line.distance(vect))<10){
-					return true;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
 	
 
 	private void save() throws ClassNotFoundException {
@@ -250,20 +239,75 @@ public class Cropcircle extends BasicGame implements Serializable{
 		return new Line(ml.X1, ml.Y1, ml.X2, ml.Y2);
 	}
 	
-		
+	/**
+	 * get the malus due to not filling the lines
+	 * @return
+	 */
 	private int getTrackMalus(){
 		int malus=0;
-		if(path!=null && path.size()>0){
-			Vector2f last=path.get(0);
-			for(Vector2f vect : path){
-				if(vect.distance(last)>60){
-					malus++;
-				}
-			}
+		int malusX;
+		int malusY;
+		int lineCpt=0;
+		
+		for(ArrayList<Vector2f>lineVect:path){
+			
+			(new QuickSort()).sortByX(lineVect);
+			malusX=getLineMalus(lineVect, track.get(lineCpt));
+			(new QuickSort()).sortByY(lineVect);
+			malusY=getLineMalus(lineVect, track.get(lineCpt));
+			
+			malus+=Math.min(malusX, malusY);
+			
+			lineCpt++;
 		}
 		return malus;
 	}
 	
+	/**
+	 * Return the malus got when a line is not filled
+	 * @param linePath
+	 * @param line
+	 * @return
+	 */
+	private int getLineMalus(ArrayList<Vector2f> linePath, Line line){
+        int malus=0;
+        if(linePath!=null && linePath.size()>1){
+                Vector2f last=linePath.get(0);
+                for(Vector2f vect : linePath){
+                        if(vect.distance(last)>imgRadius*2){
+                                malus+=vect.distance(last);
+                        }
+                        last=vect;
+                }
+        }
+        else{
+        	malus+=100;
+        }
+        return malus;
+
+	}
+	private boolean validDistanceFromLastPoint(){
+		return (Math.abs(lastPoint.x - x) > imgRadius
+				|| Math.abs(lastPoint.y- y) > imgRadius)
+						|| path.isEmpty() || path==null;
+	}
+	
+	/**
+	 * return true if the point has been successfully added
+	 * return false otherwise
+	 * @param p
+	 * @return
+	 */
+	private boolean addToClosestLines(Vector2f p){
+		boolean res=false;
+		for(int i=0;i<track.size();i++){
+			if(track.get(i).distance(p)<imgRadius){
+				path.get(i).add(p);
+				res=true;
+			}
+		}
+		return res;
+	}
 	
 	public static void main(String[] args) throws SlickException {
 
