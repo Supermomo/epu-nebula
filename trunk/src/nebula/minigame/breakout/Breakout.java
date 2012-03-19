@@ -116,7 +116,7 @@ public class Breakout extends BasicGame
             // Collision with bricks
             if (ball.getY() <= bricksField.getY()+bricksField.getHeight())
             {
-                Brick bcollide = null;
+                Brick bcol = null;
                 List<Brick> brickToRemove = new ArrayList<Brick>();
                 
                 for (Brick b : bricks)
@@ -125,17 +125,22 @@ public class Breakout extends BasicGame
                         ball.getX(), ball.getY(), Ball.w, Ball.h,
                         b.getX(), b.getY(), b.getWidth(), b.getHeight()))
                     {
-                        if (bcollide == null) bcollide = b;
+                        if (bcol == null) bcol = b;
                         brickToRemove.add(b);
                     }
                 }
                 
                 bricks.removeAll(brickToRemove);
                 
-                if (bcollide != null)
+                if (bcol != null)
                 {
                     ball.goPrevPosition();
-                    ballSpeed.invertY(); // TODO : Improve collision
+                    
+                    if (Collision.right(ball.getX(), bcol.getX(), bcol.getWidth()) ||
+                        Collision.left (ball.getX(), Ball.w, bcol.getX()))
+                        ballSpeed.invertX();
+                    else
+                        ballSpeed.invertY();
                 }
             }
             
@@ -248,7 +253,7 @@ public class Breakout extends BasicGame
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
-        app.setDisplayMode(800, 600, false);
+        app.setDisplayMode(800, 600, true);
         app.setTargetFrameRate(2000);
         app.start();
     }

@@ -39,4 +39,36 @@ public class Collision
     {
         return (!(y1 < y2 || y1 > y2+h2 || x1 < x2 || x1 > x2+w2));
     }
+    
+    public static boolean right (
+        float x1,
+        float x2, float w2
+    )
+    {
+        return (x2+w2 < x1);
+    }
+    
+    public static boolean left (
+        float x1, float w1,
+        float x2
+    )
+    {
+        return (x1+w1 < x2);
+    }
+    
+    public static boolean top (
+        float y1, float h1,
+        float y2
+    )
+    {
+        return (y1+h1 < y2);
+    }
+    
+    public static boolean bottom (
+        float y1,
+        float y2, float h2
+    )
+    {
+        return (y2+h2 < y1);
+    }
 }
