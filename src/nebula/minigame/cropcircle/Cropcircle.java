@@ -51,9 +51,10 @@ public class Cropcircle extends BasicGame implements Serializable {
 	/** the last drawnPoint */
 	private Vector2f lastPoint = new Vector2f(0, 0);
 	/**Variator for the deplacement speed*/
-	private float pointerSpeed = 0.3f;
+	private float pointerSpeed = 0.2f;
 	private float progressBarScale=0.3f;
 	private CustomProgressBar progressBar;
+	public static final int MALUS_TANK_MAX=800;
 
 	public Cropcircle() {
 		super("DeVint - CropCircle");
@@ -126,7 +127,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			x -= (delta * pointerSpeed);
 		}
-
+		
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			x += (delta * pointerSpeed);;
 		}
@@ -147,6 +148,9 @@ public class Cropcircle extends BasicGame implements Serializable {
 				if (!addToClosestLines(p)) {
 					malusTank++;
 					progressBar.updatePct(malusTank);
+					if(malusTank>MALUS_TANK_MAX){
+						gc.pause();
+					}
 				} else {
 					lastPoint = new Vector2f(x, y);
 				}
