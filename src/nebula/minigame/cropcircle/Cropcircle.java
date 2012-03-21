@@ -26,7 +26,9 @@ import org.newdawn.slick.geom.*;
 public class Cropcircle extends BasicGame implements Serializable{
 
 	private static final long serialVersionUID = -2880478680378397924L;
-	
+	private String imgFirePath="assets/images/cropCircle/braise.png";
+	private String imgFieldPath="assets/images/cropCircle/Background.jpg";
+	private String dataPath="assets/images/cropCircle/trackList.data";
 	private Image land = null;
 	private float x = 400;
 	private float y = 300;
@@ -86,8 +88,8 @@ public class Cropcircle extends BasicGame implements Serializable{
 		for(Line l : track){
 			path.add(new ArrayList<Vector2f>());
 		}
-		imgPath = new Image("assets/cropCircle/braise.png");
-		land = new Image("assets/cropCircle/spritBleu.jpg");
+		imgPath = new Image(imgFirePath);
+		land = new Image(imgFieldPath);
 	}
 
 	@Override
@@ -178,7 +180,7 @@ public class Cropcircle extends BasicGame implements Serializable{
 	
 
 	private void save() throws ClassNotFoundException {
-		String filename = "assets/cropCircle/trackList.data";
+		String filename = dataPath;
 		FileOutputStream fis = null;
 		ObjectOutputStream oit = null;
 		
@@ -195,7 +197,7 @@ public class Cropcircle extends BasicGame implements Serializable{
 
 	@SuppressWarnings("unchecked")
 	private void load() throws Exception {
-		String filename = "assets/cropCircle/trackList.data";
+		String filename = dataPath;
 		FileInputStream fos=null;
 		ObjectInputStream out=null;
 
