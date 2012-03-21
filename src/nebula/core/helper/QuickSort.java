@@ -103,9 +103,9 @@ public class QuickSort {
 		}
 		// Recursion
 		if (low < j)
-			quicksortByX(low, j);
+			quicksortByY(low, j);
 		if (i < high)
-			quicksortByX(i, high);
+			quicksortByY(i, high);
 	}
 	
 	private void exchange(int i, int j) {

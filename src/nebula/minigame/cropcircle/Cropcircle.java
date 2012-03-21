@@ -1,6 +1,5 @@
 package nebula.minigame.cropcircle;
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,35 +22,38 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.*;
 
-public class Cropcircle extends BasicGame implements Serializable{
+public class Cropcircle extends BasicGame implements Serializable {
 
 	private static final long serialVersionUID = -2880478680378397924L;
-	private String imgFirePath="assets/images/cropCircle/braise.png";
-	private String imgFieldPath="assets/images/cropCircle/Background.jpg";
-	private String dataPath="assets/images/cropCircle/trackList.data";
+	private String imgFirePath = "assets/images/cropCircle/fire.png";
+	private String imgFieldPath = "assets/images/cropCircle/fond_herbe.png";
+	private String dataPath = "assets/images/cropCircle/trackList.data";
 	private Image land = null;
 	private float x = 400;
 	private float y = 300;
-	/**Radius of one image*/
-	//TODO mettre proportionnelle à l'écran
-	private int imgRadius=30;
-	/**Coefficient for the malus you get when you don't fill the track*/
-	private float malusScoreCoef=1.0f;
-	/**Coefficient for the malus you get when you draw on side of the track*/
-	private float malusTankCoef=1.0f;
-	/**Keep the malus accumulated by drawing aside from the track*/
-	private int malusTank=0;
-	/**The list of the available tracks*/
+	/** Radius of one image */
+	// TODO mettre proportionnelle à l'écran
+	private int imgRadius = 30;
+	/** Coefficient for the malus you get when you don't fill the track */
+	private float malusScoreCoef = 1.0f;
+	/** Coefficient for the malus you get when you draw on side of the track */
+	private float malusTankCoef = 1.0f;
+	/** Keep the malus accumulated by drawing aside from the track */
+	private int malusTank = 0;
+	/** The list of the available tracks */
 	private ArrayList<ArrayList<Line>> loadedTracks;
-	/**The track to follow*/
+	/** The track to follow */
 	private ArrayList<Line> track;
-	/**The imga printed on each poit of the path*/
+	/** The imga printed on each poit of the path */
 	private Image imgPath;
-	/**The path that has been followed*/
+	/** The path that has been followed */
 	private ArrayList<ArrayList<Vector2f>> path;
-	/**the last drawnPoint*/
-	private Vector2f lastPoint=new Vector2f(0,0);
-	private float pointerSpeed=0.3f;
+	/** the last drawnPoint */
+	private Vector2f lastPoint = new Vector2f(0, 0);
+	/**Variator for the deplacement speed*/
+	private float pointerSpeed = 0.3f;
+	private float progressBarScale=0.3f;
+	private CustomProgressBar progressBar;
 
 	public Cropcircle() {
 		super("DeVint - CropCircle");
@@ -62,62 +64,57 @@ public class Cropcircle extends BasicGame implements Serializable{
 		track = new ArrayList<Line>();
 		try {
 			load();
-			System.out.println("size : "+loadedTracks.size()+"\n");
-			Random r=new Random();
-			track=loadedTracks.get(r.nextInt(loadedTracks.size()));
-			
+			System.out.println("size : " + loadedTracks.size() + "\n");
+			Random r = new Random();
+			track = loadedTracks.get(r.nextInt(loadedTracks.size()));
+
 		} catch (Exception e) {
-			loadedTracks=new ArrayList<ArrayList<Line>>();
+			loadedTracks = new ArrayList<ArrayList<Line>>();
 		}
 
-		/*ArrayList<Line> sav=new ArrayList<Line>();
-		Line l=new Line(250, 50, 250, 150);
-		sav.add(l);
-		l=new Line(350, 50, 350, 350);
-		sav.add(l);
-		l=new Line(300, 400, 400, 400);
-		sav.add(l);
-		l=new Line(200, 300, 300, 400);
-		sav.add(l);
-		l=new Line(400, 400, 500, 300);
-		sav.add(l);
-		
-		track=sav;*/
+		/*
+		 * ArrayList<Line> sav=new ArrayList<Line>(); Line l=new Line(250, 50,
+		 * 250, 150); sav.add(l); l=new Line(350, 50, 350, 350); sav.add(l);
+		 * l=new Line(300, 400, 400, 400); sav.add(l); l=new Line(200, 300, 300,
+		 * 400); sav.add(l); l=new Line(400, 400, 500, 300); sav.add(l);
+		 * 
+		 * track=sav;
+		 */
 		
 		path = new ArrayList<ArrayList<Vector2f>>();
-		for(Line l : track){
+		for (Line l : track) {
 			path.add(new ArrayList<Vector2f>());
 		}
 		imgPath = new Image(imgFirePath);
 		land = new Image(imgFieldPath);
+		
+		progressBar=new CustomProgressBar();
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-		
+
 		Input input = gc.getInput();
 
-		 //System.out.println("x : "+input.getMouseX()+"\n");
-		 //System.out.println("y = "+input.getMouseY()+"\n");
-				
+		// System.out.println("x : "+input.getMouseX()+"\n");
+		// System.out.println("y = "+input.getMouseY()+"\n");
 
 		if (input.isKeyDown(Input.KEY_M)) {
-
-
-			System.out.println("TankMalus "+malusTank*malusTankCoef+"\n track malus "+getTrackMalus()*malusScoreCoef);
+			System.out.println("TankMalus " + malusTank * malusTankCoef
+					+ "\n track malus " + getTrackMalus() * malusScoreCoef);
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_ENTER)) {
-			//TODO mettre le dessin proportionelle à la taille de l'écran.
-			ArrayList<Line> sav=new ArrayList<Line>();
+			// TODO mettre le dessin proportionelle à la taille de l'écran.
+			ArrayList<Line> sav = new ArrayList<Line>();
 			Line l;
-			l=new Line(250, 50, 250, 150);
+			l = new Line(250, 50, 250, 150);
 			sav.add(l);
-			l=new Line(350, 50, 350, 150);
+			l = new Line(350, 50, 350, 150);
 			sav.add(l);
-			l=new Line(200, 350, 400, 350);
+			l = new Line(200, 350, 400, 350);
 			sav.add(l);
-			
+
 			loadedTracks.add(sav);
 			try {
 				save();
@@ -125,69 +122,71 @@ public class Cropcircle extends BasicGame implements Serializable{
 				e.printStackTrace();
 			}
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			x-=(delta*pointerSpeed);
+			x -= (delta * pointerSpeed);
 		}
 
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			x+=(delta*pointerSpeed);;
+			x += (delta * pointerSpeed);;
 		}
 
 		if (input.isKeyDown(Input.KEY_UP)) {
-			y-=(delta*pointerSpeed);;
+			y -= (delta * pointerSpeed);;
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_DOWN)) {
-			y+=(delta*pointerSpeed);;
+			y += (delta * pointerSpeed);;
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_SPACE)) {
-			
+
 			if (validDistanceFromLastPoint()) {
 
-				Vector2f p = new Vector2f(x,y);
+				Vector2f p = new Vector2f(x, y);
 				if (!addToClosestLines(p)) {
 					malusTank++;
-				}
-				else{
-					lastPoint=new Vector2f(x,y);
+					progressBar.updatePct(malusTank);
+				} else {
+					lastPoint = new Vector2f(x, y);
 				}
 			}
+
 		}
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
-
+		
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.white);
 		g.setLineWidth(10);
-		
-		for (Line p : track) {			
-			g.drawLine(p.getX1(),p.getY1(),p.getX2(),p.getY2());
+
+		for (Line p : track) {
+			g.drawLine(p.getX1(), p.getY1(), p.getX2(), p.getY2());
 		}
 
 		for (ArrayList<Vector2f> v : path) {
-			for(Vector2f vect:v){
-				imgPath.draw(vect.x - imgRadius, vect.y - imgRadius);
-			}	
+			for (Vector2f vect : v) {
+				imgPath.draw(vect.x - imgRadius, vect.y - imgRadius,
+						imgRadius * 2, imgRadius * 2);
+			}
 		}
 		g.setColor(Color.yellow);
 		g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
 		
-	}
+		progressBar.getBar().draw(0, gc.getHeight()-50, progressBarScale);
 
-	
+	}
 
 	private void save() throws ClassNotFoundException {
 		String filename = dataPath;
 		FileOutputStream fis = null;
 		ObjectOutputStream oit = null;
-		
+
 		try {
 			fis = new FileOutputStream(filename);
 			oit = new ObjectOutputStream(fis);
-			oit.writeObject(ListLineToListMyLine(loadedTracks));
+			oit.writeObject(MyLine.ListLineToListMyLine(loadedTracks));
 			oit.flush();
 			oit.close();
 		} catch (IOException ex) {
@@ -198,119 +197,92 @@ public class Cropcircle extends BasicGame implements Serializable{
 	@SuppressWarnings("unchecked")
 	private void load() throws Exception {
 		String filename = dataPath;
-		FileInputStream fos=null;
-		ObjectInputStream out=null;
+		FileInputStream fos = null;
+		ObjectInputStream out = null;
 
-			fos = new FileInputStream(filename);
-			out = new ObjectInputStream(fos);
-			loadedTracks =  ListMyLineToListLine((ArrayList<ArrayList<MyLine>>) out.readObject());
-			out.close();
+		fos = new FileInputStream(filename);
+		out = new ObjectInputStream(fos);
+		loadedTracks = MyLine
+				.ListMyLineToListLine((ArrayList<ArrayList<MyLine>>) out
+						.readObject());
+		out.close();
 
 	}
-	
-	private ArrayList<ArrayList<MyLine>> ListLineToListMyLine(ArrayList<ArrayList<Line>> list){
-		ArrayList<ArrayList<MyLine>> res= new ArrayList<ArrayList<MyLine>>();
-		
-		for(ArrayList<Line> sList : list){
-			res.add(new ArrayList<MyLine>());
-			for(Line p: sList){
-				res.get(res.size()-1).add(new MyLine(p));
-			}
-		}
-		
-		return res;
-	}
-	
-	private ArrayList<ArrayList<Line>> ListMyLineToListLine(ArrayList<ArrayList<MyLine>> list){
-		ArrayList<ArrayList<Line>> res=new ArrayList<ArrayList<Line>>();
-		
-		for(ArrayList<MyLine>slist : list){
-			
-			res.add(new ArrayList<Line>());
-			
-			for(MyLine p : slist){
-			
-				res.get(res.size()-1).add(MyLineToLine(p));
-			}
-		}
-		
-		return res;
-	}
-	
-	private Line MyLineToLine(MyLine ml){
-		return new Line(ml.X1, ml.Y1, ml.X2, ml.Y2);
-	}
-	
+
 	/**
 	 * get the malus due to not filling the lines
+	 * 
 	 * @return
 	 */
-	private int getTrackMalus(){
-		int malus=0;
+	private int getTrackMalus() {
+		int malus = 0;
 		int malusX;
 		int malusY;
-		int lineCpt=0;
-		
-		for(ArrayList<Vector2f>lineVect:path){
-			
+		int lineCpt = 0;
+
+		for (ArrayList<Vector2f> lineVect : path) {
+
 			(new QuickSort()).sortByX(lineVect);
-			malusX=getLineMalus(lineVect, track.get(lineCpt));
+			malusX = getLineMalus(lineVect, track.get(lineCpt));
+			System.out.println("X " + malusX);
 			(new QuickSort()).sortByY(lineVect);
-			malusY=getLineMalus(lineVect, track.get(lineCpt));
-			
-			malus+=Math.min(malusX, malusY);
-			
+			malusY = getLineMalus(lineVect, track.get(lineCpt));
+			System.out.println("Y " + malusY);
+
+			malus += Math.min(malusX, malusY);
+
 			lineCpt++;
 		}
 		return malus;
 	}
-	
+
 	/**
 	 * Return the malus got when a line is not filled
+	 * 
 	 * @param linePath
 	 * @param line
 	 * @return
 	 */
-	private int getLineMalus(ArrayList<Vector2f> linePath, Line line){
-        int malus=0;
-        if(linePath!=null && linePath.size()>1){
-                Vector2f last=linePath.get(0);
-                for(Vector2f vect : linePath){
-                        if(vect.distance(last)>imgRadius*2){
-                                malus+=vect.distance(last);
-                        }
-                        last=vect;
-                }
-        }
-        else{
-        	malus+=100;
-        }
-        return malus;
+	private int getLineMalus(ArrayList<Vector2f> linePath, Line line) {
+		int malus = 0;
+		if (linePath != null && linePath.size() > 1) {
+			Vector2f last = linePath.get(0);
+			for (Vector2f vect : linePath) {
+				if (vect.distance(last) > imgRadius * 2) {
+					malus += vect.distance(last);
+				}
+				last = vect;
+			}
+		} else {
+			malus += 100;
+		}
+		return malus;
 
 	}
-	private boolean validDistanceFromLastPoint(){
-		return (Math.abs(lastPoint.x - x) > imgRadius
-				|| Math.abs(lastPoint.y- y) > imgRadius)
-						|| path.isEmpty() || path==null;
+	private boolean validDistanceFromLastPoint() {
+		return (Math.abs(lastPoint.x - x) > imgRadius || Math.abs(lastPoint.y
+				- y) > imgRadius)
+				|| path.isEmpty() || path == null;
 	}
-	
+
 	/**
-	 * return true if the point has been successfully added
-	 * return false otherwise
+	 * return true if the point has been successfully added return false
+	 * otherwise
+	 * 
 	 * @param p
 	 * @return
 	 */
-	private boolean addToClosestLines(Vector2f p){
-		boolean res=false;
-		for(int i=0;i<track.size();i++){
-			if(track.get(i).distance(p)<imgRadius){
+	private boolean addToClosestLines(Vector2f p) {
+		boolean res = false;
+		for (int i = 0; i < track.size(); i++) {
+			if (track.get(i).distance(p) < imgRadius) {
 				path.get(i).add(p);
-				res=true;
+				res = true;
 			}
 		}
 		return res;
 	}
-	
+
 	public static void main(String[] args) throws SlickException {
 
 		AppGameContainer app = new AppGameContainer(new Cropcircle());
