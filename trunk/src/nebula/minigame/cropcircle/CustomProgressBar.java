@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 public class CustomProgressBar {
 
 	private Image imgProgressBar;
-	private int malusMax=400;
+	private int malusMax=Cropcircle.MALUS_TANK_MAX;
 	private String imgBarPath="assets/images/cropCircle/FlamProgressBar.png";
 	private float pct=1.0f;
 	
