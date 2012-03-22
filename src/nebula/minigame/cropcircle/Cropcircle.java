@@ -26,7 +26,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 
 	private static final long serialVersionUID = -2880478680378397924L;
 	private String imgFirePath = "assets/images/cropCircle/fire.png";
-	private String imgFieldPath = "assets/images/cropCircle/fond_herbe.png";
+	private String imgFieldPath = "assets/images/cropCircle/fond_herbe2.png";
 	private String dataPath = "assets/images/cropCircle/trackList.data";
 	private Image land = null;
 	private float x = 400;
@@ -163,7 +163,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 		
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.white);
-		g.setLineWidth(10);
+		g.setLineWidth(30);
 
 		for (Line p : track) {
 			g.drawLine(p.getX1(), p.getY1(), p.getX2(), p.getY2());
@@ -176,9 +176,10 @@ public class Cropcircle extends BasicGame implements Serializable {
 			}
 		}
 		g.setColor(Color.yellow);
-		g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
+		g.drawGradientLine(x, y, Color.red, gc.getWidth() / 2, gc.getHeight(), Color.blue);
+		//g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
 		
-		progressBar.getBar().draw(0, gc.getHeight()-50, progressBarScale);
+		progressBar.getBar().draw(0, gc.getHeight()-70, progressBarScale);
 
 	}
 
