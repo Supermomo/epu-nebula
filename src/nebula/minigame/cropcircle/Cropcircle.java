@@ -50,11 +50,11 @@ public class Cropcircle extends BasicGame implements Serializable {
 	private ArrayList<ArrayList<Vector2f>> path;
 	/** the last drawnPoint */
 	private Vector2f lastPoint = new Vector2f(0, 0);
-	/**Variator for the deplacement speed*/
+	/** Variator for the deplacement speed */
 	private float pointerSpeed = 0.2f;
-	private float progressBarScale=0.3f;
+	private float progressBarScale = 0.25f;
 	private CustomProgressBar progressBar;
-	public static final int MALUS_TANK_MAX=800;
+	public static final int MALUS_TANK_MAX = 800;
 
 	public Cropcircle() {
 		super("DeVint - CropCircle");
@@ -81,15 +81,15 @@ public class Cropcircle extends BasicGame implements Serializable {
 		 * 
 		 * track=sav;
 		 */
-		
+
 		path = new ArrayList<ArrayList<Vector2f>>();
 		for (Line l : track) {
 			path.add(new ArrayList<Vector2f>());
 		}
 		imgPath = new Image(imgFirePath);
 		land = new Image(imgFieldPath);
-		
-		progressBar=new CustomProgressBar();
+
+		progressBar = new CustomProgressBar();
 	}
 
 	@Override
@@ -124,19 +124,19 @@ public class Cropcircle extends BasicGame implements Serializable {
 			}
 		}
 
-		if (input.isKeyDown(Input.KEY_LEFT)) {
+		if (input.isKeyDown(Input.KEY_LEFT) && x > 0) {
 			x -= (delta * pointerSpeed);
 		}
-		
-		if (input.isKeyDown(Input.KEY_RIGHT)) {
+
+		if (input.isKeyDown(Input.KEY_RIGHT) && x < gc.getWidth()) {
 			x += (delta * pointerSpeed);;
 		}
 
-		if (input.isKeyDown(Input.KEY_UP)) {
+		if (input.isKeyDown(Input.KEY_UP) && y > 0) {
 			y -= (delta * pointerSpeed);;
 		}
 
-		if (input.isKeyDown(Input.KEY_DOWN)) {
+		if (input.isKeyDown(Input.KEY_DOWN) && y < gc.getHeight()-50) {
 			y += (delta * pointerSpeed);;
 		}
 
@@ -148,7 +148,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 				if (!addToClosestLines(p)) {
 					malusTank++;
 					progressBar.updatePct(malusTank);
-					if(malusTank>MALUS_TANK_MAX){
+					if (malusTank > MALUS_TANK_MAX) {
 						gc.pause();
 					}
 				} else {
@@ -160,10 +160,10 @@ public class Cropcircle extends BasicGame implements Serializable {
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
-		
+
 		land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.white);
-		g.setLineWidth(30);
+		g.setLineWidth(10);
 
 		for (Line p : track) {
 			g.drawLine(p.getX1(), p.getY1(), p.getX2(), p.getY2());
@@ -175,11 +175,14 @@ public class Cropcircle extends BasicGame implements Serializable {
 						imgRadius * 2, imgRadius * 2);
 			}
 		}
-		g.setColor(Color.yellow);
-		g.drawGradientLine(x, y, Color.red, gc.getWidth() / 2, gc.getHeight(), Color.blue);
-		//g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
+
+		progressBar.getBar().draw(0, gc.getHeight() - 70, progressBarScale);
 		
-		progressBar.getBar().draw(0, gc.getHeight()-70, progressBarScale);
+		// g.setColor(Color.yellow);
+		// g.setLineWidth(20);
+		g.drawGradientLine(x, y, Color.red, gc.getWidth() / 2, gc.getHeight(),
+				Color.blue);
+		// g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
 
 	}
 
