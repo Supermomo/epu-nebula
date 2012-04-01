@@ -3,37 +3,63 @@ package nebula.minigame.gravity;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
 
 public class BaseJeu extends BasicGame {
 
-	ModeleJeu modeleJeu;
-	ControleJeu controleJeu;
+	private ModeleJeu modeleJeu;
+	private ControleJeu controleJeu;
+	private Image victoire, defaite, coeur; 
 
 	public BaseJeu() {
 		super("Gravity");
 	}
 
+	/**
+	 * Statut d'initialisation du jeu
+	 */
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		modeleJeu = new ModeleJeu(new Player("assets/gravity/hero.png",6,30,30), new BlockMap("assets/gravity/map.tmx"));
+		modeleJeu = new ModeleJeu(new Player("data/heroSet.png",200,300), new BlockMap("data/2_gzip.tmx"));
 		controleJeu = new ControleJeu(modeleJeu);
+		victoire = new Image("data/victoire.png");
+		defaite = new Image("data/defaite.png");
+		coeur = new Image("data/coeur.png");
 		container.setVSync(true);
 	}
 
+	/**
+	 * Boucle principale qui itère l'avancement du jeu
+	 */
 	@Override
-	public void update(GameContainer container, int delta) throws SlickException {		
+	public void update(GameContainer container, int delta) throws SlickException {	
 		controleJeu.inputJoueur(container.getInput(), delta);
-		modeleJeu.hero.deplace();
+		modeleJeu.getHero().incStill();
+		// if(modeleJeu.finJeu()) stop();
 	}
 
+	/**
+	 * Méthode appellée à chaque fois que l'on veut dessiner l'état du jeu à l'écran
+	 */
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		modeleJeu.getMap().getTiledMap().render(0, 0);
 		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX(), modeleJeu.getHero().getY());
+    	
+		if(modeleJeu.getFin())
+			if(modeleJeu.getVictoire())
+				victoire.draw(100, 250);
+			else if(modeleJeu.getDefaite())
+				defaite.draw(100,250);
+
+    	for(int i = 0; i < modeleJeu.getHero().getNbrVies(); i++) {
+    		coeur.draw(10 + i * coeur.getWidth(), container.getHeight() - coeur.getHeight());
+    	}
 	}
 
+	
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new BaseJeu());
@@ -42,5 +68,9 @@ public class BaseJeu extends BasicGame {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void stop() {
+		
 	}
 }
