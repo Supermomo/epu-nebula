@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="13" height="10" tilewidth="60" tileheight="60">
+ <tileset firstgid="1" name="mapSet" tilewidth="60" tileheight="60">
+  <image source="./mapSet.png" width="360" height="300"/>
+ </tileset>
+ <tileset firstgid="31" name="collision" tilewidth="60" tileheight="60">
+  <image source="./collision.png" width="60" height="60"/>
+ </tileset>
+ <layer name="block" width="13" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC5NnYGCQJwOTAsgxlxJ7GBiwm0WKfwYiDHDpIxWQE58Atbgf8AgCAAA=
+  </data>
+ </layer>
+ <layer name="end" width="13" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWDHcjSwQ4AKlHyIAgCAAA=
+  </data>
+ </layer>
+ <layer name="map" width="13" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NjYGDgIwGzATEnEMuRgNmh+kQIYFE0PeTYA9MjhiTOCMRMODAPDnt4qRwGvATCQBSHPpA9siTaxYbHv7gwAILRFTkIAgAA
+  </data>
+ </layer>
+ <layer name="death" width="13" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjgIEBADzDR3YIAgAA
+  </data>
+ </layer>
+</map>

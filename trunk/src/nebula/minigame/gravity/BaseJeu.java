@@ -22,11 +22,11 @@ public class BaseJeu extends BasicGame {
 	 */
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		modeleJeu = new ModeleJeu(new Player("data/heroSet.png",200,300), new BlockMap("data/2_gzip.tmx"));
+		modeleJeu = new ModeleJeu(new Player("assets/images/gravity/heroSet.png",200,300), new BlockMap("assets/images/gravity/2_gzip.tmx"));
 		controleJeu = new ControleJeu(modeleJeu);
-		victoire = new Image("data/victoire.png");
-		defaite = new Image("data/defaite.png");
-		coeur = new Image("data/coeur.png");
+		victoire = new Image("assets/images/gravity/victoire.png");
+		defaite = new Image("assets/images/gravity/defaite.png");
+		coeur = new Image("assets/images/gravity/coeur.png");
 		container.setVSync(true);
 	}
 
