@@ -1,4 +1,5 @@
 package nebula.minigame.spaceInvaders;
+import java.awt.Toolkit;
 import java.util.Random;
 
 import nebula.core.helper.Collision;
@@ -263,7 +264,8 @@ public class SpaceInvaders extends BasicGame{
          AppGameContainer app = 
 			new AppGameContainer(new SpaceInvaders(8));
  
-         app.setDisplayMode(800,700, false);
+         app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
+ 				Toolkit.getDefaultToolkit().getScreenSize().height, true);
          app.setTargetFrameRate(200);
          app.start();
     }
