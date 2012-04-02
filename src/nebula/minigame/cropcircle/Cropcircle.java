@@ -41,7 +41,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 	/** Coefficient for the malus you get when you don't fill the track */
 	private float malusScoreCoef = 1.0f;
 	/** Coefficient for the malus you get when you draw on side of the track */
-	private float malusTankCoef = 1.0f;
+	private float malusTankCoef = 3.0f;
 	/** Keep the malus accumulated by drawing aside from the track */
 	private int malusTank = 0;
 	/** The list of the available tracks */
@@ -58,7 +58,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 	private float pointerSpeed = 0.2f;
 	private float progressBarScale = 0.25f;
 	private CustomProgressBar progressBar;
-	public static final int MALUS_TANK_MAX = 800;
+	public static final int MALUS_TANK_MAX = 100;
 	
 	/**Counting the time in millisecond*/
 	private int timer=0;
@@ -127,7 +127,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 					+ "\n track malus " + getTrackMalus() * malusScoreCoef);
 		}
 
-		if (input.isKeyDown(Input.KEY_ENTER)) {
+		/*if (input.isKeyDown(Input.KEY_ENTER)) {
 			// TODO mettre le dessin proportionelle à la taille de l'écran.
 			ArrayList<Line> sav = new ArrayList<Line>();
 			Line l;
@@ -144,7 +144,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 		if (input.isKeyDown(Input.KEY_LEFT) && x > 0) {
 			x -= (delta * pointerSpeed);
@@ -332,7 +332,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 
 		AppGameContainer app = new AppGameContainer(new Cropcircle());
 
-		app.setDisplayMode(800, 600, false);
+		app.setDisplayMode(800, 800, false);
 		app.start();
 	}
 }
