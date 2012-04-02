@@ -49,6 +49,8 @@ public class SpaceInvaders extends BasicGame{
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
     	land = new Image("assets/images/spaceInvaders/fond.png");
     	tank = new Tank();
+    	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
+    	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
     	tir = new Tir(0);
     	tirEnnemi = new Tir(1);
     	victoire = new Image("assets/images/spaceInvaders/victoire.png");
@@ -102,7 +104,7 @@ public class SpaceInvaders extends BasicGame{
     	if(tir.getY() > -100)
     		tir.setY(tir.getY() - 0.4f * delta);
     	
-    	if(tirEnnemi.getY() < 700 )
+    	if(tirEnnemi.getY() < gc.getHeight() )
     		tirEnnemi.setY(tirEnnemi.getY() + 0.4f * delta);
     	
     	for(int i=0; i < 4; i++)
@@ -247,10 +249,10 @@ public class SpaceInvaders extends BasicGame{
     			}
     	}
     	if(nbEnnemis == 0)
-    		victoire.draw(100, 250);
+    		victoire.draw((gc.getWidth()-victoire.getWidth())/2, (gc.getHeight()-victoire.getHeight())/2);
     		
     	if(tank.dead())
-    		defaite.draw(100,250);
+    		defaite.draw((gc.getWidth()-victoire.getWidth())/2, (gc.getHeight()-victoire.getHeight())/2);
     	g.drawAnimation(explosion, xExplo, yExplo);
     	for(int i = 0; i < tank.getVies(); i++)
     	{
