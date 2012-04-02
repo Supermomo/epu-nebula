@@ -20,6 +20,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.*;
 
 public class Cropcircle extends BasicGame implements Serializable {
@@ -28,6 +29,11 @@ public class Cropcircle extends BasicGame implements Serializable {
 	private String imgFirePath = "assets/images/cropCircle/fire.png";
 	private String imgFieldPath = "assets/images/cropCircle/fond_herbe2.png";
 	private String dataPath = "assets/images/cropCircle/trackList.data";
+	private String pathSucessfulBurnSound="assets/sound/cropCircle/flamThrower2.ogg";
+	private String pathFailedBurnSound="assets/sound/cropCircle/alumette2.1.ogg";
+	private String pathTankEmptyTankSound="assets/sound/cropCircle/failGame.ogg";
+	private String pathSucessSound;
+	private String pathFailureSound="assets/sound/cropCircle/failGame.ogg";
 	private Image land = null;
 	private float x = 400;
 	private float y = 300;
@@ -55,6 +61,16 @@ public class Cropcircle extends BasicGame implements Serializable {
 	private float progressBarScale = 0.25f;
 	private CustomProgressBar progressBar;
 	public static final int MALUS_TANK_MAX = 800;
+	
+	/**Counting the time in millisecond*/
+	private int timer=0;
+	private boolean spaceReleased=true;
+	
+	private Sound sucessfulBurnSound;
+	private Sound failedBurnSound;
+	private Sound emptyTankSound;
+	private Sound sucessSound;
+	private Sound failureSound;
 
 	public Cropcircle() {
 		super("DeVint - CropCircle");
@@ -90,11 +106,19 @@ public class Cropcircle extends BasicGame implements Serializable {
 		land = new Image(imgFieldPath);
 
 		progressBar = new CustomProgressBar();
+		
+		
+		 sucessfulBurnSound=new Sound(pathSucessfulBurnSound);
+		 failedBurnSound=new Sound(pathFailedBurnSound);
+		 emptyTankSound=new Sound(pathTankEmptyTankSound);
+		 //sucessSound=new Sound(pathSucessSound);
+		 failureSound=new Sound(pathFailureSound);
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-
+		
+		timer+=delta;
 		Input input = gc.getInput();
 
 		// System.out.println("x : "+input.getMouseX()+"\n");
@@ -139,9 +163,15 @@ public class Cropcircle extends BasicGame implements Serializable {
 		if (input.isKeyDown(Input.KEY_DOWN) && y < gc.getHeight()-50) {
 			y += (delta * pointerSpeed);;
 		}
+		
+		if(!input.isKeyDown(Input.KEY_SPACE)){
+			spaceReleased=true;
+		}
 
-		if (input.isKeyDown(Input.KEY_SPACE)) {
-
+		if (input.isKeyDown(Input.KEY_SPACE) && spaceReleased) {
+			
+			spaceReleased=false;
+			
 			if (validDistanceFromLastPoint()) {
 
 				Vector2f p = new Vector2f(x, y);
@@ -149,10 +179,19 @@ public class Cropcircle extends BasicGame implements Serializable {
 					malusTank++;
 					progressBar.updatePct(malusTank);
 					if (malusTank > MALUS_TANK_MAX) {
+						if(!emptyTankSound.playing()){
+							emptyTankSound.play();
+						}			
 						gc.pause();
 					}
+					if(!failedBurnSound.playing()){
+						failedBurnSound.play(0.8f,0.4f);
+					}	
 				} else {
 					lastPoint = new Vector2f(x, y);
+					if(!sucessfulBurnSound.playing()){
+						sucessfulBurnSound.play();
+					}				
 				}
 			}
 
