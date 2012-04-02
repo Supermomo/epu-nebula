@@ -1,5 +1,6 @@
 package nebula.minigame.breakout;
 
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -274,7 +275,8 @@ public class Breakout extends BasicGame
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
-        app.setDisplayMode(800, 600, false);
+        app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
+				Toolkit.getDefaultToolkit().getScreenSize().height, true);
         app.setTargetFrameRate(2000);
         app.start();
     }

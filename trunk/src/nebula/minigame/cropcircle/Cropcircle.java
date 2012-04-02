@@ -1,5 +1,6 @@
 package nebula.minigame.cropcircle;
 
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -331,8 +332,8 @@ public class Cropcircle extends BasicGame implements Serializable {
 	public static void main(String[] args) throws SlickException {
 
 		AppGameContainer app = new AppGameContainer(new Cropcircle());
-
-		app.setDisplayMode(800, 800, false);
+		app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
+				Toolkit.getDefaultToolkit().getScreenSize().height, true);
 		app.start();
 	}
 }
