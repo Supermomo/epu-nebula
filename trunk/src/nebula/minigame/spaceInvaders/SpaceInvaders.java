@@ -233,7 +233,7 @@ public class SpaceInvaders extends BasicGame{
     public void render(GameContainer gc, Graphics g) 
 			throws SlickException 
     {
-    	land.draw(0, 0);
+    	land.draw(0, 0, gc.getWidth(), gc.getHeight());
     	g.drawImage(tank.getImage(), tank.getX(), tank.getY());
     	g.drawImage(tir.getImage(), tir.getX(), tir.getY());
     	g.drawImage(tirEnnemi.getImage(), tirEnnemi.getX(), tirEnnemi.getY());
@@ -263,7 +263,7 @@ public class SpaceInvaders extends BasicGame{
          AppGameContainer app = 
 			new AppGameContainer(new SpaceInvaders(8));
  
-         app.setDisplayMode(800, 600, false);
+         app.setDisplayMode(800,700, false);
          app.setTargetFrameRate(200);
          app.start();
     }
