@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-
 import nebula.core.helper.QuickSort;
 
 import org.newdawn.slick.AppGameContainer;
