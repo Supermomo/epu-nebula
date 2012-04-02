@@ -8,7 +8,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Player {
 	
-	Point position;
+	private Point position;
 	private SpriteSheet sheet;
 
 	private int isStill;
@@ -176,8 +176,8 @@ public class Player {
 	public void moveX(float dx) {
 		position.translate(dx*vitesse, 0);
 	}
-	public void moveY(float dy) {
-		position.translate(0, dy*vitesse);
+	public void moveY(float dy, float gravite) {
+		position.translate(0, dy*gravite);
 	}
 	
 	/**
@@ -185,8 +185,14 @@ public class Player {
 	 * Modifie la vitesse de déplacement du héro
 	 */
 	public void courrir() {
-		if(enCourse) vitesse =  0.15f;
-		else vitesse = 0.2f;
+		if(enCourse) {
+			vitesse =  0.15f;
+			enCourse = false;
+		} else {
+			vitesse = 0.5f;
+			enCourse = true;
+		}
+		System.out.println("*Player Vitesse : "+vitesse);
 	}
 	
 	//---
@@ -206,7 +212,7 @@ public class Player {
 		animation = animGravite.still(isReversed);
 	}
 	
-	public void setAnimRetourner(int g) {
+	public void setAnimRetourner(float g) {
 		if(g>0) {
 			isReversed = false;
 			animation = animGravite.retourner(animation);

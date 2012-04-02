@@ -4,7 +4,7 @@ public class ModeleJeu {
 
 	private Player hero;
 	private BlockMap map;
-	private int gravite;
+	private float gravite;
 
 	private boolean fin;
 	private boolean victoire;
@@ -14,7 +14,8 @@ public class ModeleJeu {
 	public ModeleJeu(Player hero, BlockMap map) {
 		setHero(hero);
 		setMap(map);
-		gravite=1;
+		hero.setPosition((Point)map.getDepart().clone());
+		gravite=0.0981f;
 
 		fin = false;
 		victoire = false;
@@ -35,7 +36,7 @@ public class ModeleJeu {
 		this.map = map;
 	}
 
-	public int getGravite() {
+	public float getGravite() {
 		return gravite;
 	}
 
@@ -110,7 +111,7 @@ public class ModeleJeu {
 			victoire();
 		default:
 			// Déplacement du personnage
-			hero.moveY(-delta);
+			hero.moveY(delta, gravite);
 			hero.peutInverserGravite(false);
 		}
 
@@ -127,7 +128,7 @@ public class ModeleJeu {
 			victoire();
 		default:
 			// Déplacement du personnage
-			hero.moveY(+delta);
+			hero.moveY(delta, gravite);
 			hero.peutInverserGravite(false);
 		}
 	}
@@ -166,8 +167,8 @@ public class ModeleJeu {
 	}
 
 	private void mort() {
-		// TODO Déplacer le personnage à l'origine de la map
-		
+		//TODO Rajouter une animation spéciale
+		hero.setPosition((Point)map.getDepart().clone());
 		hero.domage();		
 	}
 
