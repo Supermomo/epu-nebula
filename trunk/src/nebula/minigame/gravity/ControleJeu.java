@@ -37,10 +37,16 @@ public class ControleJeu {
 			}
 			System.out.println();
 		}
+		else if (input.isKeyDown(Input.KEY_DOWN)) {
+			System.out.println(modeleJeu.getHero().getPosition());
+		}
 
 		// Courrir
-		if(input.isKeyDown(Input.KEY_LSHIFT))
+		if(input.isKeyPressed(Input.KEY_LCONTROL)) {
+			//TODO Passer en KeyDown
 			modeleJeu.courrir();
+		}
+		
 		// Changer la gravité
 		if(input.isKeyPressed(Input.KEY_SPACE))
 			modeleJeu.inverserGravite();

@@ -26,4 +26,10 @@
    H4sIAAAAAAAAC2NgoD6QgmJaABkamUupvXJImFIgTYK96ICScKfEXkrsliashCZgoOwlB0gOtAMGGcBWxtCqzBkFEEBKGpREw7jkBwsAAMtJLtIIBwAA
   </data>
  </layer>
+
+
+ <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
+  <object name="spawn" type="start" x="110" y="60" width="1" height="1"/>
+ </objectgroup>
+
 </map>

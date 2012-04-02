@@ -1,5 +1,6 @@
 package nebula.minigame.gravity;
 
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,9 +10,10 @@ import org.newdawn.slick.AppGameContainer;
 
 public class BaseJeu extends BasicGame {
 
+	private final static String dossierData = "assets/images/gravity/";
 	private ModeleJeu modeleJeu;
 	private ControleJeu controleJeu;
-	private Image victoire, defaite, coeur; 
+	private Image victoire, defaite, coeur;
 
 	public BaseJeu() {
 		super("Gravity");
@@ -22,11 +24,16 @@ public class BaseJeu extends BasicGame {
 	 */
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		modeleJeu = new ModeleJeu(new Player("assets/images/gravity/heroSet.png",200,300), new BlockMap("assets/images/gravity/2_gzip.tmx"));
+		try {
+			// Map 1 ou map 2
+			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+"2.tmx"));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 		controleJeu = new ControleJeu(modeleJeu);
-		victoire = new Image("assets/images/gravity/victoire.png");
-		defaite = new Image("assets/images/gravity/defaite.png");
-		coeur = new Image("assets/images/gravity/coeur.png");
+		victoire = new Image(dossierData+"victoire.png");
+		defaite = new Image(dossierData+"defaite.png");
+		coeur = new Image(dossierData+"coeur.png");
 		container.setVSync(true);
 	}
 

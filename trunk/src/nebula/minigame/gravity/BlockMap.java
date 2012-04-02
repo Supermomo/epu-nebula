@@ -12,15 +12,20 @@ public class BlockMap {
 	private BlockType[][] blocks;
 	private int tileHeight;
 	private int tileWidth;
+	
+	private Point depart;
+	
+	public Point getDepart() {
+		return depart;
+	}
+	public void setDepart(float x, float y) {
+		depart = new Point(Math.round(x/tileWidth)*tileWidth,Math.round(y/tileHeight)*tileHeight);
+	}
 
-	public BlockMap(String reference) {
-		try {
-			map = new TiledMap(reference);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public BlockMap(String reference) throws SlickException {
+
+		map = new TiledMap(reference);
+
 		// Récupération des données sur la carte
 		tileHeight = map.getTileHeight();
 		tileWidth = map.getTileWidth();
@@ -29,7 +34,7 @@ public class BlockMap {
 		blocks = new BlockType[map.getWidth()][map.getHeight()];
 		
 		
-		for (int xAxis=0;xAxis<map.getWidth(); xAxis++) {
+		for(int xAxis=0;xAxis<map.getWidth(); xAxis++) {
 			for (int yAxis=0;yAxis<map.getHeight(); yAxis++) {
 				//--- Éléments bloquant
 				if (map.getTileId(xAxis, yAxis, 0)!=0) blocks[xAxis][yAxis] = BlockType.BLOCK;
@@ -38,6 +43,14 @@ public class BlockMap {
 			}
 		}
 		
+		for(int i=0; i<map.getObjectGroupCount(); i++) {
+			for(int j=0; j<map.getObjectCount(i); j++) {
+				if("start".equals(map.getObjectType(i,j)))
+					setDepart(map.getObjectX(i, j), map.getObjectY(i, j));
+			}
+		}
+		if(depart==null) throw new SlickException("Aucun objet start enregistré dans la carte "+reference);
+				
 	}
 
 	public TiledMap getTiledMap() {
