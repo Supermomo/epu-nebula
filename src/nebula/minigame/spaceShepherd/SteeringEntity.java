@@ -19,7 +19,7 @@ public class SteeringEntity {
 	/**The maximum spped*/
 	private float maxSpeed;
 	/**The maximum roation in degree*/
-	private float maxRotation=30;
+	private float maxRotation=5;
 
 	private int Xfield;
 	private int Yfield;

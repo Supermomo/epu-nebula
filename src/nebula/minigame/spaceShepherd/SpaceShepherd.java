@@ -42,6 +42,11 @@ public class SpaceShepherd extends BasicGame{
 	private Vector2f targetCenter;
 	private int targetRadius=60;
 	
+	private Image victoryImg;
+	private Image  lossImg;
+	private String pathVictoryImg="assets/images/spaceInvaders/victoire.png";
+	private String pathlLossImg="assets/images/spaceInvaders/defaite.png";
+	
 	public SpaceShepherd(){
 		super("SpaceShepherd");
 	}
@@ -56,6 +61,9 @@ public class SpaceShepherd extends BasicGame{
 		
 		targetCenter=new Vector2f(new Random().nextInt(gc.getWidth()-60)
 				,new Random().nextInt(gc.getHeight()-60));
+		
+		victoryImg=new Image(pathVictoryImg);
+		lossImg=new Image(pathlLossImg);
 	}
 
 	@Override
@@ -105,8 +113,7 @@ public class SpaceShepherd extends BasicGame{
 		}
 		
 		if(flock.allIntheHole(targetCenter, targetRadius)){
-			System.out.println("VICTORY");
-			//gc.pause();
+			gc.pause();
 			
 		}
 	}
@@ -140,6 +147,10 @@ public class SpaceShepherd extends BasicGame{
 		g.setColor(Color.blue);
 		g.drawOval(x, y, 30, 30, 8);
 
+		
+		if(flock.allIntheHole(targetCenter, targetRadius)){	
+			victoryImg.draw(0,0,gc.getWidth(),gc.getHeight());
+		}
 		
 	}
 	
