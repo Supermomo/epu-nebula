@@ -34,10 +34,10 @@ public class Flock extends SteeringEntity{
 		
 		for(SteeringEntity fl : flockers){
 
-			newPos=getFlockingMouvment(fl, delta);
+			newPos=getFlockingMouvment(fl, delta, fences);
 			
 			while(!isValidTrajectory(newPos, fences)){
-				newPos=getFlockingMouvment(fl, delta);
+				newPos=getFlockingMouvment(fl, delta, fences);
 			}
 			fl.setPosition(newPos);
 		}
@@ -61,16 +61,18 @@ public class Flock extends SteeringEntity{
 	 * @param delta
 	 * @return the position that would be gotten after making that move
 	 */
-	private Vector2f getFlockingMouvment(SteeringEntity fl, float delta){
+	private Vector2f getFlockingMouvment(SteeringEntity fl, float delta,ArrayList<Line> fences){
 		
-		Vector2f vect;
-		Vector2f vect2;
+		Vector2f vect;//seek vector
+		Vector2f vect2;//random mouvment vector
 		Vector2f newPos;
 		
 		vect=fl.seek(super.getPosition());
 		vect.scale(delta*super.getPosition().distance(fl.getPosition())*attractionCoeff);
-		vect2=fl.moveRandomlyInternal(delta);
+		
+		vect2=fl.moveRandomly(delta,fences);
 		vect2=vect2.sub(fl.getPosition());
+		
 		vect.add(vect2);
 		vect.normalise();
 		vect.scale(fl.getMaxSpeed());
