@@ -1,6 +1,8 @@
 package nebula.minigame.gravity;
 
 
+import java.awt.Toolkit;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -70,7 +72,8 @@ public class BaseJeu extends BasicGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new BaseJeu());
-			app.setDisplayMode(800, 600, false);
+			app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
+	 				Toolkit.getDefaultToolkit().getScreenSize().height, true);
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

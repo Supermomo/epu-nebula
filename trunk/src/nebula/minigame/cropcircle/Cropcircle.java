@@ -33,6 +33,13 @@ public class Cropcircle extends BasicGame implements Serializable {
 	private String pathTankEmptyTankSound="assets/sound/cropCircle/failGame.ogg";
 	private String pathSucessSound;
 	private String pathFailureSound="assets/sound/cropCircle/failGame.ogg";
+	
+	private Sound sucessfulBurnSound;
+	private Sound failedBurnSound;
+	private Sound emptyTankSound;
+	private Sound sucessSound;
+	private Sound failureSound;
+	
 	private Image land = null;
 	private float x = 400;
 	private float y = 300;
@@ -65,11 +72,6 @@ public class Cropcircle extends BasicGame implements Serializable {
 	private int timer=0;
 	private boolean spaceReleased=true;
 	
-	private Sound sucessfulBurnSound;
-	private Sound failedBurnSound;
-	private Sound emptyTankSound;
-	private Sound sucessSound;
-	private Sound failureSound;
 
 	public Cropcircle() {
 		super("DeVint - CropCircle");
@@ -182,6 +184,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 							emptyTankSound.play();
 						}			
 						gc.pause();
+						new Image("assets/images/spaceInvaders/defaite.png").draw(0,0,gc.getWidth(),gc.getHeight());
 					}
 					if(!failedBurnSound.playing()){
 						failedBurnSound.play(0.8f,0.4f);
@@ -221,7 +224,7 @@ public class Cropcircle extends BasicGame implements Serializable {
 		g.drawGradientLine(x, y, Color.red, gc.getWidth() / 2, gc.getHeight(),
 				Color.blue);
 		// g.drawLine(x, y, gc.getWidth() / 2, gc.getHeight());
-
+		
 	}
 
 	private void save() throws ClassNotFoundException {
