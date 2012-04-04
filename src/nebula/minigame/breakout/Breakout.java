@@ -275,8 +275,10 @@ public class Breakout extends BasicGame
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
+        
         app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
 				Toolkit.getDefaultToolkit().getScreenSize().height, true);
+        
         app.setTargetFrameRate(2000);
         app.start();
     }
