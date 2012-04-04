@@ -56,7 +56,7 @@ public class NebulaGame extends StateBasedGame {
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
         this.getState(State.MAIN_MENU.getValeur()).init(gameContainer, this);
         this.getState(State.OPTION_MENU.getValeur()).init(gameContainer, this);
-        this.getState(State.JEU_GRAVITY.getValeur()).init(gameContainer, this);
+        this.getState(5).init(gameContainer, this);
 	}
 
 	/**
