@@ -71,8 +71,8 @@ public class SteeringEntity {
 	 * @param fences
 	 * @return the position after moving
 	 */
-	protected Vector2f moveRandomly(int delta, ArrayList<Line> fences ){
-		Line line;
+	protected Vector2f moveRandomly(float delta, ArrayList<Line> fences ){
+
 		Vector2f newPos=null;
 		newPos=moveRandomlyInternal(delta);
 		

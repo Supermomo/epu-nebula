@@ -57,7 +57,7 @@ public class SpaceShepherd extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		imgRadius=(int) (gc.getScreenWidth()*0.01);
 		fences=new ArrayList<Line>();
-		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.2f, gc.getWidth(), gc.getHeight());
+		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.3f, gc.getWidth(), gc.getHeight());
 		
 		targetCenter=new Vector2f(new Random().nextInt(gc.getWidth()-60)
 				,new Random().nextInt(gc.getHeight()-60));
@@ -124,7 +124,7 @@ public class SpaceShepherd extends BasicGame{
 		g.setColor(Color.black);
 		g.drawRect(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.yellow);
-		g.fillOval(targetCenter.x, targetCenter.y, targetRadius*2, targetRadius*2);
+		g.fillOval(targetCenter.x-targetRadius, targetCenter.y-targetRadius, targetRadius*2, targetRadius*2);
 		g.setColor(Color.white);
 		g.setLineWidth(10);
 		for(Line l : fences){
@@ -167,7 +167,7 @@ public class SpaceShepherd extends BasicGame{
 		/*app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
 				Toolkit.getDefaultToolkit().getScreenSize().height, true);*/
 		app.setDisplayMode(800, 600, false);
-		app.setTargetFrameRate(1000);
+		app.setTargetFrameRate(60);
 		app.start();
 	}
 	
