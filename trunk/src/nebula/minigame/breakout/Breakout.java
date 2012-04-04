@@ -19,11 +19,10 @@ public class Breakout extends BasicGame
     static final String imgPath = "assets/images/breakout/";
     static final String sndPath = "assets/sound/breakout/";
     
-    private final float initialSpeed = 0.2f;
+    private final float initialSpeed = 0.25f;
     private int lifes = 3;
     
     private float gameCounter;
-    private float whiteFadeAlpha;
     private GameState gameState;
     private boolean useMouse;
     private SpeedVector ballSpeed = new SpeedVector();
@@ -33,6 +32,7 @@ public class Breakout extends BasicGame
     private List<Brick> bricks = new ArrayList<Brick>();
     private Image bgImage;
     private Image lifeImage;
+    private Sound sndBounce;
     
     private static Random random = new Random();
     
@@ -50,13 +50,13 @@ public class Breakout extends BasicGame
     @Override
     public void init (GameContainer gc) throws SlickException
     {
-        // Load images
-        bgImage = new Image(imgPath + "background.png");
+        // Load images and sounds
+        bgImage   = new Image(imgPath + "background.png");
         lifeImage = new Image(imgPath + "ball.png");
+        sndBounce = new Sound(sndPath + "bounce.ogg");
         
         // Game state and counters
         gameCounter = 1.0f;
-        whiteFadeAlpha = 0.0f;
         gameState = GameState.Inactive;
         useMouse = false;
         
@@ -102,6 +102,7 @@ public class Breakout extends BasicGame
             {
                 ball.goPrevPosition();
                 ballSpeed.invertY();
+                sndBounce.play();
             }
             
             // Collision with right or left
@@ -115,6 +116,7 @@ public class Breakout extends BasicGame
             {
                 ball.goPrevPosition();
                 ballSpeed.invertX();
+                sndBounce.play();
             }
             
             
@@ -202,10 +204,6 @@ public class Breakout extends BasicGame
         // Inactive state
         if (GameState.Inactive.equals(gameState))
         {
-            // Decrease white fade alpha
-            whiteFadeAlpha -= 0.0025f * delta;
-            if (whiteFadeAlpha <= 0.0f) whiteFadeAlpha = 0.0f;
-            
             racket.goUp(Racket.vspeed * delta);
             
             // Decrease game counter
@@ -213,7 +211,6 @@ public class Breakout extends BasicGame
             if (gameCounter <= 0.0f)
             {
                 gameCounter = 0.0f;
-                whiteFadeAlpha = 0.0f;
                 gameState = GameState.Active;
                 racket.goActivePosition();
                 ballSpeed.reset();
@@ -248,20 +245,12 @@ public class Breakout extends BasicGame
         // Render racket and ball
         racket.draw();
         ball.draw();
-        
-        // Render white fade
-        if (whiteFadeAlpha > 0.0f)
-        {
-            g.setColor(new Color(1.0f, 1.0f, 1.0f, whiteFadeAlpha));
-            g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
-        }
     }
     
     private void invokeDefeat ()
     {
         gameState = GameState.Inactive;
         gameCounter = 1.0f;
-        whiteFadeAlpha = 1.0f;
         lifes--;
         racket.resetPosition();
         racket.attachBall(ball, getRandomRPos());
@@ -275,10 +264,8 @@ public class Breakout extends BasicGame
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
-        
         app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
 				Toolkit.getDefaultToolkit().getScreenSize().height, true);
-        
         app.setTargetFrameRate(2000);
         app.start();
     }
