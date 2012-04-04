@@ -1,5 +1,6 @@
 package nebula.minigame.gravity;
 
+
 public class ModeleJeu {
 
 	private Player hero;
@@ -8,7 +9,6 @@ public class ModeleJeu {
 
 	private boolean fin;
 	private boolean victoire;
-	private boolean defaite;
 
 
 	public ModeleJeu(Player hero, BlockMap map) {
@@ -19,7 +19,6 @@ public class ModeleJeu {
 
 		fin = false;
 		victoire = false;
-		defaite = false;
 	}
 
 	public Player getHero() {
@@ -54,11 +53,10 @@ public class ModeleJeu {
 		return victoire;
 	}
 
-	public void setDefaite(boolean b) {
-		defaite = b;
-	}
 	public boolean getDefaite() {
-		return defaite;
+		System.out.println("*MJ* get def");
+		if(hero.getNbrVies()<=0) return true;
+		else return false;
 	}
 
 	//---
@@ -169,7 +167,14 @@ public class ModeleJeu {
 	private void mort() {
 		//TODO Rajouter une animation spéciale
 		hero.setPosition((Point)map.getDepart().clone());
-		hero.domage();		
+		if(hero.getNbrVies()>1) {
+			hero.domage();
+			System.out.println(hero.getNbrVies()+" vies restantes");
+		}
+		else {
+			setFin(true);
+			System.out.println("*MJ* GameOver");
+		}
 	}
 
 }
