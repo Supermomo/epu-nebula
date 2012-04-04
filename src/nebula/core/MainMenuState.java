@@ -16,7 +16,7 @@ public class MainMenuState extends BasicGameState {
 	
 	private int stateID;
 	
-	private final String[] menu = {"Options", "Jeu", "Score", "Quitter"};
+	private final String[] menu = {"Jeu", "Options", "Score", "Quitter"};
 	private int labelSelectionne;
 	
 	public MainMenuState(int stateID) {
@@ -70,7 +70,7 @@ public class MainMenuState extends BasicGameState {
 			if(texte.equalsIgnoreCase("Quitter"))
 				System.exit(0);
 			if(texte.equalsIgnoreCase("Jeu"))
-				stateChange = State.JEU_GRAVITY.getValeur();
+				stateChange = 3;
 			
 			// Changement d'état
 			stateGame.enterState(stateChange, null, new FadeInTransition(Color.black,1000));

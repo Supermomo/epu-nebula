@@ -8,13 +8,15 @@ import java.util.Random;
 import nebula.core.helper.Collision;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 
 /**
  * Breakout minigame
  * @author Thomas Di'Meco
  */
-public class Breakout extends BasicGame
+public class Breakout extends BasicGameState
 {
     static final String imgPath = "assets/images/breakout/";
     static final String sndPath = "assets/sound/breakout/";
@@ -44,11 +46,11 @@ public class Breakout extends BasicGame
      */
     public Breakout ()
     {
-        super("Breakout");
+        //super("Breakout");
     }
 
     @Override
-    public void init (GameContainer gc) throws SlickException
+    public void init (GameContainer gc, StateBasedGame game) throws SlickException
     {
         // Load images and sounds
         bgImage   = new Image(imgPath + "background.png");
@@ -77,7 +79,7 @@ public class Breakout extends BasicGame
     }
 
     @Override
-    public void update (GameContainer gc, int delta) throws SlickException
+    public void update (GameContainer gc, StateBasedGame game, int delta) throws SlickException
     {
         Input input = gc.getInput();
         
@@ -225,7 +227,7 @@ public class Breakout extends BasicGame
     }
 
     @Override
-    public void render (GameContainer gc, Graphics g) throws SlickException
+    public void render (GameContainer gc,  StateBasedGame game, Graphics g) throws SlickException
     {
         // Render background
         for (int x = 0; x < gc.getWidth(); x += bgImage.getWidth())
@@ -260,7 +262,7 @@ public class Breakout extends BasicGame
     {
         return random.nextFloat() * 0.6f - 0.3f;
     }
-
+    /*
     public static void main (String[] args) throws SlickException
     {
         AppGameContainer app = new AppGameContainer(new Breakout());
@@ -269,4 +271,10 @@ public class Breakout extends BasicGame
         app.setTargetFrameRate(2000);
         app.start();
     }
+	*/
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
 }

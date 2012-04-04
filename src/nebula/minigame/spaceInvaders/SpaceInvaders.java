@@ -2,14 +2,19 @@ package nebula.minigame.spaceInvaders;
 import java.awt.Toolkit;
 import java.util.Random;
 
+import nebula.core.NebulaGame;
 import nebula.core.helper.Collision;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.effects.FireEmitter;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
-public class SpaceInvaders extends BasicGame{
+public class SpaceInvaders extends BasicGameState {
 	
 	Image land = null;
 	Boolean droite = true;
@@ -37,14 +42,14 @@ public class SpaceInvaders extends BasicGame{
 	
     public SpaceInvaders(int nbEnnemis)
     {
-        super("Space Invaders");
         this.nbEnnemis = nbEnnemis;
     }
  
     @Override
-    public void init(GameContainer gc) 
-			throws SlickException {
+    public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+    	System.out.println("test");
     	gc.setMinimumLogicUpdateInterval(20);
+    	gc.setTargetFrameRate(120);
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
     	land = new Image("assets/images/spaceInvaders/fond.png");
@@ -76,8 +81,7 @@ public class SpaceInvaders extends BasicGame{
     }
  
     @Override
-    public void update(GameContainer gc, int delta) 
-			throws SlickException     
+    public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException     
     {
     	Input input = gc.getInput();
     	
@@ -221,7 +225,8 @@ public class SpaceInvaders extends BasicGame{
     	if(nbEnnemis == 0)
     	{
     		//sVictoire.play();
-    		gc.pause();
+    		//gc.pause();
+    		((NebulaGame)game).next(this.getID());
     	}
     	
     	if(tank.dead())
@@ -233,7 +238,7 @@ public class SpaceInvaders extends BasicGame{
     	
     }
  
-    public void render(GameContainer gc, Graphics g) 
+    public void render(GameContainer gc, StateBasedGame game, Graphics g) 
 			throws SlickException 
     {
     	land.draw(0, 0, gc.getWidth(), gc.getHeight());
@@ -259,16 +264,10 @@ public class SpaceInvaders extends BasicGame{
     		coeur.draw(10 + i * coeur.getWidth(), gc.getHeight() - coeur.getHeight());
     	}
     }
- 
-    public static void main(String[] args) 
-			throws SlickException
-    {
-         AppGameContainer app = 
-			new AppGameContainer(new SpaceInvaders(8));
- 
-         app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
- 				Toolkit.getDefaultToolkit().getScreenSize().height, true);
-         app.setTargetFrameRate(200);
-         app.start();
-    }
+
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return 4;
+	}
 }

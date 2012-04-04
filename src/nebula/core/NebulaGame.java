@@ -1,12 +1,19 @@
 package nebula.core;
 
+import nebula.minigame.spaceInvaders.IntroSpaceInvaders;
+import nebula.minigame.spaceInvaders.SpaceInvaders;
+
 import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
 
 public class NebulaGame extends StateBasedGame {
 
+	private MinigameController controleur;
+	
 	enum State {
 		MAIN_MENU(0),
 		OPTION_MENU(1),
@@ -28,10 +35,15 @@ public class NebulaGame extends StateBasedGame {
 	public NebulaGame() {
 		super("Nebula");
 		
+		controleur = new MinigameController();
+		
 		// Ajout des GameStates
 		this.addState((new MainMenuState(State.MAIN_MENU.getValeur())));
 		this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
-		this.addState(new nebula.minigame.gravity.Gravity(State.JEU_GRAVITY.getValeur()));
+		this.addState(new IntroSpaceInvaders());
+		this.addState(new SpaceInvaders(8));
+		this.addState(new nebula.minigame.gravity.Gravity(5));
+		
 		
 		// Selection de l'état de départ
 		this.enterState(State.MAIN_MENU.getValeur());
@@ -55,9 +67,18 @@ public class NebulaGame extends StateBasedGame {
 	public static void main(String[] args) throws SlickException
     {
          AppGameContainer app = new AppGameContainer(new NebulaGame());
-         app.setDisplayMode(800, 600, false);
+         app.setDisplayMode(1280, 768, false);
          app.start();
     }
  
+	public MinigameController getControleur()
+	{
+		return this.controleur;
+	}
+	
+	public void next(int state)
+	{
+		enterState(++state, null, new FadeInTransition(Color.black,3000));
+	}
 
 }
