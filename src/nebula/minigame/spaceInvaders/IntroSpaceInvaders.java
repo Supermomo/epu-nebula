@@ -20,14 +20,14 @@ public class IntroSpaceInvaders extends BasicGameState
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		container.setTargetFrameRate(2);
-		image = new Image("assets/images/spaceInvaders/histoire/nebula_intro.jpg");
+		image = new Image("ressources/images/spaceInvaders/histoire/nebula_intro.jpg");
 		scale = 12.0f;
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
 	{
-		image.draw(0, 0, scale);
+		image.draw(0, 0, scale * container.getWidth(), scale * container.getHeight());
 	}
 
 	@Override

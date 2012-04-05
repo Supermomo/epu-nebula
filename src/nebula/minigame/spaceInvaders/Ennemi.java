@@ -15,9 +15,9 @@ public class Ennemi
 	public Ennemi(float x, float y) throws SlickException
 	{
 		if(image == null)
-			image = new Image("assets/images/spaceInvaders/ship.png");
+			image = new Image("ressources/images/spaceInvaders/ship.png");
 		if(son == null)
-			son = new Sound("assets/sound/spaceInvaders/explosion.ogg");
+			son = new Sound("ressources/sons/spaceInvaders/explosion.ogg");
 		
 		this.x = x;
 		this.y = y;
