@@ -40,7 +40,7 @@ public class SpaceShepherd extends BasicGame{
 	private boolean spaceReleased=true;
 
 	private Vector2f targetCenter;
-	private int targetRadius=60;
+	private int targetRadius=80;
 	
 	private Image victoryImg;
 	private Image  lossImg;
