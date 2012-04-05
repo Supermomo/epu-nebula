@@ -1,10 +1,10 @@
 package nebula.minigame.breakout;
 
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import nebula.core.NebulaGame;
 import nebula.core.helper.Collision;
 
 import org.newdawn.slick.*;
@@ -32,30 +32,26 @@ public class Breakout extends BasicGameState
     private Racket racket;
     private BricksField bricksField;
     private List<Brick> bricks = new ArrayList<Brick>();
-    private Image bgImage;
-    private Image lifeImage;
-    private Sound sndBounce;
+    private Image imgBackground, imgLife;
+    private Sound sndBounce, sndLaunch, sndBreak, sndLose;
     
     private static Random random = new Random();
-    
     private enum GameState {Inactive, Active, Ingame}
     
-
-    /**
-     * Constructor
-     */
-    public Breakout ()
-    {
-        //super("Breakout");
-    }
+    
+    /* Game ID */
+    @Override public int getID () { return 1; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game) throws SlickException
     {
         // Load images and sounds
-        bgImage   = new Image(imgPath + "background.png");
-        lifeImage = new Image(imgPath + "ball.png");
+        imgBackground   = new Image(imgPath + "background.png");
+        imgLife = new Image(imgPath + "ball.png");
         sndBounce = new Sound(sndPath + "bounce.ogg");
+        sndLaunch = new Sound(sndPath + "launch.ogg");
+        sndBreak  = new Sound(sndPath + "break.ogg");
+        sndLose   = new Sound(sndPath + "lose.ogg");
         
         // Game state and counters
         gameCounter = 1.0f;
@@ -65,7 +61,7 @@ public class Breakout extends BasicGameState
         // Ball and racket
         ball = new Ball();
         racket = new Racket(0, gc.getWidth(),
-            gc.getHeight()+Racket.h, gc.getHeight()-Racket.h - 30);
+            gc.getHeight()+Racket.h+Ball.h, gc.getHeight()-Racket.h - 30);
         
         racket.attachBall(ball, getRandomRPos());
         
@@ -79,7 +75,8 @@ public class Breakout extends BasicGameState
     }
 
     @Override
-    public void update (GameContainer gc, StateBasedGame game, int delta) throws SlickException
+    public void update (GameContainer gc, StateBasedGame game, int delta)
+        throws SlickException
     {
         Input input = gc.getInput();
         
@@ -90,7 +87,7 @@ public class Breakout extends BasicGameState
             ball.setX(ball.getX()+ballSpeed.getX()*(float)delta);
             ball.setY(ball.getY()+ballSpeed.getY()*(float)delta);
             ballSpeed.increaseSpeed(delta * 0.04f);
-
+            
             // Collision with bottom
             if (Collision.rectangle(
                     ball.getX(), ball.getY(), Ball.w, Ball.h,
@@ -123,7 +120,7 @@ public class Breakout extends BasicGameState
             
             
             // Collision with bricks
-            if (ball.getY() <= bricksField.getY()+bricksField.getHeight())
+            if (ball.getY() <= bricksField.getY() + bricksField.getHeight())
             {
                 Brick bcol = null;
                 List<Brick> brickToRemove = new ArrayList<Brick>();
@@ -150,6 +147,8 @@ public class Breakout extends BasicGameState
                         ballSpeed.invertX();
                     else
                         ballSpeed.invertY();
+                    
+                    sndBreak.play();
                 }
             }
             
@@ -169,8 +168,13 @@ public class Breakout extends BasicGameState
                         (Racket.w/2 + Ball.w/2);
                     
                     ballSpeed.setAngle(-90.0f + 60.0f*rpos);
+                    sndLaunch.play();
                 }
             }
+            
+            // Victory condition
+            if (bricks.isEmpty())
+                ((NebulaGame)game).next(this.getID());
         }
         // Active state
         else if (GameState.Active.equals(gameState))
@@ -184,6 +188,7 @@ public class Breakout extends BasicGameState
                 ballSpeed.setY(initialSpeed);
                 racket.detachBall();
                 gameState = GameState.Ingame;
+                sndLaunch.play();
             }
         }
         // Active and ingame states
@@ -192,14 +197,10 @@ public class Breakout extends BasicGameState
         {
             // Racket events
             if (input.isKeyDown(Input.KEY_RIGHT))
-            {
                 racket.goRight(Racket.hspeed * delta);
-            }
             
             if (input.isKeyDown(Input.KEY_LEFT))
-            {
                 racket.goLeft(Racket.hspeed * delta);
-            }
             
             if (useMouse) racket.setX(input.getAbsoluteMouseX()-Racket.w/2);
         }
@@ -221,23 +222,22 @@ public class Breakout extends BasicGameState
         
         // All states
         if (input.isKeyPressed(Input.KEY_M))
-        {
             useMouse = !useMouse;
-        }
     }
 
     @Override
-    public void render (GameContainer gc,  StateBasedGame game, Graphics g) throws SlickException
+    public void render (GameContainer gc,  StateBasedGame game, Graphics g)
+        throws SlickException
     {
         // Render background
-        for (int x = 0; x < gc.getWidth(); x += bgImage.getWidth())
-            for (int y = 0; y < gc.getHeight(); y += bgImage.getHeight())
-                bgImage.draw(x, y);
+        for (int x = 0; x < gc.getWidth(); x += imgBackground.getWidth())
+            for (int y = 0; y < gc.getHeight(); y += imgBackground.getHeight())
+                imgBackground.draw(x, y);
         
         // Render lifes
         final float lifeImageSize = 20.0f;
         for (int i = 0; i < lifes; i++)
-            lifeImage.draw(4.0f+i*(4.0f+lifeImageSize),
+            imgLife.draw(4.0f+i*(4.0f+lifeImageSize),
                            (gc.getHeight()-lifeImageSize-4.0f),
                            lifeImageSize, lifeImageSize);
         
@@ -256,25 +256,11 @@ public class Breakout extends BasicGameState
         lifes--;
         racket.resetPosition();
         racket.attachBall(ball, getRandomRPos());
+        sndLose.play();
     }
     
     private float getRandomRPos ()
     {
         return random.nextFloat() * 0.6f - 0.3f;
     }
-    /*
-    public static void main (String[] args) throws SlickException
-    {
-        AppGameContainer app = new AppGameContainer(new Breakout());
-        app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
-				Toolkit.getDefaultToolkit().getScreenSize().height, true);
-        app.setTargetFrameRate(2000);
-        app.start();
-    }
-	*/
-	@Override
-	public int getID() {
-		// TODO Auto-generated method stub
-		return 1;
-	}
 }
