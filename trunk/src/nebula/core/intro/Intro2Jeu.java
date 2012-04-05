@@ -1,4 +1,4 @@
-package nebula.minigame.spaceInvaders;
+package nebula.core.intro;
 
 import nebula.core.NebulaGame;
 
@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class IntroSpaceInvaders extends BasicGameState
+public class Intro2Jeu extends BasicGameState
 {
 
 	Image image;
@@ -19,9 +19,8 @@ public class IntroSpaceInvaders extends BasicGameState
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
-		container.setTargetFrameRate(2);
-		image = new Image("ressources/images/spaceInvaders/histoire/nebula_intro.jpg");
-		scale = 12.0f;
+		image = new Image("ressources/images/histoire/attaqueNebula.png");
+		scale = 1.0f;
 	}
 
 	@Override
@@ -33,7 +32,7 @@ public class IntroSpaceInvaders extends BasicGameState
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException 
 	{
-		if(scale <= 1)
+		if(scale >= 1)
 		{
 			if(cpt < 10)
 			{
@@ -41,19 +40,19 @@ public class IntroSpaceInvaders extends BasicGameState
 			}
 			else
 			{
-				((NebulaGame)game).next(this.getID());
+				((NebulaGame)game).next(this.getID(),2);
 			}
 		}
 		else
 		{
-			scale -= 0.005f * delta;
+			scale += 0.00005f * delta;
 		}
 	}
 
 	@Override
 	public int getID() 
 	{
-		return 3;
+		return 4;
 	}
 
 }

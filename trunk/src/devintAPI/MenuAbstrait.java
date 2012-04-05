@@ -19,9 +19,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,6 +31,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public abstract class MenuAbstrait extends DevintFrameListener implements
 		ActionListener {
@@ -67,6 +72,8 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	protected JLabel lb1;
 	protected LineBorder buttonBorder;
 	protected LineBorder enteteBorder;
+	
+	ArrayList<Sound> son = new ArrayList<Sound>();
 
 	// -------------------------------------------------
 	// les méthodes abstraites à définir par héritage
@@ -105,13 +112,25 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		// créé les éléments de la fenêtre
 		creerLayout();
 		creerEntete();
-		creerOption(nomOptions);
+		try {
+			creerOption(nomOptions);
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	     // visible
     	this.setVisible(true);
     	// a le focus
     	this.requestFocus();
 		// lit le message d'accueil
-		//TODO Voix accueil
+    	try {
+			son.add(4,new Sound("ressources/sons/menu/accueil.ogg"));
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	son.get(4).play();
  
 	}
 
@@ -166,8 +185,9 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 
 	/**
 	 * creer les boutons associés aux noms d'options
+	 * @throws SlickException 
 	 */
-	private void creerOption(String[] noms) {
+	private void creerOption(String[] noms) throws SlickException {
 		// création des boutons
 		// panel des boutons
 		JPanel boutons = new JPanel();
@@ -187,6 +207,12 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		regles.gridy = 2;
 		placement.setConstraints(boutons, regles);
 		add(boutons);
+		
+		son.add(0,new Sound("ressources/sons/menu/jouer.ogg"));
+		son.add(1,new Sound("ressources/sons/menu/option.ogg"));
+		son.add(2,new Sound("ressources/sons/menu/score.ogg"));
+		son.add(3,new Sound("ressources/sons/menu/quitter.ogg"));
+		
 	}
 
 	// pour créer un bouton associé à un texte
@@ -247,7 +273,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 
 	// activer l'option si clic sur le bouton
 	public void actionPerformed(ActionEvent ae) {
-		//TODO Stopper la voix
+		this.stopSound();
 		Object source = ae.getSource();
 		for (int i = 0; i < nbOption; i++) {
 			if (source == boutonOption[i]) {
@@ -262,7 +288,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 
 	// mettre le focus sur une option
 	private void setFocusedButton(int i) {
-		//TODO Voix Boutton
+		son.get(i).play();
 		boutonOption[i].setBackground(backgroundColor);
 		boutonOption[i].setForeground(foregroundColor);
 	}
@@ -333,5 +359,15 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 			boutonOption[i].setBorder(buttonBorder);
 		}
 	}
- 
+	
+	public void stopSound()
+	{
+		for(int i = 0; i < son.size(); i++)
+		{
+			if(son.get(i).playing())
+			{
+				son.get(i).stop();
+			}
+		}
+	}
 }

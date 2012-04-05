@@ -1,7 +1,11 @@
 package nebula.core;
 
-import nebula.minigame.breakout.Breakout;
-import nebula.minigame.spaceInvaders.IntroSpaceInvaders;
+import nebula.core.intro.Bougibouga;
+import nebula.core.intro.FinInvaders;
+import nebula.core.intro.Intro2Jeu;
+import nebula.core.intro.Intro3Jeu;
+import nebula.core.intro.IntroJeu;
+import nebula.core.intro.Jubba;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
 import org.newdawn.slick.AppGameContainer;
@@ -11,6 +15,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.HorizontalSplitTransition;
+import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 public class NebulaGame extends StateBasedGame {
 
@@ -41,11 +47,15 @@ public class NebulaGame extends StateBasedGame {
 		
 		// Ajout des GameStates
 		this.addState((new MainMenuState(State.MAIN_MENU.getValeur())));
-		//this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
-		this.addState(new Breakout());
-		this.addState(new IntroSpaceInvaders());
+		this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
+		this.addState(new IntroJeu());
+		this.addState(new Intro2Jeu());
+		this.addState(new Intro3Jeu());
 		this.addState(new SpaceInvaders(8));
-		this.addState(new nebula.minigame.gravity.Gravity(5));
+		this.addState(new FinInvaders());
+		this.addState(new Bougibouga());
+		this.addState(new Jubba());
+		//this.addState(new nebula.minigame.gravity.Gravity(9));
 		
 		
 		// Selection de l'état de départ
@@ -67,16 +77,33 @@ public class NebulaGame extends StateBasedGame {
 	 * @param args
 	 * @throws SlickException
 	 */
-	public static void main(String[] args) throws SlickException
-    {
-         AppGameContainer app = new AppGameContainer(new NebulaGame());
-         app.setDisplayMode(800, 600, false);
-         app.start();
-    }
  
 	public MinigameController getControleur()
 	{
 		return this.controleur;
+	}
+	
+	public void next(int currentState, int typeFondu)
+	{
+		switch (typeFondu) 
+		{
+			case 0:
+				enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
+			break;
+
+			case 1:
+				enterState(++currentState, null, new HorizontalSplitTransition(Color.black));
+			break;
+			
+			case 2:
+				enterState(++currentState, null, new VerticalSplitTransition(Color.black));
+			break;
+		
+		default:
+			enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
+		break;
+		}
+		
 	}
 	
 	public void next(int currentState)

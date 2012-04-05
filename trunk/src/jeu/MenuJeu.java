@@ -42,6 +42,7 @@ public class MenuJeu extends MenuAbstrait {
 			try {
 				AppGameContainer app = new AppGameContainer(new NebulaGame());
 				app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
+				app.setTargetFrameRate(120);
 		        app.start();
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
