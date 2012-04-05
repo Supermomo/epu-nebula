@@ -92,7 +92,7 @@ public class Racket
 
         ballAttached.setX(
             (x+Racket.w/2-Ball.w/2) + ballRPos * (Racket.w/2 + Ball.w/2));
-        ballAttached.setY(y-Ball.h);
+        ballAttached.setY(y-Ball.h-1);
     }
     
     public void resetPosition ()
