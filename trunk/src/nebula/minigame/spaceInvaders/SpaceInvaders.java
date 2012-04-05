@@ -52,14 +52,14 @@ public class SpaceInvaders extends BasicGameState {
     	gc.setTargetFrameRate(120);
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
-    	land = new Image("assets/images/spaceInvaders/fond.png");
+    	land = new Image("ressources/images/spaceInvaders/fond.png");
     	tank = new Tank();
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
     	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
     	tir = new Tir(0);
     	tirEnnemi = new Tir(1);
-    	victoire = new Image("assets/images/spaceInvaders/victoire.png");
-    	explo = new SpriteSheet("assets/images/spaceInvaders/explosion17.png",64,64,0);
+    	victoire = new Image("ressources/images/spaceInvaders/victoire.png");
+    	explo = new SpriteSheet("ressources/images/spaceInvaders/explosion17.png",64,64,0);
     	explosion = new Animation();
     	explosion.setAutoUpdate(true);
     	for(int i =0; i < 5; i++)
@@ -76,8 +76,8 @@ public class SpaceInvaders extends BasicGameState {
     			ennemi[i][j] = new Ennemi(i*100,j*84);
     	}
     	rand = new Random();
-    	coeur = new Image("assets/images/spaceInvaders/coeur.png");
-    	defaite = new Image("assets/images/spaceInvaders/defaite.png");
+    	coeur = new Image("ressources/images/spaceInvaders/coeur.png");
+    	defaite = new Image("ressources/images/spaceInvaders/defaite.png");
     }
  
     @Override

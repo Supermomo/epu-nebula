@@ -14,13 +14,13 @@ public class Tir
 	{
 		if(i==0)
 		{
-			image = new Image("assets/images/spaceInvaders/tir.png");
-			son = new Sound("assets/sound/spaceInvaders/tir.ogg");
+			image = new Image("ressources/images/spaceInvaders/tir.png");
+			son = new Sound("ressources/sons/spaceInvaders/tir.ogg");
 		}
 		else
 		{
-			image = new Image("assets/images/spaceInvaders/tirEnnemi.png");
-			son = new Sound("assets/sound/spaceInvaders/tirEnnemi.ogg");
+			image = new Image("ressources/images/spaceInvaders/tirEnnemi.png");
+			son = new Sound("ressources/sons/spaceInvaders/tirEnnemi.ogg");
 		}
 	}
 	
