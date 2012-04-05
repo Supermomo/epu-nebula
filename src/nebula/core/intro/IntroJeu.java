@@ -2,6 +2,7 @@ package nebula.core.intro;
 
 import nebula.core.NebulaGame;
 
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,13 +24,15 @@ public class IntroJeu extends BasicGameState
 		image = new Image("ressources/images/histoire/nebula_intro.jpg");
 		cadre = new Image("ressources/images/miscellaneous/cadre.png");
 		scale = 12.0f;
+		((NebulaGame) game).getUFont().loadGlyphs();
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
 	{
 		image.draw(0, 0, scale * container.getWidth(), scale * container.getHeight());
-		cadre.draw(x, y, container.getWidth()*0.7f, container.getHeight() * 0.25f);
+		cadre.draw(x, y, container.getWidth()*0.8f, container.getHeight() * 0.3f);
+		((NebulaGame)game).getUFont().drawString(x/0.70f + container.getWidth()*0.01f, y + container.getHeight()*0.01f,"Bidibop est un alien. Et aujourd'hui il a 10 ans.");
 	}
 
 	@Override
@@ -43,9 +46,13 @@ public class IntroJeu extends BasicGameState
 			}
 			else
 			{
-				x = container.getWidth() * 0.15f;
+				x = container.getWidth() * 0.1f;
 				y = container.getHeight() * 0.7f;
-				if(cpt < 10)
+				if(cpt < 8)
+				{
+					cpt += 0.001f * delta;
+				}
+				else if(cpt < 10)
 				{
 					cpt += 0.001f * delta;
 				}
