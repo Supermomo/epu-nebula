@@ -37,7 +37,7 @@ public class IntroSpaceInvaders extends BasicGameState
 		{
 			if(cpt < 10)
 			{
-				cpt += 0.005f * delta;				
+				cpt += 0.005f * delta;		
 			}
 			else
 			{
