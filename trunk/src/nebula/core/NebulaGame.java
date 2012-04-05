@@ -9,6 +9,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class NebulaGame extends StateBasedGame {
 
@@ -76,9 +77,9 @@ public class NebulaGame extends StateBasedGame {
 		return this.controleur;
 	}
 	
-	public void next(int state)
+	public void next(int currentState)
 	{
-		enterState(++state, null, new FadeInTransition(Color.black,3000));
+		enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
 	}
 
 }
