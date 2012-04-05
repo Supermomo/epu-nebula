@@ -1,5 +1,6 @@
 package nebula.core;
 
+import nebula.minigame.breakout.Breakout;
 import nebula.minigame.spaceInvaders.IntroSpaceInvaders;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
@@ -40,7 +41,8 @@ public class NebulaGame extends StateBasedGame {
 		
 		// Ajout des GameStates
 		this.addState((new MainMenuState(State.MAIN_MENU.getValeur())));
-		this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
+		//this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
+		this.addState(new Breakout());
 		this.addState(new IntroSpaceInvaders());
 		this.addState(new SpaceInvaders(8));
 		this.addState(new nebula.minigame.gravity.Gravity(5));
@@ -68,7 +70,7 @@ public class NebulaGame extends StateBasedGame {
 	public static void main(String[] args) throws SlickException
     {
          AppGameContainer app = new AppGameContainer(new NebulaGame());
-         app.setDisplayMode(1280, 768, false);
+         app.setDisplayMode(800, 600, false);
          app.start();
     }
  

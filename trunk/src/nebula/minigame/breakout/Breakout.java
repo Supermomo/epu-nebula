@@ -18,8 +18,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Breakout extends BasicGameState
 {
-    static final String imgPath = "assets/images/breakout/";
-    static final String sndPath = "assets/sound/breakout/";
+    static final String imgPath = "ressources/images/breakout/";
+    static final String sndPath = "ressources/sons/breakout/";
     
     private final float initialSpeed = 0.25f;
     private int lifes = 3;
