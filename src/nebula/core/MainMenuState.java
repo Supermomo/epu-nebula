@@ -37,7 +37,8 @@ public class MainMenuState extends BasicGameState {
 		//TODO
 		font = new UnicodeFont("ressources/font/batmfa.ttf", (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
 		font.addAsciiGlyphs();
-		font.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
+		font.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
+		font.loadGlyphs();
 	}
 
 	@Override
