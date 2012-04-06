@@ -40,7 +40,7 @@ public class Breakout extends BasicGameState
     
     
     /* Game ID */
-    @Override public int getID () { return 11; }
+    @Override public int getID () { return 10; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game) throws SlickException
