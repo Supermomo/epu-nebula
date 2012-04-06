@@ -1,6 +1,7 @@
 package nebula.minigame.gravity;
 
 
+import nebula.core.Minigame;
 import nebula.core.NebulaGame;
 
 import org.newdawn.slick.GameContainer;
@@ -12,7 +13,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class Gravity extends BasicGameState {
+public class Gravity extends Minigame {
 	
 	private int stateID;
 	
@@ -32,6 +33,10 @@ public class Gravity extends BasicGameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
 			throws SlickException {
+	    
+	    // Call super method
+        super.init(gameContainer, stateBasedGame);
+        
 		try {
 			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+"2.tmx"));
 		} catch (SlickException e) {
@@ -51,6 +56,10 @@ public class Gravity extends BasicGameState {
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g)
 			throws SlickException {
+	    
+	    // Call super method
+        super.render(gameContainer, stateBasedGame, g);
+	    
 		int taille[] = modeleJeu.renderMap();
 		modeleJeu.getMap().getTiledMap().render(taille[0]*60, taille[1]*60);
 		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX()+taille[0]*60, modeleJeu.getHero().getY()+taille[1]*60);
@@ -58,8 +67,7 @@ public class Gravity extends BasicGameState {
 		if(modeleJeu.getFin()) {
 			if(modeleJeu.getVictoire()) {
 				victoire.draw(100, 250);
-				NebulaGame ng=(NebulaGame)stateBasedGame;
-				ng.next(getID());
+				this.gotoNextState();
 			} else if(modeleJeu.getDefaite()) {
 				defaite.draw(100,250);
 			}
@@ -76,15 +84,12 @@ public class Gravity extends BasicGameState {
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
 			throws SlickException {
-		
-		if(gameContainer.getInput().isKeyDown(Input.KEY_ESCAPE))
-		{
-			((NebulaGame)stateBasedGame).enterState(0);
-		}
+	    
+	    // Call super method
+        super.update(gameContainer, stateBasedGame, delta);
 		
 		controleJeu.inputJoueur(gameContainer.getInput(), delta);
 		modeleJeu.getHero().incStill();
-
 	}
 
 	/**
