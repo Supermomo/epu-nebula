@@ -8,7 +8,7 @@ public class ModeleJeu {
 	
 	
 
-	private final static String dossierData = "ressources/sons/gravity/";
+	private final static String dossierSon = "ressources/sons/gravity/";
 	
 	
 	private Player hero;
@@ -42,10 +42,10 @@ public class ModeleJeu {
 		
 		// Chargement des sons
 		try {
-			sonJump = new Sound(dossierData+"jump.wav");
-			sonDomage = new Sound(dossierData+"hurt.wav");
-			sonVictoire = new Sound(dossierData+"defaite.wav");
-			sonDefaite = new Sound(dossierData+"victoire.wav");
+			sonJump = new Sound(dossierSon+"jump.wav");
+			sonDomage = new Sound(dossierSon+"hurt.wav");
+			sonVictoire = new Sound(dossierSon+"defaite.wav");
+			sonDefaite = new Sound(dossierSon+"victoire.wav");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -240,11 +240,9 @@ public class ModeleJeu {
 		int renderX = 0;
 		int renderY = 0;
 		
-		while(heroX>renderX+5) renderX += 5;
+		while(heroX>renderX+13) renderX += 13;
 		while(heroY>renderY+10) renderY += 10;
 	
-		//System.out.println(renderX+" "+renderY);
-		// Render( ScreenX, ScreenY, , , NbrTilesX, NbrTilesY)
 		int i[] = {-renderX,-renderY};
 		return i;
 	}
