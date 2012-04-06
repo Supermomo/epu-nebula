@@ -1,6 +1,7 @@
 package nebula.core;
 
 import java.awt.FontFormatException;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -66,7 +67,7 @@ public class NebulaGame extends StateBasedGame {
 		this.addState(new Jubba());
 		//this.addState(new nebula.minigame.gravity.Gravity(9));
 		
-		uFont = new UnicodeFont(fontPath, 40, false, false);
+		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 42.0f), false, false);
 		uFont.addAsciiGlyphs();
 		uFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
 		

@@ -14,6 +14,7 @@ public class IntroJeu extends BasicGameState
 {
 
 	Image image, cadre;
+	StringBuilder s;
 	float scale;
 	float cpt = 0f;
 	float x = -1000,y = -1000;
@@ -23,16 +24,22 @@ public class IntroJeu extends BasicGameState
 	{
 		image = new Image("ressources/images/histoire/nebula_intro.jpg");
 		cadre = new Image("ressources/images/miscellaneous/cadre.png");
-		scale = 12.0f;
+		scale = 1.0f;
 		((NebulaGame) game).getUFont().loadGlyphs();
+		s = new StringBuilder();
+		s.append("Bidibop est un alien. Et aujourd'hui il a 10 ans.\n");
+		s.append("C'est a dire qu'aujourd'hui il peut conduire son\n");
+		s.append("propre vaisseau spatial !\n");
+		s.append("Et ça tombe bien car Bidibop construit depuis\n");
+		s.append("2 ans une superbe soucoupe rouge avec son papa.");
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
 	{
 		image.draw(0, 0, scale * container.getWidth(), scale * container.getHeight());
-		cadre.draw(x, y, container.getWidth()*0.8f, container.getHeight() * 0.3f);
-		((NebulaGame)game).getUFont().drawString(x/0.70f + container.getWidth()*0.01f, y + container.getHeight()*0.01f,"Bidibop est un alien. Et aujourd'hui il a 10 ans.");
+		cadre.draw(x, y, container.getWidth()*0.90f, container.getHeight() * 0.3f);
+		((NebulaGame)game).getUFont().drawString(x/0.55f + container.getWidth()*0.01f, y + container.getHeight()*0.03f, s.toString());
 	}
 
 	@Override
@@ -46,7 +53,7 @@ public class IntroJeu extends BasicGameState
 			}
 			else
 			{
-				x = container.getWidth() * 0.1f;
+				x = container.getWidth() * 0.05f;
 				y = container.getHeight() * 0.7f;
 				if(cpt < 8)
 				{

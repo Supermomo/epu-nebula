@@ -166,7 +166,7 @@ public class SpaceShepherd extends BasicGame{
 		AppGameContainer app = new AppGameContainer(new SpaceShepherd());
 		/*app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
 				Toolkit.getDefaultToolkit().getScreenSize().height, true);*/
-		app.setDisplayMode(800, 600, false);
+		app.setDisplayMode(800, 600, true);
 		app.setTargetFrameRate(60);
 		app.start();
 	}
