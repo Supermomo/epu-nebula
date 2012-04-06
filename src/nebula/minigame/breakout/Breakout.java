@@ -218,7 +218,8 @@ public class Breakout extends BasicGameState
         
         // ==== All states ====
         // Mouse support
-        if (input.isKeyPressed(Input.KEY_M))
+        if (input.isKeyPressed(Input.KEY_M) &&
+            input.isKeyDown(Input.KEY_LSHIFT))
             useMouse = !useMouse;
         
         // Victory condition
