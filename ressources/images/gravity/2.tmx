@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="30" height="15" tilewidth="60" tileheight="60">
- <tileset firstgid="1" name="mapSet" tilewidth="60" tileheight="60">
-  <image source="./mapSet.png" width="360" height="300"/>
+ <tileset name="mapSet" firstgid="1" tilewidth="60" tileheight="60">
+  <image source="mapSet.png"/>
  </tileset>
- <tileset firstgid="31" name="collision" tilewidth="60" tileheight="60">
-  <image source="./collision.png" width="60" height="60"/>
+ <tileset name="collision" firstgid="31" tilewidth="60" tileheight="60">
+  <image source="collision.png"/>
  </tileset>
  <layer name="block" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WTUQoAIAhDd5Puf8u+grByU8oEIWLzpVUD0C7nCFU365XIemeuXUe5ntf2yLjsLB53N1OPG5m92u/Ox3RqPfVuVK5aN8N9mcDaXwU3868ruKe9V9wf8ZPL3qA6u1NNxqrODpnWAQoIBwAA
+   H4sIAAAAAAAAAMWTUQoAIAhDd5Puf8u+grByU8oEIWLzpVUD0C7nCFU365XIemeuXUe5ntf2yLjsLB53N1OPG5m92u/Ox3RqPfVuVK5aN8N9mcDaXwU3868ruKe9V9wf8ZPL3qA6u1NNxqrODpnWAQoIBwAA
   </data>
  </layer>
  <layer name="end" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAUDAWQH2gGjYBQMIBAcaAeMglGABACuzWa+CAcAAA==
+   H4sIAAAAAAAAAGNgGAUDAWQH2gGjYBQMIBAcaAeMglGABACuzWa+CAcAAA==
   </data>
  </layer>
  <layer name="map" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8WU2wqDMBBEY21rtLURKr7V///MRkhgWGbjai0+DMrs5YgZvTnnXkKeeEysr42ak3pl7i76sjriMbE+y2wD3Cqq/oF7Lcwuu0fYj9x8/4HZKQn3atxOXN+JtSgkbyBcPIuwwpjFHqwPpK/0njVNBe6eTFi51r1buY+oi0F+Rz3nCDObuf7Pys/UKlz8F6B3FF9yZX574Wn/nK0KgmvNwpE6k1vK4FrGa7KzUuroP8n5YwateZXfE6tL/wvkRmzYCAcAAA==
+   H4sIAAAAAAAAAMWU2wqDMBBEY21rtLURKr7V///MRkhgWGbjai0+DMrs5YgZvTnnXkKeeEysr42ak3pl7i76sjriMbE+y2wD3Cqq/oF7Lcwuu0fYj9x8/4HZKQn3atxOXN+JtSgkbyBcPIuwwpjFHqwPpK/0njVNBe6eTFi51r1buY+oi0F+Rz3nCDObuf7Pys/UKlz8F6B3FF9yZX574Wn/nK0KgmvNwpE6k1vK4FrGa7KzUuroP8n5YwateZXfE6tL/wvkRmzYCAcAAA==
   </data>
  </layer>
  <layer name="death" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgoD6QgmJaABkamUupvXJImFIgTYK96ICScKfEXkrsliashCZgoOwlB0gOtAMGGcBWxtCqzBkFEEBKGpREw7jkBwsAAMtJLtIIBwAA
+   H4sIAAAAAAAAAGNgoD6QgmJaABkamUupvXJImFIgTYK96ICScKfEXkrsliashCZgoOwlB0gOtAMGGcBWxtCqzBkFEEBKGpREw7jkBwsAAMtJLtIIBwAA
   </data>
  </layer>
-
-
- <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
-  <object name="spawn" type="start" x="110" y="60" width="1" height="1"/>
+ <objectgroup name="spawn" width="0" height="0" x="1" y="1">
+  <object name="start" type="start1" x="600" y="60" width="1" height="1"/>
+  <object name="start" type="start2" x="800" y="290" width="1" height="1"/>
+  <object name="respawn" type="checkPoint" x="1440" y="150" width="46" height="20"/>
  </objectgroup>
-
 </map>
