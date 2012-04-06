@@ -40,12 +40,12 @@ public class SpaceShepherd extends BasicGame{
 	private boolean spaceReleased=true;
 
 	private Vector2f targetCenter;
-	private int targetRadius=80;
+	private int targetRadius=20;
 	
 	private Image victoryImg;
 	private Image  lossImg;
-	private String pathVictoryImg="assets/images/spaceInvaders/victoire.png";
-	private String pathlLossImg="assets/images/spaceInvaders/defaite.png";
+	private String pathVictoryImg="ressources/images/spaceInvaders/victoire.png";
+	private String pathlLossImg="ressources/images/spaceInvaders/defaite.png";
 	
 	public SpaceShepherd(){
 		super("SpaceShepherd");
@@ -57,7 +57,7 @@ public class SpaceShepherd extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		imgRadius=(int) (gc.getScreenWidth()*0.01);
 		fences=new ArrayList<Line>();
-		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.3f, gc.getWidth(), gc.getHeight());
+		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.2f, gc.getWidth(), gc.getHeight());
 		
 		targetCenter=new Vector2f(new Random().nextInt(gc.getWidth()-60)
 				,new Random().nextInt(gc.getHeight()-60));
@@ -80,7 +80,7 @@ public class SpaceShepherd extends BasicGame{
 		if (input.isKeyDown(Input.KEY_LEFT) && x > 0) {
 			x -= (delta * pointerSpeed);
 		}
-
+		
 		if (input.isKeyDown(Input.KEY_RIGHT) && x+10 < gc.getWidth()) {
 			x += (delta * pointerSpeed);
 		}
@@ -135,7 +135,6 @@ public class SpaceShepherd extends BasicGame{
 		if(lastPlot!=null){
 			g.drawOval(lastPlot.x, lastPlot.y, imgRadius, imgRadius);
 		}
-		
 		g.setColor(Color.green);
 		g.drawOval(flock.getPosition().x, flock.getPosition().y, 5,5, 16);
 		
