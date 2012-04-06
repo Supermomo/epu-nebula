@@ -7,12 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import nebula.core.intro.Bougibouga;
-import nebula.core.intro.Fin;
-import nebula.core.intro.FinInvaders;
-import nebula.core.intro.Intro2Jeu;
-import nebula.core.intro.Intro3Jeu;
-import nebula.core.intro.IntroJeu;
+import nebula.core.intro.*;
 import nebula.core.intro.Jubba;
 import nebula.minigame.breakout.Breakout;
 import nebula.minigame.gravity.Gravity;
@@ -21,7 +16,6 @@ import nebula.minigame.spaceInvaders.SpaceInvaders;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.EffectUtil;
@@ -43,7 +37,8 @@ public class NebulaGame extends StateBasedGame {
 		INTRO_2JEU(3),
 		DEBUT_AVENTURE(3),
 		JEU_SPACEINVADERS(6),
-		JEU_BREAKOUT(10);
+		JEU_BREAKOUT(10),
+		JEU_GRAVITY(30);
 		
 		private int valeur;
 		
@@ -72,10 +67,9 @@ public class NebulaGame extends StateBasedGame {
 		this.addState(new FinInvaders()); //7
 		this.addState(new Bougibouga()); //8
 		this.addState(new Jubba()); //9
-		this.addState(new Gravity(10));
-		this.addState(new Breakout()); //11
-		this.addState(new Fin()); //12
-		//this.addState(new nebula.minigame.gravity.Gravity(9));
+		//TODO this.addState(new Breakout()); //10
+		this.addState(new Fin()); //11
+		//this.addState(new nebula.minigame.gravity.Gravity(State.JEU_GRAVITY.getValeur()));
 		
 		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
 		uFont.addAsciiGlyphs();

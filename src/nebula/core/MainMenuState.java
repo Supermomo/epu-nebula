@@ -1,11 +1,16 @@
 package nebula.core;
 
 
+import java.awt.Toolkit;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.HieroSettings;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -13,12 +18,13 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import nebula.core.NebulaGame.State;
 
 public class MainMenuState extends BasicGameState {
-	
+
 	private int stateID;
-	
+	private UnicodeFont font;
+
 	private String[] menu = {"Mode Aventure", "Choix Du Jeu", "Retour Au Menu"};
 	private int labelSelectionne;
-	
+
 	public MainMenuState(int stateID) {
 		this.stateID = stateID;
 	}
@@ -26,29 +32,32 @@ public class MainMenuState extends BasicGameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateGame)
 			throws SlickException {
-		// Menu selectionner
+		// Menu sélectionné
 		labelSelectionne = 0;
+		//TODO
+		font = new UnicodeFont("ressources/font/batmfa.ttf", (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
+		font.addAsciiGlyphs();
+		font.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
 	}
 
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateGame, Graphics g)
 			throws SlickException {
-		int x = 200;
-		int y = 50;
-		g.setColor(Color.white);
+
+		int x = gameContainer.getScreenWidth()/3;
+		int y = gameContainer.getScreenHeight()/3;
 		
 		for(int i = 0; i < menu.length; i++) {
 			if(i==labelSelectionne) {
-				g.setColor(Color.red);
-				g.drawString(menu[i], x, y);
-				g.setColor(Color.white);
+				//TODO
+				font.drawString(x, y, menu[i], Color.red);
 			} else {
-				g.drawString(menu[i], x, y);
+				((nebula.core.NebulaGame) stateGame).getUFont().drawString(x, y, menu[i], Color.white);
 			}
 			y+=50;
 		}
 	}
-
+	
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateGame, int arg2)
 			throws SlickException {

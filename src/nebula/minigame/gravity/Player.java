@@ -107,8 +107,8 @@ public class Player {
 	}
 	public Point[] getBordBas() {
 		Point p[] = {(Point) position.clone(),(Point) position.clone()};
-		p[0].translate(10f, Sprite.HAUTEUR.getValue());
-		p[1].translate(Sprite.LARGEUR.getValue()-10f, Sprite.HAUTEUR.getValue());
+		p[0].translate(10f, Sprite.HAUTEUR.getValue()+1f);
+		p[1].translate(Sprite.LARGEUR.getValue()-10f, Sprite.HAUTEUR.getValue()+1f);
 		return p;
 	}
 	
