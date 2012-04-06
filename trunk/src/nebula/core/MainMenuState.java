@@ -83,7 +83,7 @@ public class MainMenuState extends BasicGameState {
 				labelSelectionne = 0;
 			}
 			else if("breakout".equalsIgnoreCase(texte))
-				stateChange = 10;
+				stateChange = 11;
 			else if("gravity".equalsIgnoreCase(texte))
 				stateChange = State.JEU_GRAVITY.getValeur();
 			else if("spaceinvaders".equalsIgnoreCase(texte))

@@ -43,7 +43,8 @@ public class NebulaGame extends StateBasedGame {
 		INTRO_2JEU(3),
 		DEBUT_AVENTURE(3),
 		JEU_SPACEINVADERS(6),
-		JEU_GRAVITY(9);
+		JEU_GRAVITY(10),
+		JEU_BREAKOUT(11);
 		
 		private int valeur;
 		
@@ -73,8 +74,8 @@ public class NebulaGame extends StateBasedGame {
 		this.addState(new Bougibouga()); //8
 		this.addState(new Jubba()); //9
 		this.addState(new Gravity(10));
-		this.addState(new Breakout()); //10
-		this.addState(new Fin()); //11
+		this.addState(new Breakout()); //11
+		this.addState(new Fin()); //12
 		//this.addState(new nebula.minigame.gravity.Gravity(9));
 		
 		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);

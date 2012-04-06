@@ -16,7 +16,7 @@ public class Gravity extends BasicGameState {
 	
 	private int stateID;
 	
-	private final static String dossierData = "ressources/images/gravity";
+	private final static String dossierData = "ressources/images/gravity/";
 	private ModeleJeu modeleJeu;
 	private ControleJeu controleJeu;
 	private Image victoire, defaite, coeur;
