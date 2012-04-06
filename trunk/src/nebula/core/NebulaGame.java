@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import nebula.core.intro.Bougibouga;
+import nebula.core.intro.Fin;
 import nebula.core.intro.FinInvaders;
 import nebula.core.intro.Intro2Jeu;
 import nebula.core.intro.Intro3Jeu;
@@ -59,7 +60,7 @@ public class NebulaGame extends StateBasedGame {
 		// Ajout des GameStates
 		this.addState((new MainMenuState(State.MAIN_MENU.getValeur())));
 		this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
-		this.addState(new IntroJeu());
+		this.addState(new IntroJeu()); //3
 		this.addState(new Intro2Jeu());
 		this.addState(new Intro3Jeu());
 		this.addState(new SpaceInvaders(8));
@@ -67,6 +68,7 @@ public class NebulaGame extends StateBasedGame {
 		this.addState(new Bougibouga());
 		this.addState(new Jubba());
 		this.addState(new Breakout());
+		this.addState(new Fin());
 		//this.addState(new nebula.minigame.gravity.Gravity(9));
 		
 		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
