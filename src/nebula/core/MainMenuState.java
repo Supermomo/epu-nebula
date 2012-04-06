@@ -16,7 +16,7 @@ public class MainMenuState extends BasicGameState {
 	
 	private int stateID;
 	
-	private final String[] menu = {"Jeu", "Options", "Score", "Quitter"};
+	private String[] menu = {"Mode Aventure", "Choix Du Jeu", "Retour Au Menu"};
 	private int labelSelectionne;
 	
 	public MainMenuState(int stateID) {
@@ -33,7 +33,7 @@ public class MainMenuState extends BasicGameState {
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateGame, Graphics g)
 			throws SlickException {
-		int x = 100;
+		int x = 200;
 		int y = 50;
 		g.setColor(Color.white);
 		
@@ -54,6 +54,8 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		Input input = gameContainer.getInput();
 		
+		
+		
 		if(input.isKeyPressed(Input.KEY_DOWN)) {
 			if(++labelSelectionne >= menu.length) {
 				labelSelectionne = 0;
@@ -65,12 +67,28 @@ public class MainMenuState extends BasicGameState {
 		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
 			String texte = menu[labelSelectionne];
 			int stateChange = State.MAIN_MENU.getValeur();
-			if(texte.equalsIgnoreCase("Options"))
-				stateChange = State.OPTION_MENU.getValeur();
-			if(texte.equalsIgnoreCase("Quitter"))
-				System.exit(0);
-			if(texte.equalsIgnoreCase("Jeu"))
-				stateChange = 3;
+
+			if("retour au menu".equalsIgnoreCase(texte))
+				;// stateGame.exit();
+			else if("mode aventure".equalsIgnoreCase(texte))
+				stateChange = State.DEBUT_AVENTURE.getValeur();
+			else if("choix du jeu".equalsIgnoreCase(texte)) {
+				String[] s = {"BreakOut", "Gravity", "SpaceInvaders", "SpaceShepard", "Retour"};
+				menu = s;
+				labelSelectionne = 0;
+			}
+			else if("retour".equalsIgnoreCase(texte)) {
+				String[] s = {"Mode Aventure", "Choix Du Jeu", "Retour Au Menu"};
+				menu = s;
+				labelSelectionne = 0;
+			}
+			else if("breakout".equalsIgnoreCase(texte))
+				stateChange = 10;
+			else if("gravity".equalsIgnoreCase(texte))
+				stateChange = State.JEU_GRAVITY.getValeur();
+			else if("spaceinvaders".equalsIgnoreCase(texte))
+				stateChange = State.JEU_SPACEINVADERS.getValeur();
+			
 			
 			// Changement d'état
 			stateGame.enterState(stateChange, null, new FadeInTransition(Color.black,1000));

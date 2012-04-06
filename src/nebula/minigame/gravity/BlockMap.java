@@ -33,7 +33,7 @@ public class BlockMap {
 		// Construction de la matrice de blocks
 		blocks = new BlockType[map.getWidth()][map.getHeight()];
 		
-		
+		// --- Récupération des tileSets de blocs
 		for(int xAxis=0;xAxis<map.getWidth(); xAxis++) {
 			for (int yAxis=0;yAxis<map.getHeight(); yAxis++) {
 				//--- Éléments bloquant
@@ -43,14 +43,15 @@ public class BlockMap {
 			}
 		}
 		
+		// Récupération des Objets Spawn
 		for(int i=0; i<map.getObjectGroupCount(); i++) {
 			for(int j=0; j<map.getObjectCount(i); j++) {
-				if("start".equals(map.getObjectType(i,j)))
+				if("start".equals(map.getObjectName(i,j)) && "start2".equals(map.getObjectType(i,j)))
 					setDepart(map.getObjectX(i, j), map.getObjectY(i, j));
 			}
 		}
 		if(depart==null) throw new SlickException("Aucun objet start enregistré dans la carte "+reference);
-				
+		
 	}
 
 	public TiledMap getTiledMap() {
