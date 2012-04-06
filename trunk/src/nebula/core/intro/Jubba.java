@@ -5,6 +5,7 @@ import nebula.core.NebulaGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -32,20 +33,20 @@ public class Jubba extends BasicGameState
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException 
 	{
-		if(scale >= 1)
+		Input input = container.getInput();
+		
+		if(input.isKeyDown(Input.KEY_ENTER))
 		{
-			if(cpt < 10)
-			{
-				cpt += 0.005f * delta;		
-			}
-			else
-			{
-				((NebulaGame)game).next(this.getID());
-			}
+			((NebulaGame)game).next(this.getID(),1);
+		}
+		
+		if(cpt < 3)
+		{
+			cpt += 0.001f * delta;		
 		}
 		else
 		{
-			scale += 0.00005f * delta;
+			((NebulaGame)game).next(this.getID());
 		}
 	}
 

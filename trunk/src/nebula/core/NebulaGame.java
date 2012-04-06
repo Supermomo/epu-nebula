@@ -13,6 +13,7 @@ import nebula.core.intro.Intro2Jeu;
 import nebula.core.intro.Intro3Jeu;
 import nebula.core.intro.IntroJeu;
 import nebula.core.intro.Jubba;
+import nebula.minigame.breakout.Breakout;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
 import org.newdawn.slick.Color;
@@ -65,12 +66,12 @@ public class NebulaGame extends StateBasedGame {
 		this.addState(new FinInvaders());
 		this.addState(new Bougibouga());
 		this.addState(new Jubba());
+		this.addState(new Breakout());
 		//this.addState(new nebula.minigame.gravity.Gravity(9));
 		
-		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 42.0f), false, false);
+		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
 		uFont.addAsciiGlyphs();
 		uFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
-		
 		
 		// Selection de l'état de départ
 		this.enterState(State.MAIN_MENU.getValeur());
@@ -83,7 +84,6 @@ public class NebulaGame extends StateBasedGame {
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
         this.getState(State.MAIN_MENU.getValeur()).init(gameContainer, this);
         this.getState(State.OPTION_MENU.getValeur()).init(gameContainer, this);
-        this.getState(5).init(gameContainer, this);
 	}
 
 	/**
