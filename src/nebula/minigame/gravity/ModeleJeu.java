@@ -8,7 +8,7 @@ public class ModeleJeu {
 	
 	
 
-	private final static String dossierData = "data/";
+	private final static String dossierData = "ressources/sons/gravity/";
 	
 	
 	private Player hero;
@@ -42,10 +42,10 @@ public class ModeleJeu {
 		
 		// Chargement des sons
 		try {
-			sonJump = new Sound(dossierData+"sound/jump.wav");
-			sonDomage = new Sound(dossierData+"sound/hurt.wav");
-			sonVictoire = new Sound(dossierData+"sound/defaite.wav");
-			sonDefaite = new Sound(dossierData+"sound/victoire.wav");
+			sonJump = new Sound(dossierData+"jump.wav");
+			sonDomage = new Sound(dossierData+"hurt.wav");
+			sonVictoire = new Sound(dossierData+"defaite.wav");
+			sonDefaite = new Sound(dossierData+"victoire.wav");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -43,8 +43,7 @@ public class NebulaGame extends StateBasedGame {
 		INTRO_2JEU(3),
 		DEBUT_AVENTURE(3),
 		JEU_SPACEINVADERS(6),
-		JEU_GRAVITY(10),
-		JEU_BREAKOUT(11);
+		JEU_BREAKOUT(10);
 		
 		private int valeur;
 		

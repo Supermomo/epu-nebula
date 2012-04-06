@@ -35,14 +35,14 @@ public class Fin extends BasicGameState
 		
 		if(input.isKeyDown(Input.KEY_ENTER))
 		{
-			container.exit();
+			((NebulaGame)game).enterState(0);
 		}
 	}
 
 	@Override
 	public int getID() 
 	{
-		return 12;
+		return 11;
 	}
 
 }
