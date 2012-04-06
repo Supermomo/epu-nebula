@@ -288,6 +288,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 
 	// mettre le focus sur une option
 	private void setFocusedButton(int i) {
+		this.stopSound();
 		son.get(i).play();
 		boutonOption[i].setBackground(backgroundColor);
 		boutonOption[i].setForeground(foregroundColor);
@@ -366,6 +367,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		{
 			if(son.get(i).playing())
 			{
+				System.out.println("plop");
 				son.get(i).stop();
 			}
 		}

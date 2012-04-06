@@ -5,6 +5,7 @@ import nebula.core.NebulaGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -12,40 +13,53 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Intro2Jeu extends BasicGameState
 {
 
-	Image image;
+	Image image, cadre, tete;
+	StringBuilder s;
 	float scale;
 	float cpt = 0f;
+	float x = -1000,y = -1000;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		image = new Image("ressources/images/histoire/attaqueNebula.png");
 		scale = 1.0f;
+		cadre = new Image("ressources/images/miscellaneous/cadre.png");
+		tete = new Image("ressources/images/histoire/father.png");
+		((NebulaGame) game).getUFont().loadGlyphs();
+		s = new StringBuilder();
+		s.append("Bidibop, vite ! Dans ton vaisseau ! Il faut \n");
+		s.append("que tu partes chercher de l'aide !\n");
+		
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
 	{
 		image.draw(0, 0, scale * container.getWidth(), scale * container.getHeight());
+		cadre.draw(x, y, container.getWidth()*0.8f, container.getHeight() * 0.3f);
+		tete.draw(0, y, container.getWidth()*0.15f, container.getHeight() * 0.3f);
+		((NebulaGame)game).getUFont().drawString(x + container.getWidth()*0.05f, y + container.getHeight()*0.03f, s.toString());
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException 
 	{
-		if(scale >= 1)
+		Input input = container.getInput();
+		
+		if(input.isKeyDown(Input.KEY_ENTER))
 		{
-			if(cpt < 10)
-			{
-				cpt += 0.005f * delta;		
-			}
-			else
-			{
-				((NebulaGame)game).next(this.getID(),2);
-			}
+			((NebulaGame)game).next(this.getID(),1);
+		}
+		
+		if(cpt < 3)
+		{
+			cpt += delta * 0.001f;
 		}
 		else
 		{
-			scale += 0.00005f * delta;
+			x = container.getWidth() * 0.2f;
+			y = container.getHeight() * 0.7f;
 		}
 	}
 
