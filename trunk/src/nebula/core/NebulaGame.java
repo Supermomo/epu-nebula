@@ -38,7 +38,11 @@ public class NebulaGame extends StateBasedGame {
 	enum State {
 		MAIN_MENU(0),
 		OPTION_MENU(1),
-		JEU_GRAVITY(10);
+		INTRO_JEU(2),
+		INTRO_2JEU(3),
+		DEBUT_AVENTURE(3),
+		JEU_SPACEINVADERS(6),
+		JEU_GRAVITY(9);
 		
 		private int valeur;
 		
@@ -61,14 +65,14 @@ public class NebulaGame extends StateBasedGame {
 		this.addState((new MainMenuState(State.MAIN_MENU.getValeur())));
 		this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
 		this.addState(new IntroJeu()); //3
-		this.addState(new Intro2Jeu());
-		this.addState(new Intro3Jeu());
-		this.addState(new SpaceInvaders(8));
-		this.addState(new FinInvaders());
-		this.addState(new Bougibouga());
-		this.addState(new Jubba());
-		this.addState(new Breakout());
-		this.addState(new Fin());
+		this.addState(new Intro2Jeu()); //4
+		this.addState(new Intro3Jeu()); //5
+		this.addState(new SpaceInvaders(8)); //6
+		this.addState(new FinInvaders()); //7
+		this.addState(new Bougibouga()); //8
+		this.addState(new Jubba()); //9
+		//TODO this.addState(new Breakout()); //10
+		this.addState(new Fin()); //11
 		//this.addState(new nebula.minigame.gravity.Gravity(9));
 		
 		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);

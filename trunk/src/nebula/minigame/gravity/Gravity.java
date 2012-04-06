@@ -1,5 +1,8 @@
 package nebula.minigame.gravity;
 
+
+import nebula.core.NebulaGame;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -7,11 +10,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+
 public class Gravity extends BasicGameState {
 	
 	private int stateID;
 	
-	private final static String dossierData = "ressources/images/gravity/";
+	private final static String dossierData = "ressources/images/gravity";
 	private ModeleJeu modeleJeu;
 	private ControleJeu controleJeu;
 	private Image victoire, defaite, coeur;
@@ -37,6 +41,7 @@ public class Gravity extends BasicGameState {
 		defaite = new Image(dossierData+"defaite.png");
 		coeur = new Image(dossierData+"coeur.png");
 		gameContainer.setVSync(true);
+		
 	}
 
 	/**
@@ -45,13 +50,16 @@ public class Gravity extends BasicGameState {
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g)
 			throws SlickException {
-		modeleJeu.getMap().getTiledMap().render(0, 0);
-		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX(), modeleJeu.getHero().getY());
+		int taille[] = modeleJeu.renderMap();
+		modeleJeu.getMap().getTiledMap().render(taille[0]*60, taille[1]*60);
+		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX()+taille[0]*60, modeleJeu.getHero().getY()+taille[1]*60);
     	
 		if(modeleJeu.getFin()) {
-			if(modeleJeu.getVictoire())
+			if(modeleJeu.getVictoire()) {
 				victoire.draw(100, 250);
-			else if(modeleJeu.getDefaite()) {
+				NebulaGame ng=(NebulaGame)stateBasedGame;
+				ng.next(getID());
+			} else if(modeleJeu.getDefaite()) {
 				defaite.draw(100,250);
 			}
 		}

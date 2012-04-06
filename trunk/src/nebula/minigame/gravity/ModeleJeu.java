@@ -1,16 +1,36 @@
 package nebula.minigame.gravity;
 
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 
 public class ModeleJeu {
+	
+	
 
+	private final static String dossierData = "data/";
+	
+	
 	private Player hero;
 	private BlockMap map;
 	private float gravite;
-
+	
 	private boolean fin;
 	private boolean victoire;
+	
+	// Ensemble des sons
+	private Sound sonJump;
+	private Sound sonDomage;
+	private Sound sonVictoire;
+	private Sound sonDefaite;
+	
 
-
+	/** Constructeur par défaut
+	 * Initialise les instances du héro et de la map.
+	 * Initialise les sons.
+	 * @param hero - Instance du hero créé dans le jeu de base
+	 * @param map - Instance de map créé dans le jeu de base
+	 */
 	public ModeleJeu(Player hero, BlockMap map) {
 		setHero(hero);
 		setMap(map);
@@ -19,6 +39,18 @@ public class ModeleJeu {
 
 		fin = false;
 		victoire = false;
+		
+		// Chargement des sons
+		try {
+			sonJump = new Sound(dossierData+"sound/jump.wav");
+			sonDomage = new Sound(dossierData+"sound/hurt.wav");
+			sonVictoire = new Sound(dossierData+"sound/defaite.wav");
+			sonDefaite = new Sound(dossierData+"sound/victoire.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public Player getHero() {
@@ -54,11 +86,17 @@ public class ModeleJeu {
 	}
 
 	public boolean getDefaite() {
-		System.out.println("*MJ* get def");
-		if(hero.getNbrVies()<=0) return true;
+		if(hero.getNbrVies()<=0) {
+			System.out.println("*MJ* Get Defaite");
+			return true;
+		}
 		else return false;
 	}
 
+	
+	
+	
+	
 	//---
 	// Méthode de déplacement du héro
 	/////////////////////////////////
@@ -135,6 +173,10 @@ public class ModeleJeu {
 		hero.courrir();
 	}
 
+	
+	
+	
+	
 	// ---
 	// Méthodes de gestion de la gravité
 	///////////////////////////////////
@@ -144,6 +186,7 @@ public class ModeleJeu {
 			gravite *= -1;
 			hero.setAnimRetourner(gravite);
 			hero.peutInverserGravite(false);
+			sonJump.play();
 		}
 	}
 
@@ -154,6 +197,8 @@ public class ModeleJeu {
 	}
 
 
+	
+	
 
 	// ---
 	// Méthodes de gestion de la victoire/défaite
@@ -167,14 +212,41 @@ public class ModeleJeu {
 	private void mort() {
 		//TODO Rajouter une animation spéciale
 		hero.setPosition((Point)map.getDepart().clone());
-		if(hero.getNbrVies()>1) {
+		if(hero.getNbrVies()>0) {
 			hero.domage();
-			System.out.println(hero.getNbrVies()+" vies restantes");
+			sonDomage.play();
 		}
 		else {
 			setFin(true);
-			System.out.println("*MJ* GameOver");
 		}
+	}
+	
+	
+	
+	
+	
+	
+	//---
+	// Méthode de rendu de la map lors du déplacement
+	/////////////////////////////////////////////////
+
+	/** Rendu de la map
+	 * Dessine la partie de la map occupée par le personnage
+	 */
+	public int[] renderMap() {
+		double heroY = hero.getPosition().getY()/map.getTiledMap().getTileHeight();
+		double heroX = hero.getPosition().getX()/map.getTiledMap().getTileWidth();		
+
+		int renderX = 0;
+		int renderY = 0;
+		
+		while(heroX>renderX+5) renderX += 5;
+		while(heroY>renderY+10) renderY += 10;
+	
+		//System.out.println(renderX+" "+renderY);
+		// Render( ScreenX, ScreenY, , , NbrTilesX, NbrTilesY)
+		int i[] = {-renderX,-renderY};
+		return i;
 	}
 
 }
