@@ -6,6 +6,7 @@ import nebula.core.NebulaGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -75,6 +76,12 @@ public class Gravity extends BasicGameState {
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
 			throws SlickException {
+		
+		if(gameContainer.getInput().isKeyDown(Input.KEY_ESCAPE))
+		{
+			((NebulaGame)stateBasedGame).enterState(0);
+		}
+		
 		controleJeu.inputJoueur(gameContainer.getInput(), delta);
 		modeleJeu.getHero().incStill();
 

@@ -15,6 +15,7 @@ import nebula.core.intro.Intro3Jeu;
 import nebula.core.intro.IntroJeu;
 import nebula.core.intro.Jubba;
 import nebula.minigame.breakout.Breakout;
+import nebula.minigame.gravity.Gravity;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
 import org.newdawn.slick.Color;
@@ -71,7 +72,8 @@ public class NebulaGame extends StateBasedGame {
 		this.addState(new FinInvaders()); //7
 		this.addState(new Bougibouga()); //8
 		this.addState(new Jubba()); //9
-		//TODO this.addState(new Breakout()); //10
+		this.addState(new Gravity(10));
+		this.addState(new Breakout()); //10
 		this.addState(new Fin()); //11
 		//this.addState(new nebula.minigame.gravity.Gravity(9));
 		

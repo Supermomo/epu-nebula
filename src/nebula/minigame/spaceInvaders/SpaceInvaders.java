@@ -87,6 +87,11 @@ public class SpaceInvaders extends BasicGameState {
     	
     	// =================== Gestion des deplacements ==========================
     	
+    	if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			((NebulaGame)game).enterState(0);
+		}
+    	
     	if(input.isKeyDown(Input.KEY_RIGHT))
     	{
     		if(tank.getX() < gc.getWidth() - tank.getImage().getWidth())
