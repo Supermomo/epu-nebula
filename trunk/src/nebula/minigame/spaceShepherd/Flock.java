@@ -19,7 +19,7 @@ public class Flock extends SteeringEntity{
 		
 		flockers=new ArrayList<SteeringEntity>();
 		for(int i=0;i<flockersNumber;i++){
-			flockers.add(new SteeringEntity(x, y, maxSpeed*10, fieldx, fieldy));
+			flockers.add(new SteeringEntity(x, y, maxSpeed*15, fieldx, fieldy));
 		}	
 	}
 	
