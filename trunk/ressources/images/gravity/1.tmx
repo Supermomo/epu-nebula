@@ -28,6 +28,6 @@
   </data>
  </layer>
  <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
-  <object name="spawn" type="start" x="110" y="60" width="1" height="1"/>
+  <object name="spawn" type="start" x="210" y="360" width="1" height="1"/>
  </objectgroup>
 </map>
