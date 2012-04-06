@@ -222,6 +222,10 @@ public class Breakout extends BasicGameState
             input.isKeyDown(Input.KEY_LSHIFT))
             useMouse = !useMouse;
         
+        // Escape key
+        if (input.isKeyPressed(Input.KEY_ESCAPE))
+            ((NebulaGame)game).enterState(0);
+        
         // Victory condition
         if (bricks.isEmpty())
             ((NebulaGame)game).next(this.getID());
