@@ -48,10 +48,10 @@ public class Breakout extends BasicGameState
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
         imgLife = new Image(imgPath + "ball.png");
-        sndBounce = new Sound(sndPath + "bounce.ogg");
-        sndLaunch = new Sound(sndPath + "launch.ogg");
-        sndBreak  = new Sound(sndPath + "break.ogg");
-        sndLose   = new Sound(sndPath + "lose.ogg");
+        sndBounce = new Sound(sndPath + "bounce.wav");
+        sndLaunch = new Sound(sndPath + "launch.wav");
+        sndBreak  = new Sound(sndPath + "break.wav");
+        sndLose   = new Sound(sndPath + "lose.wav");
         
         // Game state and counters
         gameCounter = 1.0f;
@@ -80,7 +80,7 @@ public class Breakout extends BasicGameState
     {
         Input input = gc.getInput();
         
-        // Ingame state
+        // ==== Ingame state ====
         if (GameState.Ingame.equals(gameState))
         {
             // Move ball
@@ -171,12 +171,8 @@ public class Breakout extends BasicGameState
                     sndLaunch.play();
                 }
             }
-            
-            // Victory condition
-            if (bricks.isEmpty())
-                ((NebulaGame)game).next(this.getID());
         }
-        // Active state
+        // ==== Active state ====
         else if (GameState.Active.equals(gameState))
         {
             // Launch ball event
@@ -191,7 +187,7 @@ public class Breakout extends BasicGameState
                 sndLaunch.play();
             }
         }
-        // Active and ingame states
+        // ==== Active and ingame states ====
         if (GameState.Active.equals(gameState) ||
             GameState.Ingame.equals(gameState))
         {
@@ -204,7 +200,7 @@ public class Breakout extends BasicGameState
             
             if (useMouse) racket.setX(input.getAbsoluteMouseX()-Racket.w/2);
         }
-        // Inactive state
+        // ==== Inactive state ====
         if (GameState.Inactive.equals(gameState))
         {
             racket.goUp(Racket.vspeed * delta);
@@ -220,9 +216,17 @@ public class Breakout extends BasicGameState
             }
         }
         
-        // All states
+        // ==== All states ====
+        // Mouse support
         if (input.isKeyPressed(Input.KEY_M))
             useMouse = !useMouse;
+        
+        // Victory condition
+        if (bricks.isEmpty())
+            ((NebulaGame)game).next(this.getID());
+        // Defeat condition
+        else if (lifes < 0)
+            System.out.println("Breakout: you failed!");
     }
 
     @Override
