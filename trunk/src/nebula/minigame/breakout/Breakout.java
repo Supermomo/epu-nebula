@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nebula.core.NebulaGame;
+import nebula.core.Minigame;
 import nebula.core.helper.Collision;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -16,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * Breakout minigame
  * @author Thomas Di'Meco
  */
-public class Breakout extends BasicGameState
+public class Breakout extends Minigame
 {
     static final String imgPath = "ressources/images/breakout/";
     static final String sndPath = "ressources/sons/breakout/";
@@ -45,6 +44,9 @@ public class Breakout extends BasicGameState
     @Override
     public void init (GameContainer gc, StateBasedGame game) throws SlickException
     {
+        // Call super method
+        super.init(gc, game);
+        
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
         imgLife = new Image(imgPath + "ball.png");
@@ -78,6 +80,9 @@ public class Breakout extends BasicGameState
     public void update (GameContainer gc, StateBasedGame game, int delta)
         throws SlickException
     {
+        // Call super method
+        super.update(gc, game, delta);
+        
         Input input = gc.getInput();
         
         // ==== Ingame state ====
@@ -221,13 +226,9 @@ public class Breakout extends BasicGameState
         if (input.isKeyPressed(Input.KEY_M))
             useMouse = !useMouse;
         
-        // Escape key
-        if (input.isKeyPressed(Input.KEY_ESCAPE))
-            ((NebulaGame)game).enterState(0);
-        
         // Victory condition
         if (bricks.isEmpty())
-            ((NebulaGame)game).next(this.getID());
+            this.gotoNextState();
         // Defeat condition
         else if (lifes < 0)
             System.out.println("Breakout: you failed!");
@@ -237,6 +238,9 @@ public class Breakout extends BasicGameState
     public void render (GameContainer gc,  StateBasedGame game, Graphics g)
         throws SlickException
     {
+        // Call super method
+        super.render(gc, game, g);
+        
         // Render background
         for (int x = 0; x < gc.getWidth(); x += imgBackground.getWidth())
             for (int y = 0; y < gc.getHeight(); y += imgBackground.getHeight())

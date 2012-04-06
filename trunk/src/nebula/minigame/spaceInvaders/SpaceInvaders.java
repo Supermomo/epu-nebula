@@ -2,6 +2,7 @@ package nebula.minigame.spaceInvaders;
 import java.awt.Toolkit;
 import java.util.Random;
 
+import nebula.core.Minigame;
 import nebula.core.NebulaGame;
 import nebula.core.helper.Collision;
 
@@ -14,7 +15,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
-public class SpaceInvaders extends BasicGameState {
+public class SpaceInvaders extends Minigame {
 	
 	Image land = null;
 	Boolean droite = true;
@@ -47,6 +48,10 @@ public class SpaceInvaders extends BasicGameState {
  
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+        
+        // Call super method
+        super.init(gc, game);
+        
     	System.out.println("test");
     	gc.setMinimumLogicUpdateInterval(20);
     	gc.setTargetFrameRate(120);
@@ -83,6 +88,9 @@ public class SpaceInvaders extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException     
     {
+        // Call super method
+        super.update(gc, game, delta);
+        
     	Input input = gc.getInput();
     	
     	// =================== Gestion des deplacements ==========================
@@ -231,7 +239,7 @@ public class SpaceInvaders extends BasicGameState {
     	{
     		//sVictoire.play();
     		//gc.pause();
-    		((NebulaGame)game).next(this.getID());
+    		this.gotoNextState();
     	}
     	
     	if(tank.dead())
@@ -246,6 +254,10 @@ public class SpaceInvaders extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame game, Graphics g) 
 			throws SlickException 
     {
+        
+        // Call super method
+        super.render(gc, game, g);
+        
     	land.draw(0, 0, gc.getWidth(), gc.getHeight());
     	g.drawImage(tank.getImage(), tank.getX(), tank.getY());
     	g.drawImage(tir.getImage(), tir.getX(), tir.getY());
