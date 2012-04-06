@@ -54,6 +54,11 @@ public class IntroJeu extends BasicGameState
 			((NebulaGame)game).next(this.getID(),1);
 		}
 		
+		if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			((NebulaGame)game).enterState(0);
+		}
+		
 		if(cpt < 3)
 		{
 			cpt += delta * 0.001f;

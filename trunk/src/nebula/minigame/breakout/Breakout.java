@@ -40,7 +40,7 @@ public class Breakout extends BasicGameState
     
     
     /* Game ID */
-    @Override public int getID () { return 10; }
+    @Override public int getID () { return 11; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game) throws SlickException
@@ -218,8 +218,7 @@ public class Breakout extends BasicGameState
         
         // ==== All states ====
         // Mouse support
-        if (input.isKeyPressed(Input.KEY_M) &&
-            input.isKeyDown(Input.KEY_LSHIFT))
+        if (input.isKeyPressed(Input.KEY_M))
             useMouse = !useMouse;
         
         // Escape key

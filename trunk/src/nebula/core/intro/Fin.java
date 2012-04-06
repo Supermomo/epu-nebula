@@ -42,7 +42,7 @@ public class Fin extends BasicGameState
 	@Override
 	public int getID() 
 	{
-		return 11;
+		return 12;
 	}
 
 }
