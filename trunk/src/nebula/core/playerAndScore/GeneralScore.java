@@ -14,7 +14,7 @@ public class GeneralScore implements Serializable {
 
 	private static final long serialVersionUID = -4773432590321886491L;
 	private HashMap<String, PlayerScoreDuo> scoreList;
-	private String generalScorePath = "generalScore.data";
+	private String generalScorePath = "ressources/data/generalScore.data";
 
 	public GeneralScore() {
 		try {
@@ -113,5 +113,17 @@ public class GeneralScore implements Serializable {
 			return s;
 		}
 	}
+	
+//    public static void main(String args[]){
+//		GeneralScore gs=new GeneralScore();
+//		/*gs.addScore("Gwenn", new Score(42, MiniGamesEnum.SPACEINVADERS));
+//		gs.addScore("Gwenn", new Score(42, MiniGamesEnum.SPACEINVADERS));
+//		gs.addScore("Gwenn", new Score(666, MiniGamesEnum.SPACEINVADERS));
+//		gs.addScore("Gwenn2", new Score(42, MiniGamesEnum.SPACEINVADERS));
+//		gs.addScore("Gwenn", new Score(410, MiniGamesEnum.BREAKOUT));
+//		gs.addScore("Gwenn3", new Score(333, MiniGamesEnum.GRAVITY));*/
+//		System.out.println(gs.toString());
+//		//gs.save();
+//	}
 
 }
