@@ -16,15 +16,20 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 
 import nebula.core.NebulaGame.State;
+import nebula.core.playerAndScore.GeneralScore;
+import nebula.core.playerAndScore.Player;
 
 public class MainMenuState extends BasicGameState {
 
 	private int stateID;
 	private UnicodeFont font;
 
-	private String[] menu = {"Mode Aventure", "Choix Du Jeu", "Retour Au Menu"};
+	private String[] menu = {"Mode Aventure", "Choix Du Jeu","Scores du jeu", "Retour Au Menu"};
 	private int labelSelectionne;
 
+	//TODO méthode d'acquisition du nom ?
+	private String playerName="Gwenn";
+	
 	public MainMenuState(int stateID) {
 		this.stateID = stateID;
 	}
@@ -67,13 +72,18 @@ public class MainMenuState extends BasicGameState {
 		
 		
 		if(input.isKeyPressed(Input.KEY_DOWN)) {
-			if(++labelSelectionne >= menu.length) {
+			if(++labelSelectionne >= menu.length || menu[labelSelectionne].startsWith(playerName)) {
 				labelSelectionne = 0;
 			}
 		} else if(input.isKeyPressed(Input.KEY_UP)) {
 			if(--labelSelectionne < 0) {
 				labelSelectionne = menu.length-1;
+				if(menu[labelSelectionne].startsWith(playerName)){
+					labelSelectionne = 0;
+				}
 			}
+
+
 		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
 			String texte = menu[labelSelectionne];
 			int stateChange = State.MAIN_MENU.getValeur();
@@ -88,7 +98,7 @@ public class MainMenuState extends BasicGameState {
 				labelSelectionne = 0;
 			}
 			else if("retour".equalsIgnoreCase(texte)) {
-				String[] s = {"Mode Aventure", "Choix Du Jeu", "Retour Au Menu"};
+				String[] s = {"Mode Aventure", "Choix Du Jeu","Scores du jeu", "Retour Au Menu"};
 				menu = s;
 				labelSelectionne = 0;
 			}
@@ -96,7 +106,13 @@ public class MainMenuState extends BasicGameState {
 				stateChange = 10;
 			else if("spaceinvaders".equalsIgnoreCase(texte))
 				stateChange = State.JEU_SPACEINVADERS.getValeur();
-			
+			else if("scores du jeu".equalsIgnoreCase(texte)){
+				String[] s={"Retour",Player.load(playerName).toString()};
+				menu=s;
+				labelSelectionne = 0;
+			}
+
+			//TODO empecher le surlignage du score
 			
 			// Changement d'état
 			stateGame.enterState(stateChange, null, new FadeInTransition(Color.black,1000));

@@ -1,6 +1,10 @@
 package nebula.core.playerAndScore;
 
-public class Score {
+import java.io.Serializable;
+
+public class Score implements Serializable{
+
+	private static final long serialVersionUID = -7646321226283725678L;
 	
 	public MiniGamesEnum GameEnum;
 	private int score;
