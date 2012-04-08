@@ -40,12 +40,13 @@ public class SpaceShepherd extends BasicGame{
 	private boolean spaceReleased=true;
 
 	private Vector2f targetCenter;
-	private int targetRadius=20;
+	private int targetRadius=80;
 	
 	private Image victoryImg;
 	private Image  lossImg;
 	private String pathVictoryImg="ressources/images/spaceInvaders/victoire.png";
 	private String pathlLossImg="ressources/images/spaceInvaders/defaite.png";
+	private Sound victoSound;
 	
 	public SpaceShepherd(){
 		super("SpaceShepherd");
@@ -64,6 +65,8 @@ public class SpaceShepherd extends BasicGame{
 		
 		victoryImg=new Image(pathVictoryImg);
 		lossImg=new Image(pathlLossImg);
+		
+		victoSound=new Sound("assets/sound/cropCircle/odetojoy.ogg");
 	}
 
 	@Override
@@ -113,6 +116,9 @@ public class SpaceShepherd extends BasicGame{
 		}
 		
 		if(flock.allIntheHole(targetCenter, targetRadius)){
+			if(!victoSound.playing()){
+				victoSound.play();
+			}
 			gc.pause();
 			
 		}
@@ -163,9 +169,9 @@ public class SpaceShepherd extends BasicGame{
 	public static void main(String[] args) throws SlickException {
 
 		AppGameContainer app = new AppGameContainer(new SpaceShepherd());
-		/*app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
-				Toolkit.getDefaultToolkit().getScreenSize().height, true);*/
-		app.setDisplayMode(800, 600, true);
+		app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
+				Toolkit.getDefaultToolkit().getScreenSize().height, true);
+		//app.setDisplayMode(800, 600, true);
 		app.setTargetFrameRate(60);
 		app.start();
 	}
