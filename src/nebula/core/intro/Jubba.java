@@ -1,6 +1,7 @@
 package nebula.core.intro;
 
 import nebula.core.NebulaGame;
+import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -37,7 +38,7 @@ public class Jubba extends BasicGameState
 		
 		if(input.isKeyDown(Input.KEY_ENTER))
 		{
-			((NebulaGame)game).next(this.getID(),1);
+			((NebulaGame)game).next(this.getID(),TransitionType.HorizontalSplit);
 		}
 		
 		if(input.isKeyDown(Input.KEY_ESCAPE))

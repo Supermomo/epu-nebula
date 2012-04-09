@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class Minigame extends BasicGameState
 {
-    private NebulaGame nebulaGame;
+    protected NebulaGame nebulaGame;
     
     @Override
     public void init (GameContainer gc, StateBasedGame game)

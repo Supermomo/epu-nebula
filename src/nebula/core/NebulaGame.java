@@ -1,15 +1,8 @@
 package nebula.core;
 
-import java.awt.FontFormatException;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import nebula.core.intro.*;
 import nebula.minigame.breakout.Breakout;
-import nebula.minigame.gravity.Gravity;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
 import org.newdawn.slick.AppGameContainer;
@@ -18,7 +11,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.EffectUtil;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -29,6 +21,9 @@ public class NebulaGame extends StateBasedGame {
 
 	public final static String fontPath = "ressources/font/batmfa.ttf";
 	private UnicodeFont uFont;
+	
+	public static enum TransitionType
+	    {Default, FadeOut, HorizontalSplit, VerticalSplit};
 	
 	enum State {
 		MAIN_MENU(0),
@@ -54,7 +49,7 @@ public class NebulaGame extends StateBasedGame {
 	 * Definit les différents états (menus / jeux) disponnibles
 	 * @throws SlickException 
 	 */
-	public NebulaGame() throws SlickException {
+    public NebulaGame() throws SlickException {
 		super("Nebula");
 		
 		// Ajout des GameStates
@@ -94,32 +89,19 @@ public class NebulaGame extends StateBasedGame {
 	 * @throws SlickException
 	 */
 	
-	public void next(int currentState, int typeFondu)
+	public void next (int currentState, TransitionType transition)
 	{
-		switch (typeFondu) 
-		{
-			case 0:
-				enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
-			break;
-
-			case 1:
-				enterState(++currentState, null, new HorizontalSplitTransition(Color.black));
-			break;
-			
-			case 2:
-				enterState(++currentState, null, new VerticalSplitTransition(Color.black));
-			break;
-		
-		default:
+		if (TransitionType.HorizontalSplit.equals(transition))
+			enterState(++currentState, null, new HorizontalSplitTransition(Color.black));
+		else if (TransitionType.VerticalSplit.equals(transition))
+			enterState(++currentState, null, new VerticalSplitTransition(Color.black));
+		else
 			enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
-		break;
-		}
-		
 	}
 	
-	public void next(int currentState)
+	public void next (int currentState)
 	{
-		enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
+	    next(currentState, TransitionType.Default);
 	}
 
 	public UnicodeFont getUFont()
