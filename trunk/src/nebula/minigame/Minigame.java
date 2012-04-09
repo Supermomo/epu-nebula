@@ -1,4 +1,6 @@
-package nebula.core;
+package nebula.minigame;
+
+import nebula.core.NebulaGame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

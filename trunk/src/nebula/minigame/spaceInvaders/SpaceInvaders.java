@@ -2,9 +2,10 @@ package nebula.minigame.spaceInvaders;
 
 import java.util.Random;
 
-import nebula.core.Minigame;
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
+import nebula.minigame.Minigame;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 

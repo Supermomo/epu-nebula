@@ -1,8 +1,8 @@
 package nebula.minigame.gravity;
 
 
-import nebula.core.Minigame;
 import nebula.core.NebulaGame;
+import nebula.minigame.Minigame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

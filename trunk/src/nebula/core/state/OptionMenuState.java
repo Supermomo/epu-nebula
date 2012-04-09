@@ -1,4 +1,4 @@
-package nebula.core;
+package nebula.core.state;
 
 import nebula.core.NebulaGame.StateID;
 
