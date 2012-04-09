@@ -8,11 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import nebula.core.intro.*;
-import nebula.core.intro.Jubba;
 import nebula.minigame.breakout.Breakout;
 import nebula.minigame.gravity.Gravity;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -67,7 +67,7 @@ public class NebulaGame extends StateBasedGame {
 		this.addState(new FinInvaders()); //7
 		this.addState(new Bougibouga()); //8
 		this.addState(new Jubba()); //9
-		//TODO this.addState(new Breakout()); //10
+		this.addState(new Breakout()); //10
 		this.addState(new Fin()); //11
 		//this.addState(new nebula.minigame.gravity.Gravity(State.JEU_GRAVITY.getValeur()));
 		
@@ -125,5 +125,21 @@ public class NebulaGame extends StateBasedGame {
 	public UnicodeFont getUFont()
 	{
 		return uFont;
+	}
+	
+	public static void main (String[] args) throws SlickException
+	{
+	    try {
+    	    AppGameContainer app = new AppGameContainer(new NebulaGame());
+            app.setDisplayMode(
+                Toolkit.getDefaultToolkit().getScreenSize().width,
+                Toolkit.getDefaultToolkit().getScreenSize().height,
+                true);
+            app.setTargetFrameRate(120);
+            app.start();
+	    }
+	    catch (Exception exc) {
+            exc.printStackTrace();
+        }
 	}
 }
