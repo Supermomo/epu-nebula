@@ -19,10 +19,10 @@ public class Brick
         // Set brick size
         if (f == null) return;
         
-        w = f.getWidth()/f.getColumn();
-        h = f.getHeight()/f.getRow();
-        x = f.getX() + c*w;
-        y = f.getY() + r*h;
+        w = f.getWidth()/(float)f.getColumn();
+        h = f.getHeight()/(float)f.getRow();
+        x = f.getX() + (float)c*w;
+        y = f.getY() + (float)r*h;
         
         // Set brick image first time
         if (image == null)
