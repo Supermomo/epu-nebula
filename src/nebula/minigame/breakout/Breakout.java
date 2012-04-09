@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nebula.core.Minigame;
 import nebula.core.NebulaGame.StateID;
 import nebula.core.helper.Collision;
+import nebula.minigame.Minigame;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
