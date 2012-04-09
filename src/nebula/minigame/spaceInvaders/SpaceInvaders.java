@@ -51,7 +51,6 @@ public class SpaceInvaders extends Minigame {
         // Call super method
         super.init(gc, game);
         
-    	System.out.println("test");
     	gc.setMinimumLogicUpdateInterval(20);
     	gc.setTargetFrameRate(120);
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");

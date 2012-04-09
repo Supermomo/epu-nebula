@@ -20,6 +20,7 @@ public class Intro3Jeu extends Transition
         super.init(gc, game);
         
         this.setTransitionImage("ressources/images/histoire/nebula fuite.png");
-        this.setTransitionTime(5000.0f);
+        this.setTransitionVoice("ressources/sons/histoire/intro3.ogg");
+        this.setTransitionTime(12000.0f);
 	}
 }
