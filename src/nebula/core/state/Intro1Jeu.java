@@ -1,4 +1,4 @@
-package nebula.core.intro;
+package nebula.core.state;
 
 import nebula.core.NebulaGame.StateID;
 import nebula.core.NebulaGame.TransitionType;

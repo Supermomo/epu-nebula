@@ -1,17 +1,18 @@
-package nebula.core.intro;
+package nebula.core.state;
 
 import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class Intro3Jeu extends Transition
+public class FinInvaders extends Transition
 {
     /* Transition ID */
-    @Override public int getID () { return StateID.Intro3Jeu.value; }
-    
+    @Override public int getID () { return StateID.FinInvaders.value; }
+	
 	@Override
 	public void init (GameContainer gc, StateBasedGame game)
 	    throws SlickException 
@@ -19,7 +20,8 @@ public class Intro3Jeu extends Transition
 	    // Call super method
         super.init(gc, game);
         
-        this.setTransitionImage("ressources/images/histoire/nebula fuite.png");
+        this.setTransitionType(TransitionType.HorizontalSplit);
+        this.setTransitionImage("ressources/images/histoire/nebula-vol_espace.png");
         this.setTransitionTime(5000.0f);
 	}
 }
