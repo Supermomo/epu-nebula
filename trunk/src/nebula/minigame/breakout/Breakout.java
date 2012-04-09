@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import nebula.core.Minigame;
+import nebula.core.NebulaGame.StateID;
 import nebula.core.helper.Collision;
 
 import org.newdawn.slick.*;
@@ -39,7 +40,7 @@ public class Breakout extends Minigame
     
     
     /* Game ID */
-    @Override public int getID () { return 10; }
+    @Override public int getID () { return StateID.Breakout.value; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game) throws SlickException
@@ -223,7 +224,8 @@ public class Breakout extends Minigame
         
         // ==== All states ====
         // Mouse support
-        if (input.isKeyPressed(Input.KEY_M))
+        if (input.isKeyPressed(Input.KEY_M) &&
+            input.isKeyDown(Input.KEY_LSHIFT))
             useMouse = !useMouse;
         
         // Victory condition

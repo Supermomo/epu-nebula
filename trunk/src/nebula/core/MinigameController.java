@@ -1,14 +1,5 @@
 package nebula.core;
 
-import nebula.minigame.breakout.Breakout;
-import nebula.minigame.spaceInvaders.SpaceInvaders;
-
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.GameState;
-import org.newdawn.slick.state.StateBasedGame;
-
 
 /**
  * Base type for a minigame controller. Each minigame controller must subclass
@@ -43,7 +34,4 @@ public class MinigameController
 	{
 		Scores[rang] = score;
 	}
-	
-	
-	
 }

@@ -1,6 +1,5 @@
 package nebula.core;
 
-
 import java.awt.Toolkit;
 
 import org.newdawn.slick.Color;
@@ -9,19 +8,17 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.HieroSettings;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 
-import nebula.core.NebulaGame.State;
-import nebula.core.playerAndScore.GeneralScore;
+import nebula.core.NebulaGame.StateID;
 import nebula.core.playerAndScore.Player;
 
-public class MainMenuState extends BasicGameState {
 
-	private int stateID;
+public class MainMenuState extends BasicGameState
+{
 	private UnicodeFont font;
 
 	private String[] menu = {"Mode Aventure", "Choix Du Jeu","Scores du jeu", "Retour Au Menu"};
@@ -29,10 +26,6 @@ public class MainMenuState extends BasicGameState {
 
 	//TODO méthode d'acquisition du nom ?
 	private String playerName="Gwenn";
-	
-	public MainMenuState(int stateID) {
-		this.stateID = stateID;
-	}
 
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateGame)
@@ -58,7 +51,7 @@ public class MainMenuState extends BasicGameState {
 				//TODO
 				font.drawString(x, y, menu[i], Color.red);
 			} else {
-				((nebula.core.NebulaGame) stateGame).getUFont().drawString(x, y, menu[i], Color.white);
+				((nebula.core.NebulaGame) stateGame).getFont().drawString(x, y, menu[i], Color.white);
 			}
 			y+=50;
 		}
@@ -86,12 +79,12 @@ public class MainMenuState extends BasicGameState {
 
 		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
 			String texte = menu[labelSelectionne];
-			int stateChange = State.MAIN_MENU.getValeur();
+			int stateChange = StateID.MainMenu.value;
 
 			if("retour au menu".equalsIgnoreCase(texte))
 				;// stateGame.exit();
 			else if("mode aventure".equalsIgnoreCase(texte))
-				stateChange = State.DEBUT_AVENTURE.getValeur();
+				stateChange = StateID.StartAventure.value;
 			else if("choix du jeu".equalsIgnoreCase(texte)) {
 				String[] s = {"BreakOut", "Gravity", "SpaceInvaders", "SpaceShepard", "Retour"};
 				menu = s;
@@ -103,9 +96,9 @@ public class MainMenuState extends BasicGameState {
 				labelSelectionne = 0;
 			}
 			else if("breakout".equalsIgnoreCase(texte))
-				stateChange = 10;
+				stateChange = StateID.Breakout.value;
 			else if("spaceinvaders".equalsIgnoreCase(texte))
-				stateChange = State.JEU_SPACEINVADERS.getValeur();
+				stateChange = StateID.SpaceInvaders.value;
 			else if("scores du jeu".equalsIgnoreCase(texte)){
 				String[] s={"Retour",Player.load(playerName).toString()};
 				menu=s;
@@ -116,12 +109,11 @@ public class MainMenuState extends BasicGameState {
 			
 			// Changement d'état
 			stateGame.enterState(stateChange, null, new FadeInTransition(Color.black,1000));
-		}		
+		}
 	}
 
 	@Override
-	public int getID() {
-		return stateID;
+	public int getID () {
+		return StateID.MainMenu.value;
 	}
-
 }

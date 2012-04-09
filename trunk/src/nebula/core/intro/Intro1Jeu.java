@@ -1,14 +1,17 @@
 package nebula.core.intro;
 
+import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.TransitionType;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class IntroJeu extends Transition
+public class Intro1Jeu extends Transition
 {
 	/* Transition ID */
-	@Override public int getID () { return 3; }
+	@Override public int getID () { return StateID.Intro1Jeu.value; }
 	
 	@Override
 	public void init (GameContainer gc, StateBasedGame game)
@@ -18,6 +21,7 @@ public class IntroJeu extends Transition
 	    // Call super method
 	    super.init(gc, game);
 	    
+	    this.setTransitionType(TransitionType.HorizontalSplit);
 	    this.setTransitionImage("ressources/images/histoire/nebula_intro.jpg");
 	    this.setTransitionText(
 	        "Bidibop est un alien. Et aujourd'hui il a 10 ans.\n" +

@@ -31,6 +31,11 @@ public abstract class Minigame extends BasicGameState
         // Escape key
         if (input.isKeyPressed(Input.KEY_ESCAPE))
             this.escapeMinigame();
+        
+        // Debug victory key
+        if (input.isKeyPressed(Input.KEY_W) &&
+            input.isKeyDown(Input.KEY_LSHIFT))
+            this.gotoNextState();
     }
     
     @Override
