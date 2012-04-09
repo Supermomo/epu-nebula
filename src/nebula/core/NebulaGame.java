@@ -118,19 +118,28 @@ public class NebulaGame extends StateBasedGame
 	/**
 	 * Get the main font
 	 */
-	public UnicodeFont getFont ()
-	{
-		return uFont;
-	}
+	public UnicodeFont getFont () { return uFont; }
 	
+	/**
+	 * Start NebulaGame
+	 */
 	public static void main (String[] args) throws SlickException
 	{
+	    // FULLSCREEN //
+	    final boolean FULLSCREEN = true;
+	    
 	    try {
     	    AppGameContainer app = new AppGameContainer(new NebulaGame());
-            app.setDisplayMode(
-                800,
-                600,
-                false);
+    	    
+    	    if (FULLSCREEN)
+    	    {
+                app.setDisplayMode(
+                    Toolkit.getDefaultToolkit().getScreenSize().width,
+                    Toolkit.getDefaultToolkit().getScreenSize().height,
+                    true);
+    	    }
+    	    else app.setDisplayMode(800, 600, false);
+    	    
             app.setTargetFrameRate(120);
             app.start();
 	    }
