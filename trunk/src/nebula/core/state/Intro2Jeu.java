@@ -22,11 +22,7 @@ public class Intro2Jeu extends Transition
         
         this.setTransitionType(TransitionType.HorizontalSplit);
 	    this.setTransitionImage("ressources/images/histoire/attaqueNebula.png");
-		this.setTransitionFace("ressources/images/histoire/father.png");
-		this.setTransitionText(
-		    "Bidibop, vite ! Dans ton vaisseau ! Il faut \n" +
-		    "que tu partes chercher de l'aide !"
-		);
-		
+	    this.setTransitionVoice("ressources/sons/histoire/intro2.ogg");
+		this.setTransitionTime(8000.0f);
 	}
 }

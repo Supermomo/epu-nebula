@@ -23,12 +23,7 @@ public class Intro1Jeu extends Transition
 	    
 	    this.setTransitionType(TransitionType.HorizontalSplit);
 	    this.setTransitionImage("ressources/images/histoire/nebula_intro.jpg");
-	    this.setTransitionText(
-	        "Bidibop est un alien. Et aujourd'hui il a 10 ans.\n" +
-	        "C'est a dire qu'aujourd'hui il peut conduire son\n" +
-	        "propre vaisseau spatial !\n" +
-	        "Et ca tombe bien car Bidibop construit depuis\n" +
-	        "2 ans une superbe soucoupe rouge avec son papa."
-	    );
+	    this.setTransitionVoice("ressources/sons/histoire/intro1.ogg");
+	    this.setTransitionTime(14000.0f);
 	}
 }

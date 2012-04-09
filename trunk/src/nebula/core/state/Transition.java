@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -20,9 +21,11 @@ public abstract class Transition extends BasicGameState
     protected NebulaGame nebulaGame;
     private String text;
     private float time = Float.NEGATIVE_INFINITY;
-    private float timeBeforeText = 3000.0f;
+    private float timeBeforeText = 100.0f;
     private TransitionType transitionType = TransitionType.Default;
     private Image image, face, frame;
+    private Sound voice;
+    private boolean voicePlayed = false;
     private Rectangle frameRect = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
     private float screenw, screenh;
     
@@ -51,11 +54,17 @@ public abstract class Transition extends BasicGameState
         
         // Next state key
         if(input.isKeyDown(Input.KEY_ENTER))
+        {
+            voice.stop();
             gotoNextState();
+        }
         
         // Escape key
         if(input.isKeyDown(Input.KEY_ESCAPE))
+        {
+            voice.stop();
             nebulaGame.enterState(0);
+        }
         
         // Text time counter
         if (timeBeforeText > 0) timeBeforeText -= delta;
@@ -88,13 +97,23 @@ public abstract class Transition extends BasicGameState
                 frameRect.getX() + 64.0f, frameRect.getY() + 32.0f,
                 text.toString());
             
+            // Face
             if (face != null)
+            {
                 face.draw(
                     FRAME_MARGIN,
                     screenh - FRAME_MARGIN - FRAME_HEIGHT,
                     FACE_WIDTH,
                     FRAME_HEIGHT
                 );
+            }
+        }
+        
+        // Sound
+        if (!voicePlayed)
+        {
+            voicePlayed = true;
+            voice.play();
         }
     }
     
@@ -196,6 +215,20 @@ public abstract class Transition extends BasicGameState
         }
         
         createFrameRect();
+    }
+    
+    /**
+     * Set the transition voice
+     * @param path The sound path
+     */
+    protected void setTransitionVoice (String path)
+    {
+        try {
+            voice = new Sound(path);
+        }
+        catch (SlickException exc) {
+            exc.printStackTrace();
+        }        
     }
     
     /**
