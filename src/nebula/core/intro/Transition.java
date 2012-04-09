@@ -39,8 +39,8 @@ public abstract class Transition extends BasicGameState
         this.nebulaGame = (NebulaGame)game;
         
         // Screen size
-        screenw = gc.getScreenWidth();
-        screenh = gc.getScreenHeight();
+        screenw = gc.getWidth();
+        screenh = gc.getHeight();
     }
 
     @Override
@@ -51,7 +51,7 @@ public abstract class Transition extends BasicGameState
         
         // Next state key
         if(input.isKeyDown(Input.KEY_ENTER))
-            nebulaGame.next(this.getID(), TransitionType.HorizontalSplit);
+            gotoNextState();
         
         // Escape key
         if(input.isKeyDown(Input.KEY_ESCAPE))
@@ -84,7 +84,7 @@ public abstract class Transition extends BasicGameState
                 frameRect.getX(), frameRect.getY(),
                 frameRect.getWidth(), frameRect.getHeight());
             
-            nebulaGame.getUFont().drawString(
+            nebulaGame.getFont().drawString(
                 frameRect.getX() + 64.0f, frameRect.getY() + 32.0f,
                 text.toString());
             
@@ -159,7 +159,7 @@ public abstract class Transition extends BasicGameState
         
         try {
             frame = new Image("ressources/images/miscellaneous/cadre.png");
-            nebulaGame.getUFont().loadGlyphs();
+            nebulaGame.getFont().loadGlyphs();
         }
         catch (SlickException exc) {
             exc.printStackTrace();

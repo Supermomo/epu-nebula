@@ -1,18 +1,12 @@
 package nebula.minigame.spaceInvaders;
-import java.awt.Toolkit;
+
 import java.util.Random;
 
 import nebula.core.Minigame;
 import nebula.core.NebulaGame;
-import nebula.core.helper.Collision;
-
+import nebula.core.NebulaGame.StateID;
 import org.newdawn.slick.*;
-import org.newdawn.slick.particles.ParticleSystem;
-import org.newdawn.slick.particles.effects.FireEmitter;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
 public class SpaceInvaders extends Minigame {
@@ -40,6 +34,10 @@ public class SpaceInvaders extends Minigame {
 	Image defaite = null;
 	Sound sVictoire = null;
 	Sound sDefaite = null;
+	
+	/* Game ID */
+	@Override public int getID () { return StateID.SpaceInvaders.value; }
+	
 	
     public SpaceInvaders(int nbEnnemis)
     {
@@ -281,10 +279,4 @@ public class SpaceInvaders extends Minigame {
     		coeur.draw(10 + i * coeur.getWidth(), gc.getHeight() - coeur.getHeight());
     	}
     }
-
-	@Override
-	public int getID() {
-		// TODO Auto-generated method stub
-		return 6;
-	}
 }

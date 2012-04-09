@@ -1,5 +1,7 @@
 package nebula.core;
 
+import nebula.core.NebulaGame.StateID;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,14 +9,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class OptionMenuState extends BasicGameState {
-
-	private int stateID;
-		
-	public OptionMenuState(int stateID) {
-		this.stateID = stateID;
-	}
-
+public class OptionMenuState extends BasicGameState
+{
 	@Override
 	public void init(GameContainer container, StateBasedGame arg1)
 			throws SlickException {
@@ -42,7 +38,7 @@ public class OptionMenuState extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return stateID;
+		return StateID.OptionMenu.value;
 	}
 
 }

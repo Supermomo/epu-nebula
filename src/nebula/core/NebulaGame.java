@@ -17,80 +17,87 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.HorizontalSplitTransition;
 import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
-public class NebulaGame extends StateBasedGame {
 
+public class NebulaGame extends StateBasedGame
+{
+    /**
+     * Game states enum
+     * All state Id must be defined here, and only here !
+     */
+    public static enum StateID
+    {
+        MainMenu                (0),
+        OptionMenu              (1),
+        StartAventure           (10),
+        Intro1Jeu               (10),
+        Intro2Jeu               (11),
+        Intro3Jeu               (12),
+        SpaceInvaders           (13),
+        FinInvaders             (14),
+        Bougibouga              (15),
+        Jubba                   (16),
+        Breakout                (17),
+        Fin                     (18);
+        
+        public int value;
+        private StateID (int value) { this.value = value; }
+    }
+    
 	public final static String fontPath = "ressources/font/batmfa.ttf";
 	private UnicodeFont uFont;
 	
 	public static enum TransitionType
 	    {Default, FadeOut, HorizontalSplit, VerticalSplit};
 	
-	enum State {
-		MAIN_MENU(0),
-		OPTION_MENU(1),
-		INTRO_JEU(2),
-		INTRO_2JEU(3),
-		DEBUT_AVENTURE(3),
-		JEU_SPACEINVADERS(6),
-		JEU_BREAKOUT(10),
-		JEU_GRAVITY(30);
-		
-		private int valeur;
-		
-		private State(int n) {
-			valeur = n;
-		}
-		
-		public int getValeur() { return valeur; }
-	}
-	
 	/**
 	 * Constructeur du jeu.
 	 * Definit les différents états (menus / jeux) disponnibles
 	 * @throws SlickException 
 	 */
-    public NebulaGame() throws SlickException {
+    public NebulaGame() throws SlickException
+    {
 		super("Nebula");
 		
-		// Ajout des GameStates
-		this.addState((new MainMenuState(State.MAIN_MENU.getValeur())));
-		this.addState(new OptionMenuState(State.OPTION_MENU.getValeur()));
-		this.addState(new IntroJeu()); //3
-		this.addState(new Intro2Jeu()); //4
-		this.addState(new Intro3Jeu()); //5
-		this.addState(new SpaceInvaders(8)); //6
-		this.addState(new FinInvaders()); //7
-		this.addState(new Bougibouga()); //8
-		this.addState(new Jubba()); //9
-		this.addState(new Breakout()); //10
-		this.addState(new Fin()); //11
-		//this.addState(new nebula.minigame.gravity.Gravity(State.JEU_GRAVITY.getValeur()));
+		// ==== GAME STATES ===
+		// Menus / Options
+		this.addState(new MainMenuState());
+		this.addState(new OptionMenuState());
 		
+		// Main timeline
+		this.addState(new Intro1Jeu());
+		this.addState(new Intro2Jeu());
+		this.addState(new Intro3Jeu());
+		this.addState(new SpaceInvaders(8));
+		this.addState(new FinInvaders());
+		this.addState(new Bougibouga());
+		this.addState(new Jubba());
+		this.addState(new Breakout());
+		this.addState(new Fin());
+		
+		// Fonts
 		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
 		uFont.addAsciiGlyphs();
 		uFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
 		
-		// Selection de l'état de départ
-		this.enterState(State.MAIN_MENU.getValeur());
+		// Starting state
+		this.enterState(StateID.MainMenu.value);
 	}
 
 	/**
 	 * 
 	 */
 	@Override
-	public void initStatesList(GameContainer gameContainer) throws SlickException {
-        this.getState(State.MAIN_MENU.getValeur()).init(gameContainer, this);
-        this.getState(State.OPTION_MENU.getValeur()).init(gameContainer, this);
+	public void initStatesList(GameContainer gc) throws SlickException
+	{
+        this.getState(StateID.MainMenu.value).init(gc, this);
 	}
 
 	/**
-	 * Méthode principale lancée au début du jeu
-	 * @param args
-	 * @throws SlickException
+	 * Goto next state with the given transition
 	 */
-	
 	public void next (int currentState, TransitionType transition)
 	{
+	    // Goto next state with the given transition
 		if (TransitionType.HorizontalSplit.equals(transition))
 			enterState(++currentState, null, new HorizontalSplitTransition(Color.black));
 		else if (TransitionType.VerticalSplit.equals(transition))
@@ -99,12 +106,18 @@ public class NebulaGame extends StateBasedGame {
 			enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
 	}
 	
+	/**
+     * Goto next state with the default transition
+     */
 	public void next (int currentState)
 	{
 	    next(currentState, TransitionType.Default);
 	}
 
-	public UnicodeFont getUFont()
+	/**
+	 * Get the main font
+	 */
+	public UnicodeFont getFont ()
 	{
 		return uFont;
 	}
@@ -114,9 +127,9 @@ public class NebulaGame extends StateBasedGame {
 	    try {
     	    AppGameContainer app = new AppGameContainer(new NebulaGame());
             app.setDisplayMode(
-                Toolkit.getDefaultToolkit().getScreenSize().width,
-                Toolkit.getDefaultToolkit().getScreenSize().height,
-                true);
+                800,
+                600,
+                false);
             app.setTargetFrameRate(120);
             app.start();
 	    }
