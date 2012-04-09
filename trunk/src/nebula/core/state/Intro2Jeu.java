@@ -1,4 +1,4 @@
-package nebula.core.intro;
+package nebula.core.state;
 
 import nebula.core.NebulaGame.StateID;
 import nebula.core.NebulaGame.TransitionType;
@@ -8,11 +8,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class FinInvaders extends Transition
+public class Intro2Jeu extends Transition
 {
     /* Transition ID */
-    @Override public int getID () { return StateID.FinInvaders.value; }
-	
+    @Override public int getID () { return StateID.Intro2Jeu.value; }
+    
 	@Override
 	public void init (GameContainer gc, StateBasedGame game)
 	    throws SlickException 
@@ -21,7 +21,12 @@ public class FinInvaders extends Transition
         super.init(gc, game);
         
         this.setTransitionType(TransitionType.HorizontalSplit);
-        this.setTransitionImage("ressources/images/histoire/nebula-vol_espace.png");
-        this.setTransitionTime(5000.0f);
+	    this.setTransitionImage("ressources/images/histoire/attaqueNebula.png");
+		this.setTransitionFace("ressources/images/histoire/father.png");
+		this.setTransitionText(
+		    "Bidibop, vite ! Dans ton vaisseau ! Il faut \n" +
+		    "que tu partes chercher de l'aide !"
+		);
+		
 	}
 }

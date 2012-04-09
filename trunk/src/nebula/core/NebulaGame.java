@@ -1,7 +1,8 @@
 package nebula.core;
 
 import java.awt.Toolkit;
-import nebula.core.intro.*;
+
+import nebula.core.state.*;
 import nebula.minigame.breakout.Breakout;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
