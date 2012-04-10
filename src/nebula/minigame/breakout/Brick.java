@@ -8,11 +8,15 @@ import org.newdawn.slick.SlickException;
  */
 public class Brick
 {
+    private static final int MAX_RESISTANCE = 2;
+    
     private float x;
     private float y;
     private float w;
     private float h;
-    private static Image image;
+    private int resistance = 1;
+    private static Image[] images = {null, null};
+    
     
     public Brick (int r, int c, BricksField f) throws SlickException
     {
@@ -24,14 +28,34 @@ public class Brick
         x = f.getX() + (float)c*w;
         y = f.getY() + (float)r*h;
         
-        // Set brick image first time
-        if (image == null)
-            image = new Image(Breakout.imgPath + "brick-red.png");
+        // Set brick images first time
+        if (images[0] == null)
+        {
+            images[0] = new Image(Breakout.imgPath + "brick-red.png");
+            images[1] = new Image(Breakout.imgPath + "brick-orange.png");
+        }
+    }
+    
+    public void touch ()
+    {
+        if (resistance > 0) resistance--;
+    }
+    
+    public boolean isBroken ()
+    {
+        return (resistance <= 0);
     }
     
     public void draw ()
     {
-        image.draw(x, y, w, h);
+        final int img = (resistance <= 0 ? 0 : resistance-1);
+        images[img].draw(x, y, w, h);
+    }
+    
+    public void setResistance (int resistance)
+    {
+        if (1 <= resistance && resistance <= MAX_RESISTANCE)
+            this.resistance = resistance;
     }
 
     public float getX ()
