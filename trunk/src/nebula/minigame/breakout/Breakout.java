@@ -21,7 +21,7 @@ public class Breakout extends Minigame
     static final String imgPath = "ressources/images/breakout/";
     static final String sndPath = "ressources/sons/breakout/";
     
-    private final float initialSpeed = 0.25f;
+    private final float[] initialSpeed = {0.25f, 0.35f, 0.45f};
     private int lifes = 3;
     
     private float gameCounter;
@@ -47,14 +47,14 @@ public class Breakout extends Minigame
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
-        imgLife = new Image(imgPath + "ball.png");
-        sndBounce = new Sound(sndPath + "bounce.wav");
-        sndLaunch = new Sound(sndPath + "launch.wav");
-        sndBreak  = new Sound(sndPath + "break.wav");
-        sndLose   = new Sound(sndPath + "lose.wav");
+        imgLife         = new Image(imgPath + "ball.png");
+        sndBounce       = new Sound(sndPath + "bounce.wav");
+        sndLaunch       = new Sound(sndPath + "launch.wav");
+        sndBreak        = new Sound(sndPath + "break.wav");
+        sndLose         = new Sound(sndPath + "lose.wav");
         
         // Game state and counters
         gameCounter = 1.0f;
@@ -73,8 +73,14 @@ public class Breakout extends Minigame
             = new BricksField(0, 0, gc.getWidth(), gc.getHeight()/4, 3, 6);
         
         for (int i = 0; i < bricksField.getRow(); i++)
+        {
             for (int j = 0; j < bricksField.getColumn(); j++)
-                bricks.add(new Brick(i, j, bricksField));
+            {
+                Brick brick = new Brick(i, j, bricksField);
+                brick.setResistance(2);
+                bricks.add(brick);
+            }
+        }
     }
 
     @Override
@@ -92,18 +98,18 @@ public class Breakout extends Minigame
             // Move ball
             ball.setX(ball.getX()+ballSpeed.getX()*(float)delta);
             ball.setY(ball.getY()+ballSpeed.getY()*(float)delta);
-            ballSpeed.increaseSpeed(delta * 0.04f);
+            ballSpeed.increaseSpeed(delta * 0.05f);
             
             // Collision with bottom
             if (Collision.rectangle(
                     ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    0, gc.getHeight()+Ball.h/2, gc.getWidth(), 200))
+                    0, gc.getHeight()+Ball.h/2, gc.getWidth(), 400))
                 invokeDefeat();
             
             // Collision with top
             if (Collision.rectangle(
                     ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    0, -200, gc.getWidth(), 200))
+                    0, -400, gc.getWidth(), 400))
             {
                 ball.goPrevPosition();
                 ballSpeed.invertY();
@@ -113,11 +119,11 @@ public class Breakout extends Minigame
             // Collision with right or left
             if (Collision.rectangle(
                     ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    gc.getWidth(), 0, 200, gc.getHeight())
+                    gc.getWidth(), -400, 400, gc.getHeight()+800)
                 ||
                 Collision.rectangle(
                     ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    -200, 0, 200, gc.getHeight()))
+                    -400, -400, 400, gc.getHeight()+800))
             {
                 ball.goPrevPosition();
                 ballSpeed.invertX();
@@ -138,7 +144,9 @@ public class Breakout extends Minigame
                         b.getX(), b.getY(), b.getWidth(), b.getHeight()))
                     {
                         if (bcol == null) bcol = b;
-                        brickToRemove.add(b);
+                        b.touch();
+                        if (b.isBroken()) brickToRemove.add(b);
+                            
                     }
                 }
                 
@@ -161,7 +169,7 @@ public class Breakout extends Minigame
             // Collision with racket
             if (Collision.rectangle(
                     ball.getX(), ball.getY(), Ball.w, Ball.h,
-                    racket.getX(), racket.getY(), Racket.w, Racket.h))
+                    racket.getX(), racket.getY(), Racket.w, Racket.h+400))
             {
                 ball.goPrevPosition();
                 
@@ -187,7 +195,7 @@ public class Breakout extends Minigame
                  (useMouse && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))))
             {
                 ballSpeed.setX(0.0f);
-                ballSpeed.setY(initialSpeed);
+                ballSpeed.setY(getInitialSpeed());
                 racket.detachBall();
                 gameState = GameState.Ingame;
                 sndLaunch.play();
@@ -276,5 +284,15 @@ public class Breakout extends Minigame
     private float getRandomRPos ()
     {
         return random.nextFloat() * 0.6f - 0.3f;
+    }
+    
+    private float getInitialSpeed ()
+    {
+        if (Difficulty.Easy.equals(difficulty))
+            return initialSpeed[0];
+        else if (Difficulty.Hard.equals(difficulty))
+            return initialSpeed[2];
+        
+        return initialSpeed[1];
     }
 }
