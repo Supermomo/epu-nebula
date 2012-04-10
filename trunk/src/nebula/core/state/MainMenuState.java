@@ -30,7 +30,9 @@ public class MainMenuState extends BasicGameState
 
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateGame)
-			throws SlickException {
+			throws SlickException
+	{
+	    System.out.println("COUCOU MON CHOUX");
 		// Menu sélectionné
 		labelSelectionne = 0;
 		//TODO
