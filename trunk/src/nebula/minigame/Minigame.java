@@ -14,7 +14,12 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class Minigame extends BasicGameState
 {
+    /* Minigame difficulty */
+    public static enum Difficulty {Easy, Medium, Hard}
+    
     protected NebulaGame nebulaGame;
+    protected Difficulty difficulty;
+    
     
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -47,9 +52,18 @@ public abstract class Minigame extends BasicGameState
     }
     
     /**
+     * Set the minigame difficulty
+     * @param difficulty The difficulty
+     */
+    public void setDifficulty (Difficulty difficulty)
+    {
+        this.difficulty = difficulty;
+    }
+    
+    /**
      * Escape command
      */
-    public void escapeMinigame ()
+    protected void escapeMinigame ()
     {
         nebulaGame.enterState(0);
     }
@@ -57,7 +71,7 @@ public abstract class Minigame extends BasicGameState
     /**
      * Go to next state
      */
-    public void gotoNextState ()
+    protected void gotoNextState ()
     {
         nebulaGame.next(this.getID());
     }
