@@ -32,7 +32,6 @@ public class MainMenuState extends BasicGameState
 	public void init(GameContainer gameContainer, StateBasedGame stateGame)
 			throws SlickException
 	{
-	    System.out.println("COUCOU MON CHOUX");
 		// Menu sélectionné
 		labelSelectionne = 0;
 		//TODO

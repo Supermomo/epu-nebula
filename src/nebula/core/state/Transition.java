@@ -19,6 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public abstract class Transition extends BasicGameState
 {
     protected NebulaGame nebulaGame;
+    
     private String text;
     private float time = Float.NEGATIVE_INFINITY;
     private float timeBeforeText = 100.0f;
