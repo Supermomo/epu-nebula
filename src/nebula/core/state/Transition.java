@@ -110,7 +110,7 @@ public abstract class Transition extends BasicGameState
         }
         
         // Sound
-        if (!voicePlayed)
+        if (!voicePlayed && voice != null)
         {
             voicePlayed = true;
             voice.play();
