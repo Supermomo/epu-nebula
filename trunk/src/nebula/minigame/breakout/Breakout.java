@@ -22,6 +22,9 @@ public class Breakout extends Minigame
     static final String sndPath = "ressources/sons/breakout/";
     
     private final float[] initialSpeed = {0.25f, 0.35f, 0.45f};
+    private final float[] brickProbability = {0.0f, 0.2f, 0.4f};
+    private final int[]   brickRowCount = {3, 3, 4};
+    
     private int lifes = 3;
     
     private float gameCounter;
@@ -47,7 +50,7 @@ public class Breakout extends Minigame
     {
         // Call super method
         super.init(gc, game);
-
+        
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
         imgLife         = new Image(imgPath + "ball.png");
@@ -69,15 +72,19 @@ public class Breakout extends Minigame
         racket.attachBall(ball, getRandomRPos());
         
         // Bricks
-        bricksField
-            = new BricksField(0, 0, gc.getWidth(), gc.getHeight()/4, 3, 6);
+        bricksField = new BricksField(
+            0, 0, gc.getWidth(), gc.getHeight()*getBrickRowCount()/12,
+            getBrickRowCount(), 6);
         
         for (int i = 0; i < bricksField.getRow(); i++)
         {
             for (int j = 0; j < bricksField.getColumn(); j++)
             {
                 Brick brick = new Brick(i, j, bricksField);
-                brick.setResistance(2);
+                
+                if (random.nextFloat() < getBrickProbability())
+                    brick.setResistance(2);
+                
                 bricks.add(brick);
             }
         }
@@ -294,5 +301,25 @@ public class Breakout extends Minigame
             return initialSpeed[2];
         
         return initialSpeed[1];
+    }
+    
+    private float getBrickProbability ()
+    {
+        if (Difficulty.Easy.equals(difficulty))
+            return brickProbability[0];
+        else if (Difficulty.Hard.equals(difficulty))
+            return brickProbability[2];
+        
+        return brickProbability[1];
+    }
+    
+    private int getBrickRowCount ()
+    {
+        if (Difficulty.Easy.equals(difficulty))
+            return brickRowCount[0];
+        else if (Difficulty.Hard.equals(difficulty))
+            return brickRowCount[2];
+        
+        return brickRowCount[1];
     }
 }
