@@ -25,7 +25,7 @@ public class ControleJeu {
 		else if (input.isKeyDown(Input.KEY_UP)) {
 			/*
 			 * AFFICHAGE DES ÉLÉMENTS DE CONTRÔLE
-			 */
+			 *
 			BlockType[][] blocks = modeleJeu.getMap().getBlocks();
 			for(int i=blocks.length-1;i>=0;i--) {
 				for(int j=0;j<blocks[i].length;j++) {
@@ -36,6 +36,7 @@ public class ControleJeu {
 				System.out.println();
 			}
 			System.out.println();
+			*/
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN)) {
 			System.out.println(modeleJeu.getHero().getPosition());

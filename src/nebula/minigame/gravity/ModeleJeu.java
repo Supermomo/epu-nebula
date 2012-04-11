@@ -1,29 +1,38 @@
 package nebula.minigame.gravity;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 
 public class ModeleJeu {
-	
-	
+
+
 
 	private final static String dossierSon = "ressources/sons/gravity/";
-	
-	
+
+
 	private Player hero;
 	private BlockMap map;
 	private float gravite;
-	
+
 	private boolean fin;
 	private boolean victoire;
-	
+
 	// Ensemble des sons
 	private Sound sonJump;
 	private Sound sonDomage;
 	private Sound sonVictoire;
 	private Sound sonDefaite;
 	
+	//--- Calcul de l'affichage de la carte
+	// Nombre de tiles affichées à l'écran
+	private int shownTileX;
+	private int shownTileY;
+	// Tile origine affichée
+	private int mapRenderX;
+	private int mapRenderY;
+
 
 	/** Constructeur par défaut
 	 * Initialise les instances du héro et de la map.
@@ -31,7 +40,7 @@ public class ModeleJeu {
 	 * @param hero - Instance du hero créé dans le jeu de base
 	 * @param map - Instance de map créé dans le jeu de base
 	 */
-	public ModeleJeu(Player hero, BlockMap map) {
+	public ModeleJeu(Player hero, BlockMap map, int shownPixelsY, int shownPixelsX) {
 		setHero(hero);
 		setMap(map);
 		hero.setPosition((Point)map.getDepart().clone());
@@ -39,8 +48,8 @@ public class ModeleJeu {
 
 		fin = false;
 		victoire = false;
-		
-		// Chargement des sons
+
+		//--- Chargement des sons
 		try {
 			sonJump = new Sound(dossierSon+"jump.wav");
 			sonDomage = new Sound(dossierSon+"hurt.wav");
@@ -51,6 +60,22 @@ public class ModeleJeu {
 			e.printStackTrace();
 		}
 		
+
+		//--- Calcul pour la mise en place de la map au départ
+		int tileHeight = map.getTiledMap().getTileHeight();
+		int tileWidth = map.getTiledMap().getTileWidth();
+
+		// Nombre de Tiles affichées
+		this.shownTileY = shownPixelsY/tileHeight;
+		this.shownTileX = shownPixelsX/tileWidth;
+		System.out.println("*MJ*ShownTileInit : "+shownTileX+" "+shownTileY);
+		int heroY = (int) hero.getPosition().getY()/tileHeight;
+		int heroX = (int) hero.getPosition().getX()/tileWidth;
+		
+		mapRenderX = (int) (heroX / shownTileX * shownTileX);
+		mapRenderY = (int) (heroY / shownTileY * shownTileY);
+
+		System.out.println("*MJ*MapRenderInit : "+mapRenderX+" "+mapRenderY);
 	}
 
 	public Player getHero() {
@@ -90,13 +115,13 @@ public class ModeleJeu {
 			System.out.println("*MJ* Get Defaite");
 			return true;
 		}
-		else return false;
+		return false;
 	}
 
-	
-	
-	
-	
+
+
+
+
 	//---
 	// Méthode de déplacement du héro
 	/////////////////////////////////
@@ -173,10 +198,10 @@ public class ModeleJeu {
 		hero.courrir();
 	}
 
-	
-	
-	
-	
+
+
+
+
 	// ---
 	// Méthodes de gestion de la gravité
 	///////////////////////////////////
@@ -197,8 +222,8 @@ public class ModeleJeu {
 	}
 
 
-	
-	
+
+
 
 	// ---
 	// Méthodes de gestion de la victoire/défaite
@@ -220,12 +245,12 @@ public class ModeleJeu {
 			setFin(true);
 		}
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	//---
 	// Méthode de rendu de la map lors du déplacement
 	/////////////////////////////////////////////////
@@ -234,16 +259,57 @@ public class ModeleJeu {
 	 * Dessine la partie de la map occupée par le personnage
 	 */
 	public int[] renderMap() {
-		double heroY = hero.getPosition().getY()/map.getTiledMap().getTileHeight();
-		double heroX = hero.getPosition().getX()/map.getTiledMap().getTileWidth();		
-
-		int renderX = 0;
-		int renderY = 0;
 		
-		while(heroX>renderX+13) renderX += 13;
-		while(heroY>renderY+10) renderY += 10;
+
+		// Nombre de Tiles par rapport au bord auquel il faut faire la transition
+		int delta = 3;
+		int tileHeight = map.getTiledMap().getTileHeight();
+		int tileWidth = map.getTiledMap().getTileWidth();
+
+		// Tile sur laquelle le hero est
+		int heroTileY = (int) (hero.getPosition().getY()/tileHeight);
+		int heroTileX = (int) (hero.getPosition().getX()/tileWidth);
+
+		// Nombre de tiles total sur la carte
+		int nbrTilesY = map.getTiledMap().getHeight();
+		int nbrTilesX = map.getTiledMap().getWidth();
+
+		/*//-- Mode Personnage Toujours Centré
+		mapRenderX = heroTileX - shownTileX/2;
+		mapRenderY = heroTileY - shownTileY/2;
+		
+		if(mapRenderX<0) mapRenderX = 0;
+		else if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
+		if(mapRenderY<0) mapRenderY = 0;
+		else if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
+		*/
+		
+		
 	
-		int i[] = {-renderX,-renderY};
+		//-- Pour avoir le fond fixé. Entraine des saccades si non post-traité
+		if(heroTileX<mapRenderX+delta) {
+			mapRenderX -= shownTileX/2;
+			// Pour ne pas afficher d'emplacement noir
+			if(mapRenderX<0) mapRenderX = 0;
+		} else if(heroTileX>mapRenderX+shownTileX-delta) {
+			mapRenderX += shownTileX/2;
+			// Pour ne pas afficher d'emplacement noir
+			if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
+		}
+		
+		if(heroTileY<mapRenderY+delta) {
+			mapRenderY -= shownTileY/2;
+			// Pour ne pas afficher d'emplacement noir
+			if(mapRenderY<0) mapRenderY = 0;
+		} else if(heroTileY>mapRenderY+shownTileY-delta) {
+			mapRenderY += shownTileY/2;
+			// Pour ne pas afficher d'emplacement noir
+			if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
+		}
+		
+		
+		// Inversion pour l'affichage
+		int i[] = {-mapRenderX, -mapRenderY};
 		return i;
 	}
 
