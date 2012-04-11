@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class SpaceInvaders extends Minigame {
 	
+	static int initialNbEnnemis;
 	Image land = null;
 	Boolean droite = true;
 	// Gestion du joueur avec position x,y et echelle
@@ -43,6 +44,7 @@ public class SpaceInvaders extends Minigame {
     public SpaceInvaders(int nbEnnemis)
     {
         this.nbEnnemis = nbEnnemis;
+        initialNbEnnemis = nbEnnemis;
     }
  
     @Override
@@ -72,7 +74,7 @@ public class SpaceInvaders extends Minigame {
     	}
     	explosion.setLooping(false);
     	explosion.stopAt(24);
-    	int multiple = nbEnnemis/4;
+    	int multiple = initialNbEnnemis/4;
         for(int i =0; i < 4; i++)
     	{
     		for(int j=0; j < multiple;j++)
