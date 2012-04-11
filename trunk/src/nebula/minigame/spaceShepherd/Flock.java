@@ -3,6 +3,8 @@ package nebula.minigame.spaceShepherd;
 import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Flock extends SteeringEntity{
@@ -83,5 +85,51 @@ public class Flock extends SteeringEntity{
 	public ArrayList<SteeringEntity> getFlockers() {
 		return flockers;
 	}
+	
+	public boolean isDividing(Line line){
+		Line l;
+		for(SteeringEntity fl: flockers){
+			l=new Line(this.getPosition(),fl.getPosition());
+			if(l.intersect(line, true)!=null){
+				return true;
+			}
+		}
+		return false;
+	}
 
+	public boolean isEnded(final ArrayList<Line> fences){
+		
+		Line left=new Line(0,0,0,super.getYfield());
+		Line top=new Line(0,0,super.getXfield(),0);
+		Line bottom=new Line(0,super.getYfield(),super.getXfield(),super.getYfield());
+		Line right=new Line(super.getXfield(),0,super.getXfield(),super.getYfield());
+		
+		Shape sh=new Shape() {
+			
+			@Override
+			public Shape transform(Transform transform) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			protected void createPoints() {
+				int i=0;
+				for(Line l : fences){
+					this.points[i]=l.getX1();
+					this.points[i+1]=l.getY1();
+					this.points[i]=l.getX2();
+					this.points[i+1]=l.getY2();
+					i+=4;
+				}
+				
+			}
+		};;;
+		
+		if(sh.contains(this.getPosition().x, this.getPosition().y)){
+			return true;
+		}
+		
+		return false;
+	}
 }
