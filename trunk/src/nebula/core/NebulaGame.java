@@ -21,6 +21,8 @@ import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 public class NebulaGame extends StateBasedGame
 {
+	public static boolean isScenario;
+	
     /**
      * Game states enum
      * All state Id must be defined here, and only here !
@@ -76,6 +78,9 @@ public class NebulaGame extends StateBasedGame
 		this.addState(new Breakout());
 		this.addState(new Fin());
 		
+		//Score
+		this.addState(new StateScore());
+		
 		// Fonts
 		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
 		uFont.addAsciiGlyphs();
@@ -114,6 +119,12 @@ public class NebulaGame extends StateBasedGame
 	public void next (int currentState)
 	{
 	    next(currentState, TransitionType.Default);
+	}
+	
+	public void showScore(int currentState, int Score, boolean isScenar){
+		((StateScore)getState(StateID.Score.value)).setLastState(currentState);
+		((StateScore)getState(StateID.Score.value)).setScore(Score);
+		enterState(StateID.Score.value);	
 	}
 
 	/**
