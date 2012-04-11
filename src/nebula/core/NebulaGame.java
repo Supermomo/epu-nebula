@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 
 import nebula.core.state.*;
 import nebula.minigame.breakout.Breakout;
+import nebula.minigame.gravity.Gravity;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
 import org.newdawn.slick.AppGameContainer;
@@ -41,6 +42,7 @@ public class NebulaGame extends StateBasedGame
         Jubba                   (16),
         Breakout                (17),
         Fin                     (18),
+        Gravity	(100),
         Score				(-1);
         
         public int value;
@@ -77,6 +79,7 @@ public class NebulaGame extends StateBasedGame
 		this.addState(new Jubba());
 		this.addState(new Breakout());
 		this.addState(new Fin());
+		this.addState(new Gravity(StateID.Gravity.value));
 		
 		//Score
 		this.addState(new StateScore());

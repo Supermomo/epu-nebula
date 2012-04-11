@@ -20,6 +20,7 @@ public class ModeleJeu {
 	private boolean victoire;
 
 	// Ensemble des sons
+	private Sound sonEnCours;
 	private Sound sonJump;
 	private Sound sonDomage;
 	private Sound sonVictoire;
@@ -53,8 +54,9 @@ public class ModeleJeu {
 		try {
 			sonJump = new Sound(dossierSon+"jump.wav");
 			sonDomage = new Sound(dossierSon+"hurt.wav");
-			sonVictoire = new Sound(dossierSon+"defaite.wav");
-			sonDefaite = new Sound(dossierSon+"victoire.wav");
+			sonVictoire = new Sound(dossierSon+"victoire.wav");
+			sonDefaite = new Sound(dossierSon+"defaite.wav");
+		
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,14 +70,12 @@ public class ModeleJeu {
 		// Nombre de Tiles affichées
 		this.shownTileY = shownPixelsY/tileHeight;
 		this.shownTileX = shownPixelsX/tileWidth;
-		System.out.println("*MJ*ShownTileInit : "+shownTileX+" "+shownTileY);
+
 		int heroY = (int) hero.getPosition().getY()/tileHeight;
 		int heroX = (int) hero.getPosition().getX()/tileWidth;
 		
 		mapRenderX = (int) (heroX / shownTileX * shownTileX);
 		mapRenderY = (int) (heroY / shownTileY * shownTileY);
-
-		System.out.println("*MJ*MapRenderInit : "+mapRenderX+" "+mapRenderY);
 	}
 
 	public Player getHero() {
@@ -112,7 +112,6 @@ public class ModeleJeu {
 
 	public boolean getDefaite() {
 		if(hero.getNbrVies()<=0) {
-			System.out.println("*MJ* Get Defaite");
 			return true;
 		}
 		return false;
@@ -230,22 +229,32 @@ public class ModeleJeu {
 	/////////////////////////////////////////////
 
 	private void victoire() {
-		// TODO Modifier le controleur (désactivé le controleur de jeu)
-		
+		sonVictoire.play();
+		sonEnCours = sonVictoire;
+		setFin(true);
+		setVictoire(true);
 	}
 
 	private void mort() {
-		//TODO Rajouter une animation spéciale
-		hero.setPosition((Point)map.getDepart().clone());
-		if(hero.getNbrVies()>0) {
+		if(hero.getNbrVies()>1) {
+			hero.setPosition((Point)map.getDepart().clone());
 			hero.domage();
 			sonDomage.play();
+			sonEnCours = sonDomage;
 		}
-		else {
+		else if(hero.getNbrVies()==1) {
+			hero.domage();
+			sonDomage.play();
+			sonEnCours = sonDomage;
+			sonDefaite.play();
+			sonEnCours = sonDefaite;
 			setFin(true);
 		}
 	}
 
+	public void arreterSon() {
+		if(sonEnCours.playing()) sonEnCours.stop();
+	}
 
 
 
