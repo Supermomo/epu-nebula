@@ -42,7 +42,7 @@ public class NebulaGame extends StateBasedGame
         Jubba                   (16),
         Breakout                (17),
         Fin                     (18),
-        Gravity	(100),
+        Gravity					(100),
         Score				(-1);
         
         public int value;
