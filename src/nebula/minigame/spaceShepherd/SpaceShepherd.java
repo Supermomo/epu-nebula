@@ -103,14 +103,19 @@ public class SpaceShepherd extends BasicGame{
 		if (input.isKeyDown(Input.KEY_SPACE) && spaceReleased) {
 			
 			spaceReleased=false;
+			Vector2f plot=new Vector2f(x,y);
 			
 			if(lastPlot==null){
 				lastPlot=new Vector2f(x,y);
 			}
-			else if (validDistanceFromLastPoint()) {
-				Vector2f plot=new Vector2f(x,y);
+			else if (validDistanceFromLastPoint() && !flock.isDividing(new Line(lastPlot,plot))) {
+				
 				fences.add(new Line(lastPlot,plot));
 				lastPlot=null;
+				lastPlot=new Vector2f(x,y);
+			}
+			else{
+				System.out.println("Divide");
 			}
 			
 		}

@@ -163,4 +163,13 @@ public class SteeringEntity {
 		this.maxSpeed = maxSpeed;
 	}
 	
+
+	public int getXfield() {
+		return Xfield;
+	}
+
+	public int getYfield() {
+		return Yfield;
+	}
+
 }
