@@ -38,7 +38,8 @@ public class NebulaGame extends StateBasedGame
         Bougibouga              (15),
         Jubba                   (16),
         Breakout                (17),
-        Fin                     (18);
+        Fin                     (18),
+        Score				(-1);
         
         public int value;
         private StateID (int value) { this.value = value; }
