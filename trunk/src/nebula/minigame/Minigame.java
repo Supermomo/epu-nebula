@@ -51,6 +51,12 @@ public abstract class Minigame extends BasicGameState
     {
     }
     
+    @Override
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException 
+    {
+    	this.init(container, game);
+    }
+    
     /**
      * Set the minigame difficulty
      * @param difficulty The difficulty
