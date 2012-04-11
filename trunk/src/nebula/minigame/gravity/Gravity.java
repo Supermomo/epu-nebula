@@ -6,6 +6,7 @@ import nebula.minigame.Minigame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -79,20 +80,29 @@ public class Gravity extends Minigame {
 		// Call super method
 		super.render(gameContainer, stateBasedGame, g);
 
+		
+		
+		
+		//// Default
+		// Render Map
+		modeleJeu.getMap().getTiledMap().render(mapRender[0]*60+mapRender[2], mapRender[1]*60+mapRender[3]);
 
-		// Vérification
+		// Render Hero
+		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX()+mapRender[0]*60+mapRender[2], modeleJeu.getHero().getY()+mapRender[1]*60+mapRender[3]);
 
+		// Render Vie
+		for(int i = 0; i < modeleJeu.getHero().getNbrVies(); i++) {
+			coeur.draw(10 + i * coeur.getWidth(),gameContainer.getHeight() - coeur.getHeight());
+		}
+		
+
+		// Affichage de l'image en fonction de l'état
 		switch(etatActuel) {
 		case DEPLACEMENT_MAP:
 
 			int newRender[] = modeleJeu.renderMap();
 			boolean stop = false;
 
-			if(!out) {
-				System.out.println("*G*newR "+newRender[0]);
-				System.out.println("*G*oldR"+mapRender[0]+"\n_____\n");
-				out = true;
-			}
 			int vitesseDeplacement = 2;
 			// Traitement des X
 			if(newRender[0]*60 < mapRender[0]*60+mapRender[2]) {
@@ -120,33 +130,26 @@ public class Gravity extends Minigame {
 			
 			if(stop) {
 				etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
-			} else {
-				System.out.println("*G*"+mapRender[2]+" "+mapRender[3]);
 			}
 			break;
 
 		case VICTOIRE:
-			victoire.draw(100, 250);
+			victoire.draw((gameContainer.getWidth() - victoire.getWidth())/2 , (gameContainer.getHeight() - victoire.getHeight())/2);
 			break;
 
 		case DEFAITE:
-			defaite.draw(100,250);
+			defaite.draw((gameContainer.getWidth() - defaite.getWidth())/2 , (gameContainer.getHeight() - defaite.getHeight())/2);
+			break;
+			
+		case DEPLACEMENT_JOUEUR:
+			// On vérifie si on a atteint un des états final
+			if(modeleJeu.getDefaite()) etatActuel = EtatJeu.DEFAITE;
+			if(modeleJeu.getVictoire()) etatActuel = EtatJeu.VICTOIRE;
 			break;
 
 		}
 
 
-		//// Default
-		// Render Map
-		modeleJeu.getMap().getTiledMap().render(mapRender[0]*60+mapRender[2], mapRender[1]*60+mapRender[3]);
-
-		// Render Hero
-		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX()+mapRender[0]*60+mapRender[2], modeleJeu.getHero().getY()+mapRender[1]*60+mapRender[3]);
-
-		// Render Vie
-		for(int i = 0; i < modeleJeu.getHero().getNbrVies(); i++) {
-			coeur.draw(10 + i * coeur.getWidth(), gameContainer.getHeight() - coeur.getHeight());
-		}
 
 	} // *** Fin Render ***
 
@@ -168,6 +171,11 @@ public class Gravity extends Minigame {
 			modeleJeu.getHero().incStill();
 			if(deplacementMap()) etatActuel = EtatJeu.DEPLACEMENT_MAP;
 			break;
+		case DEFAITE: case VICTOIRE:
+			if(gameContainer.getInput().isKeyDown(Input.KEY_ENTER)) {
+				modeleJeu.arreterSon();
+				gotoNextState();
+			}
 		}
 	}
 

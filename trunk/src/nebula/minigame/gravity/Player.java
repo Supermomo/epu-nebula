@@ -90,13 +90,13 @@ public class Player {
 	public Point[] getBordGauche() {
 		Point p[] = {(Point) position.clone(),(Point) position.clone()};
 		p[0].translate(2f, 2f);
-		p[1].translate(2f, Sprite.HAUTEUR.getValue()-2f);
+		p[1].translate(2f, Sprite.HAUTEUR.getValue()-3f);
 		return p;
 	}
 	public Point[] getBordDroit() {
 		Point p[] = {(Point) position.clone(),(Point) position.clone()};
 		p[0].translate(Sprite.LARGEUR.getValue()-2f, 2f);
-		p[1].translate(Sprite.LARGEUR.getValue()-2f, Sprite.HAUTEUR.getValue()-2f);
+		p[1].translate(Sprite.LARGEUR.getValue()-2f, Sprite.HAUTEUR.getValue()-3f);
 		return p;
 	}
 	public Point[] getBordHaut() {

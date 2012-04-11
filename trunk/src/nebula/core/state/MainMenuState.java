@@ -101,10 +101,13 @@ public class MainMenuState extends BasicGameState
 				menu = s;
 				labelSelectionne = 0;
 			}
+			// Si on a selectionné un jeu
 			else if("breakout".equalsIgnoreCase(texte))
 				stateChange = StateID.Breakout.value;
 			else if("spaceinvaders".equalsIgnoreCase(texte))
 				stateChange = StateID.SpaceInvaders.value;
+			else if("gravity".equalsIgnoreCase(texte))
+				stateChange = StateID.Gravity.value;
 			else if("scores du jeu".equalsIgnoreCase(texte)){
 				String[] s={"Retour",Player.load(playerName).toString()};
 				menu=s;
