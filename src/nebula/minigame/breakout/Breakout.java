@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
 import nebula.core.helper.Collision;
+import nebula.core.state.StateScore;
 import nebula.minigame.Minigame;
 
 import org.newdawn.slick.*;
@@ -22,10 +24,10 @@ public class Breakout extends Minigame
     static final String sndPath = "ressources/sons/breakout/";
     
     private final float[] initialSpeed = {0.25f, 0.35f, 0.45f};
+    private int lifes;
     private final float[] brickProbability = {0.0f, 0.2f, 0.4f};
     private final int[]   brickRowCount = {3, 3, 4};
-    
-    private int lifes = 3;
+
     
     private float gameCounter;
     private GameState gameState;
@@ -50,7 +52,7 @@ public class Breakout extends Minigame
     {
         // Call super method
         super.init(gc, game);
-        
+        lifes = 3;
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
         imgLife         = new Image(imgPath + "ball.png");
@@ -244,11 +246,17 @@ public class Breakout extends Minigame
             useMouse = !useMouse;
         
         // Victory condition
-        if (bricks.isEmpty())
-            this.gotoNextState();
+        if (bricks.isEmpty()){
+            //this.gotoNextState();
+    		((StateScore)((NebulaGame)game).getState(StateID.Score.value)).setMessage("Bravo ! ");
+    		((NebulaGame)game).showScore(getID(), 1000, NebulaGame.isScenario);
+        }
         // Defeat condition
-        else if (lifes < 0)
-            System.out.println("Breakout: you failed!");
+        else if (lifes < 0){
+            //System.out.println("Breakout: you failed!");
+    		((StateScore)((NebulaGame)game).getState(StateID.Score.value)).setMessage("Caca ! ");
+    		((NebulaGame)game).showScore(getID(), 42, NebulaGame.isScenario);
+        }
     }
 
     @Override

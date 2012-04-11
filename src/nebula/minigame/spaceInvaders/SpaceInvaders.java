@@ -4,6 +4,7 @@ import java.util.Random;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
+import nebula.core.state.StateScore;
 import nebula.minigame.Minigame;
 
 import org.newdawn.slick.*;
@@ -83,6 +84,7 @@ public class SpaceInvaders extends Minigame {
     	rand = new Random();
     	coeur = new Image("ressources/images/spaceInvaders/coeur.png");
     	defaite = new Image("ressources/images/spaceInvaders/defaite.png");
+    	nbEnnemis=initialNbEnnemis;
     }
  
     @Override
@@ -239,13 +241,16 @@ public class SpaceInvaders extends Minigame {
     	{
     		//sVictoire.play();
     		//gc.pause();
-    		this.gotoNextState();
+    		//this.gotoNextState();
+    		((StateScore)((NebulaGame)game).getState(StateID.Score.value)).setMessage("Bravo ! ");
+    		((NebulaGame)game).showScore(getID(), score, NebulaGame.isScenario);
     	}
     	
     	if(tank.dead())
     	{
     		//sDefaite.play();
-    		gc.pause();
+    		((StateScore)((NebulaGame)game).getState(StateID.Score.value)).setMessage("Caca ! ");
+    		((NebulaGame)game).showScore(getID(), score, NebulaGame.isScenario);
     	}
     	
     	

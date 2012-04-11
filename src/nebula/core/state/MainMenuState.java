@@ -86,12 +86,15 @@ public class MainMenuState extends BasicGameState
 
 			if("retour au menu".equalsIgnoreCase(texte))
 				;// stateGame.exit();
-			else if("mode aventure".equalsIgnoreCase(texte))
+			else if("mode aventure".equalsIgnoreCase(texte)){
 				stateChange = StateID.StartAventure.value;
+				NebulaGame.isScenario=true;
+			}
 			else if("choix du jeu".equalsIgnoreCase(texte)) {
 				String[] s = {"BreakOut", "Gravity", "SpaceInvaders", "SpaceShepard", "Retour"};
 				menu = s;
 				labelSelectionne = 0;
+				NebulaGame.isScenario=false;
 			}
 			else if("retour".equalsIgnoreCase(texte)) {
 				String[] s = {"Mode Aventure", "Choix Du Jeu","Scores du jeu", "Retour Au Menu"};
