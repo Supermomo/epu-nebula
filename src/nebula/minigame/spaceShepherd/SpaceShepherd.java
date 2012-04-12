@@ -40,7 +40,7 @@ public class SpaceShepherd extends BasicGame{
 	private boolean spaceReleased=true;
 
 	private Vector2f targetCenter;
-	private int targetRadius=80;
+	private int targetRadius=40;
 	
 	private Image victoryImg;
 	private Image  lossImg;
@@ -80,19 +80,19 @@ public class SpaceShepherd extends BasicGame{
 
 		}
 
-		if (input.isKeyDown(Input.KEY_LEFT) && x > 0) {
+		if (input.isKeyDown(Input.KEY_LEFT) && x > 50) {
 			x -= (delta * pointerSpeed);
 		}
 		
-		if (input.isKeyDown(Input.KEY_RIGHT) && x+10 < gc.getWidth()) {
+		if (input.isKeyDown(Input.KEY_RIGHT) && x+50< gc.getWidth()) {
 			x += (delta * pointerSpeed);
 		}
 
-		if (input.isKeyDown(Input.KEY_UP) && y > 0) {
+		if (input.isKeyDown(Input.KEY_UP) && y > 50) {
 			y -= (delta * pointerSpeed);
 		}
 
-		if (input.isKeyDown(Input.KEY_DOWN) && y+10 < gc.getHeight()) {
+		if (input.isKeyDown(Input.KEY_DOWN) && y+50 < gc.getHeight()) {
 			y += (delta * pointerSpeed);
 		}
 		
@@ -113,20 +113,25 @@ public class SpaceShepherd extends BasicGame{
 				fences.add(new Line(lastPlot,plot));
 				lastPlot=null;
 				lastPlot=new Vector2f(x,y);
+				
+				if(flock.isEnded(fences, targetCenter)){
+					System.out.println("Fail");
+					gc.pause();
+					lossImg.draw(0, 0, gc.getWidth(), gc.getHeight());
+					if(!victoSound.playing())
+						victoSound.play();
+				}
 			}
 			else{
 				System.out.println("Divide");
 			}
+			System.out.println("x : "+x+"  y : "+y);
 			
+			System.out.println("////////////////////////////////////////////////////////");
 		}
 		
-		if(flock.allIntheHole(targetCenter, targetRadius)){
-			if(!victoSound.playing()){
-				victoSound.play();
-			}
-			gc.pause();
-			
-		}
+		
+		
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -139,15 +144,15 @@ public class SpaceShepherd extends BasicGame{
 		g.setColor(Color.white);
 		g.setLineWidth(10);
 		for(Line l : fences){
-			g.drawOval(l.getX1(), l.getY1(), imgRadius, imgRadius);
-			g.drawOval(l.getX2(), l.getY2(), imgRadius, imgRadius);
+			g.fillOval(l.getX1(), l.getY1(), imgRadius, imgRadius);
+			g.fillOval(l.getX2(), l.getY2(), imgRadius, imgRadius);
 			g.drawLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
 		}
 		if(lastPlot!=null){
 			g.drawOval(lastPlot.x, lastPlot.y, imgRadius, imgRadius);
 		}
 		g.setColor(Color.green);
-		g.drawOval(flock.getPosition().x, flock.getPosition().y, 5,5, 16);
+		g.drawOval(flock.getPosition().x, flock.getPosition().y, 5,5);
 		
 		g.setColor(Color.red);
 		for(SteeringEntity st : flock.getFlockers()){
@@ -155,11 +160,15 @@ public class SpaceShepherd extends BasicGame{
 		}
 		
 		g.setColor(Color.blue);
-		g.drawOval(x, y, 30, 30, 8);
+		g.drawOval(x-15, y-15, 30, 30,80);
 
 		
 		if(flock.allIntheHole(targetCenter, targetRadius)){	
 			victoryImg.draw(0,0,gc.getWidth(),gc.getHeight());
+			if(!victoSound.playing()){
+				victoSound.play();
+			}
+			gc.pause();
 		}
 		
 	}
@@ -174,9 +183,9 @@ public class SpaceShepherd extends BasicGame{
 	public static void main(String[] args) throws SlickException {
 
 		AppGameContainer app = new AppGameContainer(new SpaceShepherd());
-		app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
-				Toolkit.getDefaultToolkit().getScreenSize().height, true);
-		//app.setDisplayMode(800, 600, true);
+		//app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
+				//Toolkit.getDefaultToolkit().getScreenSize().height, true);
+		app.setDisplayMode(800, 600, false);
 		app.setTargetFrameRate(60);
 		app.start();
 	}
