@@ -66,7 +66,7 @@ public class SpaceShepherd extends BasicGame{
 		victoryImg=new Image(pathVictoryImg);
 		lossImg=new Image(pathlLossImg);
 		
-		victoSound=new Sound("assets/sound/cropCircle/odetojoy.ogg");
+		victoSound=new Sound("ressources/sons/cropCircle/odetojoy.ogg");
 	}
 
 	@Override
