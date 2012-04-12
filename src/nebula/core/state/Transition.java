@@ -56,14 +56,14 @@ public abstract class Transition extends BasicGameState
         // Next state key
         if(input.isKeyDown(Input.KEY_ENTER))
         {
-            voice.stop();
+            if (voice != null) voice.stop();
             gotoNextState();
         }
         
         // Escape key
         if(input.isKeyDown(Input.KEY_ESCAPE))
         {
-            voice.stop();
+            if (voice != null) voice.stop();
             nebulaGame.enterState(0);
         }
         
