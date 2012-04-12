@@ -107,11 +107,13 @@ public class Flock extends SteeringEntity{
 	 * @return
 	 */
 	public boolean isEnded(final ArrayList<Line> fences, Vector2f target){
-		
-		Line left=new Line(0,0,0,super.getYfield());
-		Line top=new Line(0,0,super.getXfield(),0);
-		Line bottom=new Line(0,super.getYfield(),super.getXfield(),super.getYfield());
-		Line right=new Line(super.getXfield(),0,super.getXfield(),super.getYfield());
+		int margin=2;
+		Line left=new Line(margin,margin,margin,super.getYfield()-margin);
+		Line top=new Line(margin,margin,super.getXfield()-margin,margin);
+		Line bottom=new Line(margin,super.getYfield()-margin,super.getXfield()-margin
+				,super.getYfield()-margin);
+		Line right=new Line(super.getXfield()-margin,margin,super.getXfield()-margin
+				,super.getYfield()-margin);
 		
 		ArrayList<Line> bords=new ArrayList<Line>();
 		bords.add(left);
@@ -163,6 +165,7 @@ public class Flock extends SteeringEntity{
 					path.lineTo(inter.x,inter.y);
 				}
 				else if(interBord!=null){
+					System.out.println("border intersection");
 					path.moveTo(interBord[0].x,interBord[0].y);
 					for(int h =0;h<shape.size()-1;h++){
 						Line li=shape.get(h);
@@ -223,7 +226,6 @@ public class Flock extends SteeringEntity{
 			for(Line l2 : shape){
 				if(l1.intersect(l2, true)!=null){
 					if(Math.abs(shape.indexOf(l1)-shape.indexOf(l2))>1){
-						System.out.println("index difference : "+shape.indexOf(l1)+"  //  "+shape.indexOf(l2));
 						return l1.intersect(l2, true);
 					}		
 				}
