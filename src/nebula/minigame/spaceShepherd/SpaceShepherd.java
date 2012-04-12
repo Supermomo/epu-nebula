@@ -80,19 +80,19 @@ public class SpaceShepherd extends BasicGame{
 
 		}
 
-		if (input.isKeyDown(Input.KEY_LEFT) && x > 50) {
+		if (input.isKeyDown(Input.KEY_LEFT) && x-(delta * pointerSpeed) > 0) {
 			x -= (delta * pointerSpeed);
 		}
 		
-		if (input.isKeyDown(Input.KEY_RIGHT) && x+50< gc.getWidth()) {
+		if (input.isKeyDown(Input.KEY_RIGHT) && x+(delta * pointerSpeed)< gc.getWidth()) {
 			x += (delta * pointerSpeed);
 		}
 
-		if (input.isKeyDown(Input.KEY_UP) && y > 50) {
+		if (input.isKeyDown(Input.KEY_UP) && y -(delta * pointerSpeed)> 0) {
 			y -= (delta * pointerSpeed);
 		}
 
-		if (input.isKeyDown(Input.KEY_DOWN) && y+50 < gc.getHeight()) {
+		if (input.isKeyDown(Input.KEY_DOWN) && y+(delta * pointerSpeed) < gc.getHeight()) {
 			y += (delta * pointerSpeed);
 		}
 		
@@ -160,7 +160,7 @@ public class SpaceShepherd extends BasicGame{
 		}
 		
 		g.setColor(Color.blue);
-		g.drawOval(x-15, y-15, 30, 30,80);
+		g.drawOval(x, y, 3, 3,80);
 
 		
 		if(flock.allIntheHole(targetCenter, targetRadius)){	
