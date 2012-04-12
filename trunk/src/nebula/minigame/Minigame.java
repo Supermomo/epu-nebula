@@ -52,9 +52,17 @@ public abstract class Minigame extends BasicGameState
     }
     
     @Override
-    public void enter(GameContainer container, StateBasedGame game) throws SlickException 
+    public void enter (GameContainer gc, StateBasedGame game)
+        throws SlickException 
     {
-    	this.init(container, game);
+    	this.init(gc, game);
+    }
+    
+    @Override
+    public void leave (GameContainer gc, StateBasedGame game)
+        throws SlickException 
+    {
+        this.init(gc, game);
     }
     
     /**

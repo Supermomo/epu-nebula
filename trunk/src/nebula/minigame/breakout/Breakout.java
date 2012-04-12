@@ -23,25 +23,25 @@ public class Breakout extends Minigame
     static final String imgPath = "ressources/images/breakout/";
     static final String sndPath = "ressources/sons/breakout/";
     
-    private final float[] initialSpeed = {0.25f, 0.35f, 0.45f};
-    private int lifes;
-    private final float[] brickProbability = {0.0f, 0.2f, 0.4f};
-    private final int[]   brickRowCount = {3, 3, 4};
-
+    private static final float[] initialSpeed     = {0.25f, 0.35f, 0.45f};
+    private static final float[] brickProbability = {0.0f, 0.2f, 0.4f};
+    private static final int[]   brickRowCount    = {3, 3, 4};
     
+    private int lifes;
     private float gameCounter;
     private GameState gameState;
     private boolean useMouse;
-    private SpeedVector ballSpeed = new SpeedVector();
     private Ball ball;
     private Racket racket;
-    private BricksField bricksField;
+    private SpeedVector ballSpeed = new SpeedVector();
     private List<Brick> bricks = new ArrayList<Brick>();
-    private Image imgBackground, imgLife;
-    private Sound sndBounce, sndLaunch, sndBreak, sndLose;
+    private BricksField bricksField;
+    
+    private static Image imgBackground, imgLife;
+    private static Sound sndBounce, sndLaunch, sndBreak, sndLose;
     
     private static Random random = new Random();
-    private enum GameState {Inactive, Active, Ingame}
+    private static enum GameState {Inactive, Active, Ingame}
     
     
     /* Game ID */
@@ -52,7 +52,7 @@ public class Breakout extends Minigame
     {
         // Call super method
         super.init(gc, game);
-        lifes = 3;
+        
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
         imgLife         = new Image(imgPath + "ball.png");
@@ -60,6 +60,9 @@ public class Breakout extends Minigame
         sndLaunch       = new Sound(sndPath + "launch.wav");
         sndBreak        = new Sound(sndPath + "break.wav");
         sndLose         = new Sound(sndPath + "lose.wav");
+        
+        // Initial life count
+        lifes = 3;
         
         // Game state and counters
         gameCounter = 1.0f;
@@ -77,6 +80,8 @@ public class Breakout extends Minigame
         bricksField = new BricksField(
             0, 0, gc.getWidth(), gc.getHeight()*getBrickRowCount()/12,
             getBrickRowCount(), 6);
+        
+        bricks.clear();
         
         for (int i = 0; i < bricksField.getRow(); i++)
         {
@@ -138,7 +143,6 @@ public class Breakout extends Minigame
                 ballSpeed.invertX();
                 sndBounce.play();
             }
-            
             
             // Collision with bricks
             if (ball.getY() <= bricksField.getY() + bricksField.getHeight())
@@ -286,21 +290,32 @@ public class Breakout extends Minigame
         ball.draw();
     }
     
+    /**
+     * Reduce life and start a new game
+     */
     private void invokeDefeat ()
     {
-        gameState = GameState.Inactive;
-        gameCounter = 1.0f;
         lifes--;
+        gameCounter = 1.0f;
+        gameState = GameState.Inactive;
         racket.resetPosition();
         racket.attachBall(ball, getRandomRPos());
         sndLose.play();
     }
     
+    /**
+     * Returns a random ball position relative to the racket
+     * @return The random position
+     */
     private float getRandomRPos ()
     {
         return random.nextFloat() * 0.6f - 0.3f;
     }
     
+    /**
+     * Returns the initial ball speed depending on the difficulty
+     * @return The ball speed
+     */
     private float getInitialSpeed ()
     {
         if (Difficulty.Easy.equals(difficulty))
@@ -311,6 +326,10 @@ public class Breakout extends Minigame
         return initialSpeed[1];
     }
     
+    /**
+     * Returns the brick resistance probability depending on the difficulty
+     * @return The resistance probability
+     */
     private float getBrickProbability ()
     {
         if (Difficulty.Easy.equals(difficulty))
@@ -321,6 +340,10 @@ public class Breakout extends Minigame
         return brickProbability[1];
     }
     
+    /**
+     * Returns the line count of the brick field
+     * @return The line count
+     */
     private int getBrickRowCount ()
     {
         if (Difficulty.Easy.equals(difficulty))
