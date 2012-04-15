@@ -143,14 +143,18 @@ public class SpaceShepherd extends BasicGame{
 		g.fillOval(targetCenter.x-targetRadius, targetCenter.y-targetRadius, targetRadius*2, targetRadius*2);
 		g.setColor(Color.white);
 		g.setLineWidth(10);
+		
 		for(Line l : fences){
 			g.fillOval(l.getX1(), l.getY1(), imgRadius, imgRadius);
 			g.fillOval(l.getX2(), l.getY2(), imgRadius, imgRadius);
 			g.drawLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
+			g.drawString(""+fences.indexOf(l), l.getX1()+20, l.getY1()+20);
 		}
+		
 		if(lastPlot!=null){
 			g.drawOval(lastPlot.x, lastPlot.y, imgRadius, imgRadius);
 		}
+		
 		g.setColor(Color.green);
 		g.drawOval(flock.getPosition().x, flock.getPosition().y, 5,5);
 		

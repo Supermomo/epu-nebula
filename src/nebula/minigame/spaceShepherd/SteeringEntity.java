@@ -20,6 +20,8 @@ public class SteeringEntity {
 	private float maxSpeed;
 	/**The maximum roation in degree*/
 	private float maxRotation=5;
+	
+	private float InitialMaxRotation=5;
 
 	private int Xfield;
 	private int Yfield;
@@ -75,10 +77,12 @@ public class SteeringEntity {
 
 		Vector2f newPos=null;
 		newPos=moveRandomlyInternal(delta);
+		maxRotation=InitialMaxRotation;
 		
 		while(!isValidTrajectory(newPos, fences)){
 			//new position from a ramdom deplacement
 			newPos=moveRandomlyInternal(delta);	
+			maxRotation+=20;
 		}//end while
 		
 		return newPos;
