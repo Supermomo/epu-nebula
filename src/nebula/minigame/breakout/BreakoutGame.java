@@ -18,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * Breakout minigame
  * @author Thomas Di'Meco
  */
-public class Breakout extends Minigame
+public class BreakoutGame extends Minigame
 {
     static final String imgPath = "ressources/images/breakout/";
     static final String sndPath = "ressources/sons/breakout/";
@@ -48,7 +48,8 @@ public class Breakout extends Minigame
     @Override public int getID () { return StateID.Breakout.value; }
 
     @Override
-    public void init (GameContainer gc, StateBasedGame game) throws SlickException
+    public void init (GameContainer gc, StateBasedGame game)
+        throws SlickException
     {
         // Call super method
         super.init(gc, game);

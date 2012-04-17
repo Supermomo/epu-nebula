@@ -23,7 +23,7 @@ public class Ball
     {
         // Set ball image first time
         if (image == null)
-            image = new Image(Breakout.imgPath + "ball.png");
+            image = new Image(BreakoutGame.imgPath + "ball.png");
     }
 
     public void draw ()

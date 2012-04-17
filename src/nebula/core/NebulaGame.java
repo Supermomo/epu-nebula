@@ -3,7 +3,8 @@ package nebula.core;
 import java.awt.Toolkit;
 
 import nebula.core.state.*;
-import nebula.minigame.breakout.Breakout;
+import nebula.minigame.asteroid.AsteroidGame;
+import nebula.minigame.breakout.BreakoutGame;
 import nebula.minigame.gravity.Gravity;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
 
@@ -41,9 +42,10 @@ public class NebulaGame extends StateBasedGame
         Bougibouga              (15),
         Jubba                   (16),
         Breakout                (17),
-        Fin                     (18),
+        Asteroid                (18),
+        Fin                     (19),
         Gravity					(100),
-        Score				(-1);
+        Score				    (-1);
         
         public int value;
         private StateID (int value) { this.value = value; }
@@ -77,7 +79,8 @@ public class NebulaGame extends StateBasedGame
 		this.addState(new FinInvaders());
 		this.addState(new Bougibouga());
 		this.addState(new Jubba());
-		this.addState(new Breakout());
+		this.addState(new BreakoutGame());
+		this.addState(new AsteroidGame());
 		this.addState(new Fin());
 		this.addState(new Gravity(StateID.Gravity.value));
 		

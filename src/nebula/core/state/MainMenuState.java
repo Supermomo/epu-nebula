@@ -91,7 +91,7 @@ public class MainMenuState extends BasicGameState
 				NebulaGame.isScenario=true;
 			}
 			else if("choix du jeu".equalsIgnoreCase(texte)) {
-				String[] s = {"BreakOut", "Gravity", "SpaceInvaders", "SpaceShepard", "Retour"};
+				String[] s = {"Breakout", "Asteroid", "Gravity", "SpaceInvaders", "SpaceShepard", "Retour"};
 				menu = s;
 				labelSelectionne = 0;
 				NebulaGame.isScenario=false;
@@ -104,6 +104,8 @@ public class MainMenuState extends BasicGameState
 			// Si on a selectionné un jeu
 			else if("breakout".equalsIgnoreCase(texte))
 				stateChange = StateID.Breakout.value;
+			else if("asteroid".equalsIgnoreCase(texte))
+                stateChange = StateID.Asteroid.value;
 			else if("spaceinvaders".equalsIgnoreCase(texte))
 				stateChange = StateID.SpaceInvaders.value;
 			else if("gravity".equalsIgnoreCase(texte))
