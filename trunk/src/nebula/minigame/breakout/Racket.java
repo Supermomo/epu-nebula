@@ -36,7 +36,7 @@ public class Racket
 
         // Set racket image first time
         if (image == null)
-            image = new Image(Breakout.imgPath + "racket.png");
+            image = new Image(BreakoutGame.imgPath + "racket.png");
     }
     
     public void goRight (float n)
