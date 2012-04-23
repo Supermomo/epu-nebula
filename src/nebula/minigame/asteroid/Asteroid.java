@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 
 /**
- * Racket class
+ * Asteroid class
  */
 public class Asteroid
 {

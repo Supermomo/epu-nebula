@@ -1,5 +1,6 @@
 package nebula.minigame.breakout;
 
+
 /**
  * BricksField class
  */

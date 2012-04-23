@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 
 /**
- * Racket class
+ * Saucer class
  */
 public class Saucer
 {

@@ -3,6 +3,7 @@ package nebula.minigame.breakout;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+
 /**
  * Brick class
  */
