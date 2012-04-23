@@ -253,7 +253,7 @@ public class BreakoutGame extends Minigame
             gameVictory();
         // Defeat condition
         else if (lifes < 0)
-            gameVictory();
+            gameDefeat();
     }
 
     @Override

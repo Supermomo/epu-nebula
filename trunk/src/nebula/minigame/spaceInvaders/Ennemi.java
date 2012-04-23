@@ -39,7 +39,7 @@ public class Ennemi
 	}
 
 	public void setImage(Image image) {
-		this.image = image;
+		Ennemi.image = image;
 	}
 
 	public float getX() {
