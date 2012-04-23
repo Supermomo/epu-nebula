@@ -11,7 +11,7 @@ public class Racket
 {
     static final float w = 280;
     static final float h = 35;
-    static final float hspeed = 0.8f;
+    static final float hspeed = 0.7f;
     static final float vspeed = 0.2f;
     
     private float x;

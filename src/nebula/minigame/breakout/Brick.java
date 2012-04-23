@@ -31,8 +31,8 @@ public class Brick
         // Set brick images first time
         if (images[0] == null)
         {
-            images[0] = new Image(BreakoutGame.imgPath + "brick-red.png");
-            images[1] = new Image(BreakoutGame.imgPath + "brick-orange.png");
+            images[0] = new Image(BreakoutGame.imgPath + "brick1.png");
+            images[1] = new Image(BreakoutGame.imgPath + "brick2.png");
         }
     }
     
