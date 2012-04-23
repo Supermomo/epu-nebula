@@ -1,5 +1,5 @@
-Clément Ader - Nebula
-=====================
+TODO LIST - Nebula
+==================
 
 
 SpaceInvaders :
@@ -9,11 +9,7 @@ SpaceInvaders :
     - Tirs rafales
 
 Breakout :
-    - Balle rapide en moyen
-    - Sons trop forts
-    - Briques bleues à la place d'orange
-    - Raquette trop rapide
-
+    
 Gravity :
     - Gravité plus élevée
     - Sons trop forts (piques)
@@ -21,5 +17,4 @@ Gravity :
     - Perso un peu lent
 
 Divers :
-    - Jeu: astéroïdes à éviter
     - Menu: Couleur rouge en plus

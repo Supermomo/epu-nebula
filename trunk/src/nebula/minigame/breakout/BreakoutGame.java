@@ -24,8 +24,8 @@ public class BreakoutGame extends Minigame
     static final String sndPath = "ressources/sons/breakout/";
     
     private static final float[] initialSpeed     = {0.25f, 0.35f, 0.45f};
-    private static final float[] brickProbability = {0.0f, 0.2f, 0.4f};
-    private static final int[]   brickRowCount    = {3, 3, 4};
+    private static final float[] brickProbability = {0.0f,  0.2f,  0.4f };
+    private static final int[]   brickRowCount    = {3,     3,     4    };
     
     private int lifes;
     private float gameCounter;
@@ -53,7 +53,7 @@ public class BreakoutGame extends Minigame
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
         imgLife         = new Image(imgPath + "ball.png");
