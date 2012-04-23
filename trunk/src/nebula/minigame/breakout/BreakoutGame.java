@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
 import nebula.core.helper.Collision;
-import nebula.core.state.StateScore;
 import nebula.minigame.Minigame;
 
 import org.newdawn.slick.*;
@@ -251,17 +249,11 @@ public class BreakoutGame extends Minigame
             useMouse = !useMouse;
         
         // Victory condition
-        if (bricks.isEmpty()){
-            //this.gotoNextState();
-    		((StateScore)((NebulaGame)game).getState(StateID.Score.value)).setMessage("Bravo ! ");
-    		((NebulaGame)game).showScore(getID(), 1000, NebulaGame.isScenario);
-        }
+        if (bricks.isEmpty())
+            gameVictory();
         // Defeat condition
-        else if (lifes < 0){
-            //System.out.println("Breakout: you failed!");
-    		((StateScore)((NebulaGame)game).getState(StateID.Score.value)).setMessage("Caca ! ");
-    		((NebulaGame)game).showScore(getID(), 42, NebulaGame.isScenario);
-        }
+        else if (lifes < 0)
+            gameVictory();
     }
 
     @Override
