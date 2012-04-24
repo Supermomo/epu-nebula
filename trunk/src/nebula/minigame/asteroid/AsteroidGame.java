@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
 import nebula.minigame.Minigame;
+
 import org.newdawn.slick.*;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -20,34 +23,41 @@ public class AsteroidGame extends Minigame
     static final String imgPath = "ressources/images/asteroid/";
     static final String sndPath = "ressources/sons/asteroid/";
     
+    private static final float asteroidSpeed[]       = {0.04f,   0.05f,   0.06f  };
+    private static final float asteroidProbability[] = {0.0004f, 0.0008f, 0.0012f};
+    
     private GameState gameState;
+    private int time;
     private int lifes;
     private Rectangle limits;
     private Saucer saucer;
     private List<Asteroid> asteroids;
     
     private static Image imgBackground, imgLife;
-    
-    private static Random random = new Random();
+    private static UnicodeFont font;
     private static enum GameState {Active, Destroying}
+    
+    static Random random = new Random();
     
     
     /* Game ID */
     @Override public int getID () { return StateID.Asteroid.value; }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Load images and sounds
         imgBackground   = new Image(imgPath + "background.png");
         imgLife         = new Image(imgPath + "heart.png");
         
-        // Initial life count
+        // Initial life count and time
         lifes = 3;
+        time = 90 * 1000;
         
         // Initialisations
         limits = new Rectangle(0, 0, gc.getWidth(), gc.getHeight());
@@ -55,7 +65,14 @@ public class AsteroidGame extends Minigame
         gameState = GameState.Active;
         saucer = new Saucer(limits);
         
-        asteroids.add(new Asteroid(limits));
+        // Font
+        if (font == null)
+        {
+            font = new UnicodeFont(NebulaGame.fontPath, 64, false, false);
+            font.addGlyphs("0123456789: ");
+            font.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
+            font.loadGlyphs();
+        }
     }
 
     @Override
@@ -83,19 +100,41 @@ public class AsteroidGame extends Minigame
             if (input.isKeyDown(Input.KEY_DOWN))
                 saucer.goDown(Saucer.speed * delta);
             
-            // Collisions
+            // Create asteroid
+            if (random.nextFloat() < getAsteroidProbability() * delta)
+                createAsteroid();
+            
+            // For each asteroid
             for (Asteroid a : asteroids)
+            {   
+                // Collisions
                 if (a.getCollideZone().intersects(saucer.getCollideZone()))
                     invokeDefeat();
+                
+                // Move
+                a.step(delta);
+            }
+            
+            // Decrease time
+            time -= delta;
         }
-        // ==== Inactive state ====
+        // ==== Destroying state ====
         else if (GameState.Destroying.equals(gameState))
         {
+            lifes--;
+            time += 10 * 1000;
+            asteroids.clear();
+            saucer.resetPosition();
             
+            gameState = GameState.Active;
         }
         
         // ==== All states ====
-        // Victory & Defeat
+        // Victory
+        if (time < 500)
+            gameVictory();
+        else if (lifes < 0)
+            gameDefeat();
     }
 
     @Override
@@ -110,10 +149,11 @@ public class AsteroidGame extends Minigame
             for (int y = 0; y < gc.getHeight(); y += imgBackground.getHeight())
                 imgBackground.draw(x, y);
         
-        // Asteroids
-        for (Asteroid a : asteroids) a.draw();
+        // Render asteroids
+        for (Asteroid a : asteroids)
+            a.draw();
         
-        // Saucer
+        // Render saucer
         saucer.draw();
         
         // Render lifes
@@ -122,6 +162,18 @@ public class AsteroidGame extends Minigame
             imgLife.draw(4.0f+i*(4.0f+lifeImageSize),
                            (gc.getHeight()-lifeImageSize-4.0f),
                            lifeImageSize, lifeImageSize);
+        
+        // Render time counter
+        String timeStr =
+            Integer.toString(time / (60 * 1000)) +
+            " : " +
+            (time % (60 * 1000) < 10 * 1000 ? "0" : "") +
+            Integer.toString((time % (60 * 1000))/1000);
+        
+        font.drawString(24.0f, 24.0f, "Pwet", Color.white);
+        font.drawString(
+            gc.getWidth()/2 - font.getWidth(timeStr)/2,
+            24.0f, timeStr, Color.white);
     }
     
     /**
@@ -129,8 +181,42 @@ public class AsteroidGame extends Minigame
      */
     private void invokeDefeat ()
     {
-        lifes--;
         gameState = GameState.Destroying;
-        saucer.resetPosition();
+    }
+    
+    /**
+     * Create a new asteroid
+     */
+    private void createAsteroid () throws SlickException
+    {
+        asteroids.add(new Asteroid(limits, getAsteroidSpeed()));
+    }
+    
+    /**
+     * Returns the speed of astereroids
+     * @return The speed of astereroids
+     */
+    private float getAsteroidSpeed ()
+    {
+        if (Difficulty.Easy.equals(difficulty))
+            return asteroidSpeed[0];
+        else if (Difficulty.Hard.equals(difficulty))
+            return asteroidSpeed[2];
+        
+        return asteroidSpeed[1];
+    }
+    
+    /**
+     * Returns the probability of astereroids
+     * @return The probability of astereroids
+     */
+    private float getAsteroidProbability ()
+    {
+        if (Difficulty.Easy.equals(difficulty))
+            return asteroidProbability[0];
+        else if (Difficulty.Hard.equals(difficulty))
+            return asteroidProbability[2];
+        
+        return asteroidProbability[1];
     }
 }
