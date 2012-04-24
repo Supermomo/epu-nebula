@@ -1,8 +1,13 @@
 package nebula.core.state;
 
+import java.awt.Toolkit;
+
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.TransitionType;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.NebulaFont.FontName;
 
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -29,6 +34,7 @@ public abstract class Transition extends BasicGameState
     private boolean voicePlayed = false;
     private Rectangle frameRect = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
     private float screenw, screenh;
+    private Font font;
     
     private static final float FRAME_MARGIN = 24.0f;
     private static final float FRAME_HEIGHT = 300.0f;
@@ -45,6 +51,9 @@ public abstract class Transition extends BasicGameState
         // Screen size
         screenw = gc.getWidth();
         screenh = gc.getHeight();
+        
+        // Font
+        font = NebulaFont.getFont(FontName.Batmfa, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f));
     }
 
     @Override
@@ -94,7 +103,7 @@ public abstract class Transition extends BasicGameState
                 frameRect.getX(), frameRect.getY(),
                 frameRect.getWidth(), frameRect.getHeight());
             
-            nebulaGame.getFont().drawString(
+            font.drawString(
                 frameRect.getX() + 64.0f, frameRect.getY() + 32.0f,
                 text.toString());
             
@@ -179,7 +188,6 @@ public abstract class Transition extends BasicGameState
         
         try {
             frame = new Image("ressources/images/miscellaneous/cadre.png");
-            nebulaGame.getFont().loadGlyphs();
         }
         catch (SlickException exc) {
             exc.printStackTrace();

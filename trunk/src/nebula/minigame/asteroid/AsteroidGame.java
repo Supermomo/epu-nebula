@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.NebulaFont.FontName;
 import nebula.minigame.Minigame;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -34,7 +34,7 @@ public class AsteroidGame extends Minigame
     private List<Asteroid> asteroids;
     
     private static Image imgBackground, imgLife;
-    private static UnicodeFont font;
+    private static Font font;
     private static enum GameState {Active, Destroying}
     
     static Random random = new Random();
@@ -43,7 +43,6 @@ public class AsteroidGame extends Minigame
     /* Game ID */
     @Override public int getID () { return StateID.Asteroid.value; }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
@@ -59,20 +58,14 @@ public class AsteroidGame extends Minigame
         lifes = 3;
         time = 90 * 1000;
         
-        // Initialisations
+        // Initializations
         limits = new Rectangle(0, 0, gc.getWidth(), gc.getHeight());
         asteroids = new ArrayList<Asteroid>();
         gameState = GameState.Active;
         saucer = new Saucer(limits);
         
         // Font
-        if (font == null)
-        {
-            font = new UnicodeFont(NebulaGame.fontPath, 64, false, false);
-            font.addGlyphs("0123456789: ");
-            font.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
-            font.loadGlyphs();
-        }
+        font = NebulaFont.getFont(FontName.Batmfa, 64);
     }
 
     @Override
@@ -122,7 +115,7 @@ public class AsteroidGame extends Minigame
         else if (GameState.Destroying.equals(gameState))
         {
             lifes--;
-            time += 10 * 1000;
+            time += 20 * 1000;
             asteroids.clear();
             saucer.resetPosition();
             
@@ -131,7 +124,7 @@ public class AsteroidGame extends Minigame
         
         // ==== All states ====
         // Victory
-        if (time < 500)
+        if (time < 750)
             gameVictory();
         else if (lifes < 0)
             gameDefeat();
@@ -170,7 +163,6 @@ public class AsteroidGame extends Minigame
             (time % (60 * 1000) < 10 * 1000 ? "0" : "") +
             Integer.toString((time % (60 * 1000))/1000);
         
-        font.drawString(24.0f, 24.0f, "Pwet", Color.white);
         font.drawString(
             gc.getWidth()/2 - font.getWidth(timeStr)/2,
             24.0f, timeStr, Color.white);

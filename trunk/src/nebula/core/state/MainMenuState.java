@@ -7,20 +7,21 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.playerAndScore.Player;
 
 
 public class MainMenuState extends BasicGameState
 {
-	private UnicodeFont font;
+	private Font font;
 
 	private String[] menu = {"Mode Aventure", "Choix Du Jeu","Scores du jeu", "Retour Au Menu"};
 	private int labelSelectionne;
@@ -34,12 +35,8 @@ public class MainMenuState extends BasicGameState
 	{
 		// Menu sélectionné
 		labelSelectionne = 0;
-		//TODO
-		((NebulaGame)stateGame).getFont().loadGlyphs();
-		font = new UnicodeFont("ressources/font/batmfa.ttf", (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
-		font.addAsciiGlyphs();
-		font.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
-		font.loadGlyphs();
+
+		font = NebulaFont.getFont(FontName.Batmfa, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f));
 	}
 
 	@Override
@@ -51,10 +48,9 @@ public class MainMenuState extends BasicGameState
 		
 		for(int i = 0; i < menu.length; i++) {
 			if(i==labelSelectionne) {
-				//TODO
 				font.drawString(x, y, menu[i], Color.red);
 			} else {
-				((nebula.core.NebulaGame) stateGame).getFont().drawString(x, y, menu[i], Color.white);
+				font.drawString(x, y, menu[i], Color.white);
 			}
 			y+=50;
 		}

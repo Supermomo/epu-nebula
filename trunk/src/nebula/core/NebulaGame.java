@@ -12,8 +12,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -21,6 +19,9 @@ import org.newdawn.slick.state.transition.HorizontalSplitTransition;
 import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 
+/**
+ * Nebula game main class
+ */
 public class NebulaGame extends StateBasedGame
 {
 	public static boolean isScenario;
@@ -50,10 +51,7 @@ public class NebulaGame extends StateBasedGame
         public int value;
         private StateID (int value) { this.value = value; }
     }
-    
-	public final static String fontPath = "ressources/font/batmfa.ttf";
-	private UnicodeFont uFont;
-	
+    	
 	public static enum TransitionType
 	    {Default, FadeOut, HorizontalSplit, VerticalSplit};
 	
@@ -62,7 +60,7 @@ public class NebulaGame extends StateBasedGame
 	 * Definit les différents états (menus / jeux) disponnibles
 	 * @throws SlickException 
 	 */
-    public NebulaGame() throws SlickException
+    public NebulaGame () throws SlickException
     {
 		super("Nebula");
 		
@@ -86,12 +84,7 @@ public class NebulaGame extends StateBasedGame
 		
 		//Score
 		this.addState(new StateScore());
-		
-		// Fonts
-		uFont = new UnicodeFont(fontPath, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f), false, false);
-		uFont.addAsciiGlyphs();
-		uFont.getEffects().add(new ColorEffect(java.awt.Color.WHITE)); 
-		
+				
 		// Starting state
 		this.enterState(StateID.MainMenu.value);
 	}
@@ -132,11 +125,6 @@ public class NebulaGame extends StateBasedGame
 		((StateScore)getState(StateID.Score.value)).setScore(Score);
 		enterState(StateID.Score.value);	
 	}
-
-	/**
-	 * Get the main font
-	 */
-	public UnicodeFont getFont () { return uFont; }
 	
 	/**
 	 * Start NebulaGame

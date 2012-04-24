@@ -1,7 +1,6 @@
 package nebula.core.state;
 
-import java.awt.RenderingHints.Key;
-
+import java.awt.Toolkit;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -14,7 +13,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.StateID;
 import nebula.core.NebulaGame.TransitionType;
-import nebula.minigame.Minigame;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.NebulaFont.FontName;
 
 public class StateScore extends BasicGameState{
 	
@@ -32,7 +32,7 @@ public class StateScore extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
-		font=((NebulaGame)game).getFont();	
+        font = NebulaFont.getFont(FontName.Batmfa, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f));
 		score=0;
 		lastState=0;
 	}
