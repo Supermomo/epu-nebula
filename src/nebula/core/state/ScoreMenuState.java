@@ -53,10 +53,10 @@ public class ScoreMenuState extends BasicGameState{
 		
 		if(input.isKeyPressed(Input.KEY_ENTER) || input.isKeyPressed(Input.KEY_ESCAPE)){
 			if(NebulaGame.isScenario){
-				((NebulaGame)game).enterState(lastState+1);
+				((NebulaGame)game).enterState(lastState+1, TransitionType.Fade);
 			}
 			else{
-				((NebulaGame)game).enterState(getID()+1, TransitionType.HorizontalSplit);
+				((NebulaGame)game).enterState(NebulaState.RapidModeMenu.id);
 			}
 		}
 	}
