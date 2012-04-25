@@ -124,7 +124,7 @@ public class NebulaGame extends StateBasedGame
 	{
 		((ScoreMenuState)getState(NebulaState.ScoreMenu.id)).setLastState(currentState);
 		((ScoreMenuState)getState(NebulaState.ScoreMenu.id)).setScore(score);
-		enterState(NebulaState.ScoreMenu.id);	
+		enterState(NebulaState.ScoreMenu.id, TransitionType.Fade);	
 	}
 	
 	/**

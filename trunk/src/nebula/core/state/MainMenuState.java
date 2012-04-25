@@ -20,7 +20,7 @@ public class MainMenuState extends AbstractMenuState
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Add menu items
         setMenuTitle("Bienvenue, " + NebulaGame.playerName);
         addMenuItem("Mode Aventure", true);
@@ -57,7 +57,7 @@ public class MainMenuState extends AbstractMenuState
             // Quitter
             case 4:
             default:
-                // TODO : Exit
+                System.exit(0);
                 break;
         }
     }
