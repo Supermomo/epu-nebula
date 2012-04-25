@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.Collision;
 import nebula.minigame.Minigame;
 
@@ -43,7 +43,7 @@ public class BreakoutGame extends Minigame
     
     
     /* Game ID */
-    @Override public int getID () { return StateID.Breakout.value; }
+    @Override public int getID () { return NebulaState.Breakout.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)

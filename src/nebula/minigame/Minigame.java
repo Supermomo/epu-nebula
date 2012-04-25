@@ -1,7 +1,7 @@
 package nebula.minigame;
 
 import nebula.core.NebulaGame;
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.state.StateScore;
 
 import org.newdawn.slick.GameContainer;
@@ -22,6 +22,7 @@ public abstract class Minigame extends BasicGameState
     
     protected NebulaGame nebulaGame;
     protected Difficulty difficulty;
+    protected int score;
     
     
     @Override
@@ -30,6 +31,9 @@ public abstract class Minigame extends BasicGameState
     {
         // Backup game
         this.nebulaGame = (NebulaGame)game;
+        
+        // Reset minigame score
+        score = 0;
     }
 
     @Override
@@ -58,7 +62,6 @@ public abstract class Minigame extends BasicGameState
     public void enter (GameContainer gc, StateBasedGame game)
         throws SlickException 
     {
-    	this.init(gc, game);
     }
     
     @Override
@@ -69,20 +72,11 @@ public abstract class Minigame extends BasicGameState
     }
     
     /**
-     * Set the minigame difficulty
-     * @param difficulty The difficulty
-     */
-    public void setDifficulty (Difficulty difficulty)
-    {
-        this.difficulty = difficulty;
-    }
-    
-    /**
      * Escape command
      */
     protected void escapeMinigame ()
     {
-        nebulaGame.enterState(0);
+        nebulaGame.enterState(NebulaState.MainMenu.id);
     }
     
     /**
@@ -98,8 +92,8 @@ public abstract class Minigame extends BasicGameState
      */
     protected void gameVictory ()
     {
-        ((StateScore)nebulaGame.getState(StateID.Score.value)).setMessage("Bravo ! ");
-        nebulaGame.showScore(getID(), 1000, NebulaGame.isScenario);
+        ((StateScore)nebulaGame.getState(NebulaState.Score.id)).setMessage("Bravo ! ");
+        nebulaGame.showScore(getID(), score);
     }
     
     /**
@@ -107,7 +101,34 @@ public abstract class Minigame extends BasicGameState
      */
     protected void gameDefeat ()
     {
-        ((StateScore)nebulaGame.getState(StateID.Score.value)).setMessage("Perdu ! ");
-        nebulaGame.showScore(getID(), 0, NebulaGame.isScenario);
+        ((StateScore)nebulaGame.getState(NebulaState.Score.id)).setMessage("Perdu ! ");
+        nebulaGame.showScore(getID(), score);
+    }
+    
+    /**
+     * Set the minigame difficulty
+     * @param difficulty The difficulty
+     */
+    public void setDifficulty (Difficulty difficulty)
+    {
+        this.difficulty = difficulty;
+    }
+    
+    /**
+     * Get the minigame difficulty
+     * @return The difficulty
+     */
+    public Difficulty getDifficulty ()
+    {
+        return difficulty;
+    }
+    
+    /**
+     * Get the minigame score
+     * @return The score
+     */
+    public int getScore ()
+    {
+        return score;
     }
 }

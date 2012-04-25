@@ -11,7 +11,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import nebula.core.NebulaGame;
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
@@ -26,7 +26,7 @@ public class StateScore extends BasicGameState{
 	
 	@Override
 	public int getID() {
-		return StateID.Score.value;
+		return NebulaState.Score.id;
 	}
 	
 	@Override

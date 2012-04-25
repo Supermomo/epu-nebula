@@ -3,7 +3,7 @@ package nebula.minigame.spaceInvaders;
 import java.util.Random;
 
 import nebula.core.NebulaGame;
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.minigame.Minigame;
 
 import org.newdawn.slick.*;
@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class SpaceInvaders extends Minigame {
 	
-	static int initialNbEnnemis;
+	static int initialNbEnnemis = 8;
 	Image land = null;
 	Boolean droite = true;
 	// Gestion du joueur avec position x,y et echelle
@@ -38,14 +38,7 @@ public class SpaceInvaders extends Minigame {
 	Sound sDefaite = null;
 	
 	/* Game ID */
-	@Override public int getID () { return StateID.SpaceInvaders.value; }
-	
-	
-    public SpaceInvaders(int nbEnnemis)
-    {
-        this.nbEnnemis = nbEnnemis;
-        initialNbEnnemis = nbEnnemis;
-    }
+	@Override public int getID () { return NebulaState.SpaceInvaders.id; }
  
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {

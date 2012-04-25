@@ -18,6 +18,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+
 /**
  * Custom base transition class
  */
@@ -56,6 +57,7 @@ public abstract class Transition extends BasicGameState
         font = NebulaFont.getFont(FontName.Batmfa, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f));
     }
 
+    
     @Override
     public final void update (GameContainer gc, StateBasedGame game, int delta)
         throws SlickException
@@ -87,6 +89,7 @@ public abstract class Transition extends BasicGameState
             else gotoNextState();
         }
     }
+    
     
     @Override
     public final void render (GameContainer gc, StateBasedGame game, Graphics g)
@@ -127,6 +130,7 @@ public abstract class Transition extends BasicGameState
         }
     }
     
+    
     /**
      * Goto next state
      */
@@ -134,6 +138,7 @@ public abstract class Transition extends BasicGameState
     {
         nebulaGame.next(this.getID(), transitionType);
     }
+    
     
     /**
      * Create frame rectangle
@@ -160,6 +165,7 @@ public abstract class Transition extends BasicGameState
         }
     }
     
+    
     /**
      * Set the transition duration
      * @param time Time in milliseconds
@@ -169,6 +175,7 @@ public abstract class Transition extends BasicGameState
         this.time = time;
     }
     
+    
     /**
      * Set the transition time before text
      * @param time Time in milliseconds
@@ -177,6 +184,7 @@ public abstract class Transition extends BasicGameState
     {
         this.timeBeforeText = time;
     }
+    
     
     /**
      * Set the transition text
@@ -196,6 +204,7 @@ public abstract class Transition extends BasicGameState
         createFrameRect();
     }
     
+    
     /**
      * Set the transition image
      * @param path The image path
@@ -209,6 +218,7 @@ public abstract class Transition extends BasicGameState
             exc.printStackTrace();
         }
     }
+    
     
     /**
      * Set the transition face character
@@ -226,6 +236,7 @@ public abstract class Transition extends BasicGameState
         createFrameRect();
     }
     
+    
     /**
      * Set the transition voice
      * @param path The sound path
@@ -239,6 +250,7 @@ public abstract class Transition extends BasicGameState
             exc.printStackTrace();
         }        
     }
+    
     
     /**
      * Set transition end type

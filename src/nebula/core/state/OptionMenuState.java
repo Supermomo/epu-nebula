@@ -1,6 +1,6 @@
 package nebula.core.state;
 
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -38,7 +38,7 @@ public class OptionMenuState extends BasicGameState
 
 	@Override
 	public int getID() {
-		return StateID.OptionMenu.value;
+		return NebulaState.OptionMenu.id;
 	}
 
 }
