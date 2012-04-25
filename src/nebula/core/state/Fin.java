@@ -1,6 +1,7 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -19,6 +20,7 @@ public class Fin extends Transition
 	    // Call super method
         super.init(gc, game);
         
+        this.setTransitionType(TransitionType.Fade);
 		this.setTransitionImage("ressources/images/miscellaneous/fin.png");
 	}
 }

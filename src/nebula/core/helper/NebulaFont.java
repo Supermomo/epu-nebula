@@ -59,7 +59,7 @@ public class NebulaFont
         
         // Cache font
         fontCache.put(uniqueFont, font);
-        
+
         return font;
     }
     

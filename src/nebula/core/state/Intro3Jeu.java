@@ -1,6 +1,7 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -19,6 +20,7 @@ public class Intro3Jeu extends Transition
 	    // Call super method
         super.init(gc, game);
         
+        this.setTransitionType(TransitionType.Fade);
         this.setTransitionImage("ressources/images/histoire/nebula fuite.png");
         this.setTransitionVoice("ressources/sons/histoire/intro3.ogg");
         this.setTransitionTime(12000.0f);

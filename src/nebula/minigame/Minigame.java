@@ -2,7 +2,7 @@ package nebula.minigame;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
-import nebula.core.state.StateScore;
+import nebula.core.state.ScoreMenuState;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -80,19 +80,11 @@ public abstract class Minigame extends BasicGameState
     }
     
     /**
-     * Go to next state
-     */
-    protected void gotoNextState ()
-    {
-        nebulaGame.next(this.getID());
-    }
-    
-    /**
      * Invoke the game victory
      */
     protected void gameVictory ()
     {
-        ((StateScore)nebulaGame.getState(NebulaState.Score.id)).setMessage("Bravo ! ");
+        ((ScoreMenuState)nebulaGame.getState(NebulaState.ScoreMenu.id)).setMessage("Bravo ! ");
         nebulaGame.showScore(getID(), score);
     }
     
@@ -101,7 +93,7 @@ public abstract class Minigame extends BasicGameState
      */
     protected void gameDefeat ()
     {
-        ((StateScore)nebulaGame.getState(NebulaState.Score.id)).setMessage("Perdu ! ");
+        ((ScoreMenuState)nebulaGame.getState(NebulaState.ScoreMenu.id)).setMessage("Perdu ! ");
         nebulaGame.showScore(getID(), score);
     }
     
