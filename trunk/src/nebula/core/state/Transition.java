@@ -1,7 +1,5 @@
 package nebula.core.state;
 
-import java.awt.Toolkit;
-
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.core.helper.NebulaFont;
@@ -29,7 +27,7 @@ public abstract class Transition extends BasicGameState
     private String text;
     private float time = Float.NEGATIVE_INFINITY;
     private float timeBeforeText = 100.0f;
-    private TransitionType transitionType = TransitionType.Default;
+    private TransitionType transitionType = TransitionType.None;
     private Image image, face, frame;
     private Sound voice;
     private boolean voicePlayed = false;
@@ -54,7 +52,7 @@ public abstract class Transition extends BasicGameState
         screenh = gc.getHeight();
         
         // Font
-        font = NebulaFont.getFont(FontName.Batmfa, (int)((Toolkit.getDefaultToolkit().getScreenSize().width/1920.0f) * 44.0f));
+        font = NebulaFont.getFont(FontName.Batmfa, 36);
     }
 
     
@@ -131,12 +129,20 @@ public abstract class Transition extends BasicGameState
     }
     
     
+    @Override
+    public void leave (GameContainer gc, StateBasedGame game)
+        throws SlickException 
+    {
+        this.init(gc, game);
+    }
+    
+    
     /**
      * Goto next state
      */
     protected void gotoNextState ()
     {
-        nebulaGame.next(this.getID(), transitionType);
+        nebulaGame.enterState(this.getID()+1, transitionType);
     }
     
     

@@ -25,6 +25,7 @@ import org.newdawn.slick.state.transition.VerticalSplitTransition;
 public class NebulaGame extends StateBasedGame
 {
 	public static boolean isScenario;
+	public static String playerName = "Joueur";
 	
     /**
      * Game states enum
@@ -33,8 +34,9 @@ public class NebulaGame extends StateBasedGame
     public static enum NebulaState
     {
         MainMenu                (0),
-        OptionMenu              (1),
-        Score                   (2),
+        RapidModeMenu           (1),
+        OptionsMenu             (2),
+        ScoreMenu               (3),
         StartAventure           (10),
         Intro1Jeu               (10),
         Intro2Jeu               (11),
@@ -53,7 +55,7 @@ public class NebulaGame extends StateBasedGame
     }
     	
 	public static enum TransitionType
-	    {Default, FadeOut, HorizontalSplit, VerticalSplit};
+	    {None, Fade, HorizontalSplit, VerticalSplit};
 	
 	/**
 	 * Constructeur du jeu.
@@ -67,8 +69,9 @@ public class NebulaGame extends StateBasedGame
 		// ==== GAME STATES ===
 		// Menus
 		this.addState(new MainMenuState());
-		this.addState(new OptionMenuState());
-		this.addState(new StateScore());
+		this.addState(new RapidModeMenuState());
+		this.addState(new OptionsMenuState());
+		this.addState(new ScoreMenuState());
 		
 		// Aventure
 		this.addState(new Intro1Jeu());
@@ -96,30 +99,32 @@ public class NebulaGame extends StateBasedGame
 	/**
 	 * Goto next state with the given transition
 	 */
-	public void next (int currentState, TransitionType transition)
+	public void enterState (int state, TransitionType transition)
 	{
 	    // Goto next state with the given transition
 		if (TransitionType.HorizontalSplit.equals(transition))
-			enterState(++currentState, null, new HorizontalSplitTransition(Color.black));
+			enterState(state, null, new HorizontalSplitTransition(Color.black));
 		else if (TransitionType.VerticalSplit.equals(transition))
-			enterState(++currentState, null, new VerticalSplitTransition(Color.black));
+			enterState(state, null, new VerticalSplitTransition(Color.black));
+		else if (TransitionType.Fade.equals(transition))
+		    enterState(state, new FadeOutTransition(Color.black, 2000), new FadeInTransition(Color.black, 2000));
 		else
-			enterState(++currentState, new FadeOutTransition(Color.black, 2000), new FadeInTransition(Color.black, 2000));
+			enterState(state, null, null);
 	}
 	
 	/**
      * Goto next state with the default transition
      */
-	public void next (int currentState)
+	public void enterState (int state)
 	{
-	    next(currentState, TransitionType.Default);
+	    enterState(state, TransitionType.None);
 	}
 	
 	public void showScore (int currentState, int score)
 	{
-		((StateScore)getState(NebulaState.Score.id)).setLastState(currentState);
-		((StateScore)getState(NebulaState.Score.id)).setScore(score);
-		enterState(NebulaState.Score.id);	
+		((ScoreMenuState)getState(NebulaState.ScoreMenu.id)).setLastState(currentState);
+		((ScoreMenuState)getState(NebulaState.ScoreMenu.id)).setScore(score);
+		enterState(NebulaState.ScoreMenu.id);	
 	}
 	
 	/**

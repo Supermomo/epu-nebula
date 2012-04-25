@@ -172,7 +172,7 @@ public class Gravity extends Minigame {
 		case DEFAITE: case VICTOIRE:
 			if(gameContainer.getInput().isKeyDown(Input.KEY_ENTER)) {
 				modeleJeu.arreterSon();
-				gotoNextState();
+				gameVictory();
 			}
 		}
 	}
