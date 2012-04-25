@@ -30,10 +30,11 @@ public class NebulaGame extends StateBasedGame
      * Game states enum
      * All state Id must be defined here, and only here !
      */
-    public static enum StateID
+    public static enum NebulaState
     {
         MainMenu                (0),
         OptionMenu              (1),
+        Score                   (2),
         StartAventure           (10),
         Intro1Jeu               (10),
         Intro2Jeu               (11),
@@ -44,12 +45,11 @@ public class NebulaGame extends StateBasedGame
         Jubba                   (16),
         Breakout                (17),
         Asteroid                (18),
-        Fin                     (19),
-        Gravity					(100),
-        Score				    (-1);
+        Gravity					(19),
+        Fin                     (20);
         
-        public int value;
-        private StateID (int value) { this.value = value; }
+        public int id;
+        private NebulaState (int id) { this.id = id; }
     }
     	
 	public static enum TransitionType
@@ -57,7 +57,7 @@ public class NebulaGame extends StateBasedGame
 	
 	/**
 	 * Constructeur du jeu.
-	 * Definit les différents états (menus / jeux) disponnibles
+	 * Definit les différents états (menus / jeux) disponibles
 	 * @throws SlickException 
 	 */
     public NebulaGame () throws SlickException
@@ -65,38 +65,33 @@ public class NebulaGame extends StateBasedGame
 		super("Nebula");
 		
 		// ==== GAME STATES ===
-		// Menus / Options
+		// Menus
 		this.addState(new MainMenuState());
 		this.addState(new OptionMenuState());
+		this.addState(new StateScore());
 		
-		// Main timeline
+		// Aventure
 		this.addState(new Intro1Jeu());
 		this.addState(new Intro2Jeu());
 		this.addState(new Intro3Jeu());
-		this.addState(new SpaceInvaders(8));
+		this.addState(new SpaceInvaders());
 		this.addState(new FinInvaders());
 		this.addState(new Bougibouga());
 		this.addState(new Jubba());
 		this.addState(new BreakoutGame());
 		this.addState(new AsteroidGame());
+		this.addState(new Gravity());
 		this.addState(new Fin());
-		this.addState(new Gravity(StateID.Gravity.value));
-		
-		//Score
-		this.addState(new StateScore());
 				
 		// Starting state
-		this.enterState(StateID.MainMenu.value);
+		this.enterState(NebulaState.MainMenu.id);
 	}
 
 	/**
-	 * 
+	 * Initialise states
 	 */
 	@Override
-	public void initStatesList(GameContainer gc) throws SlickException
-	{
-        this.getState(StateID.MainMenu.value).init(gc, this);
-	}
+	public void initStatesList (GameContainer gc) throws SlickException {}
 
 	/**
 	 * Goto next state with the given transition
@@ -109,7 +104,7 @@ public class NebulaGame extends StateBasedGame
 		else if (TransitionType.VerticalSplit.equals(transition))
 			enterState(++currentState, null, new VerticalSplitTransition(Color.black));
 		else
-			enterState(++currentState, new FadeOutTransition(Color.black, 3000), new FadeInTransition(Color.black,3000));
+			enterState(++currentState, new FadeOutTransition(Color.black, 2000), new FadeInTransition(Color.black, 2000));
 	}
 	
 	/**
@@ -120,10 +115,11 @@ public class NebulaGame extends StateBasedGame
 	    next(currentState, TransitionType.Default);
 	}
 	
-	public void showScore(int currentState, int Score, boolean isScenar){
-		((StateScore)getState(StateID.Score.value)).setLastState(currentState);
-		((StateScore)getState(StateID.Score.value)).setScore(Score);
-		enterState(StateID.Score.value);	
+	public void showScore (int currentState, int score)
+	{
+		((StateScore)getState(NebulaState.Score.id)).setLastState(currentState);
+		((StateScore)getState(NebulaState.Score.id)).setScore(score);
+		enterState(NebulaState.Score.id);	
 	}
 	
 	/**

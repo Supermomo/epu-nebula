@@ -1,6 +1,6 @@
 package nebula.core.state;
 
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
@@ -11,12 +11,11 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Intro1Jeu extends Transition
 {
 	/* Transition ID */
-	@Override public int getID () { return StateID.Intro1Jeu.value; }
+	@Override public int getID () { return NebulaState.Intro1Jeu.id; }
 	
 	@Override
 	public void init (GameContainer gc, StateBasedGame game)
 	    throws SlickException
-	    
 	{
 	    // Call super method
 	    super.init(gc, game);

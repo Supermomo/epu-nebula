@@ -1,6 +1,6 @@
 package nebula.core.state;
 
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Intro2Jeu extends Transition
 {
     /* Transition ID */
-    @Override public int getID () { return StateID.Intro2Jeu.value; }
+    @Override public int getID () { return NebulaState.Intro2Jeu.id; }
     
 	@Override
 	public void init (GameContainer gc, StateBasedGame game)

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.minigame.Minigame;
@@ -41,7 +41,7 @@ public class AsteroidGame extends Minigame
     
     
     /* Game ID */
-    @Override public int getID () { return StateID.Asteroid.value; }
+    @Override public int getID () { return NebulaState.Asteroid.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)

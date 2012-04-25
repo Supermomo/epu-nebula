@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 
 import nebula.core.NebulaGame;
-import nebula.core.NebulaGame.StateID;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.playerAndScore.Player;
@@ -78,12 +78,12 @@ public class MainMenuState extends BasicGameState
 
 		} else if(input.isKeyPressed(Input.KEY_ENTER)) {
 			String texte = menu[labelSelectionne];
-			int stateChange = StateID.MainMenu.value;
+			int stateChange = NebulaState.MainMenu.id;
 
 			if("retour au menu".equalsIgnoreCase(texte))
 				;// stateGame.exit();
 			else if("mode aventure".equalsIgnoreCase(texte)){
-				stateChange = StateID.StartAventure.value;
+				stateChange = NebulaState.StartAventure.id;
 				NebulaGame.isScenario=true;
 			}
 			else if("choix du jeu".equalsIgnoreCase(texte)) {
@@ -99,13 +99,13 @@ public class MainMenuState extends BasicGameState
 			}
 			// Si on a selectionné un jeu
 			else if("breakout".equalsIgnoreCase(texte))
-				stateChange = StateID.Breakout.value;
+				stateChange = NebulaState.Breakout.id;
 			else if("asteroid".equalsIgnoreCase(texte))
-                stateChange = StateID.Asteroid.value;
+                stateChange = NebulaState.Asteroid.id;
 			else if("spaceinvaders".equalsIgnoreCase(texte))
-				stateChange = StateID.SpaceInvaders.value;
+				stateChange = NebulaState.SpaceInvaders.id;
 			else if("gravity".equalsIgnoreCase(texte))
-				stateChange = StateID.Gravity.value;
+				stateChange = NebulaState.Gravity.id;
 			else if("scores du jeu".equalsIgnoreCase(texte)){
 				String[] s={"Retour",Player.load(playerName).toString()};
 				menu=s;
@@ -121,6 +121,6 @@ public class MainMenuState extends BasicGameState
 
 	@Override
 	public int getID () {
-		return StateID.MainMenu.value;
+		return NebulaState.MainMenu.id;
 	}
 }

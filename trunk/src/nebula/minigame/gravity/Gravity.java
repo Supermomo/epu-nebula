@@ -1,6 +1,7 @@
 package nebula.minigame.gravity;
 
 
+import nebula.core.NebulaGame.NebulaState;
 import nebula.minigame.Minigame;
 
 import org.newdawn.slick.GameContainer;
@@ -20,7 +21,6 @@ public class Gravity extends Minigame {
 		DEFAITE;
 	}
 
-	private int stateID;
 	private EtatJeu etatActuel;
 
 	private final static String dossierData = "ressources/images/gravity/";
@@ -34,10 +34,8 @@ public class Gravity extends Minigame {
 	/////// DEBUG ///////
 	private boolean out = false;
 
-	public Gravity(int stateID) {
-		this.stateID = stateID;
-	}
-
+	/* Game ID */
+    @Override public int getID () { return NebulaState.Gravity.id; }
 
 	/**
 	 * Initialisation des données pour le jeu
@@ -189,14 +187,4 @@ public class Gravity extends Minigame {
 		if(mapRender[1] != newRender[1]) return true;
 		return false;
 	}
-
-	/**
-	 * Retourne l'identifiant de l'état du jeu
-	 */
-	@Override
-	public int getID() {
-		return stateID;
-	}
-
-
 }
