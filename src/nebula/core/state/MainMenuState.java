@@ -56,8 +56,9 @@ public class MainMenuState extends AbstractMenuState
                 break;
             // Quitter
             case 4:
-            default:
                 System.exit(0);
+                break;
+            default:
                 break;
         }
     }

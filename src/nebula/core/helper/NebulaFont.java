@@ -14,7 +14,7 @@ import org.newdawn.slick.font.effects.ColorEffect;
  */
 public class NebulaFont
 {
-    // Fonts available
+    // Available fonts
     public static enum FontName
     {
         // Fonts must have differents ID
@@ -22,6 +22,18 @@ public class NebulaFont
         
         public int id;
         private FontName (int id) { this.id = id; }
+    }
+    
+    // Available font sizes
+    public static enum FontSize
+    {
+        // Predefined font sizes to avoid multiples loadings
+        Small  (18),
+        Medium (36),
+        Large  (64);
+        
+        public int size;
+        private FontSize (int size) { this.size = size; }
     }
     
     // Fonts cache
@@ -32,27 +44,27 @@ public class NebulaFont
     /**
      * Get a specified font, and cache this font for the entire application
      * @param fontName The font name
-     * @param size     The font size
+     * @param fontSize The font size
      * @throws SlickException 
      */
     @SuppressWarnings("unchecked")
-    public static Font getFont (FontName fontName, int size)
+    public static Font getFont (FontName fontName, FontSize fontSize)
         throws SlickException
     {
-        // Fonts path
+        // Fonts paths
         String fontPath = "";
         if (FontName.Batmfa.equals(fontName))
             fontPath = "ressources/fonts/batmfa.ttf";
         
         // Font unique key
-        UniqueFont uniqueFont = new UniqueFont(fontName, size);
+        UniqueFont uniqueFont = new UniqueFont(fontName, fontSize.size);
 
         // Check font cache
         if (fontCache.containsKey(uniqueFont))
             return fontCache.get(uniqueFont);
         
         // Create font
-        UnicodeFont font = new UnicodeFont(fontPath, size, false, false);
+        UnicodeFont font = new UnicodeFont(fontPath, fontSize.size, false, false);
         font.addAsciiGlyphs();
         font.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
         font.loadGlyphs();

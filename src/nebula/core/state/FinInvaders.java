@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class FinInvaders extends Transition
+public class FinInvaders extends AbstractTransitionState
 {
     /* Transition ID */
     @Override public int getID () { return NebulaState.FinInvaders.id; }
