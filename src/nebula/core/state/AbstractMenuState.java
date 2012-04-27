@@ -49,9 +49,7 @@ public abstract class AbstractMenuState extends BasicGameState
         nebulaGame = (NebulaGame)game;
         
         // Reset menu
-        textList.clear();
-        selectableList.clear();
-        menuTitle = "";
+        resetMenu();
 
         // Load fonts
         itemFont  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
@@ -127,14 +125,6 @@ public abstract class AbstractMenuState extends BasicGameState
             y += itemsSpace + itemFont.getHeight(textList.get(i));
         }
     }
-    
-    
-    @Override
-    public void leave (GameContainer gc, StateBasedGame game)
-        throws SlickException 
-    {
-        this.init(gc, game);
-    }
 
     
     /**
@@ -208,6 +198,17 @@ public abstract class AbstractMenuState extends BasicGameState
     protected void setMenuTitle (String title)
     {
         menuTitle = title;
+    }
+    
+    
+    /**
+     * Reset the menu
+     */
+    protected void resetMenu ()
+    {
+        textList.clear();
+        selectableList.clear();
+        menuTitle = "";
     }
     
     

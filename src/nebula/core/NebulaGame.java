@@ -1,6 +1,8 @@
 package nebula.core;
 
 import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import nebula.core.state.*;
 import nebula.minigame.asteroid.AsteroidGame;
@@ -26,6 +28,7 @@ public class NebulaGame extends StateBasedGame
 {
 	public static boolean isScenario;
 	public static String playerName = "Joueur";
+	private AppGameContainer application;
 	
     /**
      * Game states enum
@@ -36,7 +39,7 @@ public class NebulaGame extends StateBasedGame
         MainMenu                (0),
         RapidModeMenu           (1),
         OptionsMenu             (2),
-        ScoreMenu               (3),
+        ScoresMenu              (3),
         StartAventure           (10),
         Intro1Jeu               (10),
         Intro2Jeu               (11),
@@ -48,7 +51,8 @@ public class NebulaGame extends StateBasedGame
         Breakout                (17),
         Asteroid                (18),
         Gravity					(19),
-        Fin                     (20);
+        Fin                     (20),
+        ScoreTransition         (100);
         
         public int id;
         private NebulaState (int id) { this.id = id; }
@@ -71,7 +75,8 @@ public class NebulaGame extends StateBasedGame
 		this.addState(new MainMenuState());
 		this.addState(new RapidModeMenuState());
 		this.addState(new OptionsMenuState());
-		this.addState(new ScoreMenuState());
+		this.addState(new ScoresMenuState());
+		this.addState(new ScoreTransitionState());
 		
 		// Aventure
 		this.addState(new Intro1Jeu());
@@ -94,7 +99,9 @@ public class NebulaGame extends StateBasedGame
 	 * Initialise states
 	 */
 	@Override
-	public void initStatesList (GameContainer gc) throws SlickException {}
+	public void initStatesList (GameContainer gc) throws SlickException
+	{
+	}
 
 	/**
 	 * Goto next state with the given transition
@@ -115,16 +122,79 @@ public class NebulaGame extends StateBasedGame
 	/**
      * Goto next state with the default transition
      */
-	public void enterState (int state)
+    public void enterState (int state)
+    {
+        enterState(state, TransitionType.None);
+    }
+	
+	/**
+     * Init and goto next state with the given transition
+     */
+    public void enterAndInitState (int state, TransitionType transition)
+    {
+        try { getState(state).init(this.getContainer(), this); }
+        catch (SlickException exc) { exc.printStackTrace(); }
+        
+        enterState(state, transition);
+    }
+    
+    /**
+     * Init and goto next state with the default transition
+     */
+    public void enterAndInitState (int state)
+    {
+        enterAndInitState(state, TransitionType.None);
+    }
+    
+	/**
+	 * Show the score transition state
+	 */
+	public void showScoreState (int score, boolean won, int lastState)
 	{
-	    enterState(state, TransitionType.None);
+		((ScoreTransitionState)getState(NebulaState.ScoreTransition.id)).
+		    initScore(score, won, lastState);
+		
+		enterState(NebulaState.ScoreTransition.id, TransitionType.Fade);	
 	}
 	
-	public void showScore (int currentState, int score)
+	public void setApplication (AppGameContainer app)
 	{
-		((ScoreMenuState)getState(NebulaState.ScoreMenu.id)).setLastState(currentState);
-		((ScoreMenuState)getState(NebulaState.ScoreMenu.id)).setScore(score);
-		enterState(NebulaState.ScoreMenu.id, TransitionType.Fade);	
+	    this.application = app;
+	}
+	
+	public AppGameContainer getApplication ()
+    {
+        return application;
+    }
+	
+	/**
+	 * Create and start the Nebula sick game
+	 */
+	public static void startNebulaGame ()
+	{
+	    // FULLSCREEN //
+        final boolean FULLSCREEN = true;
+        
+        try {
+            NebulaGame nebulaGame = new NebulaGame();
+            AppGameContainer app = new AppGameContainer(nebulaGame);
+            nebulaGame.setApplication(app);
+
+            if (FULLSCREEN)
+            {
+                app.setDisplayMode(
+                    Toolkit.getDefaultToolkit().getScreenSize().width,
+                    Toolkit.getDefaultToolkit().getScreenSize().height,
+                    true);
+            }
+            else app.setDisplayMode(800, 600, false);
+            
+            app.setTargetFrameRate(120);
+            app.start();
+        }
+        catch (Exception exc) {
+            exc.printStackTrace();
+        }
 	}
 	
 	/**
@@ -132,26 +202,15 @@ public class NebulaGame extends StateBasedGame
 	 */
 	public static void main (String[] args) throws SlickException
 	{
-	    // FULLSCREEN //
-	    final boolean FULLSCREEN = true;
-	    
-	    try {
-    	    AppGameContainer app = new AppGameContainer(new NebulaGame());
-    	    
-    	    if (FULLSCREEN)
-    	    {
-                app.setDisplayMode(
-                    Toolkit.getDefaultToolkit().getScreenSize().width,
-                    Toolkit.getDefaultToolkit().getScreenSize().height,
-                    true);
-    	    }
-    	    else app.setDisplayMode(800, 600, false);
-    	    
-            app.setTargetFrameRate(120);
-            app.start();
-	    }
-	    catch (Exception exc) {
-            exc.printStackTrace();
-        }
+	    NebulaGame.startNebulaGame();
+	}
+	
+	/**
+	 * Print step message
+	 */
+	public static void printStep (String text)
+	{
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSS");
+        System.out.println("[" + sdf.format(new Date()) + "] " + text);
 	}
 }

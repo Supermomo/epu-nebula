@@ -32,7 +32,7 @@ public class MainMenuState extends AbstractMenuState
     
     @Override
     protected void indexSelectedEvent (int index)
-    {        
+    {
         // Index selected
         switch (index)
         {
@@ -44,19 +44,19 @@ public class MainMenuState extends AbstractMenuState
             // Mode rapide
             case 1:
                 NebulaGame.isScenario = false;
-                nebulaGame.enterState(NebulaState.RapidModeMenu.id);
+                nebulaGame.enterAndInitState(NebulaState.RapidModeMenu.id);
                 break;
             // Scores
             case 2:
-                nebulaGame.enterState(NebulaState.ScoreMenu.id);
+                nebulaGame.enterAndInitState(NebulaState.ScoresMenu.id);
                 break;
             // Options
             case 3:
-                nebulaGame.enterState(NebulaState.OptionsMenu.id);
+                nebulaGame.enterAndInitState(NebulaState.OptionsMenu.id);
                 break;
             // Quitter
             case 4:
-                System.exit(0);
+                nebulaGame.getApplication().exit();
                 break;
             default:
                 break;
