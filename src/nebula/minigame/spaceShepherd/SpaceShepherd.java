@@ -13,8 +13,10 @@ public class SpaceShepherd extends BasicGame{
 	private Image land = null;
 	private float x = 400;
 	private float y = 300;
-	/** Radius of one image */
-	private int imgRadius ;
+	/** Radius of one plot */
+	private int plotRadius ;
+	private int flockRadius;
+	private int fenceThickness;
 	/** Coefficient for the malus you get when you don't fill the track */
 	private float malusScoreCoef = 1.0f;
 	/**the list of all the fences that has been created */
@@ -31,10 +33,20 @@ public class SpaceShepherd extends BasicGame{
 	private Vector2f targetCenter;
 	private int targetRadius=40;
 	
+	private int borderMargin=50;
+	
 	private Image victoryImg;
 	private Image  lossImg;
+	private Image  flockImg;
+	private Image  leadImg;
+	private Image  plotImg;
+	private Image  fenceImg;
 	private String pathVictoryImg="ressources/images/spaceInvaders/victoire.png";
 	private String pathlLossImg="ressources/images/spaceInvaders/defaite.png";
+	private String pathFlockImg="ressources/images/spaceShepherd/nebula-farfadets.png";
+	private String pathLeadImg="ressources/images/spaceShepherd/nebula-farLeader.png";
+	private String pathPlotImg="ressources/images/spaceShepherd/nebula-plot.png";
+	private String pathFenceImg="ressources/images/spaceShepherd/sabre-laser.png";
 	private Sound victoSound;
 	
 	public SpaceShepherd(){
@@ -45,16 +57,21 @@ public class SpaceShepherd extends BasicGame{
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		imgRadius=(int) (gc.getScreenWidth()*0.01);
+		plotRadius=(int) (gc.getScreenWidth()*0.04);
+		flockRadius=(int) (gc.getScreenWidth()*0.03);
+		fenceThickness=(int) (gc.getScreenWidth()*0.03);
 		fences=new ArrayList<Line>();
-		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.2f, gc.getWidth(), gc.getHeight());
+		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.16f, gc.getWidth(), gc.getHeight());
 		
 		targetCenter=new Vector2f(new Random().nextInt(gc.getWidth()-60)
 				,new Random().nextInt(gc.getHeight()-60));
 		
 		victoryImg=new Image(pathVictoryImg);
 		lossImg=new Image(pathlLossImg);
-		
+		flockImg=new Image(pathFlockImg);
+		leadImg=new Image(pathLeadImg);
+		plotImg=new Image(pathPlotImg);
+		fenceImg=new Image(pathFenceImg);
 		victoSound=new Sound("ressources/sons/cropCircle/odetojoy.ogg");
 	}
 
@@ -69,19 +86,19 @@ public class SpaceShepherd extends BasicGame{
 
 		}
 
-		if (input.isKeyDown(Input.KEY_LEFT) && x-(delta * pointerSpeed) > 0) {
+		if (input.isKeyDown(Input.KEY_LEFT) && x-(delta * pointerSpeed) > 0+borderMargin) {
 			x -= (delta * pointerSpeed);
 		}
 		
-		if (input.isKeyDown(Input.KEY_RIGHT) && x+(delta * pointerSpeed)< gc.getWidth()) {
+		if (input.isKeyDown(Input.KEY_RIGHT) && x+(delta * pointerSpeed)< gc.getWidth()-borderMargin) {
 			x += (delta * pointerSpeed);
 		}
 
-		if (input.isKeyDown(Input.KEY_UP) && y -(delta * pointerSpeed)> 0) {
+		if (input.isKeyDown(Input.KEY_UP) && y -(delta * pointerSpeed)> 0+borderMargin) {
 			y -= (delta * pointerSpeed);
 		}
 
-		if (input.isKeyDown(Input.KEY_DOWN) && y+(delta * pointerSpeed) < gc.getHeight()) {
+		if (input.isKeyDown(Input.KEY_DOWN) && y+(delta * pointerSpeed) < gc.getHeight()-borderMargin) {
 			y += (delta * pointerSpeed);
 		}
 		
@@ -99,6 +116,7 @@ public class SpaceShepherd extends BasicGame{
 			}
 			else if (validDistanceFromLastPoint() && !flock.isDividing(new Line(lastPlot,plot))) {
 				
+				System.out.println("x : "+x+" y : "+y);
 				fences.add(new Line(lastPlot,plot));
 				lastPlot=null;
 				lastPlot=new Vector2f(x,y);
@@ -125,6 +143,7 @@ public class SpaceShepherd extends BasicGame{
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 
+		g.setAntiAlias(true);
 		//land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.black);
 		g.drawRect(0, 0, gc.getWidth(), gc.getHeight());
@@ -133,30 +152,41 @@ public class SpaceShepherd extends BasicGame{
 		g.setColor(Color.white);
 		g.setLineWidth(10);
 		
+		g.setColor(Color.red);
 		for(Line l : fences){
-			g.fillOval(l.getX1(), l.getY1(), imgRadius, imgRadius);
-			g.fillOval(l.getX2(), l.getY2(), imgRadius, imgRadius);
+			plotImg.draw(l.getX1()-plotRadius/2, l.getY1()-plotRadius/2, plotRadius, plotRadius);
+			plotImg.draw(l.getX2()-plotRadius/2, l.getY2()-plotRadius/2, plotRadius, plotRadius);
+			
 			g.drawLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
+//			fenceImg.setCenterOfRotation(0, 0);
+//			double cos=(l.getX1()-l.getX2())/l.length();
+//			double angle= Math.acos(cos) * 180/Math.PI;
+//			fenceImg.rotate((float) angle);
+//			fenceImg.draw(l.getX1(), l.getY1(),Math.abs(l.getX2()-l.getX1()), Math.abs(l.getY1()-l.getY2()));
+//			//remet l'image a plat pour la prochaine fois
+//			fenceImg.rotate((float) (360-angle));
+			
 			g.drawString(""+fences.indexOf(l), l.getX1()+20, l.getY1()+20);
 		}
-		
+
 		if(lastPlot!=null){
-			g.drawOval(lastPlot.x, lastPlot.y, imgRadius, imgRadius);
+			plotImg.draw(lastPlot.getX()-plotRadius/2, lastPlot.getY()-plotRadius/2, plotRadius, plotRadius);
 		}
 		
-		g.setColor(Color.green);
-		g.drawOval(flock.getPosition().x, flock.getPosition().y, 5,5);
+		leadImg.draw(flock.getPosition().x-(flockRadius/2), flock.getPosition().y-(flockRadius/2), 
+				flockRadius, flockRadius);
 		
 		g.setColor(Color.red);
 		for(SteeringEntity st : flock.getFlockers()){
-			g.fillOval(st.getPosition().x, st.getPosition().y, 10, 10);
+			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2), 
+					flockRadius, flockRadius);
 		}
 		
 		g.setColor(Color.blue);
-		g.drawOval(x, y, 3, 3,80);
+		g.drawOval(x, y, 8, 8,80);
 
 		
-		if(flock.allIntheHole(targetCenter, targetRadius)){	
+		if(flock.allInTheHole(targetCenter, targetRadius)){	
 			victoryImg.draw(0,0,gc.getWidth(),gc.getHeight());
 			if(!victoSound.playing()){
 				victoSound.play();
@@ -168,8 +198,8 @@ public class SpaceShepherd extends BasicGame{
 	
 	
 	private boolean validDistanceFromLastPoint() {
-		return (Math.abs(lastPlot.x - x) > imgRadius || Math.abs(lastPlot.y
-				- y) > imgRadius);
+		return (Math.abs(lastPlot.x - x) > plotRadius || Math.abs(lastPlot.y
+				- y) > plotRadius);
 	}
 
 	
@@ -177,8 +207,8 @@ public class SpaceShepherd extends BasicGame{
 
 		AppGameContainer app = new AppGameContainer(new SpaceShepherd());
 		//app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
-				//Toolkit.getDefaultToolkit().getScreenSize().height, true);
-		app.setDisplayMode(800, 600, false);
+		//		Toolkit.getDefaultToolkit().getScreenSize().height, true);
+		app.setDisplayMode(1500, 800, false);
 		app.setTargetFrameRate(60);
 		app.start();
 	}
