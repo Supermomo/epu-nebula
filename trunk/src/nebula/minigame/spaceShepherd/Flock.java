@@ -18,6 +18,7 @@ public class Flock extends SteeringEntity{
 	
 	private ArrayList<Line> remaining=null;;
 	
+	private int margin=40;
 	
 	public Flock(int x, int y, float maxSpeed, int fieldx, int fieldy) {
 		super(x, y, maxSpeed, fieldx, fieldy);
@@ -29,7 +30,9 @@ public class Flock extends SteeringEntity{
 	}
 	
 	public void moveRandom(int delta, ArrayList<Line> fences ){
+
 		super.setPosition(moveRandomly(delta, fences));
+		super.resetMaxSpeedAndMaxRotation();
 		updateFlock(delta, fences);
 	}
 	
@@ -40,15 +43,26 @@ public class Flock extends SteeringEntity{
 		for(SteeringEntity fl : flockers){
 
 			newPos=getFlockingMouvment(fl, delta, fences);
-			
-			while(!isValidTrajectory(newPos, fences)){
+			fl.resetMaxSpeedAndMaxRotation();
+			int cpt =0;
+			while(!isValidTrajectory(newPos, fences) && cpt <300){
 				newPos=getFlockingMouvment(fl, delta, fences);
+				//System.out.println("flock failure");
+				//fl.setMaxSpeed((float) (fl.getMaxSpeed()*0.9));
+				//fl.setMaxRotation((float) (fl.getMaxRotation()*1.5));
+				//newPos=fl.moveRandomly(delta, fences);
+				cpt ++;
+			}
+			
+			if(cpt==300){
+				System.out.println("30000000000000000000000000");
+				newPos=super.getPosition();
 			}
 			fl.setPosition(newPos);
 		}
 	}
 	
-	public boolean allIntheHole(Vector2f target, int radius){
+	public boolean allInTheHole(Vector2f target, int radius){
 		
 		for(SteeringEntity st: flockers){
 			if(st.getPosition().distance(target)>=radius){
@@ -73,7 +87,7 @@ public class Flock extends SteeringEntity{
 		Vector2f newPos;
 		
 		vect=fl.seek(super.getPosition());
-		vect.scale(delta*super.getPosition().distance(fl.getPosition())*attractionCoeff);
+		vect.scale(delta*attractionCoeff);
 		
 		vect2=fl.moveRandomly(delta,fences);
 		vect2=vect2.sub(fl.getPosition());
@@ -103,13 +117,13 @@ public class Flock extends SteeringEntity{
 	
 	/**
 	 * Some bad ass kamouloxick method who <BR> is kind of magically
-	 * able to find out <BR> whther or not this game should end right now
+	 * able to find out <BR> whether or not this game should end right now
 	 * @param fences
 	 * @param target
 	 * @return
 	 */
 	public boolean isEnded(final ArrayList<Line> fences, Vector2f target){
-		int margin=2;
+		
 		Line left=new Line(margin,margin,margin,super.getYfield()-margin);
 		Line top=new Line(margin,margin,super.getXfield()-margin,margin);
 		Line bottom=new Line(margin,super.getYfield()-margin,super.getXfield()-margin
@@ -162,8 +176,6 @@ public class Flock extends SteeringEntity{
 				
 				//Création de la forme
 				if(inter!=null){
-					System.out.println("intersection en :"+inter.x+", "+inter.y);
-					System.out.println("ligne concernée :  "+fences.indexOf(l));
 					//Recupére la ligne coupé par la ligne courante
 					Line lili=new Line(inter.x,inter.y, l.getX1(),l.getY1());
 					lili=intersectLine(shape, l);
@@ -180,7 +192,7 @@ public class Flock extends SteeringEntity{
 					}
 					path.lineTo(inter.x,inter.y);
 										
-					//Création de la jointure de remplacement de la forme éliminé (passant pas l'intersection)
+					//Création de la jointure de remplacement de la forme éliminé (passant par l'intersection)
 					Line cutLine=new Line(lili.getX1(),lili.getY1(),inter.x,inter.y);
 					
 					Line secondCutLine=new Line(l.getX1(),l.getY1(),l.getX2(),l.getY2());
@@ -193,20 +205,42 @@ public class Flock extends SteeringEntity{
 					remaining.add(cutLine);	
 					remaining.add(secondCutLine);
 					
-					
+					//Vu qu'on a modifié la forme, on repart du début.
+					cpt=0;
 				}
 				else if(interBord!=null){
+					
 					System.out.println("border intersection");
-					path.moveTo(interBord[0].x,interBord[0].y);
-					for(int h =0;h<shape.size()-1;h++){
+					
+					//Point in the middle of the line formed by the two bord intersection
+					Vector2f middle=new Vector2f((interBord[0].x+interBord[1].x)/2,
+							(interBord[0].y+interBord[1].y)/2);
+					
+					System.out.println(" middle : x "+middle.x+" y : "+middle.y);
+					//Closest corner to that point
+					Vector2f closesstCorner=getClosestCorner(middle);
+					
+					System.out.println("closest : x : "+closesstCorner.x+" y : "+closesstCorner.y);
+					//Recupére la premiere ligne coupant un bord
+					Line border=new Line(closesstCorner,interBord[0]);
+					border=intersectLine(shape, l);
+					int indexFirstLine = shape.indexOf(border)+1;
+					
+					System.out.println("indice : "+remaining.indexOf(shape.get(indexFirstLine)));
+					//Ajout du coin de départ et de la premiere ligne (du coin a la premiere intersection avec le bord)
+					path.moveTo(closesstCorner.x,closesstCorner.y);
+					path.lineTo(shape.get(indexFirstLine).getX1(), shape.get(indexFirstLine).getY1());
+					
+					for(int h =indexFirstLine;h<shape.size();h++){
 						Line li=shape.get(h);
 						path.lineTo(li.getX2(), li.getY2());
 					}
-					path.lineTo(interBord[1].x,interBord[1].y);
-					path.lineTo(interBord[0].x,interBord[0].y);
+					path.lineTo(closesstCorner.x,closesstCorner.y);
 					
 					//On retire les ligne de la forme crée de la list pour le pas les traiter 2 fois.
-					substractList(remaining, shape);
+					//substractList(remaining, shape);
+					
+					cpt++;
 				}
 						
 				//remise a zéro de la forme
@@ -223,8 +257,7 @@ public class Flock extends SteeringEntity{
 				//Si le leader du flock est dans une forme et que la cible n'y est pas
 				if(path.contains(target.x, target.y) != path.contains(super.getPosition().x, super.getPosition().y)){
 					return true;
-				}
-				cpt=0;
+				}				
 			}
 			else{
 				cpt++;
@@ -234,6 +267,27 @@ public class Flock extends SteeringEntity{
 		}//Fin while
 		
 		return false;
+	}
+	
+	/**
+	 * return the corner which is the closest to this point
+	 * @param point
+	 * @return
+	 */
+	private Vector2f getClosestCorner(Vector2f point){
+		Vector2f tab[]=new Vector2f[4];
+		tab[0]=new Vector2f(margin,margin);
+		tab[1]=new Vector2f(margin,super.getYfield()-margin);
+		tab[2]=new Vector2f(super.getXfield()-margin,margin);
+		tab[3]=new Vector2f(super.getXfield()-margin,super.getYfield()-margin);
+		
+		Vector2f closest=tab[0];
+		for(Vector2f ve : tab){
+			if(point.distance(ve)<point.distance(closest)){
+				closest=ve;
+			}
+		}
+		return closest;
 	}
 	
 	/**
@@ -266,7 +320,7 @@ public class Flock extends SteeringEntity{
 	}
 	
 	/**
-	 * Return the next Two intersection of the shpe with some borders or null
+	 * Return the next Two intersection of the shape with some borders or null
 	 * @param shape
 	 * @param Bords
 	 * @return
@@ -275,8 +329,8 @@ public class Flock extends SteeringEntity{
 		
 		Vector2f tab[]=new Vector2f[2];
 		int cpt=0;
-		for(Line l : shape){
-			for(Line b: Bords){
+		for(Line b: Bords){
+			for(Line l : shape){
 				tab[cpt]=l.intersect(b, true);
 				if(tab[cpt]!=null){
 					cpt++;

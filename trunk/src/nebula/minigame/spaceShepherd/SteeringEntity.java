@@ -22,6 +22,8 @@ public class SteeringEntity {
 	private float maxRotation=5;
 	
 	private float InitialMaxRotation=5;
+	
+	private float InitialMaxSpeed=5;
 
 	private int Xfield;
 	private int Yfield;
@@ -36,6 +38,7 @@ public class SteeringEntity {
 		velocity=new Vector2f(0,0);
 		Xfield=fieldx;
 		Yfield=fieldy;
+		InitialMaxSpeed=this.maxSpeed;
 	}
 	
 	protected Vector2f moveRandomlyInternal(float delta){
@@ -67,6 +70,11 @@ public class SteeringEntity {
 		return newPos;
 	}
 	
+	public void resetMaxSpeedAndMaxRotation(){
+		maxRotation=InitialMaxRotation;
+		maxSpeed=InitialMaxSpeed;
+	}
+	
 	/**
 	 * Get the position after a random move
 	 * @param delta
@@ -76,26 +84,26 @@ public class SteeringEntity {
 	protected Vector2f moveRandomly(float delta, ArrayList<Line> fences ){
 
 		Vector2f newPos=null;
-		newPos=moveRandomlyInternal(delta);
-		maxRotation=InitialMaxRotation;
-		
+		newPos=moveRandomlyInternal(delta);		
+		resetMaxSpeedAndMaxRotation();
 		while(!isValidTrajectory(newPos, fences)){
 			//new position from a ramdom deplacement
-			newPos=moveRandomlyInternal(delta);	
-			maxRotation+=20;
+			newPos=moveRandomlyInternal(delta);
+
+			maxRotation*=1.5;
+			maxSpeed*=0.7f;
 		}//end while
 		
 		return newPos;
 	}
 	
 	public boolean isValidTrajectory(Vector2f newPos, ArrayList<Line> fences){
-		
-		boolean cross=true;
+
 		Line line;
 		
 		//check for out of area issues
-		if(newPos.x<0 || newPos.x+30>Xfield || newPos.y<0 || newPos.y+30>Yfield){
-			cross=false;
+		if(newPos.x<10 || newPos.x+10>Xfield || newPos.y<10 || newPos.y+10>Yfield){
+			return false;
 		}
 		else{
 			//Line from old to new position
@@ -103,14 +111,13 @@ public class SteeringEntity {
 			//check if we cross the fences
 			for(Line l : fences){
 				if(line.intersect(l, true) != null){
-					cross=false;
-					break;
+					return false;
 				}
 			}
 			//end for
 		}//end else
 		
-		return cross;
+		return true;
 	}
 	
 	/**
@@ -120,10 +127,10 @@ public class SteeringEntity {
 	 */
 	public Vector2f seek(Vector2f target){
 		Vector2f res=new Vector2f(target.x-position.x,target.y-position.y);
-		if(res.length()>maxSpeed){
+		/*if(res.length()>maxSpeed){
 			res.normalise();
 			res.scale(maxSpeed);
-		}
+		}*/
 		return res;
 	}
 	
@@ -174,6 +181,14 @@ public class SteeringEntity {
 
 	public int getYfield() {
 		return Yfield;
+	}
+
+	public float getMaxRotation() {
+		return maxRotation;
+	}
+
+	public void setMaxRotation(float maxRotation) {
+		this.maxRotation = maxRotation;
 	}
 
 }
