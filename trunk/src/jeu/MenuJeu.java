@@ -1,24 +1,21 @@
 /*  Classe de menu de lancement de l'exemple de jeu.
- *  Cette classe hérite de la classe abstraite MenuAbstrait en définissant les méthodes :
+ *  Cette classe hï¿½rite de la classe abstraite MenuAbstrait en dï¿½finissant les mï¿½thodes :
  *     - nomOptions qui renvoie la liste des options possibles pour le menu 
- *     - lancerOption qui associe une action à chaque option du menu
+ *     - lancerOption qui associe une action ï¿½ chaque option du menu
  *     - wavAccueil() qui renvoie le nom du fichier wav lu lors de l'accueil dans le menu
  *     - wavAide() qui renvoie le nom du fichier wav lu lors de l'activation de la touche F1
  */
 
 package jeu; 
 
-import java.awt.Toolkit;
-
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.SlickException;
-
 import nebula.core.NebulaGame;
 import devintAPI.MenuAbstrait;
 
-public class MenuJeu extends MenuAbstrait {
+public class MenuJeu extends MenuAbstrait
+{
+    private static final long serialVersionUID = 1L;
 
-	/** constructeur
+    /** constructeur
 	 * @param title : le nom du jeu 
 	 */
 	public MenuJeu(String title) {
@@ -26,33 +23,25 @@ public class MenuJeu extends MenuAbstrait {
 	}
 
 	/** renvoie le nom des options du menu
-     * vous pouvez définir autant d'options que vous voulez
+     * vous pouvez dï¿½finir autant d'options que vous voulez
      **/
 	protected String[] nomOptions() {
 		String[] noms = {"Jouer","Options","Scores","Quitter"};
 		return noms;
 	}
 
-	/** lance l'action associée au bouton n°i
-	 * la numérotation est celle du tableau renvoyé par nomOption
+	/** lance l'action associï¿½e au bouton nï¿½i
+	 * la numï¿½rotation est celle du tableau renvoyï¿½ par nomOption
 	 */
 	protected void lancerOption(int i) {
 		switch (i){  
 		case 0 : 
-			try {
-				AppGameContainer app = new AppGameContainer(new NebulaGame());
-				app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
-				app.setTargetFrameRate(120);
-		        app.start();
-			} catch (SlickException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    NebulaGame.startNebulaGame();
 			break;
 		case 1 : new Option(nomJeu + ": gestion des options");break;
-		//case 2 : new Fichier(nomJeu + ": pour écrire dans un fichier");break;
+		//case 2 : new Fichier(nomJeu + ": pour ï¿½crire dans un fichier");break;
 		case 3 : System.exit(0);
-		default: System.err.println("action non définie");
+		default: System.err.println("action non dï¿½finie");
 		}
 	}
 
