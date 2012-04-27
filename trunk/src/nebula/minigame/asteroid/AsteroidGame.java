@@ -7,6 +7,7 @@ import java.util.Random;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 import nebula.minigame.Minigame;
 
 import org.newdawn.slick.*;
@@ -65,7 +66,7 @@ public class AsteroidGame extends Minigame
         saucer = new Saucer(limits);
         
         // Font
-        font = NebulaFont.getFont(FontName.Batmfa, 64);
+        font = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
     }
 
     @Override

@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import nebula.core.NebulaGame;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 
 /**
  * Abstract menu class
@@ -53,8 +54,8 @@ public abstract class AbstractMenuState extends BasicGameState
         menuTitle = "";
 
         // Load fonts
-        itemFont  = NebulaFont.getFont(FontName.Batmfa, 36);
-        titleFont = NebulaFont.getFont(FontName.Batmfa, 64);
+        itemFont  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
+        titleFont = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
         
         // Load background
         imgBackground = new Image(imgPath + "background.png");

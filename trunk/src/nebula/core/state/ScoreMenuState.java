@@ -14,6 +14,7 @@ import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 
 public class ScoreMenuState extends BasicGameState{
 	
@@ -31,7 +32,7 @@ public class ScoreMenuState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
-        font = NebulaFont.getFont(FontName.Batmfa, 36);
+        font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
 		score=0;
 		lastState=0;
 	}

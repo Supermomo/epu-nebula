@@ -4,6 +4,7 @@ import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -20,7 +21,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Custom base transition class
  */
-public abstract class Transition extends BasicGameState
+public abstract class AbstractTransitionState extends BasicGameState
 {
     protected NebulaGame nebulaGame;
     
@@ -52,7 +53,7 @@ public abstract class Transition extends BasicGameState
         screenh = gc.getHeight();
         
         // Font
-        font = NebulaFont.getFont(FontName.Batmfa, 36);
+        font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
     }
 
     
