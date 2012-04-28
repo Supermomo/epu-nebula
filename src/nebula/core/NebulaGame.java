@@ -28,7 +28,6 @@ public class NebulaGame extends StateBasedGame
 {
 	public static boolean isScenario;
 	public static String playerName = "Joueur";
-	private AppGameContainer application;
 	
     /**
      * Game states enum
@@ -114,7 +113,7 @@ public class NebulaGame extends StateBasedGame
 		else if (TransitionType.VerticalSplit.equals(transition))
 			enterState(state, null, new VerticalSplitTransition(Color.black));
 		else if (TransitionType.Fade.equals(transition))
-		    enterState(state, new FadeOutTransition(Color.black, 2000), new FadeInTransition(Color.black, 2000));
+		    enterState(state, new FadeOutTransition(Color.black, 1000), new FadeInTransition(Color.black, 1000));
 		else
 			enterState(state, null, null);
 	}
@@ -157,15 +156,6 @@ public class NebulaGame extends StateBasedGame
 		enterState(NebulaState.ScoreTransition.id, TransitionType.Fade);	
 	}
 	
-	public void setApplication (AppGameContainer app)
-	{
-	    this.application = app;
-	}
-	
-	public AppGameContainer getApplication ()
-    {
-        return application;
-    }
 	
 	/**
 	 * Create and start the Nebula sick game
@@ -176,9 +166,7 @@ public class NebulaGame extends StateBasedGame
         final boolean FULLSCREEN = true;
         
         try {
-            NebulaGame nebulaGame = new NebulaGame();
-            AppGameContainer app = new AppGameContainer(nebulaGame);
-            nebulaGame.setApplication(app);
+            AppGameContainer app = new AppGameContainer(new NebulaGame());
 
             if (FULLSCREEN)
             {
