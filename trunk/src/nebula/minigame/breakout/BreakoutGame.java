@@ -157,7 +157,13 @@ public class BreakoutGame extends Minigame
                     {
                         if (bcol == null) bcol = b;
                         b.touch();
-                        if (b.isBroken()) brickToRemove.add(b);
+                        
+                        // If the brick is broken
+                        if (b.isBroken())
+                        {
+                            brickToRemove.add(b);
+                            score += 100;
+                        }
                             
                     }
                 }
@@ -268,6 +274,13 @@ public class BreakoutGame extends Minigame
             for (int y = 0; y < gc.getHeight(); y += imgBackground.getHeight())
                 imgBackground.draw(x, y);
         
+        // Render bricks
+        for (Brick b : bricks) b.draw();
+        
+        // Render racket and ball
+        racket.draw();
+        ball.draw();
+        
         // Render lifes
         final float lifeImageSize = 20.0f;
         for (int i = 0; i < lifes; i++)
@@ -275,12 +288,8 @@ public class BreakoutGame extends Minigame
                            (gc.getHeight()-lifeImageSize-4.0f),
                            lifeImageSize, lifeImageSize);
         
-        // Render bricks
-        for (Brick b : bricks) b.draw();
-        
-        // Render racket and ball
-        racket.draw();
-        ball.draw();
+        // Render score
+        renderScore(gc, ScorePosition.BottomRight);
     }
     
     /**

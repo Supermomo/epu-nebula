@@ -167,6 +167,9 @@ public class AsteroidGame extends Minigame
         font.drawString(
             gc.getWidth()/2 - font.getWidth(timeStr)/2,
             24.0f, timeStr, Color.white);
+        
+        // Render score
+        renderScore(gc, ScorePosition.BottomRight);
     }
     
     /**
