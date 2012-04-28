@@ -61,6 +61,8 @@ public abstract class Minigame extends BasicGameState
     public void enter (GameContainer gc, StateBasedGame game)
         throws SlickException 
     {
+        super.enter(gc, game);
+        gc.getInput().clearKeyPressedRecord();
     }
     
     @Override

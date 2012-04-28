@@ -56,7 +56,7 @@ public class MainMenuState extends AbstractMenuState
                 break;
             // Quitter
             case 4:
-                nebulaGame.getApplication().exit();
+                nebulaGame.getContainer().exit();
                 break;
             default:
                 break;

@@ -18,6 +18,7 @@ import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
 
+
 /**
  * Abstract menu class
  */
@@ -125,7 +126,14 @@ public abstract class AbstractMenuState extends BasicGameState
             y += itemsSpace + itemFont.getHeight(textList.get(i));
         }
     }
-
+    
+    @Override
+    public void enter (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.enter(gc, game);
+        gc.getInput().clearKeyPressedRecord();
+    }
     
     /**
      * Select the next valid index
