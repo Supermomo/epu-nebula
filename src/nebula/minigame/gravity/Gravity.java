@@ -59,7 +59,6 @@ public class Gravity extends Minigame {
 		int[] tempRender = modeleJeu.renderMap();
 		mapRender[0] = tempRender[0];
 		mapRender[1] = tempRender[1];
-		gameContainer.setVSync(true);
 
 		etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
 
