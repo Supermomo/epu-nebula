@@ -68,30 +68,6 @@ public class NebulaGame extends StateBasedGame
     public NebulaGame () throws SlickException
     {
 		super("Nebula");
-		
-		// ==== GAME STATES ===
-		// Menus
-		this.addState(new MainMenuState());
-		this.addState(new RapidModeMenuState());
-		this.addState(new OptionsMenuState());
-		this.addState(new ScoresMenuState());
-		this.addState(new ScoreTransitionState());
-		
-		// Aventure
-		this.addState(new Intro1Jeu());
-		this.addState(new Intro2Jeu());
-		this.addState(new Intro3Jeu());
-		this.addState(new SpaceInvaders());
-		this.addState(new FinInvaders());
-		this.addState(new Bougibouga());
-		this.addState(new Jubba());
-		this.addState(new BreakoutGame());
-		this.addState(new AsteroidGame());
-		this.addState(new Gravity());
-		this.addState(new Fin());
-				
-		// Starting state
-		this.enterState(NebulaState.MainMenu.id);
 	}
 
 	/**
@@ -100,6 +76,27 @@ public class NebulaGame extends StateBasedGame
 	@Override
 	public void initStatesList (GameContainer gc) throws SlickException
 	{
+	    // Menus
+        this.addState(new MainMenuState());
+        this.addState(new RapidModeMenuState());
+        this.addState(new OptionsMenuState());
+        this.addState(new ScoresMenuState());
+        this.addState(new ScoreTransitionState());
+        
+        // Aventure
+        this.addState(new Intro1Jeu());
+        this.addState(new Intro2Jeu());
+        this.addState(new Intro3Jeu());
+        this.addState(new SpaceInvaders());
+        this.addState(new FinInvaders());
+        this.addState(new Bougibouga());
+        this.addState(new Jubba());
+        this.addState(new BreakoutGame());
+        this.addState(new AsteroidGame());
+        this.addState(new Gravity());
+        this.addState(new Fin());
+        
+        this.enterState(NebulaState.MainMenu.id);
 	}
 
 	/**
