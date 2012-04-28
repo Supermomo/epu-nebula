@@ -2,7 +2,12 @@ package nebula.minigame;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -16,12 +21,21 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class Minigame extends BasicGameState
 {
+    /* Score display offset */
+    private static float SCORE_OFFSET = 8.0f;
+    
     /* Minigame difficulties */
     public static enum Difficulty {Easy, Medium, Hard}
+    
+    /* Score positions */
+    public static enum ScorePosition
+    {TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight}
     
     protected NebulaGame nebulaGame;
     protected Difficulty difficulty;
     protected int score;
+    
+    private Font font;
     
     
     @Override
@@ -33,6 +47,9 @@ public abstract class Minigame extends BasicGameState
         
         // Reset minigame score
         score = 0;
+        
+        // Load font
+        font = NebulaFont.getFont(FontName.Batmfa, FontSize.Small);
     }
 
     @Override
@@ -55,6 +72,52 @@ public abstract class Minigame extends BasicGameState
     public void render (GameContainer gc, StateBasedGame game, Graphics g)
         throws SlickException
     {
+    }
+    
+    /**
+     * Render the score
+     */
+    public void renderScore (GameContainer gc, ScorePosition scorePosition)
+        throws SlickException
+    {
+        // Render score
+        String scoreText = Integer.toString(score);
+        float scoreWidth = font.getWidth(scoreText);
+        float scoreHeight = font.getHeight(scoreText);
+        float x = 0.0f, y = 0.0f;
+        
+        if (ScorePosition.TopLeft.equals(scorePosition))
+        {
+            x = SCORE_OFFSET;
+            y = SCORE_OFFSET;
+        }
+        else if (ScorePosition.TopCenter.equals(scorePosition))
+        {
+            x = gc.getWidth()/2 - scoreWidth/2;
+            y = SCORE_OFFSET;
+        }
+        else if (ScorePosition.TopRight.equals(scorePosition))
+        {
+            x = gc.getWidth() - scoreWidth - SCORE_OFFSET;
+            y = SCORE_OFFSET;
+        }
+        else if (ScorePosition.BottomLeft.equals(scorePosition))
+        {
+            x = SCORE_OFFSET;
+            y = gc.getHeight() - scoreHeight - SCORE_OFFSET;
+        }
+        else if (ScorePosition.BottomCenter.equals(scorePosition))
+        {
+            x = gc.getWidth()/2 - scoreWidth/2;
+            y = gc.getHeight() - scoreHeight - SCORE_OFFSET;
+        }
+        else if (ScorePosition.BottomRight.equals(scorePosition))
+        {
+            x = gc.getWidth() - scoreWidth - SCORE_OFFSET;
+            y = gc.getHeight() - scoreHeight - SCORE_OFFSET;
+        }
+        
+        font.drawString(x, y, scoreText, Color.yellow);
     }
     
     @Override

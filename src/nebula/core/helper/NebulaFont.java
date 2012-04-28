@@ -28,7 +28,7 @@ public class NebulaFont
     public static enum FontSize
     {
         // Predefined font sizes to avoid multiples loadings
-        Small  (18),
+        Small  (20),
         Medium (36),
         Large  (64);
         
