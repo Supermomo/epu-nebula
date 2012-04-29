@@ -85,13 +85,7 @@ public class SpaceInvaders extends Minigame {
         
     	Input input = gc.getInput();
     	
-    	// =================== Gestion des deplacements ==========================
-    	
-    	if(input.isKeyDown(Input.KEY_ESCAPE))
-		{
-			((NebulaGame)game).enterState(0);
-		}
-    	
+    	// =================== Gestion des deplacements ==========================  	
     	if(input.isKeyDown(Input.KEY_RIGHT))
     	{
     		if(tank.getX() < gc.getWidth() - tank.getImage().getWidth())
