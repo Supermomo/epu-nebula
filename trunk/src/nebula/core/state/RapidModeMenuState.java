@@ -22,10 +22,10 @@ public class RapidModeMenuState extends AbstractMenuState
         
         // Add menu items
         setMenuTitle("Mode Rapide");
-        addMenuItem("Asteroids", true);
-        addMenuItem("Breakout", true);
-        addMenuItem("Space Invaders", true);
-        addMenuItem("Gravity", true);
+        addMenuItem("Astéroïdes", true);
+        addMenuItem("Casse-briques", true);
+        addMenuItem("Invasion", true);
+        addMenuItem("Gravité", true);
         addMenuItem("Retour", true);
     }
     

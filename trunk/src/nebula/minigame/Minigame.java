@@ -29,7 +29,7 @@ public abstract class Minigame extends BasicGameState
     
     /* Score positions */
     public static enum ScorePosition
-    {TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight}
+        {TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight}
     
     protected NebulaGame nebulaGame;
     protected Difficulty difficulty;
@@ -140,7 +140,10 @@ public abstract class Minigame extends BasicGameState
      */
     protected void escapeMinigame ()
     {
-        nebulaGame.enterState(NebulaState.MainMenu.id);
+        if (NebulaGame.isScenario)
+            nebulaGame.enterState(NebulaState.MainMenu.id);
+        else
+            nebulaGame.enterState(NebulaState.RapidModeMenu.id);
     }
     
     /**
