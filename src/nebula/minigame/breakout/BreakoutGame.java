@@ -21,9 +21,9 @@ public class BreakoutGame extends Minigame
     static final String imgPath = "ressources/images/breakout/";
     static final String sndPath = "ressources/sons/breakout/";
     
-    private static final float[] initialSpeed     = {0.25f, 0.35f, 0.45f};
-    private static final float[] brickProbability = {0.0f,  0.2f,  0.4f };
-    private static final int[]   brickRowCount    = {3,     3,     4    };
+    private static final float[] initialSpeed     = {0.25f, 0.35f, 0.45f, 1.0f};
+    private static final float[] brickProbability = {0.0f,  0.2f,  0.4f , 0.6f};
+    private static final int[]   brickRowCount    = {3,     3,     4    , 5   };
     
     private int lifes;
     private float gameCounter;
@@ -324,6 +324,8 @@ public class BreakoutGame extends Minigame
             return initialSpeed[0];
         else if (Difficulty.Hard.equals(difficulty))
             return initialSpeed[2];
+        else if (Difficulty.Insane.equals(difficulty))
+            return initialSpeed[3];
         
         return initialSpeed[1];
     }
@@ -338,6 +340,8 @@ public class BreakoutGame extends Minigame
             return brickProbability[0];
         else if (Difficulty.Hard.equals(difficulty))
             return brickProbability[2];
+        else if (Difficulty.Insane.equals(difficulty))
+            return brickProbability[3];
         
         return brickProbability[1];
     }
@@ -352,6 +356,8 @@ public class BreakoutGame extends Minigame
             return brickRowCount[0];
         else if (Difficulty.Hard.equals(difficulty))
             return brickRowCount[2];
+        else if (Difficulty.Insane.equals(difficulty))
+            return brickRowCount[3];
         
         return brickRowCount[1];
     }
