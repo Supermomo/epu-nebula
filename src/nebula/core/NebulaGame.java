@@ -1,8 +1,8 @@
 package nebula.core;
 
 import java.awt.Toolkit;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import nebula.core.state.*;
 import nebula.core.state.AbstractMinigameState.Difficulty;
@@ -16,6 +16,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -38,11 +39,12 @@ public class NebulaGame extends StateBasedGame
      */
     public static enum NebulaState
     {
-        MainMenu                (0),
-        RapidModeMenu           (1),
-        OptionsMenu             (2),
-        ScoresMenu              (3),
-        PauseMenu               (4),
+        Loading                 (0),
+        MainMenu                (1),
+        RapidModeMenu           (2),
+        OptionsMenu             (3),
+        ScoresMenu              (4),
+        PauseMenu               (5),
         ScoreTransition         (9),
         StartAventure           (10),
         Intro1Jeu               (10),
@@ -81,30 +83,51 @@ public class NebulaGame extends StateBasedGame
     @Override
     public void initStatesList (GameContainer gc) throws SlickException
     {
+        // Loading state
+        this.addState(new LoadingState());
+        this.enterState(NebulaState.Loading.id);
+    }
+    
+    /**
+     * Load all states
+     */
+    public void loadStatesAndStartMenu ()
+    {
+        List<BasicGameState> states = new ArrayList<BasicGameState>();
+        
         // Menus
-        this.addState(new MainMenuState());
-        this.addState(new RapidModeMenuState());
-        this.addState(new OptionsMenuState());
-        this.addState(new ScoresMenuState());
-        this.addState(new PauseMenuState());
-        this.addState(new ScoreTransitionState());
-        this.addState(new EndMenuState());
+        states.add(new MainMenuState());
+        states.add(new RapidModeMenuState());
+        states.add(new OptionsMenuState());
+        states.add(new ScoresMenuState());
+        states.add(new PauseMenuState());
+        states.add(new ScoreTransitionState());
+        states.add(new EndMenuState());
 
         // Aventure
-        this.addState(new Intro1Jeu());
-        this.addState(new Intro2Jeu());
-        this.addState(new Intro3Jeu());
-        this.addState(new SpaceInvaders());
-        this.addState(new FinInvaders());
-        this.addState(new Bougibouga());
-        this.addState(new Jubba());
-        this.addState(new BreakoutGame());
-        this.addState(new AsteroidGame());
-        this.addState(new Gravity());
-        this.addState(new SpaceShepherd());
+        states.add(new Intro1Jeu());
+        states.add(new Intro2Jeu());
+        states.add(new Intro3Jeu());
+        states.add(new SpaceInvaders());
+        states.add(new FinInvaders());
+        states.add(new Bougibouga());
+        states.add(new Jubba());
+        states.add(new BreakoutGame());
+        states.add(new AsteroidGame());
+        states.add(new Gravity());
+        states.add(new SpaceShepherd());
+        
+        // Init all states
+        for (BasicGameState state : states)
+        {
+            this.addState(state);
+            
+            try { state.init(this.getContainer(), this); }
+            catch (SlickException exc) { exc.printStackTrace(); }
+        }
 
         // Enter main state
-        this.enterState(NebulaState.MainMenu.id);
+        this.enterState(NebulaState.MainMenu.id, TransitionType.Fade);
     }
 
     /**
@@ -196,14 +219,5 @@ public class NebulaGame extends StateBasedGame
     public static void main (String[] args) throws SlickException
     {
         NebulaGame.startNebulaGame();
-    }
-
-    /**
-     * Print step message
-     */
-    public static void printStep (String text)
-    {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSS");
-        System.out.println("[" + sdf.format(new Date()) + "] " + text);
     }
 }
