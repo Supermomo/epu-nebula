@@ -2,7 +2,7 @@ package nebula.minigame.gravity;
 
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.minigame.Minigame;
+import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,7 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class Gravity extends Minigame {
+public class Gravity extends AbstractMinigameState {
 
 	private enum EtatJeu {
 		DEPLACEMENT_JOUEUR,

@@ -6,14 +6,11 @@ import java.util.List;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Font;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import nebula.core.NebulaGame;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
@@ -22,7 +19,7 @@ import nebula.core.helper.NebulaFont.FontSize;
 /**
  * Abstract menu class
  */
-public abstract class AbstractMenuState extends BasicGameState
+public abstract class AbstractMenuState extends AbstractNebulaState
 {
     // Images path
     public static String imgPath = "ressources/images/menus/";
@@ -33,10 +30,7 @@ public abstract class AbstractMenuState extends BasicGameState
     private Font itemFont, titleFont;
     private int selectedIndex;
     private String menuTitle;
-    protected NebulaGame nebulaGame;
-    
-    private static Image imgBackground;
-    
+        
     // Menu properties
     private List<String> textList        = new ArrayList<String>();
     private List<Boolean> selectableList = new ArrayList<Boolean>();
@@ -46,8 +40,8 @@ public abstract class AbstractMenuState extends BasicGameState
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
-        // Nebula game
-        nebulaGame = (NebulaGame)game;
+        // Call super method
+        super.init(gc, game);
         
         // Reset menu
         resetMenu();
@@ -55,9 +49,6 @@ public abstract class AbstractMenuState extends BasicGameState
         // Load fonts
         itemFont  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
         titleFont = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
-        
-        // Load background
-        imgBackground = new Image(imgPath + "background.png");
     }
     
     
@@ -65,6 +56,9 @@ public abstract class AbstractMenuState extends BasicGameState
     public void update (GameContainer gc, StateBasedGame game, int delta)
         throws SlickException
     {
+        // Call super method
+        super.update(gc, game, delta);
+        
         Input input = gc.getInput();
 
         // Menu navigation
@@ -84,10 +78,8 @@ public abstract class AbstractMenuState extends BasicGameState
     public void render (GameContainer gc, StateBasedGame game, Graphics g)
         throws SlickException
     {
-        // Render background
-        for (int x = 0; x < gc.getWidth(); x += imgBackground.getWidth())
-            for (int y = 0; y < gc.getHeight(); y += imgBackground.getHeight())
-                imgBackground.draw(x, y);
+        // Call super method
+        super.render(gc, game, g);
         
         // Compute menu height
         float menuh = 0;
@@ -126,15 +118,6 @@ public abstract class AbstractMenuState extends BasicGameState
             y += itemsSpace + itemFont.getHeight(textList.get(i));
         }
     }
-    
-    @Override
-    public void enter (GameContainer gc, StateBasedGame game)
-        throws SlickException
-    {
-        super.enter(gc, game);
-        gc.getInput().clearKeyPressedRecord();
-    }
-    
     
     /**
      * Get the true index by ignoring non selectables items

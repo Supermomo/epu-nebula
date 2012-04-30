@@ -1,9 +1,7 @@
 package nebula.core.state;
 
-import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
-import nebula.minigame.Minigame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -11,7 +9,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -19,10 +16,8 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Custom abstract transition class
  */
-public abstract class AbstractTransitionState extends BasicGameState
-{
-    protected NebulaGame nebulaGame;
-    
+public abstract class AbstractTransitionState extends AbstractNebulaState
+{    
     private float time = Float.NEGATIVE_INFINITY;
     private TransitionType transitionType = TransitionType.None;
     private Image image;
@@ -33,8 +28,11 @@ public abstract class AbstractTransitionState extends BasicGameState
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
-        // Backup game
-        this.nebulaGame = (NebulaGame)game;
+        // Call super method
+        super.init(gc, game);
+        
+        // Remove default background
+        setUseDefaultBackground(false);
     }
 
     
@@ -42,6 +40,9 @@ public abstract class AbstractTransitionState extends BasicGameState
     public final void update (GameContainer gc, StateBasedGame game, int delta)
         throws SlickException
     {
+        // Call super method
+        super.update(gc, game, delta);
+        
         Input input = gc.getInput();
         
         // Next state key
@@ -63,6 +64,9 @@ public abstract class AbstractTransitionState extends BasicGameState
     public final void render (GameContainer gc, StateBasedGame game, Graphics g)
         throws SlickException
     {
+        // Call super method
+        super.render(gc, game, g);
+        
         // Render image
         if (image != null)
             image.draw(0, 0, gc.getWidth(), gc.getHeight());
@@ -73,8 +77,8 @@ public abstract class AbstractTransitionState extends BasicGameState
     public void enter (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
+        // Call super method
         super.enter(gc, game);
-        gc.getInput().clearKeyPressedRecord();
         
         if (voice != null) voice.play();
     }
@@ -98,7 +102,7 @@ public abstract class AbstractTransitionState extends BasicGameState
         
         if (next == null)
             nebulaGame.enterState(NebulaState.MainMenu.id);
-        else if (next instanceof Minigame)
+        else if (next instanceof AbstractMinigameState)
             nebulaGame.initAndEnterState(this.getID()+1, transitionType);
         else
             nebulaGame.enterState(this.getID()+1, transitionType);

@@ -2,7 +2,7 @@ package nebula.core.state;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
-import nebula.minigame.Minigame.Difficulty;
+import nebula.core.state.AbstractMinigameState.Difficulty;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;

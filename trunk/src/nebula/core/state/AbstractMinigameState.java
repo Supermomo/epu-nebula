@@ -1,11 +1,10 @@
-package nebula.minigame;
+package nebula.core.state;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
-import nebula.core.state.PauseMenuState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -13,14 +12,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
 /**
  * Basic minigame state
  */
-public abstract class Minigame extends BasicGameState
+public abstract class AbstractMinigameState extends AbstractNebulaState
 {
     /* Score display offset */
     private static float SCORE_OFFSET = 8.0f;
@@ -32,7 +30,6 @@ public abstract class Minigame extends BasicGameState
     public static enum ScorePosition
         {TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight}
     
-    protected NebulaGame nebulaGame;
     protected Difficulty difficulty;
     protected int score;
     
@@ -43,8 +40,8 @@ public abstract class Minigame extends BasicGameState
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
-        // Backup game
-        this.nebulaGame = (NebulaGame)game;
+        // Call super method
+        super.init(gc, game);
         
         // Reset minigame score
         score = 0;
@@ -60,6 +57,9 @@ public abstract class Minigame extends BasicGameState
     public void update (GameContainer gc, StateBasedGame game, int delta)
         throws SlickException
     {
+        // Call super method
+        super.update(gc, game, delta);
+        
         Input input = gc.getInput();
         
         // Escape key
@@ -76,6 +76,8 @@ public abstract class Minigame extends BasicGameState
     public void render (GameContainer gc, StateBasedGame game, Graphics g)
         throws SlickException
     {
+        // Call super method
+        super.render(gc, game, g);
     }
     
     /**
@@ -122,14 +124,6 @@ public abstract class Minigame extends BasicGameState
         }
         
         font.drawString(x, y, scoreText, Color.yellow);
-    }
-    
-    @Override
-    public void enter (GameContainer gc, StateBasedGame game)
-        throws SlickException 
-    {
-        super.enter(gc, game);
-        gc.getInput().clearKeyPressedRecord();
     }
     
     /**

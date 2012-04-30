@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import nebula.core.state.*;
-import nebula.minigame.Minigame.Difficulty;
+import nebula.core.state.AbstractMinigameState.Difficulty;
 import nebula.minigame.asteroid.AsteroidGame;
 import nebula.minigame.breakout.BreakoutGame;
 import nebula.minigame.gravity.Gravity;
@@ -56,7 +56,7 @@ public class NebulaGame extends StateBasedGame
         Asteroid                (18),
         Gravity					(19),
         SpaceShepherd           (20),
-        Fin                     (21);
+        EndMenu                 (21);
 
         public int id;
         private NebulaState (int id) { this.id = id; }
@@ -88,6 +88,7 @@ public class NebulaGame extends StateBasedGame
         this.addState(new ScoresMenuState());
         this.addState(new PauseMenuState());
         this.addState(new ScoreTransitionState());
+        this.addState(new EndMenuState());
 
         // Aventure
         this.addState(new Intro1Jeu());
@@ -101,8 +102,8 @@ public class NebulaGame extends StateBasedGame
         this.addState(new AsteroidGame());
         this.addState(new Gravity());
         this.addState(new SpaceShepherd());
-        this.addState(new Fin());
 
+        // Enter main state
         this.enterState(NebulaState.MainMenu.id);
     }
 

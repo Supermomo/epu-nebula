@@ -8,7 +8,7 @@ import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
-import nebula.minigame.Minigame;
+import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -19,13 +19,13 @@ import org.newdawn.slick.state.StateBasedGame;
  * Asteroid minigame
  * @author Thomas Di'Meco
  */
-public class AsteroidGame extends Minigame
+public class AsteroidGame extends AbstractMinigameState
 {
     static final String imgPath = "ressources/images/asteroid/";
     static final String sndPath = "ressources/sons/asteroid/";
     
-    private static final float asteroidSpeed[]       = {0.04f,   0.05f,   0.06f  , 0.12f  };
-    private static final float asteroidProbability[] = {0.0004f, 0.0008f, 0.0012f, 0.0024f};
+    private static final float asteroidSpeed[]       = {0.04f,   0.05f,   0.06f  , 0.14f  };
+    private static final float asteroidProbability[] = {0.0004f, 0.0008f, 0.0012f, 0.0025f};
     
     private GameState gameState;
     private int time;
@@ -34,7 +34,7 @@ public class AsteroidGame extends Minigame
     private Saucer saucer;
     private List<Asteroid> asteroids;
     
-    private static Image imgBackground, imgLife;
+    private static Image imgLife;
     private static Font font;
     private static enum GameState {Active}
     
@@ -52,8 +52,7 @@ public class AsteroidGame extends Minigame
         super.init(gc, game);
 
         // Load images and sounds
-        imgBackground   = new Image(imgPath + "background.png");
-        imgLife         = new Image(imgPath + "heart.png");
+        imgLife = new Image(imgPath + "heart.png");
         
         // Initial life count and time
         lifes = 3;
@@ -136,11 +135,6 @@ public class AsteroidGame extends Minigame
     {
         // Call super method
         super.render(gc, game, g);
-        
-        // Render background
-        for (int x = 0; x < gc.getWidth(); x += imgBackground.getWidth())
-            for (int y = 0; y < gc.getHeight(); y += imgBackground.getHeight())
-                imgBackground.draw(x, y);
         
         // Render asteroids
         for (Asteroid a : asteroids)

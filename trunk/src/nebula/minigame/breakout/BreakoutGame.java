@@ -6,7 +6,7 @@ import java.util.Random;
 
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.Collision;
-import nebula.minigame.Minigame;
+import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * Breakout minigame
  * @author Thomas Di'Meco
  */
-public class BreakoutGame extends Minigame
+public class BreakoutGame extends AbstractMinigameState
 {
     static final String imgPath = "ressources/images/breakout/";
     static final String sndPath = "ressources/sons/breakout/";
@@ -35,7 +35,7 @@ public class BreakoutGame extends Minigame
     private List<Brick> bricks = new ArrayList<Brick>();
     private BricksField bricksField;
     
-    private static Image imgBackground, imgLife;
+    private static Image imgLife;
     private static Sound sndBounce, sndLaunch, sndBreak, sndLose;
     
     private static Random random = new Random();
@@ -53,7 +53,6 @@ public class BreakoutGame extends Minigame
         super.init(gc, game);
 
         // Load images and sounds
-        imgBackground   = new Image(imgPath + "background.png");
         imgLife         = new Image(imgPath + "ball.png");
         sndBounce       = new Sound(sndPath + "bounce.wav");
         sndLaunch       = new Sound(sndPath + "launch.wav");
@@ -269,11 +268,6 @@ public class BreakoutGame extends Minigame
     {
         // Call super method
         super.render(gc, game, g);
-        
-        // Render background
-        for (int x = 0; x < gc.getWidth(); x += imgBackground.getWidth())
-            for (int y = 0; y < gc.getHeight(); y += imgBackground.getHeight())
-                imgBackground.draw(x, y);
         
         // Render bricks
         for (Brick b : bricks) b.draw();

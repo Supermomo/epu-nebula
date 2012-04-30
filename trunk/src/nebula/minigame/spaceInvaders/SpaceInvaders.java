@@ -2,18 +2,16 @@ package nebula.minigame.spaceInvaders;
 
 import java.util.Random;
 
-import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
-import nebula.minigame.Minigame;
+import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class SpaceInvaders extends Minigame {
+public class SpaceInvaders extends AbstractMinigameState {
 	
 	static int initialNbEnnemis = 8;
-	Image land = null;
 	Boolean droite = true;
 	// Gestion du joueur avec position x,y et echelle
 	Tank tank = null;
@@ -48,7 +46,6 @@ public class SpaceInvaders extends Minigame {
         
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
-    	land = new Image("ressources/images/spaceInvaders/fond.png");
     	tank = new Tank();
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
     	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
@@ -244,7 +241,6 @@ public class SpaceInvaders extends Minigame {
         // Call super method
         super.render(gc, game, g);
         
-    	land.draw(0, 0, gc.getWidth(), gc.getHeight());
     	g.drawImage(tank.getImage(), tank.getX(), tank.getY());
     	g.drawImage(tir.getImage(), tir.getX(), tir.getY());
     	g.drawImage(tirEnnemi.getImage(), tirEnnemi.getX(), tirEnnemi.getY());

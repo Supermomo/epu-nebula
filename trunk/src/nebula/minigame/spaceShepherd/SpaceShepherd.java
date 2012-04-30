@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.minigame.Minigame;
+import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Line;
@@ -12,7 +12,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class SpaceShepherd extends Minigame {
+public class SpaceShepherd extends AbstractMinigameState {
 
 	private float x = 400;
 	private float y = 300;
