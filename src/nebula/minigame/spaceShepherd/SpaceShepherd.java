@@ -159,8 +159,6 @@ public class SpaceShepherd extends AbstractMinigameState {
         super.render(gc, game, g);
         
 		g.setAntiAlias(true);
-		
-		backgroundImg.draw(0, 0, gc.getWidth(), gc.getHeight());
 
 		targetImg.drawFlash(targetCenter.x-targetRadius/2 -2, targetCenter.y-targetRadius/2 -2, 
 				targetRadius+4, targetRadius+4);
