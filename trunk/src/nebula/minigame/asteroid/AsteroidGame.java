@@ -36,7 +36,7 @@ public class AsteroidGame extends Minigame
     
     private static Image imgBackground, imgLife;
     private static Font font;
-    private static enum GameState {Active, Destroying}
+    private static enum GameState {Active}
     
     static Random random = new Random();
     
@@ -99,28 +99,27 @@ public class AsteroidGame extends Minigame
                 createAsteroid();
             
             // For each asteroid
+            Asteroid asteroidTouched = null;
+            
             for (Asteroid a : asteroids)
             {   
                 // Collisions
                 if (a.getCollideZone().intersects(saucer.getCollideZone()))
-                    invokeDefeat();
+                {
+                    lifes--;
+                    asteroidTouched = a;
+                }
                 
                 // Move
                 a.step(delta);
             }
             
+            // Destrooy touched asteroid
+            if (asteroidTouched != null)
+                asteroids.remove(asteroidTouched);
+            
             // Decrease time
             time -= delta;
-        }
-        // ==== Destroying state ====
-        else if (GameState.Destroying.equals(gameState))
-        {
-            lifes--;
-            time += 20 * 1000;
-            asteroids.clear();
-            saucer.resetPosition();
-            
-            gameState = GameState.Active;
         }
         
         // ==== All states ====
@@ -170,14 +169,6 @@ public class AsteroidGame extends Minigame
         
         // Render score
         renderScore(gc, ScorePosition.BottomRight);
-    }
-    
-    /**
-     * Reduce life and start a new try
-     */
-    private void invokeDefeat ()
-    {
-        gameState = GameState.Destroying;
     }
     
     /**
