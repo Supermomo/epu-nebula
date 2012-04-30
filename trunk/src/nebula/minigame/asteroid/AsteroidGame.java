@@ -24,8 +24,8 @@ public class AsteroidGame extends Minigame
     static final String imgPath = "ressources/images/asteroid/";
     static final String sndPath = "ressources/sons/asteroid/";
     
-    private static final float asteroidSpeed[]       = {0.04f,   0.05f,   0.06f  };
-    private static final float asteroidProbability[] = {0.0004f, 0.0008f, 0.0012f};
+    private static final float asteroidSpeed[]       = {0.04f,   0.05f,   0.06f  , 0.12f  };
+    private static final float asteroidProbability[] = {0.0004f, 0.0008f, 0.0012f, 0.0024f};
     
     private GameState gameState;
     private int time;
@@ -198,6 +198,8 @@ public class AsteroidGame extends Minigame
             return asteroidSpeed[0];
         else if (Difficulty.Hard.equals(difficulty))
             return asteroidSpeed[2];
+        else if (Difficulty.Insane.equals(difficulty))
+            return asteroidSpeed[3];
         
         return asteroidSpeed[1];
     }
@@ -212,6 +214,8 @@ public class AsteroidGame extends Minigame
             return asteroidProbability[0];
         else if (Difficulty.Hard.equals(difficulty))
             return asteroidProbability[2];
+        else if (Difficulty.Insane.equals(difficulty))
+            return asteroidProbability[3];
         
         return asteroidProbability[1];
     }
