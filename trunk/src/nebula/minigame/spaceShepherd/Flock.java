@@ -14,7 +14,7 @@ public class Flock extends SteeringEntity{
 	private ArrayList<SteeringEntity> flockers;
 
 	/**the coeff for the power of attraction (ie : the velocity of the seek(positionCenter))*/
-	private float attractionCoeff=0.015f;
+	private float attractionCoeff=0.025f;
 	
 	private ArrayList<Line> remaining=null;;
 	

@@ -14,13 +14,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class SpaceShepherd extends Minigame {
 
-	private Image land = null;
 	private float x = 400;
 	private float y = 300;
 	/** Radius of one plot */
 	private int plotRadius ;
 	private int flockRadius;
-	private int fenceThickness;
+	private int cursorRadius;
 	/** Coefficient for the malus you get when you don't fill the track */
 	private float malusScoreCoef = 1.0f;
 	/**the list of all the fences that has been created */
@@ -35,7 +34,7 @@ public class SpaceShepherd extends Minigame {
 	private boolean spaceReleased=true;
 
 	private Vector2f targetCenter;
-	private int targetRadius=40;
+	private int targetRadius;
 	
 	private int borderMargin=50;
 	
@@ -44,13 +43,17 @@ public class SpaceShepherd extends Minigame {
 	private Image  flockImg;
 	private Image  leadImg;
 	private Image  plotImg;
-	private Image  fenceImg;
+	private Image  cursorImg;
+	private Image  targetImg;
+	private Image  backgroundImg;
 	private String pathVictoryImg="ressources/images/spaceInvaders/victoire.png";
 	private String pathlLossImg="ressources/images/spaceInvaders/defaite.png";
 	private String pathFlockImg="ressources/images/spaceShepherd/nebula-farfadets.png";
 	private String pathLeadImg="ressources/images/spaceShepherd/nebula-farLeader.png";
 	private String pathPlotImg="ressources/images/spaceShepherd/nebula-plot.png";
-	private String pathFenceImg="ressources/images/spaceShepherd/sabre-laser.png";
+	private String pathCursorImg="ressources/images/spaceShepherd/saucer.png";
+	private String pathTargetImg="ressources/images/spaceShepherd/vortex.png";
+	private String pathBackgroundImg="ressources/images/spaceShepherd/background.png";
 	private Sound victoSound;
 
 
@@ -62,19 +65,22 @@ public class SpaceShepherd extends Minigame {
 	    
 		plotRadius=(int) (gc.getScreenWidth()*0.04);
 		flockRadius=(int) (gc.getScreenWidth()*0.03);
-		fenceThickness=(int) (gc.getScreenWidth()*0.03);
+		cursorRadius=(int) (gc.getScreenWidth()*0.07);
+		targetRadius=(int) (gc.getScreenWidth()*0.12);
 		fences=new ArrayList<Line>();
 		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.16f, gc.getWidth(), gc.getHeight());
 		
-		targetCenter=new Vector2f(new Random().nextInt(gc.getWidth()-60)
-				,new Random().nextInt(gc.getHeight()-60));
+		targetCenter=new Vector2f(targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius))
+				,targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius)));
 		
 		victoryImg=new Image(pathVictoryImg);
 		lossImg=new Image(pathlLossImg);
 		flockImg=new Image(pathFlockImg);
 		leadImg=new Image(pathLeadImg);
 		plotImg=new Image(pathPlotImg);
-		fenceImg=new Image(pathFenceImg);
+		cursorImg=new Image(pathCursorImg);
+		targetImg=new Image(pathTargetImg);
+		backgroundImg=new Image(pathBackgroundImg);
 		victoSound=new Sound("ressources/sons/cropCircle/odetojoy.ogg");
 	}
 
@@ -129,11 +135,7 @@ public class SpaceShepherd extends Minigame {
 				lastPlot=new Vector2f(x,y);
 				
 				if(flock.isEnded(fences, targetCenter)){
-					System.out.println("Fail");
-					gc.pause();
-					lossImg.draw(0, 0, gc.getWidth(), gc.getHeight());
-					if(!victoSound.playing())
-						victoSound.play();
+					this.gameDefeat();
 				}
 			}
 			else{
@@ -144,7 +146,9 @@ public class SpaceShepherd extends Minigame {
 			System.out.println("////////////////////////////////////////////////////////");
 		}
 		
-		
+		if(flock.allInTheHole(targetCenter, targetRadius/2)){	
+			this.gameVictory();
+		}
 		
 	}
 
@@ -155,29 +159,25 @@ public class SpaceShepherd extends Minigame {
         super.render(gc, game, g);
         
 		g.setAntiAlias(true);
-		//land.draw(0, 0, gc.getWidth(), gc.getHeight());
-		g.setColor(Color.black);
-		g.drawRect(0, 0, gc.getWidth(), gc.getHeight());
-		g.setColor(Color.yellow);
-		g.fillOval(targetCenter.x-targetRadius, targetCenter.y-targetRadius, targetRadius*2, targetRadius*2);
-		g.setColor(Color.white);
-		g.setLineWidth(10);
 		
+		backgroundImg.draw(0, 0, gc.getWidth(), gc.getHeight());
+
+		targetImg.drawFlash(targetCenter.x-targetRadius/2 -2, targetCenter.y-targetRadius/2 -2, 
+				targetRadius+4, targetRadius+4);
+		targetImg.draw(targetCenter.x-targetRadius/2, targetCenter.y-targetRadius/2, 
+				targetRadius, targetRadius);
+
 		g.setColor(Color.red);
+		g.setLineWidth(10);
+
+		for(Line l : fences){		
+			g.drawLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
+			g.drawString(""+fences.indexOf(l), l.getX1()+20, l.getY1()+20);
+		}
+		
 		for(Line l : fences){
 			plotImg.draw(l.getX1()-plotRadius/2, l.getY1()-plotRadius/2, plotRadius, plotRadius);
 			plotImg.draw(l.getX2()-plotRadius/2, l.getY2()-plotRadius/2, plotRadius, plotRadius);
-			
-			g.drawLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
-//			fenceImg.setCenterOfRotation(0, 0);
-//			double cos=(l.getX1()-l.getX2())/l.length();
-//			double angle= Math.acos(cos) * 180/Math.PI;
-//			fenceImg.rotate((float) angle);
-//			fenceImg.draw(l.getX1(), l.getY1(),Math.abs(l.getX2()-l.getX1()), Math.abs(l.getY1()-l.getY2()));
-//			//remet l'image a plat pour la prochaine fois
-//			fenceImg.rotate((float) (360-angle));
-			
-			g.drawString(""+fences.indexOf(l), l.getX1()+20, l.getY1()+20);
 		}
 
 		if(lastPlot!=null){
@@ -193,17 +193,8 @@ public class SpaceShepherd extends Minigame {
 					flockRadius, flockRadius);
 		}
 		
-		g.setColor(Color.blue);
-		g.drawOval(x, y, 8, 8,80);
+		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
 
-		
-		if(flock.allInTheHole(targetCenter, targetRadius)){	
-			victoryImg.draw(0,0,gc.getWidth(),gc.getHeight());
-			if(!victoSound.playing()){
-				victoSound.play();
-			}
-			gc.pause();
-		}
 		
 	}
 	
