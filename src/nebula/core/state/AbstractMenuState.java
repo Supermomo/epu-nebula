@@ -74,9 +74,9 @@ public abstract class AbstractMenuState extends BasicGameState
             selectPreviousIndex(selectedIndex-1);
         else if (input.isKeyPressed(Input.KEY_ENTER) ||
                  input.isKeyPressed(Input.KEY_SPACE))
-            indexSelectedEvent(selectedIndex);
+            indexSelectedEvent(selectedIndex, game);
         else if (input.isKeyPressed(Input.KEY_ESCAPE))
-            indexSelectedEvent(-1);
+            indexSelectedEvent(-1, game);
     }
 
     
@@ -224,5 +224,5 @@ public abstract class AbstractMenuState extends BasicGameState
      * Called when the user select a menu item
      * @param index The index selected
      */
-    protected abstract void indexSelectedEvent (int index);
+    protected abstract void indexSelectedEvent (int index, StateBasedGame game);
 }

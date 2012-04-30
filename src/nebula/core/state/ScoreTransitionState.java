@@ -46,13 +46,13 @@ public class ScoreTransitionState extends AbstractMenuState
     }
     
     @Override
-    protected void indexSelectedEvent (int index)
+    protected void indexSelectedEvent (int index, StateBasedGame game)
     {
         switch (index)
         {
             case 3:
                 if (NebulaGame.isScenario)
-                    nebulaGame.enterState(lastState+1, TransitionType.Fade);
+                    nebulaGame.initAndEnterState(lastState+1, TransitionType.Fade);
                 else
                     nebulaGame.enterState(NebulaState.RapidModeMenu.id);
                 break;

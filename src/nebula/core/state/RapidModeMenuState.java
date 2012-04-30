@@ -30,7 +30,7 @@ public class RapidModeMenuState extends AbstractMenuState
     }
     
     @Override
-    protected void indexSelectedEvent (int index)
+    protected void indexSelectedEvent (int index, StateBasedGame game)
     {
         int nextGame = -1;
         
@@ -61,7 +61,7 @@ public class RapidModeMenuState extends AbstractMenuState
         
         // Change state if requested
         if (nextGame != -1)
-            nebulaGame.enterState(nextGame, TransitionType.Fade);
+            nebulaGame.initAndEnterState(nextGame, TransitionType.Fade);
         else
             nebulaGame.enterState(NebulaState.MainMenu.id);
     }
