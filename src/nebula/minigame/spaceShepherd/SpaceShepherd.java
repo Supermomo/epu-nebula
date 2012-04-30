@@ -70,8 +70,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 		fences=new ArrayList<Line>();
 		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.16f, gc.getWidth(), gc.getHeight());
 		
-		targetCenter=new Vector2f(targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius))
-				,targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius)));
+		targetCenter=new Vector2f(targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2))
+				,targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2)));
 		
 		victoryImg=new Image(pathVictoryImg);
 		lossImg=new Image(pathlLossImg);
