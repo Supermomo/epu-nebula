@@ -5,6 +5,7 @@ import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
+import nebula.core.state.PauseMenuState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -25,7 +26,7 @@ public abstract class Minigame extends BasicGameState
     private static float SCORE_OFFSET = 8.0f;
     
     /* Minigame difficulties */
-    public static enum Difficulty {Easy, Medium, Hard}
+    public static enum Difficulty {Easy, Medium, Hard, Insane}
     
     /* Score positions */
     public static enum ScorePosition
@@ -47,6 +48,9 @@ public abstract class Minigame extends BasicGameState
         
         // Reset minigame score
         score = 0;
+        
+        // Change difficulty
+        difficulty = NebulaGame.difficulty;
         
         // Load font
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Small);
@@ -128,22 +132,15 @@ public abstract class Minigame extends BasicGameState
         gc.getInput().clearKeyPressedRecord();
     }
     
-    @Override
-    public void leave (GameContainer gc, StateBasedGame game)
-        throws SlickException 
-    {
-        this.init(gc, game);
-    }
-    
     /**
      * Escape command
      */
     protected void escapeMinigame ()
     {
-        if (NebulaGame.isScenario)
-            nebulaGame.enterState(NebulaState.MainMenu.id);
-        else
-            nebulaGame.enterState(NebulaState.RapidModeMenu.id);
+        ((PauseMenuState)nebulaGame.getState(NebulaState.PauseMenu.id))
+            .setLastState(this.getID());
+        
+        nebulaGame.initAndEnterState(NebulaState.PauseMenu.id);
     }
     
     /**

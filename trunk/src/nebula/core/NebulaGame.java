@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import nebula.core.state.*;
+import nebula.minigame.Minigame.Difficulty;
 import nebula.minigame.asteroid.AsteroidGame;
 import nebula.minigame.breakout.BreakoutGame;
 import nebula.minigame.gravity.Gravity;
@@ -27,6 +28,7 @@ import org.newdawn.slick.state.transition.VerticalSplitTransition;
 public class NebulaGame extends StateBasedGame
 {
     public static boolean isScenario;
+    public static Difficulty difficulty = Difficulty.Medium;
     public static String playerName = "Joueur";
 
     /**
@@ -39,6 +41,8 @@ public class NebulaGame extends StateBasedGame
         RapidModeMenu           (1),
         OptionsMenu             (2),
         ScoresMenu              (3),
+        PauseMenu               (4),
+        ScoreTransition         (9),
         StartAventure           (10),
         Intro1Jeu               (10),
         Intro2Jeu               (11),
@@ -50,8 +54,7 @@ public class NebulaGame extends StateBasedGame
         Breakout                (17),
         Asteroid                (18),
         Gravity					(19),
-        Fin                     (20),
-        ScoreTransition         (100);
+        Fin                     (20);
 
         public int id;
         private NebulaState (int id) { this.id = id; }
@@ -81,6 +84,7 @@ public class NebulaGame extends StateBasedGame
         this.addState(new RapidModeMenuState());
         this.addState(new OptionsMenuState());
         this.addState(new ScoresMenuState());
+        this.addState(new PauseMenuState());
         this.addState(new ScoreTransitionState());
 
         // Aventure
@@ -126,7 +130,7 @@ public class NebulaGame extends StateBasedGame
     /**
      * Init and goto next state with the given transition
      */
-    public void enterAndInitState (int state, TransitionType transition)
+    public void initAndEnterState (int state, TransitionType transition)
     {
         try { getState(state).init(this.getContainer(), this); }
         catch (SlickException exc) { exc.printStackTrace(); }
@@ -137,9 +141,9 @@ public class NebulaGame extends StateBasedGame
     /**
      * Init and goto next state with the default transition
      */
-    public void enterAndInitState (int state)
+    public void initAndEnterState (int state)
     {
-        enterAndInitState(state, TransitionType.None);
+        initAndEnterState(state, TransitionType.None);
     }
 
     /**

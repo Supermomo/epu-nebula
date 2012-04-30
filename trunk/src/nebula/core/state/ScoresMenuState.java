@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 
 /**
- * Options menu
+ * Scores menu
  */
 public class ScoresMenuState extends AbstractMenuState
 {
@@ -26,7 +26,7 @@ public class ScoresMenuState extends AbstractMenuState
     
     
     @Override
-    protected void indexSelectedEvent (int index)
+    protected void indexSelectedEvent (int index, StateBasedGame game)
     {
         // TODO
         nebulaGame.enterState(NebulaState.MainMenu.id);
