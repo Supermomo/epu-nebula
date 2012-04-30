@@ -27,6 +27,7 @@ public class MainMenuState extends AbstractMenuState
         addMenuItem("Mode Rapide", true);
         addMenuItem("Scores", true);
         addMenuItem("Options", true);
+        addMenuSpaces(1);
         addMenuItem("Quitter", true);
     }
     

@@ -46,7 +46,8 @@ public abstract class AbstractTransitionState extends BasicGameState
         
         // Next state key
         if (input.isKeyDown(Input.KEY_ENTER) ||
-            input.isKeyDown(Input.KEY_ESCAPE))
+            input.isKeyDown(Input.KEY_ESCAPE) ||
+            input.isKeyDown(Input.KEY_SPACE))
             gotoNextState();
         
         // Transition time counter if needed
@@ -83,6 +84,7 @@ public abstract class AbstractTransitionState extends BasicGameState
     public void leave (GameContainer gc, StateBasedGame game)
         throws SlickException 
     {
+        super.leave(gc, game);
         if (voice != null) voice.stop();
     }
     

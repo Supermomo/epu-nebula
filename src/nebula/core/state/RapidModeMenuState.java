@@ -27,6 +27,7 @@ public class RapidModeMenuState extends AbstractMenuState
         addMenuItem("Invasion", true);
         addMenuItem("Gravité", true);
         addMenuItem("Berger", true);
+        addMenuSpaces(1);
         addMenuItem("Retour", true);
     }
     

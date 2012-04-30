@@ -74,7 +74,7 @@ public abstract class AbstractMenuState extends BasicGameState
             selectPreviousIndex(selectedIndex-1);
         else if (input.isKeyPressed(Input.KEY_ENTER) ||
                  input.isKeyPressed(Input.KEY_SPACE))
-            indexSelectedEvent(selectedIndex, game);
+            indexSelectedEvent(trueIndex(selectedIndex), game);
         else if (input.isKeyPressed(Input.KEY_ESCAPE))
             indexSelectedEvent(-1, game);
     }
@@ -133,6 +133,21 @@ public abstract class AbstractMenuState extends BasicGameState
     {
         super.enter(gc, game);
         gc.getInput().clearKeyPressedRecord();
+    }
+    
+    
+    /**
+     * Get the true index by ignoring non selectables items
+     * @param index The false index
+     * @return The true index
+     */
+    private int trueIndex (int index)
+    {
+        for (int i = index; i >= 0; i--)
+            if (!selectableList.get(i).booleanValue())
+                index--;
+        
+        return index;
     }
     
     /**
@@ -194,6 +209,22 @@ public abstract class AbstractMenuState extends BasicGameState
     {
         textList.add(text);
         selectableList.add(new Boolean(selectable));
+        
+        selectNextIndex(0);
+    }
+    
+    
+    /**
+     * Add some menu spaces
+     * @param n The space count
+     */
+    protected void addMenuSpaces (int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            textList.add("");
+            selectableList.add(false);
+        }
         
         selectNextIndex(0);
     }
