@@ -36,6 +36,7 @@ public class OptionsMenuState extends AbstractMenuState
         // Add menu items
         setMenuTitle("Options");
         addMenuItem("Difficulté : " + diff, true);
+        addMenuSpaces(1);
         addMenuItem("Retour", true);
     }
     

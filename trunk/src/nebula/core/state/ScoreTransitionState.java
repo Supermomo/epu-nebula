@@ -38,8 +38,7 @@ public class ScoreTransitionState extends AbstractMenuState
         else     setMenuTitle("PERDU !");
             
         addMenuItem("Score : " + score, false);
-        addMenuItem("", false);
-        addMenuItem("", false);
+        addMenuSpaces(2);
         
         if (NebulaGame.isScenario)
         {
@@ -55,7 +54,7 @@ public class ScoreTransitionState extends AbstractMenuState
     {
         switch (index)
         {
-            case 3:
+            case 0:
                 if (NebulaGame.isScenario)
                 {
                     if (won)
@@ -66,7 +65,7 @@ public class ScoreTransitionState extends AbstractMenuState
                 else
                     nebulaGame.enterState(NebulaState.RapidModeMenu.id);
                 break;
-            case 4:
+            case 1:
                 nebulaGame.enterState(NebulaState.MainMenu.id);
             default:
                 break;
