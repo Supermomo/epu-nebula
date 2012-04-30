@@ -10,6 +10,7 @@ import nebula.minigame.asteroid.AsteroidGame;
 import nebula.minigame.breakout.BreakoutGame;
 import nebula.minigame.gravity.Gravity;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
+import nebula.minigame.spaceShepherd.SpaceShepherd;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
@@ -54,7 +55,8 @@ public class NebulaGame extends StateBasedGame
         Breakout                (17),
         Asteroid                (18),
         Gravity					(19),
-        Fin                     (20);
+        SpaceShepherd           (20),
+        Fin                     (21);
 
         public int id;
         private NebulaState (int id) { this.id = id; }
@@ -98,6 +100,7 @@ public class NebulaGame extends StateBasedGame
         this.addState(new BreakoutGame());
         this.addState(new AsteroidGame());
         this.addState(new Gravity());
+        this.addState(new SpaceShepherd());
         this.addState(new Fin());
 
         this.enterState(NebulaState.MainMenu.id);

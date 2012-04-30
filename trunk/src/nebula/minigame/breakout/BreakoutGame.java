@@ -210,6 +210,7 @@ public class BreakoutGame extends Minigame
             // Launch ball event
             if (racket.haveAttachedBall() &&
                 ((!useMouse && input.isKeyDown(Input.KEY_SPACE)) ||
+                 (!useMouse && input.isKeyDown(Input.KEY_ENTER)) ||
                  (useMouse && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))))
             {
                 ballSpeed.setX(0.0f);
