@@ -26,6 +26,7 @@ public class RapidModeMenuState extends AbstractMenuState
         addMenuItem("Casse-briques", true);
         addMenuItem("Invasion", true);
         addMenuItem("Gravité", true);
+        addMenuItem("Berger", true);
         addMenuItem("Retour", true);
     }
     
@@ -53,8 +54,12 @@ public class RapidModeMenuState extends AbstractMenuState
             case 3:
                 nextGame = NebulaState.Gravity.id;
                 break;
-            // Escape
+            // Gravity
             case 4:
+                nextGame = NebulaState.SpaceShepherd.id;
+                break;
+            // Escape
+            case 5:
             default:
                 break;
         }

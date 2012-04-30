@@ -15,6 +15,7 @@ import nebula.core.NebulaGame.TransitionType;
 public class ScoreTransitionState extends AbstractMenuState
 {
     private int lastState;
+    private boolean won;
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -29,6 +30,7 @@ public class ScoreTransitionState extends AbstractMenuState
     public void initScore (int score, boolean won, int lastState)
     {
         this.lastState = lastState;
+        this.won = won;
         resetMenu();
         
         // Add menu items
@@ -40,7 +42,10 @@ public class ScoreTransitionState extends AbstractMenuState
         addMenuItem("", false);
         
         if (NebulaGame.isScenario)
-            addMenuItem("Continuer", true);
+        {
+            if (won) addMenuItem("Continuer", true);
+            else     addMenuItem("Recommencer", true);
+        }
         
         addMenuItem("Quitter", true);
     }
@@ -52,7 +57,12 @@ public class ScoreTransitionState extends AbstractMenuState
         {
             case 3:
                 if (NebulaGame.isScenario)
-                    nebulaGame.initAndEnterState(lastState+1, TransitionType.Fade);
+                {
+                    if (won)
+                        nebulaGame.initAndEnterState(lastState+1, TransitionType.Fade);
+                    else
+                        nebulaGame.initAndEnterState(lastState, TransitionType.Fade);
+                }
                 else
                     nebulaGame.enterState(NebulaState.RapidModeMenu.id);
                 break;

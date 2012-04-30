@@ -3,12 +3,16 @@ package nebula.minigame.spaceShepherd;
 import java.util.ArrayList;
 import java.util.Random;
 
+import nebula.core.NebulaGame.NebulaState;
+import nebula.minigame.Minigame;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
 
-public class SpaceShepherd extends BasicGame{
+public class SpaceShepherd extends Minigame {
 
 	private Image land = null;
 	private float x = 400;
@@ -48,15 +52,14 @@ public class SpaceShepherd extends BasicGame{
 	private String pathPlotImg="ressources/images/spaceShepherd/nebula-plot.png";
 	private String pathFenceImg="ressources/images/spaceShepherd/sabre-laser.png";
 	private Sound victoSound;
-	
-	public SpaceShepherd(){
-		super("SpaceShepherd");
-	}
-
 
 
 	@Override
-	public void init(GameContainer gc) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+	    
+	    // Call super method
+        super.init(gc, game);
+	    
 		plotRadius=(int) (gc.getScreenWidth()*0.04);
 		flockRadius=(int) (gc.getScreenWidth()*0.03);
 		fenceThickness=(int) (gc.getScreenWidth()*0.03);
@@ -76,7 +79,11 @@ public class SpaceShepherd extends BasicGame{
 	}
 
 	@Override
-	public void update(GameContainer gc, int delta) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame game, int delta)
+	    throws SlickException {
+	    
+	    // Call super method
+        super.update(gc, game, delta);
 
 		Input input = gc.getInput();
 
@@ -141,8 +148,12 @@ public class SpaceShepherd extends BasicGame{
 		
 	}
 
-	public void render(GameContainer gc, Graphics g) throws SlickException {
+	public void render(GameContainer gc, StateBasedGame game, Graphics g)
+	    throws SlickException {
 
+	    // Call super method
+        super.render(gc, game, g);
+        
 		g.setAntiAlias(true);
 		//land.draw(0, 0, gc.getWidth(), gc.getHeight());
 		g.setColor(Color.black);
@@ -202,15 +213,9 @@ public class SpaceShepherd extends BasicGame{
 				- y) > plotRadius);
 	}
 
-	
-	public static void main(String[] args) throws SlickException {
-
-		AppGameContainer app = new AppGameContainer(new SpaceShepherd());
-		//app.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width,
-		//		Toolkit.getDefaultToolkit().getScreenSize().height, true);
-		app.setDisplayMode(1500, 800, false);
-		app.setTargetFrameRate(60);
-		app.start();
-	}
-	
+    @Override
+    public int getID ()
+    {
+        return NebulaState.SpaceShepherd.id;
+    }
 }
