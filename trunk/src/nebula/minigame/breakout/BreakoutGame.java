@@ -21,7 +21,7 @@ public class BreakoutGame extends Minigame
     static final String imgPath = "ressources/images/breakout/";
     static final String sndPath = "ressources/sons/breakout/";
     
-    private static final float[] initialSpeed     = {0.25f, 0.35f, 0.45f, 1.0f};
+    private static final float[] initialSpeed     = {0.25f, 0.35f, 0.45f, 0.8f};
     private static final float[] brickProbability = {0.0f,  0.2f,  0.4f , 0.6f};
     private static final int[]   brickRowCount    = {3,     3,     4    , 5   };
     

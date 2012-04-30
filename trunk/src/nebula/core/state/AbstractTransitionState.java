@@ -1,6 +1,7 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame;
+import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.minigame.Minigame;
 
@@ -93,7 +94,9 @@ public abstract class AbstractTransitionState extends BasicGameState
     {
         GameState next = nebulaGame.getState(this.getID()+1);
         
-        if (next instanceof Minigame)
+        if (next == null)
+            nebulaGame.enterState(NebulaState.MainMenu.id);
+        else if (next instanceof Minigame)
             nebulaGame.initAndEnterState(this.getID()+1, transitionType);
         else
             nebulaGame.enterState(this.getID()+1, transitionType);
