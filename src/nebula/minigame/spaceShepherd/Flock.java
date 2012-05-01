@@ -10,11 +10,11 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Flock extends SteeringEntity{
 
-	private int flockersNumber=12;
+	private int InitialFlockersNumber=24;
 	private ArrayList<SteeringEntity> flockers;
 
 	/**the coeff for the power of attraction (ie : the velocity of the seek(positionCenter))*/
-	private float attractionCoeff=0.025f;
+	private float attractionCoeff=0.001f;
 	
 	private ArrayList<Line> remaining=null;;
 	
@@ -24,8 +24,8 @@ public class Flock extends SteeringEntity{
 		super(x, y, maxSpeed, fieldx, fieldy);
 		
 		flockers=new ArrayList<SteeringEntity>();
-		for(int i=0;i<flockersNumber;i++){
-			flockers.add(new SteeringEntity(x, y, maxSpeed*15, fieldx, fieldy));
+		for(int i=0;i<InitialFlockersNumber;i++){
+			flockers.add(new SteeringEntity(x, y, maxSpeed, fieldx, fieldy));
 		}	
 	}
 	
@@ -47,6 +47,7 @@ public class Flock extends SteeringEntity{
 			int cpt =0;
 			while(!isValidTrajectory(newPos, fences) && cpt <300){
 				newPos=getFlockingMouvment(fl, delta, fences);
+				//System.out.println("flock pb");
 				//System.out.println("flock failure");
 				//fl.setMaxSpeed((float) (fl.getMaxSpeed()*0.9));
 				//fl.setMaxRotation((float) (fl.getMaxRotation()*1.5));
@@ -70,7 +71,6 @@ public class Flock extends SteeringEntity{
 			}
 			else {
 				flockers.remove(i);
-				flockersNumber--;
 				i--;
 			}
 		}
@@ -100,6 +100,7 @@ public class Flock extends SteeringEntity{
 		vect.add(vect2);
 		vect.normalise();
 		vect.scale(fl.getMaxSpeed());
+		vect.scale(delta);
 		newPos=fl.getPosition().add(vect);
 		return newPos;
 	}

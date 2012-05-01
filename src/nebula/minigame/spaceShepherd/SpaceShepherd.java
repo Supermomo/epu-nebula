@@ -48,8 +48,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private Image  backgroundImg;
 	private String pathVictoryImg="ressources/images/spaceInvaders/victoire.png";
 	private String pathlLossImg="ressources/images/spaceInvaders/defaite.png";
-	private String pathFlockImg="ressources/images/spaceShepherd/nebula-farfadets.png";
-	private String pathLeadImg="ressources/images/spaceShepherd/nebula-farLeader.png";
+	private String pathFlockImg="ressources/images/spaceShepherd/nebula-farfadets2.png";
+	private String pathLeadImg="ressources/images/spaceShepherd/nebula-farLeader2.png";
 	private String pathPlotImg="ressources/images/spaceShepherd/nebula-plot.png";
 	private String pathCursorImg="ressources/images/spaceShepherd/saucer.png";
 	private String pathTargetImg="ressources/images/spaceShepherd/vortex.png";
@@ -67,7 +67,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		plotRadius=(int) (gc.getScreenWidth()*0.04);
 		flockRadius=(int) (gc.getScreenWidth()*0.03);
 		cursorRadius=(int) (gc.getScreenWidth()*0.07);
-		targetRadius=(int) (gc.getScreenWidth()*0.12);
+		targetRadius=(int) (gc.getScreenWidth()*0.10);
 		fences=new ArrayList<Line>();
 		Random r =new Random();
 		int valx=r.nextInt(gc.getWidth());
@@ -184,15 +184,15 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 		if(lastPlot!=null){
 			plotImg.draw(lastPlot.getX()-plotRadius/2, lastPlot.getY()-plotRadius/2, plotRadius, plotRadius);
-		}
-		
-		leadImg.draw(flock.getPosition().x-(flockRadius/2), flock.getPosition().y-(flockRadius/2), 
-				flockRadius, flockRadius);
+		}		
 		
 		for(SteeringEntity st : flock.getFlockers()){
 			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2), 
 					flockRadius, flockRadius);
 		}
+		
+		leadImg.draw((int)(flock.getPosition().x-(flockRadius*1.5/2)),(int)(flock.getPosition().y-(flockRadius*1.5/2)), 
+				(int)(flockRadius*1.5),(int) (flockRadius*1.5));
 		
 		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
 
