@@ -196,6 +196,11 @@ public class Flock extends SteeringEntity{
 							path.lineTo(li.getX2(), li.getY2());
 						}
 						path.lineTo(inter.x,inter.y);
+						
+						//Si le leader du flock est dans une forme et que la cible n'y est pas
+						if(path.contains(target.x, target.y) != path.contains(super.getPosition().x, super.getPosition().y)){
+							return true;
+						}	
 
 					}
 
@@ -234,17 +239,6 @@ public class Flock extends SteeringEntity{
 					
 					cpt++;
 				}
-						
-				//remise a zéro de la forme
-				shape.clear();
-				
-				// on remet la premiere ligne dans la forme
-				//shape.add(l);
-				//remaining.add(0,l);
-				
-				System.out.println("position contenue : "+
-						path.contains(super.getPosition().x, super.getPosition().y));
-				System.out.println("cible contenue : " +path.contains(target.x, target.y) );
 				
 				//Si le leader du flock est dans une forme et que la cible n'y est pas
 				if(path.contains(target.x, target.y) != path.contains(super.getPosition().x, super.getPosition().y)){
