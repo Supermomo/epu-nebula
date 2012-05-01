@@ -142,17 +142,17 @@ public class Flock extends SteeringEntity{
 			remaining.add(le);
 		}*/
 		
-		//ArrayList<Line> remaining=fences;
+		remaining=fences;
 		
-		if(remaining==null){
-			remaining=new ArrayList<Line>();
-			for(Line le:fences){
-				remaining.add(le);
-			}
-		}
-		else{
-			remaining.add(fences.get(fences.size()-1));
-		}
+//		if(remaining==null){
+//			remaining=new ArrayList<Line>();
+//			for(Line le:fences){
+//				remaining.add(le);
+//			}
+//		}
+//		else{
+//			remaining.add(fences.get(fences.size()-1));
+//		}
 		
 		ArrayList<Line> shape=new ArrayList<Line>();
 		GeneralPath path=new GeneralPath(GeneralPath.WIND_EVEN_ODD);
@@ -165,48 +165,40 @@ public class Flock extends SteeringEntity{
 			
 			Line l=remaining.get(cpt);
 			
-			shape.add(l);
+			shape=inclusiveSubList(remaining, cpt);
+			
 			Vector2f inter=intersectItself(shape);
 			Vector2f interBord[]=intersectBord(shape, bords);
 
 			//Si on peut faire une forme (avec les lignes ou les bords)
-			if(shape.size()>1 && (inter!=null  || interBord!=null)){
+			if(inter!=null  || interBord!=null){
 				
 				path=new GeneralPath(GeneralPath.WIND_EVEN_ODD);	
 				
 				//Création de la forme
 				if(inter!=null){
-					//Recupére la ligne coupé par la ligne courante
-					Line lili=new Line(inter.x,inter.y, l.getX1(),l.getY1());
-					lili=intersectLine(shape, l);
-					
-					//Retire toutes les lignes précédant la ligne coupé par la ligne courante
-					while(!shape.get(0).equals(lili)){
-						shape.remove(0);
-					}
-					
-					path.moveTo(inter.x,inter.y);
-					for(int h =0;h<shape.size()-1;h++){
-						Line li=shape.get(h);
-						path.lineTo(li.getX2(), li.getY2());
-					}
-					path.lineTo(inter.x,inter.y);
-										
-					//Création de la jointure de remplacement de la forme éliminé (passant par l'intersection)
-					Line cutLine=new Line(lili.getX1(),lili.getY1(),inter.x,inter.y);
-					
-					Line secondCutLine=new Line(l.getX1(),l.getY1(),l.getX2(),l.getY2());
-					secondCutLine.set(inter.x,inter.y,secondCutLine.getX2(), secondCutLine.getY2());
+					//Recupére les ligne coupé par la ligne courante
+					ArrayList<Line> interList=intersectLine(shape, l);
+					//Parcours des lignes coupants la ligne courante
+					for(Line lili : interList){
+						//On remet la liste de travail a son état au début de la boucle
+						shape=inclusiveSubList(remaining, cpt);
 
-					//On retire les ligne de la forme crée de la list pour le pas les traiter 2 fois.
-					substractList(remaining, shape);
-					
-					//On ajoute la jointure
-					remaining.add(cutLine);	
-					remaining.add(secondCutLine);
-					
-					//Vu qu'on a modifié la forme, on repart du début.
-					cpt=0;
+						//Retire toutes les lignes précédant la ligne coupé par la ligne courante
+						while(!shape.get(0).equals(lili)){
+							shape.remove(0);
+						}
+						
+						//On crée la forme
+						path.moveTo(inter.x,inter.y);
+						for(int h =0;h<shape.size()-1;h++){
+							Line li=shape.get(h);
+							path.lineTo(li.getX2(), li.getY2());
+						}
+						path.lineTo(inter.x,inter.y);
+
+					}
+
 				}
 				else if(interBord!=null){
 					
@@ -223,7 +215,7 @@ public class Flock extends SteeringEntity{
 					System.out.println("closest : x : "+closesstCorner.x+" y : "+closesstCorner.y);
 					//Recupére la premiere ligne coupant un bord
 					Line border=new Line(closesstCorner,interBord[0]);
-					border=intersectLine(shape, l);
+					//border=intersectLine(shape, l);
 					int indexFirstLine = shape.indexOf(border)+1;
 					
 					System.out.println("indice : "+remaining.indexOf(shape.get(indexFirstLine)));
@@ -259,9 +251,8 @@ public class Flock extends SteeringEntity{
 					return true;
 				}				
 			}
-			else{
-				cpt++;
-			}
+			cpt++;
+			
 			
 			
 		}//Fin while
@@ -344,19 +335,34 @@ public class Flock extends SteeringEntity{
 	}
 	
 	/**
-	 * Return the first line of the list which is intersecting the parameter line
+	 * Return the lines of the list that are intersecting the parameter line
 	 * @param fences
 	 * @param line
 	 * @return
 	 */
-	private Line intersectLine(ArrayList<Line> fences, Line line){
+	private ArrayList<Line> intersectLine(ArrayList<Line> fences, Line line){
 		Vector2f vect=null;
+		ArrayList<Line> res=new ArrayList<Line>();
 		for(Line l : fences){
 			vect=l.intersect(line,true);
-			if(vect!=null &&!vect.equals(line)){
-				return l;
+			if(vect!=null &&!l.equals(line)){
+				res.add(l);
 			}
 		}
-		return null;
+		return res;
+	}
+	
+	/**
+	 * return the sub list of the parameter list, from 0 to the given index
+	 * @param list
+	 * @param index
+	 * @return
+	 */
+	private ArrayList<Line> inclusiveSubList(ArrayList<Line> list, int index){
+		ArrayList<Line> res=new ArrayList<Line>();
+		for(int i=0;i<=index;i++){
+			res.add(list.get(i));
+		}
+		return res;
 	}
 }

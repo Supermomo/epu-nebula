@@ -68,7 +68,10 @@ public class SpaceShepherd extends AbstractMinigameState {
 		cursorRadius=(int) (gc.getScreenWidth()*0.07);
 		targetRadius=(int) (gc.getScreenWidth()*0.12);
 		fences=new ArrayList<Line>();
-		flock=new Flock(gc.getWidth()/2,gc.getHeight()/2,0.16f, gc.getWidth(), gc.getHeight());
+		Random r =new Random();
+		int valx=r.nextInt(gc.getWidth());
+		int valy=r.nextInt(gc.getHeight());
+		flock=new Flock(valx,valy,0.16f, gc.getWidth(), gc.getHeight());
 		
 		targetCenter=new Vector2f(targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2))
 				,targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2)));
