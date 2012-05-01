@@ -1,6 +1,4 @@
 
 
 - Calcul du score
-- Disparition des flockers quand ils entrent dans le téléport
-- Refaire l'algo du calcul des formes (pb au niveau de la remise a jour de la liste de lignes) 
-- niveau de difficulté
+- Niveau de difficulté

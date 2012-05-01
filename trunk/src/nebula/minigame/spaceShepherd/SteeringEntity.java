@@ -89,9 +89,9 @@ public class SteeringEntity {
 		while(!isValidTrajectory(newPos, fences)){
 			//new position from a ramdom deplacement
 			newPos=moveRandomlyInternal(delta);
-
+			//System.out.println("random move pb");
 			maxRotation*=1.5;
-			maxSpeed*=0.7f;
+			maxSpeed*=1.1f;
 		}//end while
 		
 		return newPos;
