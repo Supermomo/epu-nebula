@@ -180,7 +180,11 @@ public class Flock extends SteeringEntity{
 					//Recupére les ligne coupé par la ligne courante
 					ArrayList<Line> interList=intersectLine(shape, l);
 					//Parcours des lignes coupants la ligne courante
-					for(Line lili : interList){
+					for(int e=0;e<interList.size();e++){
+						
+						path=new GeneralPath(GeneralPath.WIND_EVEN_ODD);	
+						Line lili=interList.get(e);
+						inter=lili.intersect(l, true);
 						//On remet la liste de travail a son état au début de la boucle
 						shape=inclusiveSubList(remaining, cpt);
 
@@ -191,14 +195,23 @@ public class Flock extends SteeringEntity{
 						
 						//On crée la forme
 						path.moveTo(inter.x,inter.y);
-						for(int h =0;h<shape.size()-1;h++){
+						int h =0;
+						while(h<shape.size()-1 && 
+								!(e+1<interList.size() && shape.get(h).equals(interList.get(e+1)))){
+							
 							Line li=shape.get(h);
 							path.lineTo(li.getX2(), li.getY2());
+							h++;
+						}
+						if(h!=shape.size()-1){
+							Vector2f point=interList.get(e+1).intersect(l, true);
+							path.lineTo(point.x,point.y);
 						}
 						path.lineTo(inter.x,inter.y);
 						
 						//Si le leader du flock est dans une forme et que la cible n'y est pas
 						if(path.contains(target.x, target.y) != path.contains(super.getPosition().x, super.getPosition().y)){
+							System.out.println("e : "+e+" l :"+cpt);
 							return true;
 						}	
 
