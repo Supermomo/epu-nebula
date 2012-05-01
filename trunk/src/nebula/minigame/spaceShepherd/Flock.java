@@ -63,14 +63,19 @@ public class Flock extends SteeringEntity{
 	}
 	
 	public boolean allInTheHole(Vector2f target, int radius){
-		
-		for(SteeringEntity st: flockers){
-			if(st.getPosition().distance(target)>=radius){
-				return false;
+		boolean res=true;
+		for(int i=0;i<flockers.size();i++){
+			if(flockers.get(i).getPosition().distance(target)>=radius){
+				res=false;
+			}
+			else {
+				flockers.remove(i);
+				flockersNumber--;
+				i--;
 			}
 		}
 		
-		return true;
+		return res;
 	}
 	
 	/**

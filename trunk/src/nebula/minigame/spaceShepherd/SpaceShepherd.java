@@ -189,7 +189,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 		leadImg.draw(flock.getPosition().x-(flockRadius/2), flock.getPosition().y-(flockRadius/2), 
 				flockRadius, flockRadius);
 		
-		g.setColor(Color.red);
 		for(SteeringEntity st : flock.getFlockers()){
 			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2), 
 					flockRadius, flockRadius);

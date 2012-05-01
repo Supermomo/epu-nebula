@@ -1,8 +1,6 @@
 
 
 - Calcul du score
-- Sprite de fond,
-- Vrais musiques et images de fin ( optionel puisque score affiché )
 - Disparition des flockers quand ils entrent dans le téléport
-- Refaire l'algo du calcul des formes (pb au niveau de la remise a jour de la liste de lignes)
+- Refaire l'algo du calcul des formes (pb au niveau de la remise a jour de la liste de lignes) 
 - niveau de difficulté
