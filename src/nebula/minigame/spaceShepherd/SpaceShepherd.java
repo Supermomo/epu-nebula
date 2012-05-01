@@ -26,12 +26,12 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private ArrayList<Line> fences;
 
 	/** the last drawnPoint */
-	private Vector2f lastPlot = null;
+	private Vector2f lastPlot;
 	/** Variator for the deplacement speed */
 	private float pointerSpeed = 0.4f;
 	
 	private Flock flock;
-	private boolean spaceReleased=true;
+	private boolean spaceReleased;
 
 	private Vector2f targetCenter;
 	private int targetRadius;
@@ -62,7 +62,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 	    
 	    // Call super method
         super.init(gc, game);
-	    
+	    lastPlot=null;
+	    spaceReleased=true;
 		plotRadius=(int) (gc.getScreenWidth()*0.04);
 		flockRadius=(int) (gc.getScreenWidth()*0.03);
 		cursorRadius=(int) (gc.getScreenWidth()*0.07);
@@ -178,7 +179,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		
 		for(Line l : fences){
 			plotImg.draw(l.getX1()-plotRadius/2, l.getY1()-plotRadius/2, plotRadius, plotRadius);
-			plotImg.draw(l.getX2()-plotRadius/2, l.getY2()-plotRadius/2, plotRadius, plotRadius);
+			//plotImg.draw(l.getX2()-plotRadius/2, l.getY2()-plotRadius, plotRadius, plotRadius);
 		}
 
 		if(lastPlot!=null){
