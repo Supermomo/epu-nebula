@@ -3,6 +3,7 @@ package nebula.minigame.spaceShepherd;
 import java.util.ArrayList;
 import java.util.Random;
 
+import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.state.AbstractMinigameState;
 
@@ -38,6 +39,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 	
 	private int borderMargin=50;
 	
+	//Time accorded to win the game, in seconds
+	private int timeToWin;
+	
 	private Image victoryImg;
 	private Image  lossImg;
 	private Image  flockImg;
@@ -68,11 +72,41 @@ public class SpaceShepherd extends AbstractMinigameState {
 		flockRadius=(int) (gc.getScreenWidth()*0.03);
 		cursorRadius=(int) (gc.getScreenWidth()*0.07);
 		targetRadius=(int) (gc.getScreenWidth()*0.10);
+		
 		fences=new ArrayList<Line>();
 		Random r =new Random();
 		int valx=r.nextInt(gc.getWidth());
 		int valy=r.nextInt(gc.getHeight());
-		flock=new Flock(valx,valy,0.16f, gc.getWidth(), gc.getHeight());
+		
+		int flockNumber=0;
+		float speed=0;
+		float attractionCoef=0;
+		if(NebulaGame.difficulty.equals(Difficulty.Easy)){
+			flockNumber=8;
+			timeToWin=120;
+			speed=0.16f;
+			attractionCoef=0.003f;
+		}
+		else if(NebulaGame.difficulty.equals(Difficulty.Medium)){
+			flockNumber=16;
+			timeToWin=100;
+			speed=0.2f;
+			attractionCoef=0.002f;
+		}
+		else if(NebulaGame.difficulty.equals(Difficulty.Hard)){
+			flockNumber=32;
+			timeToWin=60;
+			speed=0.3f;
+			attractionCoef=0.001f;
+		}
+		else if(NebulaGame.difficulty.equals(Difficulty.Insane)){
+			flockNumber=64;
+			timeToWin=45;
+			speed=0.5f;
+			attractionCoef=0.0007f;
+		}
+		
+		flock=new Flock(valx,valy,speed, gc.getWidth(), gc.getHeight(),flockNumber, attractionCoef);
 		
 		targetCenter=new Vector2f(targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2))
 				,targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2)));
@@ -94,7 +128,11 @@ public class SpaceShepherd extends AbstractMinigameState {
 	    
 	    // Call super method
         super.update(gc, game, delta);
-
+        timeToWin-=delta/1000;
+        if(timeToWin<=0){
+        	this.gameDefeat();
+        }
+        
 		Input input = gc.getInput();
 
 		flock.moveRandom(delta, fences);
@@ -210,4 +248,6 @@ public class SpaceShepherd extends AbstractMinigameState {
     {
         return NebulaState.SpaceShepherd.id;
     }
+    
+    
 }
