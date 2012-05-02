@@ -1,7 +1,7 @@
 package nebula.core.state;
 
-import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.config.NebulaConfig;
 import nebula.core.state.AbstractMinigameState.Difficulty;
 
 import org.newdawn.slick.GameContainer;
@@ -22,20 +22,21 @@ public class OptionsMenuState extends AbstractMenuState
         super.init(gc, game);
         
         // Difficulty
-        String diff = "";
+        String diffStr = "";
+        Difficulty diff = NebulaConfig.getDifficulty();
         
-        if (Difficulty.Easy.equals(NebulaGame.difficulty))
-            diff = "Facile";
-        else if (Difficulty.Medium.equals(NebulaGame.difficulty))
-            diff = "Moyen";
-        else if (Difficulty.Hard.equals(NebulaGame.difficulty))
-            diff = "Difficile";
-        else if (Difficulty.Insane.equals(NebulaGame.difficulty))
-            diff = "Très difficile";
+        if (Difficulty.Easy.equals(diff))
+            diffStr = "Facile";
+        else if (Difficulty.Medium.equals(diff))
+            diffStr = "Moyen";
+        else if (Difficulty.Hard.equals(diff))
+            diffStr = "Difficile";
+        else if (Difficulty.Insane.equals(diff))
+            diffStr = "Très difficile";
         
         // Add menu items
         setMenuTitle("Options");
-        addMenuItem("Difficulté : " + diff, true);
+        addMenuItem("Difficulté : " + diffStr, true);
         addMenuSpaces(1);
         addMenuItem("Retour", true);
     }
@@ -47,14 +48,16 @@ public class OptionsMenuState extends AbstractMenuState
         switch (index)
         {
             case 0:
-                if (Difficulty.Easy.equals(NebulaGame.difficulty))
-                    NebulaGame.difficulty = Difficulty.Medium;
-                else if (Difficulty.Medium.equals(NebulaGame.difficulty))
-                    NebulaGame.difficulty = Difficulty.Hard;
-                else if (Difficulty.Hard.equals(NebulaGame.difficulty))
-                    NebulaGame.difficulty = Difficulty.Insane;
-                else if (Difficulty.Insane.equals(NebulaGame.difficulty))
-                    NebulaGame.difficulty = Difficulty.Easy;
+                Difficulty diff = NebulaConfig.getDifficulty();
+                
+                if (Difficulty.Easy.equals(diff))
+                    NebulaConfig.setDifficulty(Difficulty.Medium);
+                else if (Difficulty.Medium.equals(diff))
+                    NebulaConfig.setDifficulty(Difficulty.Hard);
+                else if (Difficulty.Hard.equals(diff))
+                    NebulaConfig.setDifficulty(Difficulty.Insane);
+                else if (Difficulty.Insane.equals(diff))
+                    NebulaConfig.setDifficulty(Difficulty.Easy);
                 
                 try { this.init(game.getContainer(), game); }
                 catch (SlickException exc) { exc.printStackTrace(); }

@@ -1,16 +1,15 @@
-package nebula.core.playerAndScore;
+package nebula.core.config;
 
-public enum MiniGamesEnum {
+public enum ScenarioProgression {
 	
-	SPACEINVADERS("Space Invaders"),
-	BREAKOUT("Breakout"),
-	GRAVITY("Gravity"),
-	SPACESHEPHERD("Space Shepherd")
+	START("start"),
+	BOUGIBOUGA("Bougi Bouga"),
+	OTHERS("Other")
 	;
 	
 	private String gameName;
 	
-	MiniGamesEnum(String game){
+	private ScenarioProgression(String game){
 		gameName=game;
 	}
 	
@@ -33,4 +32,7 @@ public enum MiniGamesEnum {
 		}
 		return null;		
 	}
+	
+	
 }
+

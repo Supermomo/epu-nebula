@@ -1,4 +1,4 @@
-package nebula.core.playerAndScore;
+package nebula.core.config;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

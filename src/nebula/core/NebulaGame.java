@@ -4,8 +4,8 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
+import nebula.core.config.NebulaConfig;
 import nebula.core.state.*;
-import nebula.core.state.AbstractMinigameState.Difficulty;
 import nebula.minigame.asteroid.AsteroidGame;
 import nebula.minigame.breakout.BreakoutGame;
 import nebula.minigame.gravity.Gravity;
@@ -29,10 +29,6 @@ import org.newdawn.slick.state.transition.VerticalSplitTransition;
  */
 public class NebulaGame extends StateBasedGame
 {
-    public static boolean isScenario;
-    public static Difficulty difficulty = Difficulty.Medium;
-    public static String playerName = "Joueur";
-
     /**
      * Game states enum
      * All state Id must be defined here, and only here !
@@ -66,15 +62,21 @@ public class NebulaGame extends StateBasedGame
 
     public static enum TransitionType
         {None, Fade, HorizontalSplit, VerticalSplit};
+    
+    public static boolean isScenario;
 
+    
     /**
      * Constructeur du jeu.
      * Definit les différents états (menus / jeux) disponibles
      * @throws SlickException 
      */
-    public NebulaGame () throws SlickException
+    public NebulaGame (String playerName) throws SlickException
     {
         super("Nebula");
+        
+        // Load config for the player
+        NebulaConfig.loadData(playerName);
     }
 
     /**
@@ -190,21 +192,14 @@ public class NebulaGame extends StateBasedGame
      */
     public static void startNebulaGame ()
     {
-        // FULLSCREEN //
-        final boolean FULLSCREEN = true;
-
         try {
-            AppGameContainer app = new AppGameContainer(new NebulaGame());
+            AppGameContainer app =
+                new AppGameContainer(new NebulaGame("Joueur"));
 
-            if (FULLSCREEN)
-            {
-                app.setDisplayMode(
-                    Toolkit.getDefaultToolkit().getScreenSize().width,
-                    Toolkit.getDefaultToolkit().getScreenSize().height,
-                    true);
-            }
-            else app.setDisplayMode(800, 600, false);
-
+            app.setDisplayMode(
+                Toolkit.getDefaultToolkit().getScreenSize().width,
+                Toolkit.getDefaultToolkit().getScreenSize().height,
+                true);
             app.setTargetFrameRate(120);
             app.start();
         }
