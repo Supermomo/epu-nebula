@@ -10,19 +10,20 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Flock extends SteeringEntity{
 
-	private int InitialFlockersNumber=24;
+	private int InitialFlockersNumber;
 	private ArrayList<SteeringEntity> flockers;
 
 	/**the coeff for the power of attraction (ie : the velocity of the seek(positionCenter))*/
-	private float attractionCoeff=0.001f;
+	private float attractionCoeff;
 	
 	private ArrayList<Line> remaining=null;;
 	
 	private int margin=40;
 	
-	public Flock(int x, int y, float maxSpeed, int fieldx, int fieldy) {
+	public Flock(int x, int y, float maxSpeed, int fieldx, int fieldy, int flNb, float attCoef) {
 		super(x, y, maxSpeed, fieldx, fieldy);
-		
+		InitialFlockersNumber=flNb;
+		attractionCoeff=attCoef;
 		flockers=new ArrayList<SteeringEntity>();
 		for(int i=0;i<InitialFlockersNumber;i++){
 			flockers.add(new SteeringEntity(x, y, maxSpeed, fieldx, fieldy));
