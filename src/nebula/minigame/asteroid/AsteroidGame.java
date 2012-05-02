@@ -8,6 +8,7 @@ import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
+import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.*;
@@ -151,11 +152,7 @@ public class AsteroidGame extends AbstractMinigameState
                            lifeImageSize, lifeImageSize);
         
         // Render time counter
-        String timeStr =
-            Integer.toString(time / (60 * 1000)) +
-            " : " +
-            (time % (60 * 1000) < 10 * 1000 ? "0" : "") +
-            Integer.toString((time % (60 * 1000))/1000);
+        String timeStr = Utils.secondsToString(time/1000);
         
         font.drawString(
             gc.getWidth()/2 - font.getWidth(timeStr)/2,
