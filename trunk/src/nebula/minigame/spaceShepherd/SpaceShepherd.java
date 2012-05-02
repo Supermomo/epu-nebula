@@ -81,25 +81,25 @@ public class SpaceShepherd extends AbstractMinigameState {
 		int flockNumber=0;
 		float speed=0;
 		float attractionCoef=0;
-		if(NebulaGame.difficulty.equals(Difficulty.Easy)){
+		if(difficulty.equals(Difficulty.Easy)){
 			flockNumber=8;
 			timeToWin=120;
 			speed=0.16f;
 			attractionCoef=0.003f;
 		}
-		else if(NebulaGame.difficulty.equals(Difficulty.Medium)){
+		else if(difficulty.equals(Difficulty.Medium)){
 			flockNumber=16;
 			timeToWin=100;
 			speed=0.2f;
 			attractionCoef=0.002f;
 		}
-		else if(NebulaGame.difficulty.equals(Difficulty.Hard)){
+		else if(difficulty.equals(Difficulty.Hard)){
 			flockNumber=32;
 			timeToWin=60;
 			speed=0.3f;
 			attractionCoef=0.001f;
 		}
-		else if(NebulaGame.difficulty.equals(Difficulty.Insane)){
+		else if(difficulty.equals(Difficulty.Insane)){
 			flockNumber=64;
 			timeToWin=45;
 			speed=0.5f;

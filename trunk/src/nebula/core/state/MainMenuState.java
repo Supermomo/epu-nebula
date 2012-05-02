@@ -7,6 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
+import nebula.core.config.NebulaConfig;
 
 
 /**
@@ -22,7 +23,7 @@ public class MainMenuState extends AbstractMenuState
         super.init(gc, game);
 
         // Add menu items
-        setMenuTitle("Bienvenue, " + NebulaGame.playerName);
+        setMenuTitle("Bienvenue, " + NebulaConfig.getPlayerName());
         addMenuItem("Mode Aventure", true);
         addMenuItem("Mode Rapide", true);
         addMenuItem("Scores", true);

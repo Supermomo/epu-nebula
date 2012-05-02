@@ -1,7 +1,7 @@
 package nebula.core.state;
 
-import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.config.NebulaConfig;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
@@ -46,8 +46,8 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
         // Reset minigame score
         score = 0;
         
-        // Change difficulty
-        difficulty = NebulaGame.difficulty;
+        // Set the minigame difficulty
+        difficulty = NebulaConfig.getDifficulty();
         
         // Load font
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Small);

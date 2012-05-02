@@ -21,7 +21,7 @@ public class EndMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Fin");
-        addMenuItem("Bravo, vous avez fini l'aventure !", false);
+        addMenuItem("Bravo, tu as fini l'aventure !", false);
         addMenuSpaces(1);
         addMenuItem("Quitter", true);
     }
