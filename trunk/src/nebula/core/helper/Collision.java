@@ -2,6 +2,7 @@ package nebula.core.helper;
 
 import org.newdawn.slick.geom.Rectangle;
 
+
 /**
  * Collision helper
  */

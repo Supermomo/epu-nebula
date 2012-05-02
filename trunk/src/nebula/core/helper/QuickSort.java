@@ -3,6 +3,8 @@ package nebula.core.helper;
 import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Vector2f;
+
+
 /**
  * Class used to sort the Vector2fList
  * @author gaubert
