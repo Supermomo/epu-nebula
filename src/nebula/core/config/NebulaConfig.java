@@ -1,5 +1,11 @@
 package nebula.core.config;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import nebula.core.state.AbstractMinigameState.Difficulty;
 
 
@@ -10,7 +16,7 @@ import nebula.core.state.AbstractMinigameState.Difficulty;
 public class NebulaConfig
 {
     private static String playerName;
-    private static Difficulty difficulty;
+    private static DataContainer dataContainer;
 
 
     /**
@@ -20,7 +26,29 @@ public class NebulaConfig
     public static void loadData (String playerName)
     {
         NebulaConfig.playerName = playerName;
-        NebulaConfig.loadDefaultConfig();
+        
+        try
+        {
+            FileInputStream fis =
+                new FileInputStream(getFileName());
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            
+            try
+            {
+                // Read data container
+                dataContainer = (DataContainer) ois.readObject();
+            }
+            finally
+            {
+                // Close streams
+                try { ois.close(); } finally { fis.close(); }
+            }
+        }
+        catch (Exception exc)
+        {
+            // Load default config
+            NebulaConfig.loadDefaultConfig();
+        }
     }
     
     /**
@@ -28,7 +56,27 @@ public class NebulaConfig
      */
     public static void saveData ()
     {
+        // Make dirs
+        new File(getFileFolder()).mkdirs();
         
+        try
+        {
+            FileOutputStream fos =
+                new FileOutputStream(getFileName(), false);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            
+            try
+            {
+                // Write data
+                oos.writeObject(dataContainer);
+            }
+            finally
+            {
+                // Close streams
+                try { oos.close(); } finally { fos.close(); }
+            }
+        }
+        catch (Exception exc) {}
     }
     
     /**
@@ -36,7 +84,7 @@ public class NebulaConfig
      */
     private static void loadDefaultConfig ()
     {
-        difficulty = Difficulty.Medium;
+        dataContainer = new DataContainer();
     }
     
     /**
@@ -49,12 +97,37 @@ public class NebulaConfig
     }
     
     /**
+     * Get the file folder
+     * @return The file folder
+     */
+    private static String getFileFolder ()
+    {
+        return
+            System.getProperty("user.home") +
+            System.getProperty("file.separator") +
+            ".nebula" +
+            System.getProperty("file.separator");
+    }
+    
+    /**
+     * Get the file name
+     * @return The file name
+     */
+    private static String getFileName ()
+    {
+        return
+            getFileFolder() +
+            playerName +
+            ".save";
+    }
+    
+    /**
      * Get difficulty
      * @return The difficulty
      */
     public static Difficulty getDifficulty ()
     {
-        return difficulty;
+        return dataContainer.getDifficulty();
     }
     
     /**
@@ -63,6 +136,6 @@ public class NebulaConfig
      */
     public static void setDifficulty (Difficulty difficulty)
     {
-        NebulaConfig.difficulty = difficulty;
+        dataContainer.setDifficulty(difficulty);
     }
 }

@@ -23,12 +23,12 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
     /* Score display offset */
     private static float SCORE_OFFSET = 8.0f;
     
-    /* Minigame difficulties */
-    public static enum Difficulty {Easy, Medium, Hard, Insane}
-    
     /* Score positions */
     public static enum ScorePosition
         {TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight}
+    
+    /* Minigame difficulties */
+    public static enum Difficulty {Easy, Medium, Hard, Insane}
     
     protected Difficulty difficulty;
     protected int score;

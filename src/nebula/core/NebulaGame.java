@@ -93,7 +93,7 @@ public class NebulaGame extends StateBasedGame
     /**
      * Load all states
      */
-    public void loadStatesAndStartMenu ()
+    public void loadGame ()
     {
         List<BasicGameState> states = new ArrayList<BasicGameState>();
         
@@ -180,10 +180,14 @@ public class NebulaGame extends StateBasedGame
      */
     public void showScoreState (int score, boolean won, int lastState)
     {
+        // Save user config
+        NebulaConfig.saveData();
+        
+        // Set up score state
         ((ScoreTransitionState)getState(NebulaState.ScoreTransition.id)).
         initScore(score, won, lastState);
 
-        enterState(NebulaState.ScoreTransition.id, TransitionType.Fade);	
+        enterState(NebulaState.ScoreTransition.id, TransitionType.Fade);
     }
 
 
