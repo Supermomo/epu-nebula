@@ -58,6 +58,8 @@ public class MainMenuState extends AbstractMenuState
                 break;
             // Quitter
             case 4:
+                // Save user config and exit
+                NebulaConfig.saveData();
                 nebulaGame.getContainer().exit();
                 break;
             default:

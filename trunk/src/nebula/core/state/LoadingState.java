@@ -50,7 +50,7 @@ public class LoadingState extends AbstractNebulaState
             loadState = LoadState.Load;
         else if (LoadState.Load.equals(loadState))
         {
-            nebulaGame.loadStatesAndStartMenu();
+            nebulaGame.loadGame();
             loadState = LoadState.Finish;
         }
     }

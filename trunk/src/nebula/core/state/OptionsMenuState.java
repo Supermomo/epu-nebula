@@ -68,6 +68,18 @@ public class OptionsMenuState extends AbstractMenuState
                 break;
         }
     }
+    
+    
+    @Override
+    public void leave (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.leave(gc, game);
+        
+        // Save user config
+        NebulaConfig.saveData();
+    }
+    
 
 	@Override
 	public int getID() { return NebulaState.OptionsMenu.id; }
