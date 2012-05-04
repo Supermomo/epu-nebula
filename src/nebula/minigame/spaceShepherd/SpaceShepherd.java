@@ -5,6 +5,10 @@ import java.util.Random;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.Utils;
+import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.*;
@@ -22,7 +26,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private int flockRadius;
 	private int cursorRadius;
 	/** Coefficient for the malus you get when you don't fill the track */
-	private float malusScoreCoef = 1.0f;
+	private float scoreCoef = 100.0f;
+	private float timeCoef=10.0f;
+	private float fenceCoef=10.0f;
 	/**the list of all the fences that has been created */
 	private ArrayList<Line> fences;
 
@@ -39,26 +45,26 @@ public class SpaceShepherd extends AbstractMinigameState {
 	
 	private int borderMargin=50;
 	
-	//Time accorded to win the game, in seconds
-	private int timeToWin;
+	//Time accorded to win the game, in miliseconds
+	private int remainingTime;
+	private int startingTime;
+	private int flockNumber;
 	
-	private Image victoryImg;
-	private Image  lossImg;
 	private Image  flockImg;
 	private Image  leadImg;
 	private Image  plotImg;
+	private Image  plotLightImg;
 	private Image  cursorImg;
 	private Image  targetImg;
-	private Image  backgroundImg;
-	private String pathVictoryImg="ressources/images/spaceInvaders/victoire.png";
-	private String pathlLossImg="ressources/images/spaceInvaders/defaite.png";
 	private String pathFlockImg="ressources/images/spaceShepherd/nebula-farfadets2.png";
 	private String pathLeadImg="ressources/images/spaceShepherd/nebula-farLeader2.png";
 	private String pathPlotImg="ressources/images/spaceShepherd/nebula-plot.png";
+	private String pathPlotLightImg="ressources/images/spaceShepherd/nebula-plot2.png";
 	private String pathCursorImg="ressources/images/spaceShepherd/saucer.png";
 	private String pathTargetImg="ressources/images/spaceShepherd/vortex.png";
-	private String pathBackgroundImg="ressources/images/spaceShepherd/background.png";
-	private Sound victoSound;
+	
+	private Font font;
+	
 
 
 	@Override
@@ -66,6 +72,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 	    
 	    // Call super method
         super.init(gc, game);
+        
+        font =NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
+        
 	    lastPlot=null;
 	    spaceReleased=true;
 		plotRadius=(int) (gc.getScreenWidth()*0.04);
@@ -78,48 +87,47 @@ public class SpaceShepherd extends AbstractMinigameState {
 		int valx=r.nextInt(gc.getWidth());
 		int valy=r.nextInt(gc.getHeight());
 		
-		int flockNumber=0;
+		flockNumber=0;
 		float speed=0;
 		float attractionCoef=0;
 		if(difficulty.equals(Difficulty.Easy)){
 			flockNumber=8;
-			timeToWin=120;
+			remainingTime=120*1000;
 			speed=0.16f;
 			attractionCoef=0.003f;
 		}
 		else if(difficulty.equals(Difficulty.Medium)){
 			flockNumber=16;
-			timeToWin=100;
+			remainingTime=100*1000;
 			speed=0.2f;
 			attractionCoef=0.002f;
 		}
 		else if(difficulty.equals(Difficulty.Hard)){
 			flockNumber=32;
-			timeToWin=60;
+			remainingTime=60*1000;
 			speed=0.3f;
-			attractionCoef=0.001f;
+			attractionCoef=0.0015f;
 		}
 		else if(difficulty.equals(Difficulty.Insane)){
 			flockNumber=64;
-			timeToWin=45;
+			remainingTime=45*1000;
 			speed=0.5f;
-			attractionCoef=0.0007f;
+			attractionCoef=0.001f;
 		}
+		
+		startingTime=remainingTime;
 		
 		flock=new Flock(valx,valy,speed, gc.getWidth(), gc.getHeight(),flockNumber, attractionCoef);
 		
 		targetCenter=new Vector2f(targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2))
 				,targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2)));
 		
-		victoryImg=new Image(pathVictoryImg);
-		lossImg=new Image(pathlLossImg);
 		flockImg=new Image(pathFlockImg);
 		leadImg=new Image(pathLeadImg);
 		plotImg=new Image(pathPlotImg);
 		cursorImg=new Image(pathCursorImg);
 		targetImg=new Image(pathTargetImg);
-		backgroundImg=new Image(pathBackgroundImg);
-		victoSound=new Sound("ressources/sons/cropCircle/odetojoy.ogg");
+		plotLightImg=new Image(pathPlotLightImg);
 	}
 
 	@Override
@@ -128,8 +136,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 	    
 	    // Call super method
         super.update(gc, game, delta);
-        timeToWin-=delta/1000;
-        if(timeToWin<=0){
+        remainingTime=remainingTime-delta;
+
+        if(remainingTime<=0){
         	this.gameDefeat();
         }
         
@@ -188,7 +197,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 			System.out.println("////////////////////////////////////////////////////////");
 		}
 		
-		if(flock.allInTheHole(targetCenter, targetRadius/2)){	
+		if(flock.allInTheHole(targetCenter, targetRadius/2)){
+			score=(int) (flockNumber*scoreCoef+(remainingTime-startingTime)*timeCoef/1000 - fences.size()*fenceCoef);
 			this.gameVictory();
 		}
 		
@@ -217,11 +227,10 @@ public class SpaceShepherd extends AbstractMinigameState {
 		
 		for(Line l : fences){
 			plotImg.draw(l.getX1()-plotRadius/2, l.getY1()-plotRadius/2, plotRadius, plotRadius);
-			//plotImg.draw(l.getX2()-plotRadius/2, l.getY2()-plotRadius, plotRadius, plotRadius);
 		}
 
 		if(lastPlot!=null){
-			plotImg.draw(lastPlot.getX()-plotRadius/2, lastPlot.getY()-plotRadius/2, plotRadius, plotRadius);
+			plotLightImg.draw(lastPlot.getX()-plotRadius/2, lastPlot.getY()-plotRadius/2, plotRadius, plotRadius);
 		}		
 		
 		for(SteeringEntity st : flock.getFlockers()){
@@ -233,7 +242,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 				(int)(flockRadius*1.5),(int) (flockRadius*1.5));
 		
 		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
-
+		String sec=Utils.secondsToString(remainingTime/1000);
+		font.drawString(gc.getWidth()/2 -font.getWidth(sec)/2, 40, sec);
 		
 	}
 	
