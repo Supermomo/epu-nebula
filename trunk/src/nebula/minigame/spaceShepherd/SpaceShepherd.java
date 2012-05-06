@@ -84,8 +84,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 		
 		fences=new ArrayList<Line>();
 		Random r =new Random();
-		int valx=r.nextInt(gc.getWidth());
-		int valy=r.nextInt(gc.getHeight());
 		
 		flockNumber=0;
 		float speed=0;
@@ -111,16 +109,28 @@ public class SpaceShepherd extends AbstractMinigameState {
 		else if(difficulty.equals(Difficulty.Insane)){
 			flockNumber=64;
 			remainingTime=45*1000;
-			speed=0.5f;
+			speed=0.4f;
 			attractionCoef=0.001f;
 		}
 		
 		startingTime=remainingTime;
 		
+		int valx=r.nextInt(gc.getWidth());
+		int valy=r.nextInt(gc.getHeight());
+		
 		flock=new Flock(valx,valy,speed, gc.getWidth(), gc.getHeight(),flockNumber, attractionCoef);
 		
-		targetCenter=new Vector2f(targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2))
-				,targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2)));
+		int vx=targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2));
+		int vy=targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2));
+		
+		while(Math.abs(valx-vx)<targetRadius || Math.abs(valy-vy)<targetRadius){
+			vx=targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2));
+			vy=targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2));
+		}
+		
+		targetCenter=new Vector2f(vx, vy);
+		
+
 		
 		flockImg=new Image(pathFlockImg);
 		leadImg=new Image(pathLeadImg);
