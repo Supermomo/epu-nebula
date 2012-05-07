@@ -34,7 +34,7 @@ public class PauseMenuState extends AbstractMenuState
         switch (index)
         {
             case 1:
-                if (NebulaGame.isScenario)
+                if (NebulaGame.isAdventureMode)
                     nebulaGame.enterState(NebulaState.MainMenu.id);
                 else
                     nebulaGame.enterState(NebulaState.RapidModeMenu.id);

@@ -3,38 +3,38 @@ package nebula.core.state;
 import java.util.ArrayList;
 import java.util.List;
 
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
+
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.state.StateBasedGame;
-
-import nebula.core.helper.NebulaFont;
-import nebula.core.helper.NebulaFont.FontName;
-import nebula.core.helper.NebulaFont.FontSize;
 
 
 /**
  * Abstract menu class
  */
-public abstract class AbstractMenuState extends AbstractNebulaState
+public abstract class AbstractMenuState extends AbstractState
 {
     // Images path
     public static String imgPath = "ressources/images/menus/";
-    
+
     protected float itemsSpace = 16.0f;
     protected float titleSpace = 80.0f;
-    
+
     private Font itemFont, titleFont;
     private int selectedIndex;
     private String menuTitle;
-        
+
     // Menu properties
     private List<String> textList        = new ArrayList<String>();
     private List<Boolean> selectableList = new ArrayList<Boolean>();
-    
+
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -42,7 +42,7 @@ public abstract class AbstractMenuState extends AbstractNebulaState
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Reset menu
         resetMenu();
 
@@ -50,15 +50,15 @@ public abstract class AbstractMenuState extends AbstractNebulaState
         itemFont  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
         titleFont = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
     }
-    
-    
+
+
     @Override
     public void update (GameContainer gc, StateBasedGame game, int delta)
         throws SlickException
     {
         // Call super method
         super.update(gc, game, delta);
-        
+
         Input input = gc.getInput();
 
         // Menu navigation
@@ -73,14 +73,14 @@ public abstract class AbstractMenuState extends AbstractNebulaState
             indexSelectedEvent(-1, game);
     }
 
-    
+
     @Override
     public void render (GameContainer gc, StateBasedGame game, Graphics g)
         throws SlickException
     {
         // Call super method
         super.render(gc, game, g);
-        
+
         // Compute menu height
         float menuh = 0;
         for (int i = 0; i < textList.size(); i++)
@@ -88,7 +88,7 @@ public abstract class AbstractMenuState extends AbstractNebulaState
             menuh += itemFont.getHeight(textList.get(i));
             if (i != 0) menuh += itemsSpace;
         }
-        
+
         if (!menuTitle.equals(""))
         {
             menuh += titleFont.getHeight(menuTitle);
@@ -104,21 +104,30 @@ public abstract class AbstractMenuState extends AbstractNebulaState
             titleFont.drawString(x, y, menuTitle, Color.yellow);
             y += titleFont.getHeight(menuTitle) + titleSpace;
         }
-        
+
         // Render items
         for (int i = 0; i < textList.size(); i++)
         {
             float x = gc.getWidth()/2 - itemFont.getWidth(textList.get(i))/2;
-            
+
             if (i == selectedIndex)
                 itemFont.drawString(x, y, textList.get(i), Color.red);
             else
                 itemFont.drawString(x, y, textList.get(i), Color.white);
-            
+
             y += itemsSpace + itemFont.getHeight(textList.get(i));
         }
     }
-    
+
+    /**
+     * Refresh the menu
+     */
+    public void refreshMenu ()
+    {
+        try { this.init(nebulaGame.getContainer(), nebulaGame); }
+        catch (SlickException exc) { exc.printStackTrace(); }
+    }
+
     /**
      * Get the true index by ignoring non selectables items
      * @param index The false index
@@ -129,10 +138,10 @@ public abstract class AbstractMenuState extends AbstractNebulaState
         for (int i = index; i >= 0; i--)
             if (!selectableList.get(i).booleanValue())
                 index--;
-        
+
         return index;
     }
-    
+
     /**
      * Select the next valid index
      * @param index Starting index
@@ -140,7 +149,7 @@ public abstract class AbstractMenuState extends AbstractNebulaState
     private void selectNextIndex (int index)
     {
         int init = index;
-        
+
         while (true)
         {
             if (index >= textList.size())
@@ -150,14 +159,14 @@ public abstract class AbstractMenuState extends AbstractNebulaState
                 index++;
             else
                 break;
-            
+
             if (init == index) break;
         }
-        
+
         selectedIndex = index;
     }
-    
-    
+
+
     /**
      * Select the previous valid index
      * @param index Starting index
@@ -165,7 +174,7 @@ public abstract class AbstractMenuState extends AbstractNebulaState
     private void selectPreviousIndex (int index)
     {
         int init = index;
-        
+
         while (true)
         {
             if (index < 0)
@@ -175,14 +184,14 @@ public abstract class AbstractMenuState extends AbstractNebulaState
                 index--;
             else
                 break;
-            
+
             if (init == index) break;
         }
-        
+
         selectedIndex = index;
     }
-    
-    
+
+
     /**
      * Add a menu item to the list
      * @param text       The item text
@@ -192,11 +201,11 @@ public abstract class AbstractMenuState extends AbstractNebulaState
     {
         textList.add(text);
         selectableList.add(new Boolean(selectable));
-        
+
         selectNextIndex(0);
     }
-    
-    
+
+
     /**
      * Add some menu spaces
      * @param n The space count
@@ -208,11 +217,11 @@ public abstract class AbstractMenuState extends AbstractNebulaState
             textList.add("");
             selectableList.add(false);
         }
-        
+
         selectNextIndex(0);
     }
-    
-    
+
+
     /**
      * Set the menu title
      * @param title The title
@@ -221,8 +230,18 @@ public abstract class AbstractMenuState extends AbstractNebulaState
     {
         menuTitle = title;
     }
-    
-    
+
+
+    /**
+     * Set the selected index
+     * @param index The selected index
+     */
+    protected void setSelectedIndex (int index)
+    {
+        selectNextIndex(index);
+    }
+
+
     /**
      * Reset the menu
      */
@@ -232,8 +251,8 @@ public abstract class AbstractMenuState extends AbstractNebulaState
         selectableList.clear();
         menuTitle = "";
     }
-    
-    
+
+
     /**
      * Called when the user select a menu item
      * @param index The index selected

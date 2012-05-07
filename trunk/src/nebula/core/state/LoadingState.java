@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Loading state class
  */
-public class LoadingState extends AbstractNebulaState
+public class LoadingState extends AbstractState
 {
     // Images path
     public static String imgPath = "ressources/images/common/";

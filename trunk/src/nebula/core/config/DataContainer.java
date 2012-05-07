@@ -15,36 +15,54 @@ class DataContainer implements Serializable
 {
     // Serial version for the data container
     private static final long serialVersionUID = 1L;
-    
-    private Difficulty difficulty;
-    
-    
+
+    // Datas
+    private Difficulty adventureDifficulty;
+    private Difficulty rapidmodeDifficulty;
+
+
     public DataContainer ()
     {
         // Default data
-        difficulty = Difficulty.Medium;
+        adventureDifficulty = Difficulty.Medium;
+        rapidmodeDifficulty = Difficulty.Medium;
     }
-    
-    public void setDifficulty (Difficulty difficulty)
+
+
+    public Difficulty getAdventureDifficulty ()
     {
-        this.difficulty = difficulty;
+        return adventureDifficulty;
     }
-    
-    public Difficulty getDifficulty ()
+
+    public void setAdventureDifficulty (Difficulty difficulty)
     {
-        return difficulty;
+        this.adventureDifficulty = difficulty;
     }
-    
+
+    public Difficulty getRapidmodeDifficulty ()
+    {
+        return rapidmodeDifficulty;
+    }
+
+    public void setRapidmodeDifficulty (Difficulty difficulty)
+    {
+        this.rapidmodeDifficulty = difficulty;
+    }
+
+
+    /**
+     * Serialization
+     */
     private void writeObject (ObjectOutputStream out) throws IOException
     {
         // Write difficulty
-        out.write(difficulty.ordinal());
+        out.write(adventureDifficulty.ordinal());
     }
-    
+
     private void readObject (ObjectInputStream in)
         throws IOException, ClassNotFoundException
     {
         // Read difficulty
-        difficulty = Difficulty.values()[in.read()];
+        adventureDifficulty = Difficulty.values()[in.read()];
     }
 }

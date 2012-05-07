@@ -40,7 +40,7 @@ public class ScoreTransitionState extends AbstractMenuState
         addMenuItem("Score : " + score, false);
         addMenuSpaces(2);
         
-        if (NebulaGame.isScenario)
+        if (NebulaGame.isAdventureMode)
         {
             if (won) addMenuItem("Continuer", true);
             else     addMenuItem("Recommencer", true);
@@ -55,7 +55,7 @@ public class ScoreTransitionState extends AbstractMenuState
         switch (index)
         {
             case 0:
-                if (NebulaGame.isScenario)
+                if (NebulaGame.isAdventureMode)
                 {
                     if (won)
                         nebulaGame.initAndEnterState(lastState+1, TransitionType.Fade);
