@@ -20,11 +20,11 @@ public class OptionsMenuState extends AbstractMenuState
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Difficulty
         String diffStr = "";
-        Difficulty diff = NebulaConfig.getDifficulty();
-        
+        Difficulty diff = NebulaConfig.getRapidmodeDifficulty();
+
         if (Difficulty.Easy.equals(diff))
             diffStr = "Facile";
         else if (Difficulty.Medium.equals(diff))
@@ -33,32 +33,32 @@ public class OptionsMenuState extends AbstractMenuState
             diffStr = "Difficile";
         else if (Difficulty.Insane.equals(diff))
             diffStr = "Très difficile";
-        
+
         // Add menu items
         setMenuTitle("Options");
         addMenuItem("Difficulté : " + diffStr, true);
         addMenuSpaces(1);
         addMenuItem("Retour", true);
     }
-    
-    
+
+
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
         switch (index)
         {
             case 0:
-                Difficulty diff = NebulaConfig.getDifficulty();
-                
+                Difficulty diff = NebulaConfig.getRapidmodeDifficulty();
+
                 if (Difficulty.Easy.equals(diff))
-                    NebulaConfig.setDifficulty(Difficulty.Medium);
+                    NebulaConfig.setRapidmodeDifficulty(Difficulty.Medium);
                 else if (Difficulty.Medium.equals(diff))
-                    NebulaConfig.setDifficulty(Difficulty.Hard);
+                    NebulaConfig.setRapidmodeDifficulty(Difficulty.Hard);
                 else if (Difficulty.Hard.equals(diff))
-                    NebulaConfig.setDifficulty(Difficulty.Insane);
+                    NebulaConfig.setRapidmodeDifficulty(Difficulty.Insane);
                 else if (Difficulty.Insane.equals(diff))
-                    NebulaConfig.setDifficulty(Difficulty.Easy);
-                
+                    NebulaConfig.setRapidmodeDifficulty(Difficulty.Easy);
+
                 try { this.init(game.getContainer(), game); }
                 catch (SlickException exc) { exc.printStackTrace(); }
                 break;
@@ -68,18 +68,18 @@ public class OptionsMenuState extends AbstractMenuState
                 break;
         }
     }
-    
-    
+
+
     @Override
     public void leave (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
         super.leave(gc, game);
-        
+
         // Save user config
         NebulaConfig.saveData();
     }
-    
+
 
 	@Override
 	public int getID() { return NebulaState.OptionsMenu.id; }

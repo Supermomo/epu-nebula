@@ -1,5 +1,6 @@
 package nebula.core.state;
 
+import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.config.NebulaConfig;
 import nebula.core.helper.NebulaFont;
@@ -18,37 +19,40 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Basic minigame state
  */
-public abstract class AbstractMinigameState extends AbstractNebulaState
+public abstract class AbstractMinigameState extends AbstractState
 {
     /* Score display offset */
     private static float SCORE_OFFSET = 8.0f;
-    
+
     /* Score positions */
     public static enum ScorePosition
         {TopLeft, TopCenter, TopRight, BottomLeft, BottomCenter, BottomRight}
-    
+
     /* Minigame difficulties */
     public static enum Difficulty {Easy, Medium, Hard, Insane}
-    
+
     protected Difficulty difficulty;
     protected int score;
-    
+
     private Font font;
-    
-    
+
+
     @Override
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Reset minigame score
         score = 0;
-        
+
         // Set the minigame difficulty
-        difficulty = NebulaConfig.getDifficulty();
-        
+        if (NebulaGame.isAdventureMode)
+            difficulty = NebulaConfig.getAdventureDifficulty();
+        else
+            difficulty = NebulaConfig.getRapidmodeDifficulty();
+
         // Load font
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Small);
     }
@@ -59,19 +63,19 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
     {
         // Call super method
         super.update(gc, game, delta);
-        
+
         Input input = gc.getInput();
-        
+
         // Escape key
         if (input.isKeyPressed(Input.KEY_ESCAPE))
             this.escapeMinigame();
-        
+
         // Debug victory key
         if (input.isKeyPressed(Input.KEY_W) &&
             input.isKeyDown(Input.KEY_LSHIFT))
             this.gameVictory();
     }
-    
+
     @Override
     public void render (GameContainer gc, StateBasedGame game, Graphics g)
         throws SlickException
@@ -79,7 +83,7 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
         // Call super method
         super.render(gc, game, g);
     }
-    
+
     /**
      * Render the score
      */
@@ -91,7 +95,7 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
         float scoreWidth = font.getWidth(scoreText);
         float scoreHeight = font.getHeight(scoreText);
         float x = 0.0f, y = 0.0f;
-        
+
         if (ScorePosition.TopLeft.equals(scorePosition))
         {
             x = SCORE_OFFSET;
@@ -122,10 +126,10 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
             x = gc.getWidth() - scoreWidth - SCORE_OFFSET;
             y = gc.getHeight() - scoreHeight - SCORE_OFFSET;
         }
-        
+
         font.drawString(x, y, scoreText, Color.yellow);
     }
-    
+
     /**
      * Escape command
      */
@@ -133,10 +137,10 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
     {
         ((PauseMenuState)nebulaGame.getState(NebulaState.PauseMenu.id))
             .setLastState(this.getID());
-        
+
         nebulaGame.initAndEnterState(NebulaState.PauseMenu.id);
     }
-    
+
     /**
      * Invoke the game victory
      */
@@ -144,7 +148,7 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
     {
         nebulaGame.showScoreState(score, true, getID());
     }
-    
+
     /**
      * Invoke the game defeat
      */
@@ -152,7 +156,7 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
     {
         nebulaGame.showScoreState(score, false, getID());
     }
-    
+
     /**
      * Set the minigame difficulty
      * @param difficulty The difficulty
@@ -161,7 +165,7 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
     {
         this.difficulty = difficulty;
     }
-    
+
     /**
      * Get the minigame difficulty
      * @return The difficulty
@@ -170,7 +174,7 @@ public abstract class AbstractMinigameState extends AbstractNebulaState
     {
         return difficulty;
     }
-    
+
     /**
      * Get the minigame score
      * @return The score

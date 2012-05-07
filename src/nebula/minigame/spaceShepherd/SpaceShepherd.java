@@ -3,15 +3,20 @@ package nebula.minigame.spaceShepherd;
 import java.util.ArrayList;
 import java.util.Random;
 
-import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
-import nebula.core.helper.Utils;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
+import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
-import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -36,20 +41,20 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private Vector2f lastPlot;
 	/** Variator for the deplacement speed */
 	private float pointerSpeed = 0.4f;
-	
+
 	private Flock flock;
 	private boolean spaceReleased;
 
 	private Vector2f targetCenter;
 	private int targetRadius;
-	
+
 	private int borderMargin=50;
-	
+
 	//Time accorded to win the game, in miliseconds
 	private int remainingTime;
 	private int startingTime;
 	private int flockNumber;
-	
+
 	private Image  flockImg;
 	private Image  leadImg;
 	private Image  plotImg;
@@ -62,76 +67,76 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private String pathPlotLightImg="ressources/images/spaceShepherd/nebula-plot2.png";
 	private String pathCursorImg="ressources/images/spaceShepherd/saucer.png";
 	private String pathTargetImg="ressources/images/spaceShepherd/vortex.png";
-	
+
 	private Font font;
-	
+
 
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-	    
+
 	    // Call super method
         super.init(gc, game);
-        
-        font =NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
-        
+
+        font = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
+
 	    lastPlot=null;
 	    spaceReleased=true;
 		plotRadius=(int) (gc.getScreenWidth()*0.04);
 		flockRadius=(int) (gc.getScreenWidth()*0.03);
 		cursorRadius=(int) (gc.getScreenWidth()*0.07);
 		targetRadius=(int) (gc.getScreenWidth()*0.10);
-		
+
 		fences=new ArrayList<Line>();
 		Random r =new Random();
-		
+
 		flockNumber=0;
 		float speed=0;
 		float attractionCoef=0;
-		if(difficulty.equals(Difficulty.Easy)){
+		if(Difficulty.Easy.equals(difficulty)){
 			flockNumber=8;
 			remainingTime=120*1000;
 			speed=0.16f;
 			attractionCoef=0.003f;
 		}
-		else if(difficulty.equals(Difficulty.Medium)){
+		else if(Difficulty.Medium.equals(difficulty)){
 			flockNumber=16;
 			remainingTime=100*1000;
 			speed=0.2f;
 			attractionCoef=0.002f;
 		}
-		else if(difficulty.equals(Difficulty.Hard)){
+		else if(Difficulty.Hard.equals(difficulty)){
 			flockNumber=32;
 			remainingTime=60*1000;
 			speed=0.3f;
 			attractionCoef=0.0015f;
 		}
-		else if(difficulty.equals(Difficulty.Insane)){
+		else if(Difficulty.Insane.equals(difficulty)){
 			flockNumber=64;
 			remainingTime=45*1000;
 			speed=0.4f;
 			attractionCoef=0.001f;
 		}
-		
+
 		startingTime=remainingTime;
-		
+
 		int valx=r.nextInt(gc.getWidth());
 		int valy=r.nextInt(gc.getHeight());
-		
+
 		flock=new Flock(valx,valy,speed, gc.getWidth(), gc.getHeight(),flockNumber, attractionCoef);
-		
+
 		int vx=targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2));
 		int vy=targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2));
-		
+
 		while(Math.abs(valx-vx)<targetRadius || Math.abs(valy-vy)<targetRadius){
 			vx=targetRadius+ new Random().nextInt(gc.getWidth()-(targetRadius*2));
 			vy=targetRadius+ new Random().nextInt(gc.getHeight()-(targetRadius*2));
 		}
-		
-		targetCenter=new Vector2f(vx, vy);
-		
 
-		
+		targetCenter=new Vector2f(vx, vy);
+
+
+
 		flockImg=new Image(pathFlockImg);
 		leadImg=new Image(pathLeadImg);
 		plotImg=new Image(pathPlotImg);
@@ -143,7 +148,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 	    throws SlickException {
-	    
+
 	    // Call super method
         super.update(gc, game, delta);
         remainingTime=remainingTime-delta;
@@ -151,11 +156,11 @@ public class SpaceShepherd extends AbstractMinigameState {
         if(remainingTime<=0){
         	this.gameDefeat();
         }
-        
+
 		Input input = gc.getInput();
 
 		flock.moveRandom(delta, fences);
-		
+
 		if (input.isKeyDown(Input.KEY_M)) {
 
 		}
@@ -163,7 +168,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		if (input.isKeyDown(Input.KEY_LEFT) && x-(delta * pointerSpeed) > 0+borderMargin) {
 			x -= (delta * pointerSpeed);
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_RIGHT) && x+(delta * pointerSpeed)< gc.getWidth()-borderMargin) {
 			x += (delta * pointerSpeed);
 		}
@@ -175,26 +180,26 @@ public class SpaceShepherd extends AbstractMinigameState {
 		if (input.isKeyDown(Input.KEY_DOWN) && y+(delta * pointerSpeed) < gc.getHeight()-borderMargin) {
 			y += (delta * pointerSpeed);
 		}
-		
+
 		if(!input.isKeyDown(Input.KEY_SPACE)){
 			spaceReleased=true;
 		}
 
 		if (input.isKeyDown(Input.KEY_SPACE) && spaceReleased) {
-			
+
 			spaceReleased=false;
 			Vector2f plot=new Vector2f(x,y);
-			
+
 			if(lastPlot==null){
 				lastPlot=new Vector2f(x,y);
 			}
 			else if (validDistanceFromLastPoint() && !flock.isDividing(new Line(lastPlot,plot))) {
-				
+
 				System.out.println("x : "+x+" y : "+y);
 				fences.add(new Line(lastPlot,plot));
 				lastPlot=null;
 				lastPlot=new Vector2f(x,y);
-				
+
 				if(flock.isEnded(fences, targetCenter)){
 					this.gameDefeat();
 				}
@@ -203,15 +208,15 @@ public class SpaceShepherd extends AbstractMinigameState {
 				System.out.println("Divide");
 			}
 			System.out.println("x : "+x+"  y : "+y);
-			
+
 			System.out.println("////////////////////////////////////////////////////////");
 		}
-		
+
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){
 			score=(int) (flockNumber*scoreCoef+(remainingTime-startingTime)*timeCoef/1000 - fences.size()*fenceCoef);
 			this.gameVictory();
 		}
-		
+
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
@@ -219,45 +224,45 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 	    // Call super method
         super.render(gc, game, g);
-        
+
 		g.setAntiAlias(true);
 
-		targetImg.drawFlash(targetCenter.x-targetRadius/2 -2, targetCenter.y-targetRadius/2 -2, 
+		targetImg.drawFlash(targetCenter.x-targetRadius/2 -2, targetCenter.y-targetRadius/2 -2,
 				targetRadius+4, targetRadius+4);
-		targetImg.draw(targetCenter.x-targetRadius/2, targetCenter.y-targetRadius/2, 
+		targetImg.draw(targetCenter.x-targetRadius/2, targetCenter.y-targetRadius/2,
 				targetRadius, targetRadius);
 
 		g.setColor(Color.red);
 		g.setLineWidth(10);
 
-		for(Line l : fences){		
+		for(Line l : fences){
 			g.drawLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
 			g.drawString(""+fences.indexOf(l), l.getX1()+20, l.getY1()+20);
 		}
-		
+
 		for(Line l : fences){
 			plotImg.draw(l.getX1()-plotRadius/2, l.getY1()-plotRadius/2, plotRadius, plotRadius);
 		}
 
 		if(lastPlot!=null){
 			plotLightImg.draw(lastPlot.getX()-plotRadius/2, lastPlot.getY()-plotRadius/2, plotRadius, plotRadius);
-		}		
-		
+		}
+
 		for(SteeringEntity st : flock.getFlockers()){
-			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2), 
+			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2),
 					flockRadius, flockRadius);
 		}
-		
-		leadImg.draw((int)(flock.getPosition().x-(flockRadius*1.5/2)),(int)(flock.getPosition().y-(flockRadius*1.5/2)), 
+
+		leadImg.draw((int)(flock.getPosition().x-(flockRadius*1.5/2)),(int)(flock.getPosition().y-(flockRadius*1.5/2)),
 				(int)(flockRadius*1.5),(int) (flockRadius*1.5));
-		
+
 		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
 		String sec=Utils.secondsToString(remainingTime/1000);
 		font.drawString(gc.getWidth()/2 -font.getWidth(sec)/2, 40, sec);
-		
+
 	}
-	
-	
+
+
 	private boolean validDistanceFromLastPoint() {
 		return (Math.abs(lastPlot.x - x) > plotRadius || Math.abs(lastPlot.y
 				- y) > plotRadius);
@@ -268,6 +273,6 @@ public class SpaceShepherd extends AbstractMinigameState {
     {
         return NebulaState.SpaceShepherd.id;
     }
-    
-    
+
+
 }

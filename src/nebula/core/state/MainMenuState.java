@@ -1,13 +1,12 @@
 package nebula.core.state;
 
+import nebula.core.NebulaGame;
+import nebula.core.NebulaGame.NebulaState;
+import nebula.core.config.NebulaConfig;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import nebula.core.NebulaGame;
-import nebula.core.NebulaGame.NebulaState;
-import nebula.core.NebulaGame.TransitionType;
-import nebula.core.config.NebulaConfig;
 
 
 /**
@@ -31,7 +30,7 @@ public class MainMenuState extends AbstractMenuState
         addMenuSpaces(1);
         addMenuItem("Quitter", true);
     }
-    
+
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
@@ -40,12 +39,12 @@ public class MainMenuState extends AbstractMenuState
         {
             // Mode aventure
             case 0:
-                NebulaGame.isScenario = true;
-                nebulaGame.enterState(NebulaState.StartAventure.id, TransitionType.Fade);
+                NebulaGame.isAdventureMode = true;
+                nebulaGame.initAndEnterState(NebulaState.DifficultyMenu.id);
                 break;
             // Mode rapide
             case 1:
-                NebulaGame.isScenario = false;
+                NebulaGame.isAdventureMode = false;
                 nebulaGame.initAndEnterState(NebulaState.RapidModeMenu.id);
                 break;
             // Scores

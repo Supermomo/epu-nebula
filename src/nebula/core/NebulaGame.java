@@ -5,7 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nebula.core.config.NebulaConfig;
-import nebula.core.state.*;
+import nebula.core.state.BougibougaState;
+import nebula.core.state.DifficultyMenuState;
+import nebula.core.state.EndMenuState;
+import nebula.core.state.FinInvadersState;
+import nebula.core.state.Intro1JeuState;
+import nebula.core.state.Intro2JeuState;
+import nebula.core.state.Intro3JeuState;
+import nebula.core.state.JubbaState;
+import nebula.core.state.LoadingState;
+import nebula.core.state.MainMenuState;
+import nebula.core.state.OptionsMenuState;
+import nebula.core.state.PauseMenuState;
+import nebula.core.state.RapidModeMenuState;
+import nebula.core.state.ScoreTransitionState;
+import nebula.core.state.ScoresMenuState;
 import nebula.minigame.asteroid.AsteroidGame;
 import nebula.minigame.breakout.BreakoutGame;
 import nebula.minigame.gravity.Gravity;
@@ -40,21 +54,23 @@ public class NebulaGame extends StateBasedGame
         RapidModeMenu           (2),
         OptionsMenu             (3),
         ScoresMenu              (4),
-        PauseMenu               (5),
-        ScoreTransition         (9),
-        StartAventure           (10),
-        Intro1Jeu               (10),
-        Intro2Jeu               (11),
-        Intro3Jeu               (12),
-        SpaceInvaders           (13),
-        FinInvaders             (14),
-        Bougibouga              (15),
-        Jubba                   (16),
-        Breakout                (17),
-        Asteroid                (18),
-        Gravity					(19),
-        SpaceShepherd           (20),
-        EndMenu                 (21);
+        SetupAdventure          (50),
+        DifficultyMenu          (51),
+        StartAdventure          (100),
+        Intro1Jeu               (100),
+        Intro2Jeu               (101),
+        Intro3Jeu               (102),
+        SpaceInvaders           (103),
+        FinInvaders             (104),
+        Bougibouga              (105),
+        Jubba                   (106),
+        Breakout                (107),
+        Asteroid                (108),
+        Gravity					(109),
+        SpaceShepherd           (110),
+        EndMenu                 (111),
+        PauseMenu               (200),
+        ScoreTransition         (201);
 
         public int id;
         private NebulaState (int id) { this.id = id; }
@@ -62,19 +78,19 @@ public class NebulaGame extends StateBasedGame
 
     public static enum TransitionType
         {None, Fade, HorizontalSplit, VerticalSplit};
-    
-    public static boolean isScenario;
 
-    
+    public static boolean isAdventureMode;
+
+
     /**
      * Constructeur du jeu.
      * Definit les différents états (menus / jeux) disponibles
-     * @throws SlickException 
+     * @throws SlickException
      */
     public NebulaGame (String playerName) throws SlickException
     {
         super("Nebula");
-        
+
         // Load config for the player
         NebulaConfig.loadData(playerName);
     }
@@ -89,41 +105,42 @@ public class NebulaGame extends StateBasedGame
         this.addState(new LoadingState());
         this.enterState(NebulaState.Loading.id);
     }
-    
+
     /**
      * Load all states
      */
     public void loadGame ()
     {
         List<BasicGameState> states = new ArrayList<BasicGameState>();
-        
+
         // Menus
         states.add(new MainMenuState());
         states.add(new RapidModeMenuState());
         states.add(new OptionsMenuState());
         states.add(new ScoresMenuState());
         states.add(new PauseMenuState());
+        states.add(new DifficultyMenuState());
         states.add(new ScoreTransitionState());
         states.add(new EndMenuState());
 
         // Aventure
-        states.add(new Intro1Jeu());
-        states.add(new Intro2Jeu());
-        states.add(new Intro3Jeu());
+        states.add(new Intro1JeuState());
+        states.add(new Intro2JeuState());
+        states.add(new Intro3JeuState());
         states.add(new SpaceInvaders());
-        states.add(new FinInvaders());
-        states.add(new Bougibouga());
-        states.add(new Jubba());
+        states.add(new FinInvadersState());
+        states.add(new BougibougaState());
+        states.add(new JubbaState());
         states.add(new BreakoutGame());
         states.add(new AsteroidGame());
         states.add(new Gravity());
         states.add(new SpaceShepherd());
-        
+
         // Init all states
         for (BasicGameState state : states)
         {
             this.addState(state);
-            
+
             try { state.init(this.getContainer(), this); }
             catch (SlickException exc) { exc.printStackTrace(); }
         }
@@ -182,7 +199,7 @@ public class NebulaGame extends StateBasedGame
     {
         // Save user config
         NebulaConfig.saveData();
-        
+
         // Set up score state
         ((ScoreTransitionState)getState(NebulaState.ScoreTransition.id)).
         initScore(score, won, lastState);
@@ -204,7 +221,7 @@ public class NebulaGame extends StateBasedGame
                 Toolkit.getDefaultToolkit().getScreenSize().width,
                 Toolkit.getDefaultToolkit().getScreenSize().height,
                 true);
-            app.setTargetFrameRate(120);
+            //app.setTargetFrameRate(120);
             app.start();
         }
         catch (Exception exc) {

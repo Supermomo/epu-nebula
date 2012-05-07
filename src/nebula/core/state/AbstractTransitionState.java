@@ -16,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Custom abstract transition class
  */
-public abstract class AbstractTransitionState extends AbstractNebulaState
+public abstract class AbstractTransitionState extends AbstractState
 {    
     private float time = Float.NEGATIVE_INFINITY;
     private TransitionType transitionType = TransitionType.None;

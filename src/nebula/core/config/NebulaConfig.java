@@ -26,13 +26,13 @@ public class NebulaConfig
     public static void loadData (String playerName)
     {
         NebulaConfig.playerName = playerName;
-        
+
         try
         {
             FileInputStream fis =
                 new FileInputStream(getFileName());
             ObjectInputStream ois = new ObjectInputStream(fis);
-            
+
             try
             {
                 // Read data container
@@ -47,10 +47,10 @@ public class NebulaConfig
         catch (Exception exc)
         {
             // Load default config
-            NebulaConfig.loadDefaultConfig();
+            dataContainer = new DataContainer();
         }
     }
-    
+
     /**
      * Save the player data into the database
      */
@@ -58,13 +58,13 @@ public class NebulaConfig
     {
         // Make dirs
         new File(getFileFolder()).mkdirs();
-        
+
         try
         {
             FileOutputStream fos =
                 new FileOutputStream(getFileName(), false);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            
+
             try
             {
                 // Write data
@@ -78,15 +78,7 @@ public class NebulaConfig
         }
         catch (Exception exc) {}
     }
-    
-    /**
-     * Load the default config for new players
-     */
-    private static void loadDefaultConfig ()
-    {
-        dataContainer = new DataContainer();
-    }
-    
+
     /**
      * Get the player name
      * @return The player name
@@ -95,7 +87,7 @@ public class NebulaConfig
     {
         return playerName;
     }
-    
+
     /**
      * Get the file folder
      * @return The file folder
@@ -108,7 +100,7 @@ public class NebulaConfig
             ".nebula" +
             System.getProperty("file.separator");
     }
-    
+
     /**
      * Get the file name
      * @return The file name
@@ -120,22 +112,40 @@ public class NebulaConfig
             playerName +
             ".save";
     }
-    
+
     /**
-     * Get difficulty
-     * @return The difficulty
+     * Get the adventure difficulty
+     * @return The adventure difficulty
      */
-    public static Difficulty getDifficulty ()
+    public static Difficulty getAdventureDifficulty ()
     {
-        return dataContainer.getDifficulty();
+        return dataContainer.getAdventureDifficulty();
     }
-    
+
     /**
-     * Set difficulty
-     * @param difficulty The difficulty
+     * Set adventure difficulty
+     * @param difficulty The adventure difficulty
      */
-    public static void setDifficulty (Difficulty difficulty)
+    public static void setAdventureDifficulty (Difficulty difficulty)
     {
-        dataContainer.setDifficulty(difficulty);
+        dataContainer.setAdventureDifficulty(difficulty);
+    }
+
+    /**
+     * Get the rapidmode difficulty
+     * @return The rapidmode difficulty
+     */
+    public static Difficulty getRapidmodeDifficulty ()
+    {
+        return dataContainer.getRapidmodeDifficulty();
+    }
+
+    /**
+     * Set rapidmode difficulty
+     * @param difficulty The rapidmode difficulty
+     */
+    public static void setRapidmodeDifficulty (Difficulty difficulty)
+    {
+        dataContainer.setRapidmodeDifficulty(difficulty);
     }
 }
