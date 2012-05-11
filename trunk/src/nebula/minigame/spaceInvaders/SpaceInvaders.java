@@ -30,7 +30,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 	Random rand;
 	int seuil = 99999;
 	Image coeur = null;
-	int score = 0;
+	int scoreSpaceInvaders = 0;
 	Image defaite = null;
 	Sound sVictoire = null;
 	Sound sDefaite = null;
@@ -188,7 +188,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	    			explosion.restart();
     	    		}
     	    		nbEnnemis--;
-    	    		score += ennemi[i][j].getPts();
+    	    		scoreSpaceInvaders += ennemi[i][j].getPts();
     	    		ennemi[i][j].getSon().play();
     	    		ennemi[i][j] = null;
     	    		tir.setX(-100);
@@ -222,6 +222,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	{
     		//sVictoire.play();
     		//gc.pause();
+    		this.score=scoreSpaceInvaders;
     		gameVictory();
     	}
     	
