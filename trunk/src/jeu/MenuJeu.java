@@ -38,10 +38,6 @@ public class MenuJeu extends MenuAbstrait
 	protected void lancerOption(int i) {
 		switch (i){  
 		case 0 : 
-            String s = JOptionPane.showInputDialog("Type your name here : ");
-            if (s == null || s.isEmpty()) {
-                    s="Default Player";
-            }
 		    NebulaGame.startNebulaGame();
 			break;
 		case 1 : new Option(nomJeu + ": gestion des options");break;
