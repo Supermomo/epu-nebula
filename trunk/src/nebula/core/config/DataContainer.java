@@ -55,14 +55,16 @@ class DataContainer implements Serializable
      */
     private void writeObject (ObjectOutputStream out) throws IOException
     {
-        // Write difficulty
+        // Write difficulties
         out.write(adventureDifficulty.ordinal());
+        out.write(rapidmodeDifficulty.ordinal());
     }
 
     private void readObject (ObjectInputStream in)
         throws IOException, ClassNotFoundException
     {
-        // Read difficulty
+        // Read difficulties
         adventureDifficulty = Difficulty.values()[in.read()];
+        rapidmodeDifficulty = Difficulty.values()[in.read()];
     }
 }

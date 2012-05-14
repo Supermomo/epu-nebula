@@ -66,7 +66,7 @@ public class NebulaGame extends StateBasedGame
         Jubba                   (106),
         Breakout                (107),
         Asteroid                (108),
-        Gravity					(109),
+        Gravity                 (109),
         SpaceShepherd           (110),
         EndMenu                 (111),
         PauseMenu               (200),
@@ -77,7 +77,7 @@ public class NebulaGame extends StateBasedGame
     }
 
     public static enum TransitionType
-        {None, Fade, HorizontalSplit, VerticalSplit};
+    {None, Fade, HorizontalSplit, VerticalSplit};
 
     public static boolean isAdventureMode;
 
@@ -221,7 +221,7 @@ public class NebulaGame extends StateBasedGame
                 Toolkit.getDefaultToolkit().getScreenSize().width,
                 Toolkit.getDefaultToolkit().getScreenSize().height,
                 true);
-            //app.setTargetFrameRate(120);
+            app.setTargetFrameRate(120);
             app.start();
         }
         catch (Exception exc) {
