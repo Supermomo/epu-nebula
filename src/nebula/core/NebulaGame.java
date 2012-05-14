@@ -77,7 +77,7 @@ public class NebulaGame extends StateBasedGame
     }
 
     public static enum TransitionType
-    {None, Fade, HorizontalSplit, VerticalSplit};
+        {None, Fade, HorizontalSplit, VerticalSplit};
 
     public static boolean isAdventureMode;
 
