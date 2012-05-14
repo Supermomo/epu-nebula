@@ -99,12 +99,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 			speed=0.16f;
 			attractionCoef=0.003f;
 		}
-		else if(Difficulty.Medium.equals(difficulty)){
-			flockNumber=16;
-			remainingTime=100*1000;
-			speed=0.2f;
-			attractionCoef=0.002f;
-		}
 		else if(Difficulty.Hard.equals(difficulty)){
 			flockNumber=32;
 			remainingTime=60*1000;
@@ -117,7 +111,13 @@ public class SpaceShepherd extends AbstractMinigameState {
 			speed=0.4f;
 			attractionCoef=0.001f;
 		}
-
+		else{//MEDIUM
+			flockNumber=16;
+			remainingTime=100*1000;
+			speed=0.2f;
+			attractionCoef=0.002f;
+		}
+		
 		startingTime=remainingTime;
 
 		int valx=r.nextInt(gc.getWidth());
@@ -213,6 +213,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		}
 
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){
+			System.out.println("trolololol");
 			score=(int) (flockNumber*scoreCoef+(remainingTime-startingTime)*timeCoef/1000 - fences.size()*fenceCoef);
 			this.gameVictory();
 		}

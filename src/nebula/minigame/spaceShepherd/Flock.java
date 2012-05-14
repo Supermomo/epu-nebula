@@ -1,11 +1,8 @@
 package nebula.minigame.spaceShepherd;
 
 import java.awt.geom.GeneralPath;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Flock extends SteeringEntity {
@@ -68,6 +65,12 @@ public class Flock extends SteeringEntity {
 		}
 	}
 
+	/**
+	 * return true if all the flocker are in the vortex
+	 * @param target
+	 * @param radius
+	 * @return
+	 */
 	public boolean allInTheHole(Vector2f target, int radius) {
 		boolean res = true;
 		for (int i = 0; i < flockers.size(); i++) {
@@ -78,7 +81,6 @@ public class Flock extends SteeringEntity {
 				i--;
 			}
 		}
-
 		return res;
 	}
 
