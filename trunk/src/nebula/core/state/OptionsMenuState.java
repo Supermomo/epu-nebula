@@ -32,6 +32,6 @@ public class OptionsMenuState extends AbstractMenuState
     }
 
 
-	@Override
-	public int getID() { return NebulaState.OptionsMenu.id; }
+    @Override
+    public int getID() { return NebulaState.OptionsMenu.id; }
 }

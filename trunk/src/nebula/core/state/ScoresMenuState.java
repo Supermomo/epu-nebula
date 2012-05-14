@@ -18,13 +18,13 @@ public class ScoresMenuState extends AbstractMenuState
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Add menu items
         setMenuTitle("Scores");
         addMenuItem("Retour", true);
     }
-    
-    
+
+
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
@@ -32,6 +32,6 @@ public class ScoresMenuState extends AbstractMenuState
         nebulaGame.enterState(NebulaState.MainMenu.id);
     }
 
-	@Override
-	public int getID() { return NebulaState.ScoresMenu.id; }
+    @Override
+    public int getID() { return NebulaState.ScoresMenu.id; }
 }

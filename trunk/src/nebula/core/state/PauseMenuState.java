@@ -14,20 +14,20 @@ import org.newdawn.slick.state.StateBasedGame;
 public class PauseMenuState extends AbstractMenuState
 {
     private int lastState = NebulaState.MainMenu.id;
-    
+
     @Override
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Add menu items
         setMenuTitle("Pause");
         addMenuItem("Retour au jeu", true);
         addMenuItem("Quitter", true);
     }
-    
+
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
@@ -45,7 +45,7 @@ public class PauseMenuState extends AbstractMenuState
                 break;
         }
     }
-    
+
     /**
      * Set the last state to return
      */
@@ -54,6 +54,6 @@ public class PauseMenuState extends AbstractMenuState
         this.lastState = lastState;
     }
 
-	@Override
-	public int getID() { return NebulaState.PauseMenu.id; }
+    @Override
+    public int getID() { return NebulaState.PauseMenu.id; }
 }
