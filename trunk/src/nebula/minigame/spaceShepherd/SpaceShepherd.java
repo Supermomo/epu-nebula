@@ -172,6 +172,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		Input input = gc.getInput();
 
 		flock.moveRandom(delta, fences);
+		
 
 		if (input.isKeyDown(Input.KEY_M)) {
 
@@ -192,7 +193,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		if (input.isKeyDown(Input.KEY_DOWN) && y+(delta * pointerSpeed) < gc.getHeight()-borderMargin) {
 			y += (delta * pointerSpeed);
 		}
-
+		
 		if(!input.isKeyDown(Input.KEY_SPACE)){
 			spaceReleased=true;
 		}
