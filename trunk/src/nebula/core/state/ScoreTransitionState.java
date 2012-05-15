@@ -37,14 +37,16 @@ public class ScoreTransitionState extends AbstractMenuState
         if (won) setMenuTitle("BRAVO !");
         else     setMenuTitle("PERDU !");
 
-        addMenuItem("Score : " + score, false);
-        addMenuSpaces(2);
-
-        if (NebulaGame.isAdventureMode)
+        if (won)
         {
-            if (won) addMenuItem("Continuer", true);
-            else     addMenuItem("Recommencer", true);
+            addMenuItem("Score : " + score, false);
+            addMenuSpaces(2);
         }
+
+        if (NebulaGame.isAdventureMode && won)
+            addMenuItem("Continuer", true);
+        else
+            addMenuItem("Recommencer", true);
 
         addMenuItem("Quitter", true);
     }
@@ -63,10 +65,13 @@ public class ScoreTransitionState extends AbstractMenuState
                         nebulaGame.initAndEnterState(lastState, TransitionType.Fade);
                 }
                 else
-                    nebulaGame.enterState(NebulaState.RapidModeMenu.id);
+                    nebulaGame.initAndEnterState(lastState, TransitionType.Fade);
                 break;
             case 1:
-                nebulaGame.enterState(NebulaState.MainMenu.id);
+                if (NebulaGame.isAdventureMode)
+                    nebulaGame.enterState(NebulaState.MainMenu.id);
+                else
+                    nebulaGame.enterState(NebulaState.RapidModeMenu.id);
             default:
                 break;
         }

@@ -4,7 +4,7 @@ package nebula.minigame.breakout;
 /**
  * BricksField class
  */
-public class BricksField
+class BricksField
 {
     private float x;
     private float y;
@@ -12,7 +12,7 @@ public class BricksField
     private float h;
     private int r;
     private int c;
-    
+
     public BricksField (float x, float y, float w, float h, int r, int c)
     {
         this.x = x;

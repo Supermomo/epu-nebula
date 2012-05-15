@@ -9,13 +9,13 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * Saucer class
  */
-public class Saucer
+class Saucer
 {
     static final float w = 128;
     static final float h = 93;
     static final float speed = 0.3f;
     static final float collideOffset = 16.0f;
-    
+
     private float x;
     private float y;
     private Rectangle limits;
@@ -30,45 +30,45 @@ public class Saucer
         if (image == null)
             image = new Image(AsteroidGame.imgPath + "saucer.png");
     }
-    
+
     public void goRight (float n)
     {
         x += n;
-        
+
         float limit = limits.getX() + limits.getWidth();
         if (x + w > limit) x = limit - w;
     }
-    
+
     public void goLeft (float n)
     {
         x -= n;
-        
+
         float limit = limits.getX();
         if (x < limit) x = limit;
     }
-    
+
     public void goUp (float n)
     {
         y -= n;
-        
+
         float limit = limits.getY();
         if (y < limit) y = limit;
     }
-    
+
     public void goDown (float n)
     {
         y += n;
-        
+
         float limit = limits.getY() + limits.getHeight();
         if (y + h > limit) y = limit - h;
     }
-    
+
     public void resetPosition ()
     {
         x = limits.getX() + limits.getWidth()/2 - w/2;
         y = limits.getY() + limits.getHeight()/2 - h/2;
     }
-    
+
     public Ellipse getCollideZone ()
     {
         return new Ellipse(
@@ -83,22 +83,22 @@ public class Saucer
     {
         image.draw(x, y, w, h);
     }
-    
+
     public void setX (float x)
     {
         this.x = x;
     }
-    
+
     public float getX ()
     {
         return x;
     }
-    
+
     public void setY (float y)
     {
         this.y = y;
     }
-    
+
     public float getY ()
     {
         return y;
