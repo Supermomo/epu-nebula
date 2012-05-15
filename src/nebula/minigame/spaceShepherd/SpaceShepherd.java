@@ -31,9 +31,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private int flockRadius;
 	private int cursorRadius;
 	/** Coefficient for the malus you get when you don't fill the track */
-	private float scoreCoef = 100.0f;
-	private float timeCoef=10.0f;
-	private float fenceCoef=10.0f;
+	private float scoreCoef;
+	private float timeCoef;
+	private float fenceCoef;
 	/**the list of all the fences that has been created */
 	private ArrayList<Line> fences;
 
@@ -98,24 +98,36 @@ public class SpaceShepherd extends AbstractMinigameState {
 			remainingTime=120*1000;
 			speed=0.16f;
 			attractionCoef=0.003f;
+			scoreCoef = 275.0f;
+			timeCoef=8.0f;
+			fenceCoef=8.0f;
 		}
 		else if(Difficulty.Hard.equals(difficulty)){
 			flockNumber=32;
 			remainingTime=60*1000;
 			speed=0.3f;
 			attractionCoef=0.0015f;
+			scoreCoef = 130.0f;
+			timeCoef=12.0f;
+			fenceCoef=12.0f;
 		}
 		else if(Difficulty.Insane.equals(difficulty)){
 			flockNumber=64;
 			remainingTime=45*1000;
 			speed=0.4f;
 			attractionCoef=0.001f;
+			scoreCoef = 90.0f;
+			timeCoef=15.0f;
+			fenceCoef=15.0f;
 		}
 		else{//MEDIUM
 			flockNumber=16;
 			remainingTime=100*1000;
 			speed=0.2f;
 			attractionCoef=0.002f;
+			scoreCoef = 200.0f;
+			timeCoef=9.0f;
+			fenceCoef=9.0f;
 		}
 		
 		startingTime=remainingTime;
@@ -252,6 +264,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 		String sec=Utils.secondsToString(remainingTime/1000);
 		font.drawString(gc.getWidth()/2 -font.getWidth(sec)/2, 40, sec);
 
+		score=computeScore();
+		renderScore(gc, ScorePosition.TopRight);
+		
 		for(SteeringEntity st : flock.getFlockers()){
 			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2),
 					flockRadius, flockRadius);
