@@ -213,7 +213,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 		}
 
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){
-			System.out.println("trolololol");
 			score=computeScore();
 			this.gameVictory();
 		}
