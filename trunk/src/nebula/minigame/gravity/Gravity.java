@@ -4,6 +4,7 @@ package nebula.minigame.gravity;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.state.AbstractMinigameState;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -18,7 +19,8 @@ public class Gravity extends AbstractMinigameState {
 		DEPLACEMENT_JOUEUR,
 		DEPLACEMENT_MAP,
 		VICTOIRE,
-		DEFAITE;
+		DEFAITE,
+		CHANGEMENT_CARTE;
 	}
 
 	private EtatJeu etatActuel;
@@ -26,8 +28,10 @@ public class Gravity extends AbstractMinigameState {
 	private final static String dossierData = "ressources/images/gravity/";
 	private ModeleJeu modeleJeu;
 	private ControleJeu controleJeu;
-	private Image victoire, defaite, coeur;
+	private Image coeur;
 	private int[] mapRender = {0,0,0,0};
+	private int numeroMap;
+	private int timer;
 
 
 
@@ -44,16 +48,16 @@ public class Gravity extends AbstractMinigameState {
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
 			throws SlickException {
 
+		numeroMap = 1;
+		
 		// Call super method
 		super.init(gameContainer, stateBasedGame);
 		try {
-			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+"2.tmx"), gameContainer.getHeight(),gameContainer.getWidth());
+			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+numeroMap+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 		controleJeu = new ControleJeu(modeleJeu);
-		victoire = new Image(dossierData+"victoire.png");
-		defaite = new Image(dossierData+"defaite.png");
 		coeur = new Image(dossierData+"coeur.png");
 
 		int[] tempRender = modeleJeu.renderMap();
@@ -61,6 +65,8 @@ public class Gravity extends AbstractMinigameState {
 		mapRender[1] = tempRender[1];
 
 		etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
+		timer = 0;
+		score = 0;
 
 	} // *** Fin Init ***
 
@@ -76,9 +82,6 @@ public class Gravity extends AbstractMinigameState {
 
 		// Call super method
 		super.render(gameContainer, stateBasedGame, g);
-
-		
-		
 		
 		//// Default
 		// Render Map
@@ -100,7 +103,7 @@ public class Gravity extends AbstractMinigameState {
 			int newRender[] = modeleJeu.renderMap();
 			boolean stop = false;
 
-			int vitesseDeplacement = 2;
+			float vitesseDeplacement = 5f;
 			// Traitement des X
 			if(newRender[0]*60 < mapRender[0]*60+mapRender[2]) {
 				mapRender[2] -= vitesseDeplacement;
@@ -129,14 +132,6 @@ public class Gravity extends AbstractMinigameState {
 				etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
 			}
 			break;
-
-		case VICTOIRE:
-			victoire.draw((gameContainer.getWidth() - victoire.getWidth())/2 , (gameContainer.getHeight() - victoire.getHeight())/2);
-			break;
-
-		case DEFAITE:
-			defaite.draw((gameContainer.getWidth() - defaite.getWidth())/2 , (gameContainer.getHeight() - defaite.getHeight())/2);
-			break;
 			
 		case DEPLACEMENT_JOUEUR:
 			// On vérifie si on a atteint un des états final
@@ -159,6 +154,7 @@ public class Gravity extends AbstractMinigameState {
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
 			throws SlickException {
 
+		
 		// Call super method
 		super.update(gameContainer, stateBasedGame, delta);
 
@@ -167,12 +163,42 @@ public class Gravity extends AbstractMinigameState {
 			controleJeu.inputJoueur(gameContainer.getInput(), delta);
 			modeleJeu.getHero().incStill();
 			if(deplacementMap()) etatActuel = EtatJeu.DEPLACEMENT_MAP;
+			timer += delta; // On augmente le temps
 			break;
-		case DEFAITE: case VICTOIRE:
-			if(gameContainer.getInput().isKeyDown(Input.KEY_ENTER)) {
-				modeleJeu.arreterSon();
+		case DEFAITE:
+			modeleJeu.arreterSon();
+			score = 100;
+			gameDefeat();
+			break;
+		case VICTOIRE:
+			//if(gameContainer.getInput().isKeyDown(Input.KEY_ENTER)) {
+			modeleJeu.arreterSon();
+			// Mise à jour du score
+			score += modeleJeu.getHero().getNbrVies()*500 + (1000 - timer/100);
+			// Appel à la fonction héritée
+			
+			if(numeroMap < 3)
+				etatActuel = EtatJeu.CHANGEMENT_CARTE;
+			else
 				gameVictory();
+			break;
+		case CHANGEMENT_CARTE:
+			super.init(gameContainer, stateBasedGame);
+			try {
+				modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+(++numeroMap)+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
+			} catch (SlickException e) {
+				e.printStackTrace();
 			}
+			controleJeu = new ControleJeu(modeleJeu);
+			coeur = new Image(dossierData+"coeur.png");
+
+			int[] tempRender = modeleJeu.renderMap();
+			mapRender[0] = tempRender[0];
+			mapRender[1] = tempRender[1];
+
+			etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
+			timer = 0;
+			break;
 		}
 	}
 

@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="30" height="15" tilewidth="60" tileheight="60">
+<map version="1.0" orientation="orthogonal" width="31" height="15" tilewidth="60" tileheight="60">
  <tileset name="mapSet" firstgid="1" tilewidth="60" tileheight="60">
-  <image source="./mapSet.png"/>
+  <image source="mapSet.png"/>
  </tileset>
  <tileset name="collision" firstgid="31" tilewidth="60" tileheight="60">
-  <image source="./collision.png"/>
+  <image source="collision.png"/>
  </tileset>
- <layer name="block" width="30" height="15">
+ <layer name="block" width="31" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAMWTUQoAIAhDd5Puf8u+grByU8oEIWLzpVUD0C7nCFU365XIemeuXUe5ntf2yLjsLB53N1OPG5m92u/Ox3RqPfVuVK5aN8N9mcDaXwU3868ruKe9V9wf8ZPL3qA6u1NNxqrODpnWAQoIBwAA
+   H4sIAAAAAAAAAM2TXQrAIAyDcxPvf8s9CaM0Sd20GChoSf3q3wAwNseU87y9ELlMX2sj2/Xj2G4v2fqKvXI+rNYxmZdxKmylqnfVV9Gfu93JPhkI4042+/e3sBHmJ3rL2N26ha3eZvUcQepUvvOtRfYD5YXCskQHAAA=
   </data>
  </layer>
- <layer name="end" width="30" height="15">
+ <layer name="end" width="31" height="15" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAUDAWQH2gGjYBQMIBAcaAeMglGABACuzWa+CAcAAA==
+   H4sIAAAAAAAAAGNgGAUDDWQH2gGjYBQMQiA40A4YBaOACAAA7GKRcUQHAAA=
   </data>
  </layer>
- <layer name="map" width="30" height="15">
+ <layer name="map" width="31" height="15" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAMWU2wqDMBBEY21rtLURKr7V///MRkhgWGbjai0+DMrs5YgZvTnnXkKeeEysr42ak3pl7i76sjriMbE+y2wD3Cqq/oF7Lcwuu0fYj9x8/4HZKQn3atxOXN+JtSgkbyBcPIuwwpjFHqwPpK/0njVNBe6eTFi51r1buY+oi0F+Rz3nCDObuf7Pys/UKlz8F6B3FF9yZX574Wn/nK0KgmvNwpE6k1vK4FrGa7KzUuroP8n5YwateZXfE6tL/wvkRmzYCAcAAA==
+   H4sIAAAAAAAAAM2U2wqDMBBEo7b10ksEtY/+/2c2QgLDMpts1UIfDureJrijV+fcS9CRGIPV9YE18lT6brEXaxMDiTFYnaW3FdpVoDmgfcn0brNnmC+123jvoH8KLGK2pj2I6xT1NnyMjYo27sYXdFYxC/MjqSu9c423cQ/WPX2jbZ29R/seqA10O/LJW+hj1P416Vx9Rhv/Fxg76wyaNvo6+d2L56N4om312pn8g7b0J3qz5P2GzK2UPMYfTvdFncmxWvmtsTzr/QDhF825RAcAAA==
   </data>
  </layer>
- <layer name="death" width="30" height="15">
+ <layer name="death" width="31" height="15" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgoD6QgmJaABkamUupvXJImFIgTYK96ICScKfEXkrsliashCZgoOwlB0gOtAMGGcBWxtCqzBkFEEBKGpREw7jkBwsAAMtJLtIIBwAA
+   H4sIAAAAAAAAAGNgoD6QgmJaARkamj3Y7JamwG5K44ASuym1X5qwEpqBgbSbHCA50A4YxABbWUTLsmkUoAJS0qYkGsYlP9gAALH+K35EBwAA
   </data>
  </layer>
- <objectgroup name="spawn" width="0" height="0" x="1" y="1">
-  <object name="start" type="start1" x="600" y="60" width="1" height="1"/>
-  <object name="start" type="start2" x="800" y="290" width="1" height="1"/>
-  <object name="respawn" type="checkPoint" x="1440" y="150" width="46" height="20"/>
+ <objectgroup name="objets" width="0" height="0" x="1" y="1" visible="0">
+  <object name="start" type="default" x="21" y="691" width="5" height="5"/>
+  <object name="respawn" type="checkPoint" x="1391" y="78" width="40" height="40">
+   <image source="checkpoint.png"/>
+  </object>
+  <object name="Object" x="0" y="660" width="60" height="120"/>
+  <object name="Object" x="0" y="720" width="60" height="60"/>
  </objectgroup>
 </map>

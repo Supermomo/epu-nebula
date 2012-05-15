@@ -9,6 +9,9 @@ import org.newdawn.slick.SpriteSheet;
 public class Player {
 	
 	private Point position;
+	private Point savedPosition;
+	private float savedGravity;
+	
 	private SpriteSheet sheet;
 
 	private int isStill;
@@ -52,7 +55,7 @@ public class Player {
 		animation = animGravite.still(false);
 		isStill = -1;
 		this.nbrVies = 5;
-		this.vitesse = 0.15f;
+		this.vitesse = 0.25f;
 		this.enCourse = false;
 		this.peutIG = false;
 		this.isReversed = false;
@@ -101,14 +104,14 @@ public class Player {
 	}
 	public Point[] getBordHaut() {
 		Point p[] = {(Point) position.clone(),(Point) position.clone()};
-		p[0].translate(10f, -1f);
-		p[1].translate(Sprite.LARGEUR.getValue()-10f, -1f);
+		p[0].translate(10f, -3f);
+		p[1].translate(Sprite.LARGEUR.getValue()-10f, -3f);
 		return p;
 	}
 	public Point[] getBordBas() {
 		Point p[] = {(Point) position.clone(),(Point) position.clone()};
-		p[0].translate(10f, Sprite.HAUTEUR.getValue()+1f);
-		p[1].translate(Sprite.LARGEUR.getValue()-10f, Sprite.HAUTEUR.getValue()+1f);
+		p[0].translate(10f, Sprite.HAUTEUR.getValue()+1.1f);
+		p[1].translate(Sprite.LARGEUR.getValue()-10f, Sprite.HAUTEUR.getValue()+1.1f);
 		return p;
 	}
 	
@@ -246,6 +249,27 @@ public class Player {
 		setNbrVies(getNbrVies()-1);
 	}
 	
-	
-	
+	//---
+	// Gestion des checkpoints
+	//////////////////////////
+	public void setSavedPosition(Point p) {
+		this.savedPosition = p;
+	}
+	public Point getSavedPosition() {
+		return savedPosition;
+	}
+	public void setSavedGravity(float gravite) {
+		this.savedGravity = gravite;
+	}
+	public float getGravity() {
+		return savedGravity;
+	}
+	/**
+	 * Permet de remettre le personnage à la dernière position sauvegardée
+	 */
+	public float resetSaved() {
+		setPosition((Point) savedPosition.clone());
+		setAnimRetourner(savedGravity);
+		return savedGravity;
+	}
 }

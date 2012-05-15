@@ -1,5 +1,8 @@
 package nebula.minigame.gravity;
 
+import javax.swing.text.Position;
+
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -24,7 +27,7 @@ public class ModeleJeu {
 	private Sound sonDomage;
 	private Sound sonVictoire;
 	private Sound sonDefaite;
-
+	
 	//--- Calcul de l'affichage de la carte
 	// Nombre de tiles affichées à l'écran
 	private int shownTileX;
@@ -41,11 +44,15 @@ public class ModeleJeu {
 	 * @param map - Instance de map créé dans le jeu de base
 	 */
 	public ModeleJeu(Player hero, BlockMap map, int shownPixelsY, int shownPixelsX) {
+		//TODO
+		gravite=0.2f;
+		
 		setHero(hero);
 		setMap(map);
 		hero.setPosition((Point)map.getDepart().clone());
-		gravite=0.1981f;
+		hero.setSavedPosition((Point)map.getDepart().clone());
 
+		hero.setSavedGravity(gravite);
 		fin = false;
 		victoire = false;
 
@@ -55,12 +62,12 @@ public class ModeleJeu {
 			sonDomage = new Sound(dossierSon+"hurt.wav");
 			sonVictoire = new Sound(dossierSon+"victoire.wav");
 			sonDefaite = new Sound(dossierSon+"defaite.wav");
-
+		
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 
 		//--- Calcul pour la mise en place de la map au départ
 		int tileHeight = map.getTiledMap().getTileHeight();
@@ -72,7 +79,7 @@ public class ModeleJeu {
 
 		int heroY = (int) hero.getPosition().getY()/tileHeight;
 		int heroX = (int) hero.getPosition().getX()/tileWidth;
-
+		
 		mapRenderX = (int) (heroX / shownTileX * shownTileX);
 		mapRenderY = (int) (heroY / shownTileY * shownTileY);
 	}
@@ -129,6 +136,7 @@ public class ModeleJeu {
 		switch(map.collisionType(hero.getBordGauche())) {
 		case BLOCK:
 			// On ne bouge pas
+			//Point p = hero.getBordGauche()[0];
 			break;
 		case DEATH:
 			mort();
@@ -162,6 +170,9 @@ public class ModeleJeu {
 		switch(map.collisionType(hero.getBordHaut())) {
 		case BLOCK:
 			hero.peutInverserGravite(true);
+			//double y = hero.getBordHaut()[0].getY();
+			//hero.setY( (float) (y/60*60)+1 );
+			//System.out.println("Bord : "+y+" | position : "+hero.getPosition());
 			break;
 		case DEATH:
 			mort();
@@ -228,15 +239,16 @@ public class ModeleJeu {
 	/////////////////////////////////////////////
 
 	private void victoire() {
-		sonVictoire.play();
-		sonEnCours = sonVictoire;
+		//sonVictoire.play();
+		//sonEnCours = sonVictoire;
 		setFin(true);
 		setVictoire(true);
 	}
 
 	private void mort() {
 		if(hero.getNbrVies()>1) {
-			hero.setPosition((Point)map.getDepart().clone());
+			// Remise en place du personnage à la position sauvegardée
+			gravite = hero.resetSaved();
 			hero.domage();
 			sonDomage.play();
 			sonEnCours = sonDomage;
@@ -248,11 +260,12 @@ public class ModeleJeu {
 			sonDefaite.play();
 			sonEnCours = sonDefaite;
 			setFin(true);
+			setVictoire(false);
 		}
 	}
 
 	public void arreterSon() {
-		if(sonEnCours.playing()) sonEnCours.stop();
+		if(sonEnCours != null && sonEnCours.playing()) sonEnCours.stop();
 	}
 
 
@@ -267,7 +280,7 @@ public class ModeleJeu {
 	 * Dessine la partie de la map occupée par le personnage
 	 */
 	public int[] renderMap() {
-
+		
 
 		// Nombre de Tiles par rapport au bord auquel il faut faire la transition
 		int delta = 3;
@@ -285,16 +298,17 @@ public class ModeleJeu {
 		/*//-- Mode Personnage Toujours Centré
 		mapRenderX = heroTileX - shownTileX/2;
 		mapRenderY = heroTileY - shownTileY/2;
-
+		
 		if(mapRenderX<0) mapRenderX = 0;
 		else if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
 		if(mapRenderY<0) mapRenderY = 0;
 		else if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
 		*/
-
-
-
-		//-- Pour avoir le fond fixé. Entraine des saccades si non post-traité
+		
+		
+	
+		//-- Pour avoir le fond fixé.
+		// Gestion des X
 		if(heroTileX<mapRenderX+delta) {
 			mapRenderX -= shownTileX/2;
 			// Pour ne pas afficher d'emplacement noir
@@ -304,18 +318,19 @@ public class ModeleJeu {
 			// Pour ne pas afficher d'emplacement noir
 			if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
 		}
-
+		
+		// Gestion des Y
 		if(heroTileY<mapRenderY+delta) {
-			mapRenderY -= shownTileY/2;
+			mapRenderY -= shownTileY*2/3;
 			// Pour ne pas afficher d'emplacement noir
 			if(mapRenderY<0) mapRenderY = 0;
 		} else if(heroTileY>mapRenderY+shownTileY-delta) {
-			mapRenderY += shownTileY/2;
+			mapRenderY += shownTileY*2/3;
 			// Pour ne pas afficher d'emplacement noir
 			if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
 		}
-
-
+		
+		
 		// Inversion pour l'affichage
 		int i[] = {-mapRenderX, -mapRenderY};
 		return i;
