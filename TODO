@@ -11,10 +11,9 @@ SpaceInvaders :
 Breakout :
     
 Gravity :
-    - Gravité plus élevée
-    - Sons trop forts (piques)
     - Plus gros
-    - Perso un peu lent
+	- Gestion de la difficulté
+	- Harmonisation des scores en fonction de la difficulté
 
 Divers :
     - Menu: Couleur rouge en plus

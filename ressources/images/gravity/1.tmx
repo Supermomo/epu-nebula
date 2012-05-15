@@ -9,7 +9,7 @@
  </tileset>
  <layer name="block" width="13" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAJNnYGCQJwMzMhAPSDEXXQ8pAFkPNrOIsZcSPcS4jVTzSLWHWLvQMQBm06lvCAIAAA==
+   H4sIAAAAAAAAAJNnYGCQJwOTAsgxlxJ7GBiwm0WKfwYiDPD5h5r2YMMAPAZPJggCAAA=
   </data>
  </layer>
  <layer name="end" width="13" height="10">
@@ -19,7 +19,7 @@
  </layer>
  <layer name="map" width="13" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNjYGDgIwGzATEnEMuRgNmh+kQIYFE0PeTYA9MjhiTOCMRMODAPDnt4qRwGvATCQBSHPpA9siTaxYbHv7gwAILRFTkIAgAA
+   H4sIAAAAAAAAAONhYGDgIwFzAzEnEMuRgNmBmAOIRQhgUTQ95NgD0yOGJM4IxEw4MA8Oe3jxhAEbmW5jI9Lv6P6RJcMeXP7FhlmBGADKKbHkCAIAAA==
   </data>
  </layer>
  <layer name="death" width="13" height="10">
@@ -28,6 +28,6 @@
   </data>
  </layer>
  <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
-  <object name="spawn" type="start" x="210" y="360" width="1" height="1"/>
+  <object name="start" type="default" x="21" y="35" width="1" height="1"/>
  </objectgroup>
 </map>
