@@ -83,8 +83,7 @@ public class NebulaGame extends StateBasedGame
 
 
     /**
-     * Constructeur du jeu.
-     * Definit les différents états (menus / jeux) disponibles
+     * Constructeur du jeu
      * @throws SlickException
      */
     public NebulaGame (String playerName) throws SlickException
@@ -201,15 +200,15 @@ public class NebulaGame extends StateBasedGame
         NebulaConfig.saveData();
 
         // Set up score state
-        ((ScoreTransitionState)getState(NebulaState.ScoreTransition.id)).
-        initScore(score, won, lastState);
+        ((ScoreTransitionState)getState(NebulaState.ScoreTransition.id))
+            .initScore(score, won, lastState);
 
         enterState(NebulaState.ScoreTransition.id, TransitionType.Fade);
     }
 
 
     /**
-     * Create and start the Nebula sick game
+     * Create and start the Nebula slick game
      */
     public static void startNebulaGame ()
     {

@@ -11,7 +11,13 @@ import nebula.core.helper.NebulaFont.FontSize;
 import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
-import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -24,24 +30,26 @@ public class AsteroidGame extends AbstractMinigameState
 {
     static final String imgPath = "ressources/images/asteroid/";
     static final String sndPath = "ressources/sons/asteroid/";
-    
-    private static final float asteroidSpeed[]       = {0.04f,   0.05f,   0.06f  , 0.14f  };
+
+    private static final float objectsSpeed[]        = {0.04f,   0.05f,   0.06f  , 0.14f  };
     private static final float asteroidProbability[] = {0.0004f, 0.0008f, 0.0012f, 0.0025f};
-    
+    private static final int initialTime = 90 * 1000;
+
     private GameState gameState;
     private int time;
     private int lifes;
+    private int crystalTimer;
     private Rectangle limits;
     private Saucer saucer;
-    private List<Asteroid> asteroids;
-    
+    private List<SpaceObject> spaceObjects;
+
     private static Image imgLife;
     private static Font font;
     private static enum GameState {Active}
-    
+
     static Random random = new Random();
-    
-    
+
+
     /* Game ID */
     @Override public int getID () { return NebulaState.Asteroid.id; }
 
@@ -54,17 +62,19 @@ public class AsteroidGame extends AbstractMinigameState
 
         // Load images and sounds
         imgLife = new Image(imgPath + "heart.png");
-        
+
         // Initial life count and time
         lifes = 3;
-        time = 90 * 1000;
-        
+        score = 1000 + lifes * 200 * (difficulty.ordinal() + 1);
+        time = initialTime;
+        crystalTimer = 10 * 1000;
+
         // Initializations
         limits = new Rectangle(0, 0, gc.getWidth(), gc.getHeight());
-        asteroids = new ArrayList<Asteroid>();
+        spaceObjects = new ArrayList<SpaceObject>();
         gameState = GameState.Active;
         saucer = new Saucer(limits);
-        
+
         // Font
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
     }
@@ -75,53 +85,67 @@ public class AsteroidGame extends AbstractMinigameState
     {
         // Call super method
         super.update(gc, game, delta);
-        
+
         Input input = gc.getInput();
-        
+
         // ==== Active state ====
         if (GameState.Active.equals(gameState))
         {
             // Saucer events
             if (input.isKeyDown(Input.KEY_RIGHT))
                 saucer.goRight(Saucer.speed * delta);
-            
+
             if (input.isKeyDown(Input.KEY_LEFT))
                 saucer.goLeft(Saucer.speed * delta);
-            
+
             if (input.isKeyDown(Input.KEY_UP))
                 saucer.goUp(Saucer.speed * delta);
-            
+
             if (input.isKeyDown(Input.KEY_DOWN))
                 saucer.goDown(Saucer.speed * delta);
-            
+
             // Create asteroid
             if (random.nextFloat() < getAsteroidProbability() * delta)
-                createAsteroid();
-            
-            // For each asteroid
-            Asteroid asteroidTouched = null;
-            
-            for (Asteroid a : asteroids)
-            {   
+                createObject(false);
+
+            // Create crystal
+            if (initialTime - time >= crystalTimer)
+            {
+                crystalTimer += 20 * 1000;
+                createObject(true);
+            }
+
+            // For each object
+            SpaceObject objectTouched = null;
+
+            for (SpaceObject obj : spaceObjects)
+            {
                 // Collisions
-                if (a.getCollideZone().intersects(saucer.getCollideZone()))
+                if (obj.getCollideZone().intersects(saucer.getCollideZone()))
+                    objectTouched = obj;
+
+                // Move
+                obj.step(delta);
+            }
+
+            // Object touched
+            if (objectTouched != null)
+            {
+                spaceObjects.remove(objectTouched);
+
+                if (objectTouched.isCrystal())
+                    score += 100 * (difficulty.ordinal() + 3);
+                else
                 {
                     lifes--;
-                    asteroidTouched = a;
+                    score -= 200 * (difficulty.ordinal() + 1);
                 }
-                
-                // Move
-                a.step(delta);
             }
-            
-            // Destrooy touched asteroid
-            if (asteroidTouched != null)
-                asteroids.remove(asteroidTouched);
-            
+
             // Decrease time
             time -= delta;
         }
-        
+
         // ==== All states ====
         // Victory
         if (time < 750)
@@ -136,56 +160,56 @@ public class AsteroidGame extends AbstractMinigameState
     {
         // Call super method
         super.render(gc, game, g);
-        
+
         // Render asteroids
-        for (Asteroid a : asteroids)
-            a.draw();
-        
+        for (SpaceObject obj : spaceObjects)
+            obj.draw();
+
         // Render saucer
         saucer.draw();
-        
+
         // Render lifes
         final float lifeImageSize = 24.0f;
         for (int i = 0; i < lifes; i++)
             imgLife.draw(4.0f+i*(4.0f+lifeImageSize),
                            (gc.getHeight()-lifeImageSize-4.0f),
                            lifeImageSize, lifeImageSize);
-        
+
         // Render time counter
         String timeStr = Utils.secondsToString(time/1000);
-        
+
         font.drawString(
             gc.getWidth()/2 - font.getWidth(timeStr)/2,
             24.0f, timeStr, Color.white);
-        
+
         // Render score
         renderScore(gc, ScorePosition.BottomRight);
     }
-    
+
     /**
-     * Create a new asteroid
+     * Create a new object
      */
-    private void createAsteroid () throws SlickException
+    private void createObject (boolean isCrystal) throws SlickException
     {
-        asteroids.add(new Asteroid(limits, getAsteroidSpeed()));
+        spaceObjects.add(new SpaceObject(isCrystal, limits, getObjectsSpeed()));
     }
-    
+
     /**
-     * Returns the speed of astereroids
-     * @return The speed of astereroids
+     * Returns the speed of objects
+     * @return The speed of objects
      */
-    private float getAsteroidSpeed ()
+    private float getObjectsSpeed ()
     {
         if (Difficulty.Easy.equals(difficulty))
-            return asteroidSpeed[0];
+            return objectsSpeed[0];
         else if (Difficulty.Hard.equals(difficulty))
-            return asteroidSpeed[2];
+            return objectsSpeed[2];
         else if (Difficulty.Insane.equals(difficulty))
-            return asteroidSpeed[3];
-        
-        return asteroidSpeed[1];
+            return objectsSpeed[3];
+
+        return objectsSpeed[1];
     }
-    
+
     /**
      * Returns the probability of astereroids
      * @return The probability of astereroids
@@ -198,7 +222,7 @@ public class AsteroidGame extends AbstractMinigameState
             return asteroidProbability[2];
         else if (Difficulty.Insane.equals(difficulty))
             return asteroidProbability[3];
-        
+
         return asteroidProbability[1];
     }
 }

@@ -154,6 +154,7 @@ public abstract class AbstractMinigameState extends AbstractState
      */
     protected void gameDefeat ()
     {
+        score = 0;
         nebulaGame.showScoreState(score, false, getID());
     }
 

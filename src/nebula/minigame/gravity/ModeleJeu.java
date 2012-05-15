@@ -1,6 +1,5 @@
 package nebula.minigame.gravity;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -25,7 +24,7 @@ public class ModeleJeu {
 	private Sound sonDomage;
 	private Sound sonVictoire;
 	private Sound sonDefaite;
-	
+
 	//--- Calcul de l'affichage de la carte
 	// Nombre de tiles affichées à l'écran
 	private int shownTileX;
@@ -45,7 +44,7 @@ public class ModeleJeu {
 		setHero(hero);
 		setMap(map);
 		hero.setPosition((Point)map.getDepart().clone());
-		gravite=0.0981f;
+		gravite=0.1981f;
 
 		fin = false;
 		victoire = false;
@@ -56,12 +55,12 @@ public class ModeleJeu {
 			sonDomage = new Sound(dossierSon+"hurt.wav");
 			sonVictoire = new Sound(dossierSon+"victoire.wav");
 			sonDefaite = new Sound(dossierSon+"defaite.wav");
-		
+
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 
 		//--- Calcul pour la mise en place de la map au départ
 		int tileHeight = map.getTiledMap().getTileHeight();
@@ -73,7 +72,7 @@ public class ModeleJeu {
 
 		int heroY = (int) hero.getPosition().getY()/tileHeight;
 		int heroX = (int) hero.getPosition().getX()/tileWidth;
-		
+
 		mapRenderX = (int) (heroX / shownTileX * shownTileX);
 		mapRenderY = (int) (heroY / shownTileY * shownTileY);
 	}
@@ -268,7 +267,7 @@ public class ModeleJeu {
 	 * Dessine la partie de la map occupée par le personnage
 	 */
 	public int[] renderMap() {
-		
+
 
 		// Nombre de Tiles par rapport au bord auquel il faut faire la transition
 		int delta = 3;
@@ -286,15 +285,15 @@ public class ModeleJeu {
 		/*//-- Mode Personnage Toujours Centré
 		mapRenderX = heroTileX - shownTileX/2;
 		mapRenderY = heroTileY - shownTileY/2;
-		
+
 		if(mapRenderX<0) mapRenderX = 0;
 		else if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
 		if(mapRenderY<0) mapRenderY = 0;
 		else if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
 		*/
-		
-		
-	
+
+
+
 		//-- Pour avoir le fond fixé. Entraine des saccades si non post-traité
 		if(heroTileX<mapRenderX+delta) {
 			mapRenderX -= shownTileX/2;
@@ -305,7 +304,7 @@ public class ModeleJeu {
 			// Pour ne pas afficher d'emplacement noir
 			if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
 		}
-		
+
 		if(heroTileY<mapRenderY+delta) {
 			mapRenderY -= shownTileY/2;
 			// Pour ne pas afficher d'emplacement noir
@@ -315,8 +314,8 @@ public class ModeleJeu {
 			// Pour ne pas afficher d'emplacement noir
 			if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
 		}
-		
-		
+
+
 		// Inversion pour l'affichage
 		int i[] = {-mapRenderX, -mapRenderY};
 		return i;
