@@ -214,7 +214,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){
 			System.out.println("trolololol");
-			score=(int) (flockNumber*scoreCoef+(remainingTime-startingTime)*timeCoef/1000 - fences.size()*fenceCoef);
+			score=computeScore();
 			this.gameVictory();
 		}
 
@@ -248,6 +248,10 @@ public class SpaceShepherd extends AbstractMinigameState {
 		if(lastPlot!=null){
 			plotLightImg.draw(lastPlot.getX()-plotRadius/2, lastPlot.getY()-plotRadius/2, plotRadius, plotRadius);
 		}
+		
+		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
+		String sec=Utils.secondsToString(remainingTime/1000);
+		font.drawString(gc.getWidth()/2 -font.getWidth(sec)/2, 40, sec);
 
 		for(SteeringEntity st : flock.getFlockers()){
 			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2),
@@ -257,13 +261,11 @@ public class SpaceShepherd extends AbstractMinigameState {
 		leadImg.draw((int)(flock.getPosition().x-(flockRadius*1.5/2)),(int)(flock.getPosition().y-(flockRadius*1.5/2)),
 				(int)(flockRadius*1.5),(int) (flockRadius*1.5));
 
-		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
-		String sec=Utils.secondsToString(remainingTime/1000);
-		font.drawString(gc.getWidth()/2 -font.getWidth(sec)/2, 40, sec);
-
 	}
 
-
+	private int computeScore(){
+		return (int) ((flockNumber-flock.getFlockers().size())*scoreCoef+(remainingTime-startingTime)*timeCoef/1000 - fences.size()*fenceCoef);
+	}
 	private boolean validDistanceFromLastPoint() {
 		return (Math.abs(lastPlot.x - x) > plotRadius || Math.abs(lastPlot.y
 				- y) > plotRadius);
