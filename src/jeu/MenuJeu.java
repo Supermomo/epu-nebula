@@ -1,14 +1,12 @@
 /*  Classe de menu de lancement de l'exemple de jeu.
  *  Cette classe h�rite de la classe abstraite MenuAbstrait en d�finissant les m�thodes :
- *     - nomOptions qui renvoie la liste des options possibles pour le menu 
+ *     - nomOptions qui renvoie la liste des options possibles pour le menu
  *     - lancerOption qui associe une action � chaque option du menu
  *     - wavAccueil() qui renvoie le nom du fichier wav lu lors de l'accueil dans le menu
  *     - wavAide() qui renvoie le nom du fichier wav lu lors de l'activation de la touche F1
  */
 
-package jeu; 
-
-import javax.swing.JOptionPane;
+package jeu;
 
 import nebula.core.NebulaGame;
 import devintAPI.MenuAbstrait;
@@ -18,7 +16,7 @@ public class MenuJeu extends MenuAbstrait
     private static final long serialVersionUID = 1L;
 
     /** constructeur
-	 * @param title : le nom du jeu 
+	 * @param title : le nom du jeu
 	 */
 	public MenuJeu(String title) {
 		super(title);
@@ -36,8 +34,8 @@ public class MenuJeu extends MenuAbstrait
 	 * la num�rotation est celle du tableau renvoy� par nomOption
 	 */
 	protected void lancerOption(int i) {
-		switch (i){  
-		case 0 : 
+		switch (i){
+		case 0 :
 		    NebulaGame.startNebulaGame();
 			break;
 		case 1 : new Option(nomJeu + ": gestion des options");break;
@@ -57,5 +55,5 @@ public class MenuJeu extends MenuAbstrait
 	protected String wavRegleJeu() {
 		// TODO Auto-generated method stub
 		return null;
-	} 
+	}
 }

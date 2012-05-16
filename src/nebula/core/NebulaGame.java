@@ -59,7 +59,6 @@ public class NebulaGame extends StateBasedGame
         {None, Fade, HorizontalSplit, VerticalSplit};
 
     public static boolean isAdventureMode;
-    public static boolean isGameLoaded;
 
 
     /**
@@ -81,7 +80,6 @@ public class NebulaGame extends StateBasedGame
     public void initStatesList (GameContainer gc) throws SlickException
     {
         // Loading state
-        NebulaGame.isGameLoaded = false;
         this.addState(new LoadingState());
         this.enterState(NebulaState.Loading.id);
     }
