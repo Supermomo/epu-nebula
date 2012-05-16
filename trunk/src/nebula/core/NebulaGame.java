@@ -1,36 +1,15 @@
 package nebula.core;
 
 import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.List;
 
 import nebula.core.config.NebulaConfig;
-import nebula.core.state.BougibougaState;
-import nebula.core.state.DifficultyMenuState;
-import nebula.core.state.EndMenuState;
-import nebula.core.state.FinInvadersState;
-import nebula.core.state.Intro1JeuState;
-import nebula.core.state.Intro2JeuState;
-import nebula.core.state.Intro3JeuState;
-import nebula.core.state.JubbaState;
 import nebula.core.state.LoadingState;
-import nebula.core.state.MainMenuState;
-import nebula.core.state.OptionsMenuState;
-import nebula.core.state.PauseMenuState;
-import nebula.core.state.RapidModeMenuState;
 import nebula.core.state.ScoreTransitionState;
-import nebula.core.state.ScoresMenuState;
-import nebula.minigame.asteroid.AsteroidGame;
-import nebula.minigame.breakout.BreakoutGame;
-import nebula.minigame.gravity.Gravity;
-import nebula.minigame.spaceInvaders.SpaceInvaders;
-import nebula.minigame.spaceShepherd.SpaceShepherd;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -80,6 +59,7 @@ public class NebulaGame extends StateBasedGame
         {None, Fade, HorizontalSplit, VerticalSplit};
 
     public static boolean isAdventureMode;
+    public static boolean isGameLoaded;
 
 
     /**
@@ -101,51 +81,9 @@ public class NebulaGame extends StateBasedGame
     public void initStatesList (GameContainer gc) throws SlickException
     {
         // Loading state
+        NebulaGame.isGameLoaded = false;
         this.addState(new LoadingState());
         this.enterState(NebulaState.Loading.id);
-    }
-
-    /**
-     * Load all states
-     */
-    public void loadGame ()
-    {
-        List<BasicGameState> states = new ArrayList<BasicGameState>();
-
-        // Menus
-        states.add(new MainMenuState());
-        states.add(new RapidModeMenuState());
-        states.add(new OptionsMenuState());
-        states.add(new ScoresMenuState());
-        states.add(new PauseMenuState());
-        states.add(new DifficultyMenuState());
-        states.add(new ScoreTransitionState());
-        states.add(new EndMenuState());
-
-        // Aventure
-        states.add(new Intro1JeuState());
-        states.add(new Intro2JeuState());
-        states.add(new Intro3JeuState());
-        states.add(new SpaceInvaders());
-        states.add(new FinInvadersState());
-        states.add(new BougibougaState());
-        states.add(new JubbaState());
-        states.add(new BreakoutGame());
-        states.add(new AsteroidGame());
-        states.add(new Gravity());
-        states.add(new SpaceShepherd());
-
-        // Init all states
-        for (BasicGameState state : states)
-        {
-            this.addState(state);
-
-            try { state.init(this.getContainer(), this); }
-            catch (SlickException exc) { exc.printStackTrace(); }
-        }
-
-        // Enter main state
-        this.enterState(NebulaState.MainMenu.id, TransitionType.Fade);
     }
 
     /**
