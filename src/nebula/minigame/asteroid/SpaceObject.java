@@ -148,4 +148,14 @@ class SpaceObject
     {
         return h;
     }
+
+    public float getCenterX ()
+    {
+        return x + w/2;
+    }
+
+    public float getCenterY ()
+    {
+        return y + h/2;
+    }
 }

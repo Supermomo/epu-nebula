@@ -79,8 +79,11 @@ class Saucer
         );
     }
 
-    public void draw ()
+    public void draw (boolean invincibility)
     {
+        if (invincibility) image.setAlpha(0.5f);
+        else               image.setAlpha(1.0f);
+
         image.draw(x, y, w, h);
     }
 

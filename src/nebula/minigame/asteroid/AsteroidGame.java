@@ -11,6 +11,7 @@ import nebula.core.helper.NebulaFont.FontSize;
 import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -18,6 +19,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -37,13 +40,17 @@ public class AsteroidGame extends AbstractMinigameState
 
     private GameState gameState;
     private int time;
+    private int invincibility;
     private int lifes;
     private int crystalTimer;
+    private float xExplosion, yExplosion;
     private Rectangle limits;
     private Saucer saucer;
     private List<SpaceObject> spaceObjects;
 
     private static Image imgLife;
+    private static Sound sndExplosion, sndInvincibility, sndCrystal;
+    private static Animation animExplosion;
     private static Font font;
     private static enum GameState {Active}
 
@@ -60,20 +67,36 @@ public class AsteroidGame extends AbstractMinigameState
         // Call super method
         super.init(gc, game);
 
-        // Load images and sounds
-        imgLife = new Image(imgPath + "heart.png");
-
-        // Initial life count and time
+        // Initial properties
         lifes = 3;
         score = 1000 + lifes * 200 * (difficulty.ordinal() + 1);
         time = initialTime;
         crystalTimer = 10 * 1000;
+        invincibility = 0;
 
         // Initializations
         limits = new Rectangle(0, 0, gc.getWidth(), gc.getHeight());
         spaceObjects = new ArrayList<SpaceObject>();
         gameState = GameState.Active;
         saucer = new Saucer(limits);
+
+        // Load images and sounds
+        imgLife          = new Image(imgPath + "heart.png");
+        sndExplosion     = new Sound(sndPath + "explosion.wav");
+        sndInvincibility = new Sound(sndPath + "invincibility.wav");
+        sndCrystal       = new Sound(sndPath + "crystal.wav");
+
+        animExplosion = new Animation(
+            new SpriteSheet(AsteroidGame.imgPath + "explosion.png", 160, 160),
+            64
+        );
+
+        animExplosion.setAutoUpdate(true);
+        animExplosion.setLooping(false);
+        animExplosion.stopAt(12);
+        animExplosion.stop();
+        xExplosion = -animExplosion.getWidth();
+        yExplosion = -animExplosion.getHeight();
 
         // Font
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
@@ -131,19 +154,38 @@ public class AsteroidGame extends AbstractMinigameState
             // Object touched
             if (objectTouched != null)
             {
-                spaceObjects.remove(objectTouched);
-
                 if (objectTouched.isCrystal())
-                    score += 100 * (difficulty.ordinal() + 3);
-                else
                 {
+                    spaceObjects.remove(objectTouched);
+                    score += 100 * (difficulty.ordinal() + 3);
+                    sndCrystal.play();
+                }
+                else if (invincibility <= 0)
+                {
+                    spaceObjects.remove(objectTouched);
+
+                    // Asteroid touched
                     lifes--;
                     score -= 200 * (difficulty.ordinal() + 1);
+                    invincibility = 2 * 1000;
+                    xExplosion = objectTouched.getCenterX() - animExplosion.getWidth()/2;
+                    yExplosion = objectTouched.getCenterY() - animExplosion.getHeight()/2;
+                    animExplosion.restart();
+                    sndExplosion.play();
                 }
             }
 
             // Decrease time
             time -= delta;
+
+            // Decrease invincibility
+            if (invincibility > 0)
+            {
+                invincibility -= delta;
+
+                if (invincibility <= 0)
+                    sndInvincibility.play();
+            }
         }
 
         // ==== All states ====
@@ -166,7 +208,10 @@ public class AsteroidGame extends AbstractMinigameState
             obj.draw();
 
         // Render saucer
-        saucer.draw();
+        saucer.draw(invincibility > 0);
+
+        // Render explosion
+        g.drawAnimation(animExplosion, xExplosion, yExplosion);
 
         // Render lifes
         final float lifeImageSize = 24.0f;
