@@ -17,6 +17,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -61,6 +62,14 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private Image  plotLightImg;
 	private Image  cursorImg;
 	private Image  targetImg;
+	private Sound ambianceSound;
+	private Sound wrongMoveSound;
+	private Sound flockSound;
+	private Sound plotSound;
+	private String pathPlotSound="ressources/sons/spaceShepherd/plot.ogg";
+	private String pathAmbianceSound="ressources/sons/spaceShepherd/BubblesUnderwater.ogg";
+	private String pathWrongMoveSound="ressources/sons/spaceShepherd/Buzzer.ogg";
+	private String pathFlockSound="ressources/sons/spaceShepherd/WiggleRiser.ogg";
 	private String pathFlockImg="ressources/images/spaceShepherd/nebula-farfadets2.png";
 	private String pathLeadImg="ressources/images/spaceShepherd/nebula-farLeader2.png";
 	private String pathPlotImg="ressources/images/spaceShepherd/nebula-plot.png";
@@ -78,6 +87,11 @@ public class SpaceShepherd extends AbstractMinigameState {
 	    // Call super method
         super.init(gc, game);
 
+        flockSound=new Sound(pathFlockSound);
+        wrongMoveSound=new Sound(pathWrongMoveSound);
+        ambianceSound=new Sound(pathAmbianceSound);
+        plotSound=new Sound(pathPlotSound);
+        
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
 
 	    lastPlot=null;
@@ -166,9 +180,13 @@ public class SpaceShepherd extends AbstractMinigameState {
         remainingTime=remainingTime-delta;
 
         if(remainingTime<=0){
+        	stopAllSound();
         	this.gameDefeat();
         }
 
+        if(!wrongMoveSound.playing() && !ambianceSound.playing() && !flockSound.playing() && !plotSound.playing()){
+        	ambianceSound.play();
+        }
 		Input input = gc.getInput();
 
 		flock.moveRandom(delta, fences);
@@ -200,11 +218,13 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 		if (input.isKeyDown(Input.KEY_SPACE) && spaceReleased) {
 
+			stopAllSound();
 			spaceReleased=false;
 			Vector2f plot=new Vector2f(x,y);
-
+			
 			if(lastPlot==null){
 				lastPlot=new Vector2f(x,y);
+				plotSound.play();
 			}
 			else if (validDistanceFromLastPoint() && !flock.isDividing(new Line(lastPlot,plot))) {
 
@@ -212,26 +232,40 @@ public class SpaceShepherd extends AbstractMinigameState {
 				fences.add(new Line(lastPlot,plot));
 				lastPlot=null;
 				lastPlot=new Vector2f(x,y);
-
+				plotSound.play();
+				
 				if(flock.isEnded(fences, targetCenter)){
 					this.gameDefeat();
 				}
 			}
 			else{
+				wrongMoveSound.play();
 				System.out.println("Divide");
 			}
 			System.out.println("x : "+x+"  y : "+y);
 
 			System.out.println("////////////////////////////////////////////////////////");
 		}
-
+		
+		int nb=flock.getFlockers().size();
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){
 			score=computeScore();
+			stopAllSound();
 			this.gameVictory();
+		}
+		else if(nb!=flock.getFlockers().size()){
+			stopAllSound();
+			flockSound.play();
 		}
 
 	}
 
+	private void stopAllSound(){
+		wrongMoveSound.stop();
+		flockSound.stop();
+		ambianceSound.stop();
+		plotSound.stop();
+	}
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 	    throws SlickException {
 
