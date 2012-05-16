@@ -12,6 +12,7 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -36,6 +37,12 @@ public abstract class AbstractMinigameState extends AbstractState
 
     private Font font;
 
+    // Music
+    private Music music;
+    private float musicVolume;
+    private boolean musicLoop;
+    private int musicState;
+
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -55,6 +62,10 @@ public abstract class AbstractMinigameState extends AbstractState
 
         // Load font
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Small);
+
+        // Reset musics
+        music = null;
+        musicState = 0;
     }
 
     @Override
@@ -82,6 +93,43 @@ public abstract class AbstractMinigameState extends AbstractState
     {
         // Call super method
         super.render(gc, game, g);
+    }
+
+    @Override
+    public void enter (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.enter(gc, game);
+
+        // Play music
+        if (music != null)
+        {
+            if (musicState == 0)
+            {
+                if (musicLoop) music.loop(1.0f, musicVolume);
+                else           music.play(1.0f, musicVolume);
+
+                musicState = 1;
+            }
+            else if (musicState == 1)
+                music.resume();
+        }
+    }
+
+    @Override
+    public void leave (GameContainer container, StateBasedGame game)
+        throws SlickException
+    {
+        super.leave(container, game);
+
+        // Pause music
+        if (music != null)
+        {
+            if (music.playing())
+                music.pause();
+            else
+                musicState = 2;
+        }
     }
 
     /**
@@ -128,6 +176,21 @@ public abstract class AbstractMinigameState extends AbstractState
         }
 
         font.drawString(x, y, scoreText, Color.yellow);
+    }
+
+    /**
+     * Set the background music of the minigame
+     */
+    protected void initMusic (String path, float volume, boolean loop)
+    {
+        try
+        {
+            music = new Music(path);
+            music.stop();
+            musicVolume = volume;
+            musicLoop = loop;
+        }
+        catch (SlickException exc) { exc.printStackTrace(); }
     }
 
     /**

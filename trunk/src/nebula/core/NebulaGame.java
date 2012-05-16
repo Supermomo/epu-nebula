@@ -9,6 +9,7 @@ import nebula.core.state.ScoreTransitionState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -79,6 +80,9 @@ public class NebulaGame extends StateBasedGame
     @Override
     public void initStatesList (GameContainer gc) throws SlickException
     {
+        // Hide mouse cursor
+        gc.setMouseCursor(new Image("ressources/images/common/cursor.png"), 0, 0);
+
         // Loading state
         this.addState(new LoadingState());
         this.enterState(NebulaState.Loading.id);
@@ -157,6 +161,8 @@ public class NebulaGame extends StateBasedGame
                 Toolkit.getDefaultToolkit().getScreenSize().height,
                 true);
             app.setTargetFrameRate(120);
+            //app.setVerbose(false);
+            //app.setShowFPS(false);
             app.start();
         }
         catch (Exception exc) {

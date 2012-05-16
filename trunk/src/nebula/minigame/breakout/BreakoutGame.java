@@ -99,6 +99,9 @@ public class BreakoutGame extends AbstractMinigameState
                 bricks.add(brick);
             }
         }
+
+        // Musics
+        initMusic(sndPath + "music.ogg", 0.6f, true);
     }
 
     @Override

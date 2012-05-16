@@ -19,16 +19,20 @@ class Saucer
     private float x;
     private float y;
     private Rectangle limits;
-    private static Image image;
+    private static Image image, imageInvincibility;
 
     public Saucer (Rectangle limits) throws SlickException
     {
         this.limits = limits;
         resetPosition();
 
-        // Set racket image first time
-        if (image == null)
+        // Set saucer images first time
+        if (image == null || imageInvincibility == null)
+        {
             image = new Image(AsteroidGame.imgPath + "saucer.png");
+            imageInvincibility = new Image(AsteroidGame.imgPath + "saucer-inv.png");
+            imageInvincibility.setAlpha(0.95f);
+        }
     }
 
     public void goRight (float n)
@@ -81,10 +85,10 @@ class Saucer
 
     public void draw (boolean invincibility)
     {
-        if (invincibility) image.setAlpha(0.5f);
-        else               image.setAlpha(1.0f);
-
-        image.draw(x, y, w, h);
+        if (invincibility)
+            imageInvincibility.draw(x, y, w, h);
+        else
+            image.draw(x, y, w, h);
     }
 
     public void setX (float x)
