@@ -32,13 +32,13 @@ public class LoadingState extends AbstractState
     private static final float LBAR_WIDTH  = 600.0f;
     private static final float LBAR_HEIGHT = 24.0f;
 
-    private List<BasicGameState> states = new ArrayList<BasicGameState>();
     private int loadStep;
     private Image imgLoading;
     private LoadState loadState;
+    private List<BasicGameState> states = new ArrayList<BasicGameState>();
 
     // Loading state
-    private enum LoadState {Start, Load, Finish}
+    private enum LoadState {Start, Loading, Finish}
 
 
     @Override
@@ -63,12 +63,14 @@ public class LoadingState extends AbstractState
         // Call super method
         super.update(gc, game, delta);
 
+        // Start state
         if (LoadState.Start.equals(loadState))
         {
             this.addStates();
-            loadState = LoadState.Load;
+            loadState = LoadState.Loading;
         }
-        else if (LoadState.Load.equals(loadState))
+        // Loading state
+        else if (LoadState.Loading.equals(loadState))
         {
             if (loadStep >= states.size())
                 loadState = LoadState.Finish;
@@ -84,7 +86,8 @@ public class LoadingState extends AbstractState
                 loadStep++;
             }
         }
-        else
+        // Finish state
+        else if (LoadState.Finish.equals(loadState))
             nebulaGame.enterState(NebulaState.MainMenu.id, TransitionType.Fade);
     }
 
@@ -99,7 +102,7 @@ public class LoadingState extends AbstractState
         imgLoading.drawCentered(gc.getWidth()/2, gc.getHeight()/2 - imgLoading.getHeight()/2 - 12.0f);
 
         // Render loading bar
-        if (LoadState.Load.equals(loadState) ||
+        if (LoadState.Loading.equals(loadState) ||
             LoadState.Finish.equals(loadState))
         {
             g.setColor(Color.yellow);
