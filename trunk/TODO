@@ -11,9 +11,7 @@ SpaceInvaders :
 Breakout :
     
 Gravity :
-    - Plus gros
-	- Gestion de la difficulté
-	- Harmonisation des scores en fonction de la difficulté
+    - Plus de maps
 
 Divers :
     - Menu: Couleur rouge en plus
@@ -39,4 +37,5 @@ CE QU'IL RESTE A FAIRE
 - Finalisation du scénario
 - Intégration CD Devint
 - Jeu Final ???
+- Navigation menu : Escape fait revenir au menu précédent et/ou quitte l'application ??
 
