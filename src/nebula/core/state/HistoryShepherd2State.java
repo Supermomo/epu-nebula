@@ -8,10 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class JubbaState extends AbstractTransitionState
+public class HistoryShepherd2State extends AbstractTransitionState
 {
     /* Transition ID */
-    @Override public int getID () { return NebulaState.Jubba.id; }
+    @Override public int getID () { return NebulaState.HistoryShepherd2.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -20,8 +20,8 @@ public class JubbaState extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.Fade);
-        this.setTransitionImage("ressources/images/histoire/nebula-jbba.png");
-        this.setTransitionTime(5000.0f);
+        this.setTransitionType(TransitionType.HorizontalSplit);
+        this.setTransitionImage("ressources/images/histoire/shepherd2.png");
+        this.setTransitionTime(3000.0f);
     }
 }

@@ -8,10 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class Intro2JeuState extends AbstractTransitionState
+public class HistoryAsteroid1State extends AbstractTransitionState
 {
     /* Transition ID */
-    @Override public int getID () { return NebulaState.Intro2Jeu.id; }
+    @Override public int getID () { return NebulaState.HistoryAsteroid1.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -20,9 +20,8 @@ public class Intro2JeuState extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.HorizontalSplit);
-        this.setTransitionImage("ressources/images/histoire/attaqueNebula.png");
-        this.setTransitionVoice("ressources/sons/histoire/intro2.ogg");
-    	this.setTransitionTime(8000.0f);
+        this.setTransitionType(TransitionType.Fade);
+        this.setTransitionImage("ressources/images/histoire/asteroid1.png");
+        this.setTransitionTime(3000.0f);
     }
 }
