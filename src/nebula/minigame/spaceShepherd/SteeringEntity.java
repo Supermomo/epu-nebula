@@ -97,6 +97,16 @@ public class SteeringEntity {
 		return newPos;
 	}
 	
+	/**
+	 * Apply the given velocity (scaled at max speed) to the steering entity, moving it to a new position
+	 * @param velocity
+	 */
+	public void apply(Vector2f velocity){
+		velocity.normalise();
+		velocity.scale(maxSpeed);
+		position.add(velocity);
+	}
+	
 	public boolean isValidTrajectory(Vector2f newPos, ArrayList<Line> fences){
 
 		Line line;
@@ -121,7 +131,7 @@ public class SteeringEntity {
 	}
 	
 	/**
-	 * Sekk for the target
+	 * Seek for the target
 	 * @param target
 	 * @return the velocity needed to reach the target at max speed (or not)
 	 */
