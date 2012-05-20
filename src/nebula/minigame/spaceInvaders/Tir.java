@@ -21,6 +21,7 @@ public class Tir
 		{
 			image = new Image("ressources/images/spaceInvaders/tirEnnemi.png");
 			son = new Sound("ressources/sons/spaceInvaders/tirEnnemi.ogg");
+			y = 2000;
 		}
 	}
 	
