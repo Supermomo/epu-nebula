@@ -1,6 +1,7 @@
 package nebula.minigame.spaceInvaders;
 
 import nebula.core.helper.Collision;
+import nebula.minigame.asteroid.AsteroidGame;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -8,6 +9,7 @@ import org.newdawn.slick.SlickException;
 public class Tank 
 {
 	private Image image = null;
+	private Image imageInvincibility = null;
 	private float x;
 	private float y;
 	private int vies;
@@ -15,6 +17,8 @@ public class Tank
 	public Tank() throws SlickException
 	{
 		image = new Image("ressources/images/spaceInvaders/saucer.png");
+		imageInvincibility = new Image("ressources/images/spaceInvaders/saucer-inv.png");
+        imageInvincibility.setAlpha(0.95f);
 		x = 300 - this.getImage().getWidth()/2;
 		y = 600 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;
@@ -24,7 +28,7 @@ public class Tank
 	{
 		if(tir.getY() < 0)
 		{
-			tir.setX(this.getX());
+			tir.setX(this.getX() + this.getImage().getWidth()/2 - tir.getImage().getWidth()/2);
 			tir.setY(this.getY() - tir.getImage().getHeight());
 			tir.getSon().play();
 		}
@@ -52,6 +56,10 @@ public class Tank
 
 	public Image getImage() {
 		return image;
+	}
+	
+	public Image getImageInv() {
+		return imageInvincibility;
 	}
 
 	public void setImage(Image image) {
