@@ -8,10 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class FinInvadersState extends AbstractTransitionState
+public class HistoryEnd1State extends AbstractTransitionState
 {
     /* Transition ID */
-    @Override public int getID () { return NebulaState.FinInvaders.id; }
+    @Override public int getID () { return NebulaState.HistoryEnd1.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -20,8 +20,8 @@ public class FinInvadersState extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.HorizontalSplit);
-        this.setTransitionImage("ressources/images/histoire/nebula-vol_espace.png");
-        this.setTransitionTime(5000.0f);
+        this.setTransitionType(TransitionType.Fade);
+        //this.setTransitionImage("ressources/images/histoire/end1.png");
+        this.setTransitionTime(3000.0f);
     }
 }

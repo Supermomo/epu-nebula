@@ -138,18 +138,25 @@ public class LoadingState extends AbstractState
         states.add(new ScoreTransitionState());
         states.add(new EndMenuState());
 
-        // Aventure
-        states.add(new Intro1JeuState());
-        states.add(new Intro2JeuState());
-        states.add(new Intro3JeuState());
+        // Adventure
+        states.add(new HistoryInvaders1State());
+        states.add(new HistoryInvaders2State());
+        states.add(new HistoryInvaders3State());
         states.add(new SpaceInvaders());
-        states.add(new FinInvadersState());
-        states.add(new BougibougaState());
-        states.add(new JubbaState());
-        states.add(new BreakoutGame());
-        states.add(new AsteroidGame());
-        states.add(new Gravity());
+        states.add(new HistoryShepherdFlyState());
+        states.add(new HistoryShepherd1State());
+        states.add(new HistoryShepherd2State());
+        states.add(new HistoryShepherd3State());
         states.add(new SpaceShepherd());
+        states.add(new HistoryAsteroidFlyState());
+        states.add(new HistoryAsteroid1State());
+        states.add(new AsteroidGame());
+        states.add(new HistoryGravity1State());
+        states.add(new HistoryGravity2State());
+        states.add(new Gravity());
+        states.add(new HistoryBreakout1State());
+        states.add(new BreakoutGame());
+        states.add(new HistoryEnd1State());
     }
 
     @Override public int getID () { return NebulaState.Loading.id; }
