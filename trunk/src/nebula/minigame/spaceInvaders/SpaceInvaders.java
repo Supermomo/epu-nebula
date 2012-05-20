@@ -31,7 +31,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 	int nbEnnemis;
 	Image victoire = null;
 	Random rand;
-	int seuil = 99999;
+	int seuil;
 	Image coeur = null;
 	int scoreSpaceInvaders = 0;
 	Image defaite = null;
@@ -72,10 +72,9 @@ public class SpaceInvaders extends AbstractMinigameState {
 				this.nbTir = 6;
 				break;
 		}
-        
+        seuil = chanceTir;
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
-        scoreSpaceInvaders = 0;
     	tank = new Tank();
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
     	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
@@ -138,6 +137,8 @@ public class SpaceInvaders extends AbstractMinigameState {
     	
     	if(tir.getY() > -100)
     		tir.setY(tir.getY() - 0.4f * delta);
+    	
+    	System.out.println("bla");
     	
     	for(int t=0; t < nbTir; t++)
     	{
