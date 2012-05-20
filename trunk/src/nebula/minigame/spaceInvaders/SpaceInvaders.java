@@ -15,6 +15,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 	int chanceTir;
 	int nbTir;
 	int multiple;
+	int invincibility;
 	Boolean droite = true;
 	// Gestion du joueur avec position x,y et echelle
 	Tank tank = null;
@@ -73,6 +74,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 				break;
 		}
         seuil = chanceTir;
+        scoreSpaceInvaders = 0;
+        invincibility = 0;
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
     	tank = new Tank();
@@ -246,9 +249,10 @@ public class SpaceInvaders extends AbstractMinigameState {
     	
     	for(int i = 0; i < nbTir; i++)
     	{
-	    	if(tank.touche(tirEnnemi[i]))
+	    	if(tank.touche(tirEnnemi[i]) && invincibility <= 0)
 	    	{
 	    		tank.decrementeVie();
+	    		invincibility = 2 * 1000;
 	    		xExplo = tank.getX();
 	    		yExplo = tank.getY();
 	    		if(explosion.isStopped())
@@ -261,20 +265,23 @@ public class SpaceInvaders extends AbstractMinigameState {
 	    	}
     	}
     	
+    	if (invincibility > 0)
+        {
+            invincibility -= delta;
+        }
+    	
     	if(nbEnnemis == 0)
     	{
     		//sVictoire.play();
     		//gc.pause();
     		scoreSpaceInvaders *= 2.75;
     		scoreSpaceInvaders += tank.getVies() * 200;
-    		this.score=scoreSpaceInvaders;
-    		
+    		this.score=scoreSpaceInvaders;    		
     		gameVictory();
     	}
     	
     	if(tank.dead())
     	{
-    		//sDefaite.play();
     		gameDefeat();
     	}
     	
@@ -287,8 +294,14 @@ public class SpaceInvaders extends AbstractMinigameState {
         
         // Call super method
         super.render(gc, game, g);
-        
-    	g.drawImage(tank.getImage(), tank.getX(), tank.getY());
+        if(invincibility > 0)
+        {
+        	g.drawImage(tank.getImageInv(), tank.getX(), tank.getY());
+        }
+        else
+        {
+        	g.drawImage(tank.getImage(), tank.getX(), tank.getY());
+        }
     	g.drawImage(tir.getImage(), tir.getX(), tir.getY());
     	for(int i =0; i < nbTir; i++)
     	{
@@ -302,12 +315,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     			{
     				g.drawImage(ennemi[i][j].getImage(), ennemi[i][j].getX(), ennemi[i][j].getY());
     			}
-    	}
-    	if(nbEnnemis == 0)
-    		victoire.draw((gc.getWidth()-victoire.getWidth())/2, (gc.getHeight()-victoire.getHeight())/2);
-    		
-    	if(tank.dead())
-    		defaite.draw((gc.getWidth()-victoire.getWidth())/2, (gc.getHeight()-victoire.getHeight())/2);
+    	}	
     	g.drawAnimation(explosion, xExplo, yExplo);
     	for(int i = 0; i < tank.getVies(); i++)
     	{
