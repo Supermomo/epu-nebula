@@ -53,7 +53,8 @@ public class Gravity extends AbstractMinigameState {
 		// Call super method
 		super.init(gameContainer, stateBasedGame);
 		try {
-			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+numeroMap+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
+			// dossierData+numeroMap+".tmx"
+			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+"80_1.tmx"), gameContainer.getHeight(),gameContainer.getWidth());
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -171,15 +172,31 @@ public class Gravity extends AbstractMinigameState {
 			gameDefeat();
 			break;
 		case VICTOIRE:
-			//if(gameContainer.getInput().isKeyDown(Input.KEY_ENTER)) {
 			modeleJeu.arreterSon();
 			// Mise à jour du score
 			score += modeleJeu.getHero().getNbrVies()*500 + (1000 - timer/100);
+			
 			// Appel à la fonction héritée
 			
 			if(numeroMap < 3)
 				etatActuel = EtatJeu.CHANGEMENT_CARTE;
 			else
+				// Application du taux score/difficulté
+				switch(difficulty) {
+				case Easy:
+					score *= 0.5;
+					break;
+				case Medium:
+					score *= 0.85;
+					break;
+				case Hard:
+					score *= 1.17;
+					break;
+				case Insane:
+					score *= 1.52;
+					break;
+				}
+				// Fin du jeu
 				gameVictory();
 			break;
 		case CHANGEMENT_CARTE:
