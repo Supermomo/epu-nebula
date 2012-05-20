@@ -35,9 +35,6 @@ public class Gravity extends AbstractMinigameState {
 
 
 
-	/////// DEBUG ///////
-	private boolean out = false;
-
 	/* Game ID */
     @Override public int getID () { return NebulaState.Gravity.id; }
 
@@ -47,14 +44,39 @@ public class Gravity extends AbstractMinigameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
 			throws SlickException {
-
-		numeroMap = 1;
+		score = 0;
+		init(gameContainer, stateBasedGame, 3);
+	}
+	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame, int numeroMap)
+			throws SlickException {
+		
+		this.numeroMap = numeroMap;
 		
 		// Call super method
 		super.init(gameContainer, stateBasedGame);
+		
+		
+		String cheminDifficulte;
+		switch(difficulty) {
+		case Medium:
+			cheminDifficulte = "m";
+			break;
+		case Hard:
+			cheminDifficulte = "h";
+			break;
+		case Insane:
+			cheminDifficulte = "i";
+			break;
+		case Easy:default:
+			cheminDifficulte = "e";
+			break;
+		}
+		cheminDifficulte += numeroMap;
+		
+		
 		try {
 			// dossierData+numeroMap+".tmx"
-			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+"80_1.tmx"), gameContainer.getHeight(),gameContainer.getWidth());
+			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+cheminDifficulte+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -67,7 +89,6 @@ public class Gravity extends AbstractMinigameState {
 
 		etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
 		timer = 0;
-		score = 0;
 
 	} // *** Fin Init ***
 
@@ -86,10 +107,10 @@ public class Gravity extends AbstractMinigameState {
 		
 		//// Default
 		// Render Map
-		modeleJeu.getMap().getTiledMap().render(mapRender[0]*60+mapRender[2], mapRender[1]*60+mapRender[3]);
+		modeleJeu.getMap().getTiledMap().render(mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2], mapRender[1]*modeleJeu.getMap().getTiledMap().getTileHeight()+mapRender[3]);
 
 		// Render Hero
-		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX()+mapRender[0]*60+mapRender[2], modeleJeu.getHero().getY()+mapRender[1]*60+mapRender[3]);
+		g.drawAnimation(modeleJeu.getHero().getAnimation(), modeleJeu.getHero().getX()+mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2], modeleJeu.getHero().getY()+mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]);
 
 		// Render Vie
 		for(int i = 0; i < modeleJeu.getHero().getNbrVies(); i++) {
@@ -106,25 +127,25 @@ public class Gravity extends AbstractMinigameState {
 
 			float vitesseDeplacement = 5f;
 			// Traitement des X
-			if(newRender[0]*60 < mapRender[0]*60+mapRender[2]) {
+			if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
 				mapRender[2] -= vitesseDeplacement;
-			} else if(newRender[0]*60 > mapRender[0]*60+mapRender[2]) {
+			} else if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() > mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
 				mapRender[2] += vitesseDeplacement;
 			} else {
 				stop = true;
-				mapRender[0] += mapRender[2]/60;
+				mapRender[0] += mapRender[2]/modeleJeu.getMap().getTiledMap().getTileWidth();
 				mapRender[2] = 0;
 			}
 			
 			// Traitement des Y
-			if(newRender[1]*60 < mapRender[1]*60+mapRender[3]) {
+			if(newRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]) {
 				mapRender[3] -= vitesseDeplacement;
 				stop = false;
-			} else if(newRender[1]*60 > mapRender[1]*60+mapRender[3]) {
+			} else if(newRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth() > mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]) {
 				mapRender[3] += vitesseDeplacement;
 				stop = false;
 			} else {
-				mapRender[1] += mapRender[3]/60;
+				mapRender[1] += mapRender[3]/modeleJeu.getMap().getTiledMap().getTileWidth();
 				mapRender[3] = 0;
 			}
 
@@ -177,10 +198,9 @@ public class Gravity extends AbstractMinigameState {
 			score += modeleJeu.getHero().getNbrVies()*500 + (1000 - timer/100);
 			
 			// Appel à la fonction héritée
-			
-			if(numeroMap < 3)
+			if(numeroMap < 3) {
 				etatActuel = EtatJeu.CHANGEMENT_CARTE;
-			else
+			} else {
 				// Application du taux score/difficulté
 				switch(difficulty) {
 				case Easy:
@@ -198,23 +218,10 @@ public class Gravity extends AbstractMinigameState {
 				}
 				// Fin du jeu
 				gameVictory();
+			}
 			break;
 		case CHANGEMENT_CARTE:
-			super.init(gameContainer, stateBasedGame);
-			try {
-				modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+(++numeroMap)+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-			controleJeu = new ControleJeu(modeleJeu);
-			coeur = new Image(dossierData+"coeur.png");
-
-			int[] tempRender = modeleJeu.renderMap();
-			mapRender[0] = tempRender[0];
-			mapRender[1] = tempRender[1];
-
-			etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
-			timer = 0;
+			init(gameContainer, stateBasedGame, numeroMap+1);
 			break;
 		}
 	}

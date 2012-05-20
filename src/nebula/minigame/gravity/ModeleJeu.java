@@ -170,9 +170,6 @@ public class ModeleJeu {
 		switch(map.collisionType(hero.getBordHaut())) {
 		case BLOCK:
 			hero.peutInverserGravite(true);
-			//double y = hero.getBordHaut()[0].getY();
-			//hero.setY( (float) (y/60*60)+1 );
-			//System.out.println("Bord : "+y+" | position : "+hero.getPosition());
 			break;
 		case DEATH:
 			mort();
@@ -239,8 +236,6 @@ public class ModeleJeu {
 	/////////////////////////////////////////////
 
 	private void victoire() {
-		//sonVictoire.play();
-		//sonEnCours = sonVictoire;
 		setFin(true);
 		setVictoire(true);
 	}
@@ -306,7 +301,7 @@ public class ModeleJeu {
 		*/
 		
 		
-	
+
 		//-- Pour avoir le fond fixé.
 		// Gestion des X
 		if(heroTileX<mapRenderX+delta) {
