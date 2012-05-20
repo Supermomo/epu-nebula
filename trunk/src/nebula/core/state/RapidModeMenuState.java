@@ -41,11 +41,11 @@ public class RapidModeMenuState extends AbstractMenuState
         addMenuSpaces(2);
 
         // Minigames
-        addMenuItem("Astéroïdes", true);
-        addMenuItem("Casse-briques", true);
         addMenuItem("Invasion", true);
-        addMenuItem("Gravité", true);
         addMenuItem("Berger", true);
+        addMenuItem("Astéroïdes", true);
+        addMenuItem("Gravité", true);
+        addMenuItem("Casse-briques", true);
         addMenuSpaces(1);
         addMenuItem("Retour", true);
     }
@@ -74,25 +74,25 @@ public class RapidModeMenuState extends AbstractMenuState
 
                 refreshMenu();
                 break;
-            // Asteroids
-            case 1:
-                nextGame = NebulaState.Asteroid.id;
-                break;
-            // Breakout
-            case 2:
-                nextGame = NebulaState.Breakout.id;
-                break;
             // Space Invaders
-            case 3:
+            case 1:
                 nextGame = NebulaState.SpaceInvaders.id;
+                break;
+            // Space Shepherd
+            case 2:
+                nextGame = NebulaState.SpaceShepherd.id;
+                break;
+            // Asteroid
+            case 3:
+                nextGame = NebulaState.Asteroid.id;
                 break;
             // Gravity
             case 4:
                 nextGame = NebulaState.Gravity.id;
                 break;
-            // Gravity
+            // Breakout
             case 5:
-                nextGame = NebulaState.SpaceShepherd.id;
+                nextGame = NebulaState.Breakout.id;
                 break;
             // Escape
             case 6:
