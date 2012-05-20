@@ -51,25 +51,25 @@ public class SpaceInvaders extends AbstractMinigameState {
 			case Easy:
 				this.initialNbEnnemis = 4;
 				this.chanceTir = 75;
-				this.nbTir = 4;
+				this.nbTir = 2;
 				break;
 
 			case Hard:
 				this.initialNbEnnemis = 12;
 				this.chanceTir = 75;
-				this.nbTir = 12;
+				this.nbTir = 6;
 				break;
 				
 			case Insane:
 				this.initialNbEnnemis = 16;
 				this.chanceTir = 50;
-				this.nbEnnemis = 20;
+				this.nbEnnemis = 10;
 				break;
 				
 			default:
 				this.initialNbEnnemis = 8;
 				this.chanceTir = 75;
-				this.nbTir = 6;
+				this.nbTir = 3;
 				break;
 		}
         seuil = chanceTir;
