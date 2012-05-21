@@ -293,7 +293,7 @@ public class BreakoutGame extends AbstractMinigameState
                            lifeImageSize, lifeImageSize);
 
         // Render score
-        renderScore(gc, ScorePosition.BottomRight);
+        //renderScore(gc, ScorePosition.BottomRight);
     }
 
     /**

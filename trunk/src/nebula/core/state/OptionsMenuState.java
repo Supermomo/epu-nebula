@@ -1,6 +1,7 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.config.NebulaConfig;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -28,6 +29,7 @@ public class OptionsMenuState extends AbstractMenuState
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
+        NebulaConfig.saveData();
         nebulaGame.enterState(NebulaState.MainMenu.id);
     }
 

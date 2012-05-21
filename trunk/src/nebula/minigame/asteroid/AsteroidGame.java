@@ -231,7 +231,7 @@ public class AsteroidGame extends AbstractMinigameState
             24.0f, timeStr, Color.white);
 
         // Render score
-        renderScore(gc, ScorePosition.BottomRight);
+        //renderScore(gc, ScorePosition.BottomRight);
     }
 
     /**

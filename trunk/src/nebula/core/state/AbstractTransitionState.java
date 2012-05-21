@@ -17,40 +17,40 @@ import org.newdawn.slick.state.StateBasedGame;
  * Custom abstract transition class
  */
 public abstract class AbstractTransitionState extends AbstractState
-{    
+{
     private float time = Float.NEGATIVE_INFINITY;
     private TransitionType transitionType = TransitionType.None;
     private Image image;
     private Sound voice;
-    
-    
+
+
     @Override
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
         // Call super method
         super.init(gc, game);
-        
+
         // Remove default background
         setUseDefaultBackground(false);
     }
 
-    
+
     @Override
     public final void update (GameContainer gc, StateBasedGame game, int delta)
         throws SlickException
     {
         // Call super method
         super.update(gc, game, delta);
-        
+
         Input input = gc.getInput();
-        
+
         // Next state key
         if (input.isKeyDown(Input.KEY_ENTER) ||
             input.isKeyDown(Input.KEY_ESCAPE) ||
             input.isKeyDown(Input.KEY_SPACE))
             gotoNextState();
-        
+
         // Transition time counter if needed
         if (time != Float.NEGATIVE_INFINITY)
         {
@@ -58,57 +58,58 @@ public abstract class AbstractTransitionState extends AbstractState
             else gotoNextState();
         }
     }
-    
-    
+
+
     @Override
     public final void render (GameContainer gc, StateBasedGame game, Graphics g)
         throws SlickException
     {
         // Call super method
         super.render(gc, game, g);
-        
+
         // Render image
         if (image != null)
             image.draw(0, 0, gc.getWidth(), gc.getHeight());
     }
-    
-    
+
+
     @Override
     public void enter (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
         // Call super method
         super.enter(gc, game);
-        
+
         if (voice != null) voice.play();
     }
-    
-    
+
+
     @Override
     public void leave (GameContainer gc, StateBasedGame game)
-        throws SlickException 
+        throws SlickException
     {
         super.leave(gc, game);
         if (voice != null) voice.stop();
     }
-    
-    
+
+
     /**
      * Goto next state
      */
     protected void gotoNextState ()
     {
         GameState next = nebulaGame.getState(this.getID()+1);
-        
+
         if (next == null)
             nebulaGame.enterState(NebulaState.MainMenu.id);
-        else if (next instanceof AbstractMinigameState)
+        else if (next instanceof AbstractMinigameState ||
+                 next instanceof AbstractMenuState)
             nebulaGame.initAndEnterState(this.getID()+1, transitionType);
         else
             nebulaGame.enterState(this.getID()+1, transitionType);
     }
-    
-    
+
+
     /**
      * Set the transition duration
      * @param time Time in milliseconds
@@ -117,8 +118,8 @@ public abstract class AbstractTransitionState extends AbstractState
     {
         this.time = time;
     }
-    
-    
+
+
     /**
      * Set the transition image
      * @param path The image path
@@ -132,8 +133,8 @@ public abstract class AbstractTransitionState extends AbstractState
             exc.printStackTrace();
         }
     }
-    
-    
+
+
     /**
      * Set the transition voice
      * @param path The sound path
@@ -145,10 +146,10 @@ public abstract class AbstractTransitionState extends AbstractState
         }
         catch (SlickException exc) {
             exc.printStackTrace();
-        }        
+        }
     }
-    
-    
+
+
     /**
      * Set transition end type
      * @param transitionType The transition type

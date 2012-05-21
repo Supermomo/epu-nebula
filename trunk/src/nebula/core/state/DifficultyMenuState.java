@@ -63,9 +63,18 @@ public class DifficultyMenuState extends AbstractMenuState
 
         // Enter state
         if (wantBack)
-            nebulaGame.enterState(NebulaState.MainMenu.id);
+        {
+            if (NebulaConfig.getAdventureMinigame() != null)
+                nebulaGame.enterState(NebulaState.LoadMenu.id);
+            else
+                nebulaGame.enterState(NebulaState.MainMenu.id);
+        }
         else
+        {
+            NebulaConfig.setAdventureScore(0);
+            NebulaConfig.setAdventureMinigame(null);
             nebulaGame.enterState(NebulaState.StartAdventure.id, TransitionType.Fade);
+        }
     }
 
 

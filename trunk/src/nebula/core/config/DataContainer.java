@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import nebula.core.NebulaGame.Minigame;
 import nebula.core.state.AbstractMinigameState.Difficulty;
 
 
@@ -21,8 +22,10 @@ class DataContainer implements Serializable
     // Datas
     private Difficulty adventureDifficulty;
     private Difficulty rapidmodeDifficulty;
+    private Minigame adventureMinigame;
     private int adventureScore;
-    private Map<Integer, Integer> scores;
+    private int adventureBestScore;
+    private Map<Integer, Integer> rapidmodeScores;
 
 
     public DataContainer ()
@@ -30,8 +33,10 @@ class DataContainer implements Serializable
         // Default data
         adventureDifficulty = Difficulty.Medium;
         rapidmodeDifficulty = Difficulty.Medium;
+        adventureMinigame = null;
         adventureScore = 0;
-        scores = new HashMap<Integer, Integer>();
+        adventureBestScore = 0;
+        rapidmodeScores = new HashMap<Integer, Integer>();
     }
 
 
@@ -55,6 +60,16 @@ class DataContainer implements Serializable
         this.rapidmodeDifficulty = difficulty;
     }
 
+    public Minigame getAdventureMinigame ()
+    {
+        return adventureMinigame;
+    }
+
+    public void setAdventureMinigame (Minigame minigame)
+    {
+        this.adventureMinigame = minigame;
+    }
+
     public int getAdventureScore ()
     {
         return adventureScore;
@@ -65,6 +80,16 @@ class DataContainer implements Serializable
         this.adventureScore = score;
     }
 
+    public int getAdventureBestScore ()
+    {
+        return adventureBestScore;
+    }
+
+    public void setAdventureBestScore (int score)
+    {
+        this.adventureBestScore = score;
+    }
+
 
     /**
      * Serialization
@@ -72,10 +97,12 @@ class DataContainer implements Serializable
     private void writeObject (ObjectOutputStream out) throws IOException
     {
         // Write datas
-        out.write(adventureDifficulty.ordinal());
-        out.write(rapidmodeDifficulty.ordinal());
-        out.write(adventureScore);
-        out.writeObject(scores);
+        out.writeInt(adventureDifficulty.ordinal());
+        out.writeInt(rapidmodeDifficulty.ordinal());
+        out.writeInt(adventureMinigame.ordinal());
+        out.writeInt(adventureScore);
+        out.writeInt(adventureBestScore);
+        out.writeObject(rapidmodeScores);
     }
 
     @SuppressWarnings("unchecked")
@@ -85,7 +112,9 @@ class DataContainer implements Serializable
         // Read datas
         adventureDifficulty = Difficulty.values()[in.readInt()];
         rapidmodeDifficulty = Difficulty.values()[in.readInt()];
+        adventureMinigame = Minigame.values()[in.readInt()];
         adventureScore = in.readInt();
-        scores = (HashMap<Integer, Integer>) in.readObject();
+        adventureBestScore = in.readInt();
+        rapidmodeScores = (HashMap<Integer, Integer>) in.readObject();
     }
 }

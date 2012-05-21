@@ -1,8 +1,10 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame;
+import nebula.core.NebulaGame.Minigame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
+import nebula.core.config.NebulaConfig;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -39,6 +41,37 @@ public class ScoreTransitionState extends AbstractMenuState
         this.lastState = lastState;
         this.won = won;
         resetMenu();
+
+        // Save game
+        if (won && NebulaGame.isAdventureMode)
+        {
+            // Save score
+            NebulaConfig.setAdventureScore(
+                NebulaConfig.getAdventureScore() + score);
+
+            // Save current minigame
+            if (NebulaState.SpaceInvaders.id == lastState)
+                NebulaConfig.setAdventureMinigame(Minigame.SpaceInvaders);
+            else if (NebulaState.SpaceShepherd.id == lastState)
+                NebulaConfig.setAdventureMinigame(Minigame.SpaceShepherd);
+            else if (NebulaState.Asteroid.id == lastState)
+                NebulaConfig.setAdventureMinigame(Minigame.Asteroid);
+            else if (NebulaState.Gravity.id == lastState)
+                NebulaConfig.setAdventureMinigame(Minigame.Gravity);
+            else if (NebulaState.Breakout.id == lastState)
+                NebulaConfig.setAdventureMinigame(Minigame.Breakout);
+            else if (NebulaState.Boss.id == lastState)
+            {
+                // Adventure finished
+                NebulaConfig.setAdventureMinigame(null);
+
+                if (NebulaConfig.getAdventureScore() > NebulaConfig.getAdventureBestScore())
+                    NebulaConfig.setAdventureBestScore(NebulaConfig.getAdventureScore());
+
+            }
+
+            NebulaConfig.saveData();
+        }
 
         // Add menu items
         if (won) setMenuTitle("BRAVO !");

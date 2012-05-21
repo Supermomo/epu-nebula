@@ -40,7 +40,10 @@ public class MainMenuState extends AbstractMenuState
             // Mode aventure
             case 0:
                 NebulaGame.isAdventureMode = true;
-                nebulaGame.initAndEnterState(NebulaState.DifficultyMenu.id);
+                if (NebulaConfig.getAdventureMinigame() != null)
+                    nebulaGame.initAndEnterState(NebulaState.LoadMenu.id);
+                else
+                    nebulaGame.initAndEnterState(NebulaState.DifficultyMenu.id);
                 break;
             // Mode rapide
             case 1:
