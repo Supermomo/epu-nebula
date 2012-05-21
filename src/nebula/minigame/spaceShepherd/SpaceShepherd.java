@@ -298,9 +298,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
 		String sec=Utils.secondsToString(remainingTime/1000);
 		font.drawString(gc.getWidth()/2 -font.getWidth(sec)/2, 40, sec);
-
-		score=computeScore();
-		renderScore(gc, ScorePosition.TopRight);
 		
 		for(SteeringEntity st : flock.getFlockers()){
 			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2),
