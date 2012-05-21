@@ -25,10 +25,17 @@ public class ScoreTransitionState extends AbstractMenuState
         super.init(gc, game);
 
         lastState = NebulaState.MainMenu.id;
+
+        // Music
+        initMusic("ressources/sons/common/fanfare.ogg", 0.4f, true);
     }
 
     public void initScore (int score, boolean won, int lastState)
     {
+        // Init
+        try { this.init(nebulaGame.getContainer(), nebulaGame); }
+        catch (SlickException exc) { exc.printStackTrace(); }
+
         this.lastState = lastState;
         this.won = won;
         resetMenu();

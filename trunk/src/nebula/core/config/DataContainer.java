@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import nebula.core.state.AbstractMinigameState.Difficulty;
 
@@ -19,6 +21,8 @@ class DataContainer implements Serializable
     // Datas
     private Difficulty adventureDifficulty;
     private Difficulty rapidmodeDifficulty;
+    private int adventureScore;
+    private Map<Integer, Integer> scores;
 
 
     public DataContainer ()
@@ -26,6 +30,8 @@ class DataContainer implements Serializable
         // Default data
         adventureDifficulty = Difficulty.Medium;
         rapidmodeDifficulty = Difficulty.Medium;
+        adventureScore = 0;
+        scores = new HashMap<Integer, Integer>();
     }
 
 
@@ -49,22 +55,37 @@ class DataContainer implements Serializable
         this.rapidmodeDifficulty = difficulty;
     }
 
+    public int getAdventureScore ()
+    {
+        return adventureScore;
+    }
+
+    public void setAdventureScore (int score)
+    {
+        this.adventureScore = score;
+    }
+
 
     /**
      * Serialization
      */
     private void writeObject (ObjectOutputStream out) throws IOException
     {
-        // Write difficulties
+        // Write datas
         out.write(adventureDifficulty.ordinal());
         out.write(rapidmodeDifficulty.ordinal());
+        out.write(adventureScore);
+        out.writeObject(scores);
     }
 
+    @SuppressWarnings("unchecked")
     private void readObject (ObjectInputStream in)
         throws IOException, ClassNotFoundException
     {
-        // Read difficulties
-        adventureDifficulty = Difficulty.values()[in.read()];
-        rapidmodeDifficulty = Difficulty.values()[in.read()];
+        // Read datas
+        adventureDifficulty = Difficulty.values()[in.readInt()];
+        rapidmodeDifficulty = Difficulty.values()[in.readInt()];
+        adventureScore = in.readInt();
+        scores = (HashMap<Integer, Integer>) in.readObject();
     }
 }
