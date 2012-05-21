@@ -6,20 +6,20 @@
  </tileset>
  <layer name="block" width="20" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAJNloB6QhWJS1aPrkUWTp8QOcvSS6gdqgoEyj9hwxhdnpLqdkrhEN4ea5iGbCwDAYBf+IAMAAA==
+   H4sIAAAAAAAAABNnoB4Qh2JS1aPrEUeTp8QOcvSS6gdqgoEyj9hwxhdnpLqdkrhEN4ea5iGbCwC4WZDiIAMAAA==
   </data>
  </layer>
- <layer name="map" width="20" height="10">
+ <layer name="map" width="20" height="10" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAONkYGCQoxJmB2JOEtQLA7EIEIuiiYvhMU8Yi3pqu0+MBDNJ8e9gNg/dz7jCmQNHnJETL6SmF0Jup5Z5yO4DAP2phVogAwAA
   </data>
  </layer>
- <layer name="death" width="20" height="10">
+ <layer name="death" width="20" height="10" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgYGCQohIeBaNgMABJKmEQAACmfAuVIAMAAA==
   </data>
  </layer>
- <layer name="end" width="20" height="10">
+ <layer name="end" width="20" height="10" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgGAXkAtlR84Y9AAC5h4N7IAMAAA==
   </data>

@@ -6,25 +6,25 @@
  </tileset>
  <layer name="block" width="31" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAM2TXQrAIAyDcxHvf809CaM0Sd20GChoSf3q3wAwNseU87y9ELlMX2sj2/Xj2G4v2fqKvXI+rNYxmZdxKmylqnfVV9Gfu93JPhkI4042+/e3sBHmJ3rL2N26ha3eZvUcQepUvvOtRfYDhwnZ3kQHAAA=
+   H4sIAAAAAAAAAM2TbQoAIAhDd4vuf9N+BVF+TClrIEQ0n1o1AO1wDEXOzh5GWe/KXtdRtuXVWBbbq8diS7P12JF7YPuWfBpHys+eY8Sy2dxZ9s0A9h6r2Nl/X8WW9k/XqDEq9QvbepvsHLW8DO9FdPLMfoNEBwAA
   </data>
  </layer>
- <layer name="end" width="31" height="15">
+ <layer name="end" width="31" height="15" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgGAUDDWQH2gGjYBQMQiA40A4YBaOACAAA7GKRcUQHAAA=
   </data>
  </layer>
- <layer name="map" width="31" height="15">
+ <layer name="map" width="31" height="15" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAM2UWQvDIBCETdI2Rw+FtH3s//+ZNaAwLLO6OQp9+Eiy14hOPDvnHoKBxBisbox8Enel75J6sTYzkRiD1Vl6e6HdRLod2qdC7zL7CfOldp/eHfTPkZeYrWlP4jknvQWfYkHRzmeDtbW9DCQfSF1tzzXexnOwntMabevsLdrXSGtg2JDP3kIfo/avyesaC9p4X2DsqDVo2ujr7HcvvvfiibbVa0fyD9rSn+jNmvc7MrdR8hi/Od0XbSHHauW/xvKs9wuvyHcvRAcAAA==
   </data>
  </layer>
- <layer name="death" width="31" height="15">
+ <layer name="death" width="31" height="15" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgoD6QgmJaARkamj3Y7JamwG5K44ASuym1X5qwEpqBgbSbHCA50A4YxABbWUTLsmkUoAJS0qYkGsYlP9gAALH+K35EBwAA
   </data>
  </layer>
- <objectgroup name="objets" width="0" height="0" x="1" y="1">
+ <objectgroup name="objets" width="0" height="0" x="1" y="1" visible="0">
   <object name="start" type="default" x="-7" y="878" width="5" height="5"/>
  </objectgroup>
 </map>
