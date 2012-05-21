@@ -241,7 +241,6 @@ public class SpaceInvaders extends AbstractMinigameState {
 	    		if(ennemi[i][j] != null && ennemi[i][j].getY() + ennemi[i][j].getImage().getHeight() >= tank.getY())
 	    		{
 	    			tank.kill();
-	    			gc.pause();
 	    		}
 
     		}
