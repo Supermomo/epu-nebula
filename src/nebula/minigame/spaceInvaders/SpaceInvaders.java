@@ -259,6 +259,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 	    		{
 	    			explosion.restart();
 	    		}
+
+	    		tank.getSon().play();
 	    		tirEnnemi[i].setX(-100);
 	    		tirEnnemi[i].setY(-100);
 	    		//feu.update(ps, 20);

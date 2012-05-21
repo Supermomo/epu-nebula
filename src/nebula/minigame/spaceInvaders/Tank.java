@@ -5,11 +5,13 @@ import nebula.minigame.asteroid.AsteroidGame;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class Tank 
 {
 	private Image image = null;
 	private Image imageInvincibility = null;
+	private static Sound son = null;
 	private float x;
 	private float y;
 	private int vies;
@@ -19,6 +21,7 @@ public class Tank
 		image = new Image("ressources/images/spaceInvaders/saucer.png");
 		imageInvincibility = new Image("ressources/images/spaceInvaders/saucer-inv.png");
         imageInvincibility.setAlpha(0.95f);
+        son = new Sound("ressources/sons/spaceInvaders/explosion.ogg");
 		x = 300 - this.getImage().getWidth()/2;
 		y = 600 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;
@@ -87,4 +90,8 @@ public class Tank
 		return vies;
 	}
 	
+	public Sound getSon()
+	{
+		return son;
+	}
 }
