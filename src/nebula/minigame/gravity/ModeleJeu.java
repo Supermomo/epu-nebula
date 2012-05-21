@@ -1,8 +1,5 @@
 package nebula.minigame.gravity;
 
-import javax.swing.text.Position;
-
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -25,8 +22,6 @@ public class ModeleJeu {
 	private Sound sonEnCours;
 	private Sound sonJump;
 	private Sound sonDomage;
-	private Sound sonVictoire;
-	private Sound sonDefaite;
 	
 	//--- Calcul de l'affichage de la carte
 	// Nombre de tiles affichées à l'écran
@@ -60,9 +55,6 @@ public class ModeleJeu {
 		try {
 			sonJump = new Sound(dossierSon+"jump.wav");
 			sonDomage = new Sound(dossierSon+"hurt.wav");
-			sonVictoire = new Sound(dossierSon+"victoire.wav");
-			sonDefaite = new Sound(dossierSon+"defaite.wav");
-		
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -252,8 +244,6 @@ public class ModeleJeu {
 			hero.domage();
 			sonDomage.play();
 			sonEnCours = sonDomage;
-			sonDefaite.play();
-			sonEnCours = sonDefaite;
 			setFin(true);
 			setVictoire(false);
 		}

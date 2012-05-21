@@ -47,7 +47,7 @@ public class BlockMap {
 		int id_layer_objet = 0; // Impossible de récupérer les layers d'objets avec le parser TiledMap de Slick
 		for(int j=0; j<map.getObjectCount(id_layer_objet); j++) {
 			// Récupération du départ
-			if("start".equals(map.getObjectName(id_layer_objet,j)) && "default".equals(map.getObjectType(id_layer_objet,j))) {
+			if("start".equals(map.getObjectName(id_layer_objet,j))) {
 				setDepart(map.getObjectX(id_layer_objet, j)/tileHeight*tileHeight+tileHeight, map.getObjectY(id_layer_objet, j)/tileWidth*tileWidth+tileWidth);
 			} else if("warp".equals(map.getObjectName(id_layer_objet,j))) {
 				map.getObjectX(0, j);

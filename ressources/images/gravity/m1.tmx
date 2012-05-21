@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="13" height="8" tilewidth="80" tileheight="80">
+<map version="1.0" orientation="orthogonal" width="13" height="30" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
   <image source="map80.png"/>
  </tileset>
- <layer name="block" width="13" height="10">
+ <layer name="block" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAABNnYGAQJwOTAsgxlxJ7GBiwm0WKfwYyDAYCAwBos0UJCAIAAA==
+   H4sIAAAAAAAAAMWUyw0AIAhD2YL9N3UBaj8HaOIJXjGgdFV1cBxdMYrHlMM4FP9xSUy5B2J+ta4ZlO8wrpc70/TtMKm+KoPmwPqmMuzvo765dSZeZZC2GZVLdun27n30IWX7GAYAAA==
   </data>
  </layer>
- <layer name="map" width="13" height="8" visible="0">
+ <layer name="map" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAONhYGDgIwFzAzEnEMuRgNmBmAOIRQhgUTQ95NgD0yOGJM4IxEw4MA8Oe3jxhAEbmW5jw+MObBgUZgDFTYnkoAEAAA==
+   H4sIAAAAAAAAAMWUSwqAMAxE6weMn+rCvfc/phEsiHQmRgpdzKp5TTNJuoQQVodm1ag6HBoqMbuq+5EnGhx6G+NYPYizPJgAI+QdjEG5GLM5GZSjAXchBsUjhsUjhsWXmtGceqdvbeac+Sag38g3cTDXzqW/wpMnKd7s2/taf8hXhu0c64E1Y09f2I6WrucETVxJ9BgGAAA=
   </data>
  </layer>
- <layer name="end" width="13" height="10" visible="0">
+ <layer name="end" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAW0BrID7QAiAACiLQuHCAIAAA==
+   H4sIAAAAAAAAAGNgGAWjYBSMglEwnIEsCRgEAEs+GpUYBgAA
   </data>
  </layer>
- <layer name="death" width="13" height="10" visible="0">
+ <layer name="death" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAWjgIEBADzDR3YIAgAA
+   H4sIAAAAAAAAAGNgGP5AkgS1MgOoTxqHGmziMnjkcOkbLHpwqSdkDzb1xABS1VMTkJIWJMlQTyu3EKOenHDFpUcKimltD7F6iEmH2OwhpA+bu0jVQ67bSAEA8X8ZqRgGAAA=
   </data>
  </layer>
  <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
-  <object name="start" type="default" x="63" y="74" width="1" height="1"/>
+  <object name="start" type="default" x="203" y="125" width="2" height="2"/>
  </objectgroup>
 </map>

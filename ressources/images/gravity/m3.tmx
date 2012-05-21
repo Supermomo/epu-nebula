@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="20" height="10" tilewidth="80" tileheight="80">
- <tileset name="Untitled" firstgid="1" tilewidth="80" tileheight="80">
+<map version="1.0" orientation="orthogonal" width="13" height="30" tilewidth="80" tileheight="80">
+ <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
   <image source="map80.png"/>
  </tileset>
- <layer name="block" width="20" height="10">
+ <layer name="block" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAABNnoB4Qh2JS1aPrEUeTp8QOcvSS6gdqgoEyj9hwxhdnpLqdkrhEN4ea5iGbCwC4WZDiIAMAAA==
+   H4sIAAAAAAAAABNnYGAQJwOTAgaTHnQ1hPRgk8enB5ccqeLocuhuxgXw2YNP/UDrITU88clhi2NC+miRdogxA5v7iNVDatgQysPE6CElLHHpo5Z/CAF66yFWHzllKb3LXgBiy4NbGAYAAA==
   </data>
  </layer>
- <layer name="map" width="20" height="10" visible="0">
+ <layer name="map" width="13" height="30" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAONkYGCQoxJmB2JOEtQLA7EIEIuiiYvhMU8Yi3pqu0+MBDNJ8e9gNg/dz7jCmQNHnJETL6SmF0Jup5Z5yO4DAP2phVogAwAA
+   H4sIAAAAAAAAAM2USwrAIAxE7Qeq/bnovvc/ZhOo0EUSnYDQxWx0HpJJ4hZCOAHtpIV0A0o/YibSBTDsP4B3JL/FaH6LWR0ZaAy/H0EmOZhsMHw3OHqqcbWeSlzL7DCHzE5rPbOD4bMRzK30LQK5fRmJqzHl36jlll8fugtobr0YLVNJZeeiUa80e9r+9KjnASWfjjsYBgAA
   </data>
  </layer>
- <layer name="death" width="20" height="10" visible="0">
+ <layer name="end" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgYGCQohIeBaNgMABJKmEQAACmfAuVIAMAAA==
+   H4sIAAAAAAAAAGNgGAWjYBSMglEwnIEsCRgEAEs+GpUYBgAA
   </data>
  </layer>
- <layer name="end" width="20" height="10" visible="0">
+ <layer name="death" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAXkAtlR84Y9AAC5h4N7IAMAAA==
+   H4sIAAAAAAAAAGNgGNxAmop6JEnUI0lAnlz12NxBqj+xqZchUQ8+9TA5eumhpj58ZhCrj1yAL41hAzD3SJKgF91P6PqwhRs2MVLdik8fNfOpFBSToocce4jVAwo7cRzmoIcrIbuwxQOpeoj1D6HyAB8AAAQAykYYBgAA
   </data>
  </layer>
- <objectgroup name="Object Group 4" width="0" height="0">
-  <object name="start" type="default" x="71" y="404" width="2" height="2"/>
+ <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
+  <object name="start" type="default" x="203" y="125" width="2" height="2"/>
  </objectgroup>
 </map>

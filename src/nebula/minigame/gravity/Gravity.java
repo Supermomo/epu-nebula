@@ -1,14 +1,17 @@
 package nebula.minigame.gravity;
 
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.state.AbstractMinigameState;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -26,17 +29,20 @@ public class Gravity extends AbstractMinigameState {
 	private EtatJeu etatActuel;
 
 	private final static String dossierData = "ressources/images/gravity/";
+
 	private ModeleJeu modeleJeu;
 	private ControleJeu controleJeu;
+
+	private Queue<String> listeNiveaux;
+
 	private Image coeur;
 	private int[] mapRender = {0,0,0,0};
-	private int numeroMap;
 	private int timer;
 
 
 
 	/* Game ID */
-    @Override public int getID () { return NebulaState.Gravity.id; }
+	@Override public int getID () { return NebulaState.Gravity.id; }
 
 	/**
 	 * Initialisation des données pour le jeu
@@ -44,39 +50,60 @@ public class Gravity extends AbstractMinigameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
 			throws SlickException {
-		score = 0;
-		init(gameContainer, stateBasedGame, 3);
-	}
-	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame, int numeroMap)
-			throws SlickException {
-		
-		this.numeroMap = numeroMap;
-		
+
+
 		// Call super method
 		super.init(gameContainer, stateBasedGame);
-		
-		
-		String cheminDifficulte;
+
+
+
+		score = 0;
+
+		// Chargement des niveaux pour le jeu
+		// --- Choix de la difficulté
+		String prefixeChemin;
 		switch(difficulty) {
 		case Medium:
-			cheminDifficulte = "m";
+			prefixeChemin = "m";
 			break;
 		case Hard:
-			cheminDifficulte = "h";
+			prefixeChemin = "h";
 			break;
 		case Insane:
-			cheminDifficulte = "i";
+			prefixeChemin = "i";
 			break;
 		case Easy:default:
-			cheminDifficulte = "e";
+			prefixeChemin = "e";
 			break;
 		}
-		cheminDifficulte += numeroMap;
-		
-		
+		// --- Création de la liste des niveaux
+		Queue<String> listeNiveaux = new LinkedList<String>();
+		List<Integer> list = new ArrayList<Integer>();
+		for(int i = 0;i<3;) {
+			// On veut boucler tant qu'il n'a pas ses trois map différentes
+			int choix = (int) (Math.random() * 3 + 1);
+			if(!list.contains(choix)) {
+				// On l'ajoute à la liste temporaire
+				list.add(choix);
+				// On l'ajoute à la liste des niveaux
+				listeNiveaux.add(prefixeChemin+choix);
+				i++; // L'incrémentation du compteur !!
+			}
+		}
+
+
+		// Envoie de l'initialisation partielle suivant le niveau
+		init(gameContainer, stateBasedGame, listeNiveaux);
+	}
+	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame, Queue<String> listeNiveaux)
+			throws SlickException {
+		this.listeNiveaux = listeNiveaux;
+		// Call super method
+		super.init(gameContainer, stateBasedGame);
+
+
 		try {
-			// dossierData+numeroMap+".tmx"
-			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+cheminDifficulte+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
+			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+this.listeNiveaux.poll()+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -104,7 +131,7 @@ public class Gravity extends AbstractMinigameState {
 
 		// Call super method
 		super.render(gameContainer, stateBasedGame, g);
-		
+
 		//// Default
 		// Render Map
 		modeleJeu.getMap().getTiledMap().render(mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2], mapRender[1]*modeleJeu.getMap().getTiledMap().getTileHeight()+mapRender[3]);
@@ -116,7 +143,7 @@ public class Gravity extends AbstractMinigameState {
 		for(int i = 0; i < modeleJeu.getHero().getNbrVies(); i++) {
 			coeur.draw(10 + i * coeur.getWidth(),gameContainer.getHeight() - coeur.getHeight());
 		}
-		
+
 
 		// Affichage de l'image en fonction de l'état
 		switch(etatActuel) {
@@ -136,7 +163,7 @@ public class Gravity extends AbstractMinigameState {
 				mapRender[0] += mapRender[2]/modeleJeu.getMap().getTiledMap().getTileWidth();
 				mapRender[2] = 0;
 			}
-			
+
 			// Traitement des Y
 			if(newRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]) {
 				mapRender[3] -= vitesseDeplacement;
@@ -149,12 +176,12 @@ public class Gravity extends AbstractMinigameState {
 				mapRender[3] = 0;
 			}
 
-			
+
 			if(stop) {
 				etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
 			}
 			break;
-			
+
 		case DEPLACEMENT_JOUEUR:
 			// On vérifie si on a atteint un des états final
 			if(modeleJeu.getDefaite()) etatActuel = EtatJeu.DEFAITE;
@@ -176,7 +203,7 @@ public class Gravity extends AbstractMinigameState {
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
 			throws SlickException {
 
-		
+
 		// Call super method
 		super.update(gameContainer, stateBasedGame, delta);
 
@@ -196,11 +223,12 @@ public class Gravity extends AbstractMinigameState {
 			modeleJeu.arreterSon();
 			// Mise à jour du score
 			score += modeleJeu.getHero().getNbrVies()*500 + (1000 - timer/100);
-			
+
 			// Appel à la fonction héritée
-			if(numeroMap < 3) {
+			if(this.listeNiveaux.size() > 0) {
+				// Appel de la carte suivante
 				etatActuel = EtatJeu.CHANGEMENT_CARTE;
-			} else {
+			} else { // FIN
 				// Application du taux score/difficulté
 				switch(difficulty) {
 				case Easy:
@@ -221,7 +249,7 @@ public class Gravity extends AbstractMinigameState {
 			}
 			break;
 		case CHANGEMENT_CARTE:
-			init(gameContainer, stateBasedGame, numeroMap+1);
+			init(gameContainer, stateBasedGame, this.listeNiveaux);
 			break;
 		}
 	}
