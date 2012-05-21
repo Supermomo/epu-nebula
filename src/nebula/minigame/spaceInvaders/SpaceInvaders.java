@@ -64,7 +64,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 			case Insane:
 				this.initialNbEnnemis = 16;
 				this.chanceTir = 50;
-				this.nbEnnemis = 10;
+				this.nbTir = 10; 
 				break;
 				
 			default:
