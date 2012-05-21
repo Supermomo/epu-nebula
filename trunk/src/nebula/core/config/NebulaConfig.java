@@ -48,6 +48,7 @@ public class NebulaConfig
         catch (Exception exc)
         {
             // Load default config
+            exc.printStackTrace();
             dataContainer = new DataContainer();
         }
     }

@@ -99,7 +99,12 @@ class DataContainer implements Serializable
         // Write datas
         out.writeInt(adventureDifficulty.ordinal());
         out.writeInt(rapidmodeDifficulty.ordinal());
-        out.writeInt(adventureMinigame.ordinal());
+
+        if (adventureMinigame != null)
+            out.writeInt(adventureMinigame.ordinal());
+        else
+            out.writeInt(-1);
+
         out.writeInt(adventureScore);
         out.writeInt(adventureBestScore);
         out.writeObject(rapidmodeScores);
@@ -112,7 +117,13 @@ class DataContainer implements Serializable
         // Read datas
         adventureDifficulty = Difficulty.values()[in.readInt()];
         rapidmodeDifficulty = Difficulty.values()[in.readInt()];
-        adventureMinigame = Minigame.values()[in.readInt()];
+
+        int adventureMinigameIndex = in.readInt();
+        if (adventureMinigameIndex != -1)
+            adventureMinigame = Minigame.values()[adventureMinigameIndex];
+        else
+            adventureMinigame = null;
+
         adventureScore = in.readInt();
         adventureBestScore = in.readInt();
         rapidmodeScores = (HashMap<Integer, Integer>) in.readObject();
