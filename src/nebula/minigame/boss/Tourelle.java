@@ -23,15 +23,15 @@ public class Tourelle
 	
 	public void rotate(float delta, boolean droite)
 	{	 
-		if(droite)
+		if(!droite)
 		{
         	this.getImage().rotate(-0.2f * delta);
-            this.setViseX(delta * 0.4f * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
+            this.setViseX(this.getViseX() + delta * 0.4f * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
 		}
         else
         {
         	this.getImage().rotate(0.2f * delta);
-        	this.setViseX(delta * 0.4f * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
+        	this.setViseX(this.getViseX() + delta * 0.4f * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
         }
 	}
 	
@@ -47,7 +47,7 @@ public class Tourelle
 		System.out.println("vaisseau x : " + v.getX());
 		System.out.println("vaisseau y : " + v.getY());
 		
-		if(p.getX() > v.getX())
+		if(p.getX() > v.getX() + v.getImage().getWidth()/2)
 		{
 			rotate(delta, false);
 		}
