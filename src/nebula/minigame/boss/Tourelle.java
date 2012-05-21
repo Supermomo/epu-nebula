@@ -21,40 +21,15 @@ public class Tourelle
 		image = new Image("ressources/images/boss/ship.png");
 	}
 	
-	public void rotate(float delta, boolean droite)
+	public void rotate(float angle)
 	{	 
-		if(droite)
-		{
-        	this.getImage().rotate(-0.2f * delta);
-            this.setViseX(this.getViseX() + delta * 0.2f * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
-		}
-        else
-        {
-        	this.getImage().rotate(0.2f * delta);
-        	this.setViseX(this.getViseX() + delta * 0.2f * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
-        }
+        	this.getImage().rotate(-angle);
 	}
 	
 	public void vise(Vaisseau v, float delta)
 	{
-		Line l1 = new Line(getCenterX(), getCenterY(), getViseX(), getViseY());
-		Line l2 = new Line(v.getX() + v.getImage().getWidth()/2, v.getY() + v.getImage().getHeight()/2, 0, v.getY() + v.getImage().getHeight()/2);
-		
-		Vector2f p = l1.intersect(l2, false);
-		
-		System.out.println("x : " + p.getX());
-		System.out.println("y : " + p.getY());
-		System.out.println("vaisseau x : " + v.getX());
-		System.out.println("vaisseau y : " + v.getY());
-		
-		if(p.getX() > v.getX() + v.getImage().getWidth()/2)
-		{
-			rotate(delta, true);
-		}
-		else
-		{
-			rotate(delta, false);
-		}
+		float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - this.getCenterX())/((v.getY() + v.getImage().getHeight()/2) - this.getCenterY()));
+		rotate(angle);
 	}
 
 	public Image getImage() 
