@@ -69,7 +69,7 @@ public class AsteroidGame extends AbstractMinigameState
 
         // Initial properties
         lifes = 3;
-        score = 1000 + lifes * 200 * (difficulty.ordinal() + 1);
+        score = lifes * 200 * (difficulty.ordinal() + 1);
         time = initialTime;
         crystalTimer = 10 * 1000;
         invincibility = 0;
