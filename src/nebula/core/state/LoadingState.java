@@ -6,6 +6,7 @@ import java.util.List;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.minigame.asteroid.AsteroidGame;
+import nebula.minigame.boss.BossGame;
 import nebula.minigame.breakout.BreakoutGame;
 import nebula.minigame.gravity.Gravity;
 import nebula.minigame.spaceInvaders.SpaceInvaders;
@@ -156,6 +157,8 @@ public class LoadingState extends AbstractState
         states.add(new Gravity());
         states.add(new HistoryBreakout1State());
         states.add(new BreakoutGame());
+        states.add(new HistoryBoss1State());
+        states.add(new BossGame());
         states.add(new HistoryEnd1State());
     }
 

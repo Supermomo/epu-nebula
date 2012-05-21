@@ -46,6 +46,7 @@ public class RapidModeMenuState extends AbstractMenuState
         addMenuItem("Astéroïdes", true);
         addMenuItem("Gravité", true);
         addMenuItem("Casse-briques", true);
+        addMenuItem("Boss", true);
         addMenuSpaces(1);
         addMenuItem("Retour", true);
     }
@@ -94,8 +95,11 @@ public class RapidModeMenuState extends AbstractMenuState
             case 5:
                 nextGame = NebulaState.Breakout.id;
                 break;
-            // Escape
+            // Boss
             case 6:
+                nextGame = NebulaState.Boss.id;
+                break;
+            // Escape
             default:
                 nextGame = -1;
                 break;

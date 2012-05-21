@@ -56,14 +56,24 @@ public class NebulaGame extends StateBasedGame
         Gravity                 (114),
         HistoryBreakout1        (115),
         Breakout                (116),
-        HistoryEnd1             (117),
-        EndMenu                 (118),
+        HistoryBoss1            (117),
+        Boss                    (118),
+        HistoryEnd1             (119),
+        EndMenu                 (120),
 
         PauseMenu               (200),
         ScoreTransition         (201);
 
         public int id;
         private NebulaState (int id) { this.id = id; }
+    }
+
+    /**
+     * Games enum
+     */
+    public static enum Minigame
+    {
+        SpaceInvaders, SpaceShepherd, Asteroid, Gravity, Breakout, Boss
     }
 
     public static enum TransitionType

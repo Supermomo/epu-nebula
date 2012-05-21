@@ -5,6 +5,7 @@ import nebula.core.NebulaGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -23,6 +24,12 @@ public abstract class AbstractState extends BasicGameState
     protected NebulaGame nebulaGame;
     private boolean defaultBackground = true;
 
+    // Music
+    private Music music;
+    private float musicVolume;
+    private boolean musicLoop;
+    private int musicState;
+
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -30,6 +37,10 @@ public abstract class AbstractState extends BasicGameState
     {
         // Nebula game
         nebulaGame = (NebulaGame)game;
+
+        // Reset music
+        music = null;
+        musicState = 0;
 
         // Load background
         imgBackground = new Image(imgPath + "default-background.png");
@@ -60,8 +71,58 @@ public abstract class AbstractState extends BasicGameState
         throws SlickException
     {
         super.enter(gc, game);
+
+        // Clear inputs
         gc.getInput().clearKeyPressedRecord();
+
+        // Play music
+        if (music != null)
+        {
+            if (musicState == 0)
+            {
+                if (musicLoop) music.loop(1.0f, musicVolume);
+                else           music.play(1.0f, musicVolume);
+
+                musicState = 1;
+            }
+            else if (musicState == 1)
+                music.resume();
+        }
     }
+
+
+    @Override
+    public void leave (GameContainer container, StateBasedGame game)
+        throws SlickException
+    {
+        super.leave(container, game);
+
+        // Pause music
+        if (music != null)
+        {
+            if (music.playing())
+                music.pause();
+            else
+                musicState = 2;
+        }
+    }
+
+
+    /**
+     * Set the background music of the state
+     */
+    protected void initMusic (String path, float volume, boolean loop)
+    {
+        try
+        {
+            music = new Music(path);
+            music.stop();
+            musicVolume = volume;
+            musicLoop = loop;
+        }
+        catch (SlickException exc) { exc.printStackTrace(); }
+    }
+
 
     /**
      * Set use default background in the state

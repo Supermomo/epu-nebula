@@ -123,7 +123,7 @@ public class NebulaConfig
     }
 
     /**
-     * Set adventure difficulty
+     * Set the adventure difficulty
      * @param difficulty The adventure difficulty
      */
     public static void setAdventureDifficulty (Difficulty difficulty)
@@ -141,11 +141,29 @@ public class NebulaConfig
     }
 
     /**
-     * Set rapidmode difficulty
+     * Set the rapidmode difficulty
      * @param difficulty The rapidmode difficulty
      */
     public static void setRapidmodeDifficulty (Difficulty difficulty)
     {
         dataContainer.setRapidmodeDifficulty(difficulty);
+    }
+
+    /**
+     * Get the adventure score
+     * @return The adventure score
+     */
+    public static int getAdventureScore ()
+    {
+        return dataContainer.getAdventureScore();
+    }
+
+    /**
+     * Set the adventure score
+     * @param difficulty The adventure score
+     */
+    public static void setAdventureScore (int score)
+    {
+        dataContainer.setAdventureScore(score);
     }
 }
