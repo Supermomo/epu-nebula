@@ -63,7 +63,7 @@ public abstract class AbstractMinigameState extends AbstractState
         if (sndVictory == null || sndDefeat == null)
         {
             sndVictory = new Sound("ressources/sons/common/victory.ogg");
-            sndDefeat  = new Sound("ressources/sons/common/victory.ogg");
+            sndDefeat  = new Sound("ressources/sons/common/defeat.ogg");
         }
     }
 
