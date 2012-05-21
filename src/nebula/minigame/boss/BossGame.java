@@ -7,14 +7,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class BossGame extends AbstractMinigameState
-{
-
-		Vaisseau saucer = null;
-
-
+{		
+		Vaisseau saucer = null; 
+		Tourelle tourelle1 = null;
+	
 		/* Game ID */
 		@Override public int getID () { return NebulaState.Boss.id; }
 
@@ -42,6 +42,9 @@ public class BossGame extends AbstractMinigameState
 					break;
 			}
 	        saucer = new Vaisseau();
+	        tourelle1 = new Tourelle();
+	        tourelle1.setX(gc.getWidth()/2 - tourelle1.getImage().getWidth()/2);
+	        tourelle1.setY(tourelle1.getImage().getHeight());
 
 	    }
 
@@ -83,6 +86,8 @@ public class BossGame extends AbstractMinigameState
 	    	{
 
 	    	}
+	    	
+	    	
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
