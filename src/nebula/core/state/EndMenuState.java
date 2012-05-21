@@ -1,10 +1,11 @@
 package nebula.core.state;
 
+import nebula.core.NebulaGame.NebulaState;
+import nebula.core.config.NebulaConfig;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import nebula.core.NebulaGame.NebulaState;
 
 
 /**
@@ -23,9 +24,11 @@ public class EndMenuState extends AbstractMenuState
         setMenuTitle("Fin");
         addMenuItem("Bravo, tu as fini l'aventure !", false);
         addMenuSpaces(1);
+        addMenuItem("Score : " + NebulaConfig.getAdventureScore(), false);
+        addMenuSpaces(2);
         addMenuItem("Quitter", true);
     }
-    
+
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {

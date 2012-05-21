@@ -36,7 +36,8 @@ public class NebulaGame extends StateBasedGame
         ScoresMenu              (4),
 
         SetupAdventure          (50),
-        DifficultyMenu          (51),
+        LoadMenu                (51),
+        DifficultyMenu          (52),
 
         StartAdventure          (100),
         HistoryInvaders1        (100),
@@ -185,9 +186,7 @@ public class NebulaGame extends StateBasedGame
             //app.setShowFPS(false);
             app.start();
         }
-        catch (Exception exc) {
-            exc.printStackTrace();
-        }
+        catch (Exception exc) { exc.printStackTrace(); }
     }
 
     /**

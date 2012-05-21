@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import nebula.core.NebulaGame.Minigame;
 import nebula.core.state.AbstractMinigameState.Difficulty;
 
 
@@ -150,6 +151,24 @@ public class NebulaConfig
     }
 
     /**
+     * Get the adventure minigame
+     * @return The adventure minigame
+     */
+    public static Minigame getAdventureMinigame ()
+    {
+        return dataContainer.getAdventureMinigame();
+    }
+
+    /**
+     * Set the adventure minigame
+     * @param difficulty The adventure minigame
+     */
+    public static void setAdventureMinigame (Minigame minigame)
+    {
+        dataContainer.setAdventureMinigame(minigame);
+    }
+
+    /**
      * Get the adventure score
      * @return The adventure score
      */
@@ -165,5 +184,23 @@ public class NebulaConfig
     public static void setAdventureScore (int score)
     {
         dataContainer.setAdventureScore(score);
+    }
+
+    /**
+     * Get the adventure best score
+     * @return The adventure best score
+     */
+    public static int getAdventureBestScore ()
+    {
+        return dataContainer.getAdventureBestScore();
+    }
+
+    /**
+     * Set the adventure best score
+     * @param difficulty The adventure best score
+     */
+    public static void setAdventureBestScore (int score)
+    {
+        dataContainer.setAdventureBestScore(score);
     }
 }
