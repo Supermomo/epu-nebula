@@ -170,7 +170,7 @@ public class BreakoutGame extends AbstractMinigameState
                         if (b.isBroken())
                         {
                             brickToRemove.add(b);
-                            score += 100;
+                            score += 80;
                         }
 
                     }
