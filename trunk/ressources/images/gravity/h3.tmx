@@ -6,20 +6,20 @@
  </tileset>
  <layer name="block" width="16" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAJNlYGCQpRCTCwazfmL8iEuO2HCilf3U0E8NeUL6BkI/pWmY0jxBjTxFjfxIjfw8GPWTAqitn1RATf3kgIEof2XR2NRI++QCYvUTW8aSgwG8+B2PgAcAAA==
+   H4sIAAAAAAAAABNnYGAQpxCTCwazfmL8iEuO2HCilf3U0E8NeUL6BkI/pWmY0jxBjTxFjfxIjfw8GPWTAqitn1RATf3kgIEof8XR2NRI++QCYvUTW8aSgwFntXx1gAcAAA==
   </data>
  </layer>
- <layer name="map" width="16" height="30">
+ <layer name="map" width="16" height="30" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAM2VwQqAIAyGzQTtYB2qa+//mBkojOGmmyAdvkvtc/W7LBhjdiUhsSUeJf7H/pKwmVXonzkbyC3s74HL1VD3IvAPZX6RcUfyL9lq56cnG6433htqf1u9Ida05wXvCwWXeWuN3jyoNSR51rIY9VvvzvnSWcC+pPfoHGJf2hv6Grf4s89fV3n+C1A7J/HcltpZ/x/H+Pjbr0HVfNdf9RPCcYAHAAA=
   </data>
  </layer>
- <layer name="death" width="16" height="30">
+ <layer name="death" width="16" height="30" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgoBxIk6FHZlQ/Tv1SWNSji9Ha/VI42KTYL4VFrwwWdaS4nxL92PTCgCQaJlU/MW6iVD+xZhAKD0JmEBOe+MwYSP2UpgVK9NMrHWMDA6WXGvpHMgAAGkap0IAHAAA=
   </data>
  </layer>
- <layer name="end" width="16" height="30">
+ <layer name="end" width="16" height="30" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgGAWjYBSMglEwCkYOkB1g/TAAAKT12WCABwAA
   </data>

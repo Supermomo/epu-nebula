@@ -6,10 +6,10 @@
  </tileset>
  <layer name="block" width="13" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAJNlYGCQpRMmFQx2PcMJAwArHokGCAIAAA==
+   H4sIAAAAAAAAABNnYGAQpxMmFQx2PcMJAwCn5HuLCAIAAA==
   </data>
  </layer>
- <layer name="map" width="13" height="8">
+ <layer name="map" width="13" height="8" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAONgYGDgIAPzkYg5gViORDyY9YDCgIlETE44AwD+ogkPoAEAAA==
   </data>
@@ -19,12 +19,12 @@
    H4sIAAAAAAAAAGNgGD5AdhDrGewAACGWCFoIAgAA
   </data>
  </layer>
- <layer name="death" width="13" height="10">
+ <layer name="death" width="13" height="10" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgGJxAagDtlsSChzsAADEnIE8IAgAA
   </data>
  </layer>
- <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
+ <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1" visible="0">
   <object name="start" type="default" x="41" y="305" width="1" height="1"/>
  </objectgroup>
 </map>
