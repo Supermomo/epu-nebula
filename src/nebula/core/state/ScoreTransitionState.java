@@ -27,7 +27,7 @@ public class ScoreTransitionState extends AbstractMenuState
         lastState = NebulaState.MainMenu.id;
 
         // Music
-        initMusic("ressources/sons/common/fanfare.ogg", 0.4f, true);
+        initMusic("ressources/sons/common/fanfare.ogg", 0.3f, true);
     }
 
     public void initScore (int score, boolean won, int lastState)
