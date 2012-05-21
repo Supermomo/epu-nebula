@@ -12,8 +12,6 @@ public class Tourelle
 	public Tourelle() throws SlickException
 	{
 		image = new Image("ressources/images/boss/ship.png");
-		this.x = x; 
-		this.y = y;
 	}
 	
 	public void rotate(float delta, boolean droite)
@@ -28,14 +26,9 @@ public class Tourelle
         }
 	}
 
-	public static Image getImage() 
+	public Image getImage() 
 	{
 		return image;
-	}
-
-	public static void setImage(Image image) 
-	{
-		Tourelle.image = image;
 	}
 
 	public float getX() 
