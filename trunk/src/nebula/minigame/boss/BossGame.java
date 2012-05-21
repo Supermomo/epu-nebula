@@ -86,14 +86,17 @@ public class BossGame extends AbstractMinigameState
 	    	{
 
 	    	}
-	    	
-	    	
+    	
+	        tourelle1.rotate(delta, true);
+	        
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
 		{
 	        // Call super method
 	        super.render(gc, game, g);
+	        saucer.getImage().draw(saucer.getX(), saucer.getY());
+	        tourelle1.getImage().draw(tourelle1.getX(), tourelle1.getY());
 
 	    }
 }
