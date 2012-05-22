@@ -1,5 +1,6 @@
 package nebula.minigame.boss;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
@@ -28,10 +29,11 @@ public class Tourelle
 	        this.setViseY(this.getCenterY() * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
 	}
 	
-	public void vise(Vaisseau v, float delta)
+	public void vise(Vaisseau v,  Graphics g)
 	{
 		float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - this.getViseX())/((v.getY() + v.getImage().getHeight()/2) - this.getViseY()));
 		rotate(angle,false);
+		g.drawLine(getCenterX(), getCenterY(), viseX, viseY);
 		
 	}
 

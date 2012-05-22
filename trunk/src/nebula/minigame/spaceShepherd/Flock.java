@@ -50,7 +50,7 @@ public class Flock extends SteeringEntity {
 			while (!isValidTrajectory(newPos, fences) && cpt < 300) {
 				newPos = getFlockingMouvment(fl, delta, fences);
 				// System.out.println("flock pb");
-				// System.out.println("flock failure");
+				System.out.println("flock failure");
 				// fl.setMaxSpeed((float) (fl.getMaxSpeed()*0.9));
 				// fl.setMaxRotation((float) (fl.getMaxRotation()*1.5));
 				// newPos=fl.moveRandomly(delta, fences);
