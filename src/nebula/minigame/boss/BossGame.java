@@ -91,7 +91,7 @@ public class BossGame extends AbstractMinigameState
 
 	    	}
     	
-	        tourelle1.vise(saucer, delta);
+
 	        
 	    }
 
@@ -101,6 +101,7 @@ public class BossGame extends AbstractMinigameState
 	        super.render(gc, game, g);
 	        saucer.getImage().draw(saucer.getX(), saucer.getY());
 	        tourelle1.getImage().draw(tourelle1.getX(), tourelle1.getY());
+	        tourelle1.vise(saucer,g);
 
 	    }
 }
