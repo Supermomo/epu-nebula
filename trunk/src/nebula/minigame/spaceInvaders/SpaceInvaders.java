@@ -5,12 +5,19 @@ import java.util.Random;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.state.AbstractMinigameState;
 
-import org.newdawn.slick.*;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
 
 public class SpaceInvaders extends AbstractMinigameState {
-	
+
 	int initialNbEnnemis = 8;
 	int chanceTir;
 	int nbTir;
@@ -38,16 +45,16 @@ public class SpaceInvaders extends AbstractMinigameState {
 	Image defaite = null;
 	Sound sVictoire = null;
 	Sound sDefaite = null;
-	
+
 	/* Game ID */
 	@Override public int getID () { return NebulaState.SpaceInvaders.id; }
- 
+
     @Override
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-        
+
         // Call super method
         super.init(gc, game);
-        switch (this.getDifficulty()) 
+        switch (this.getDifficulty())
         {
 			case Easy:
 				this.initialNbEnnemis = 4;
@@ -60,13 +67,13 @@ public class SpaceInvaders extends AbstractMinigameState {
 				this.chanceTir = 75;
 				this.nbTir = 6;
 				break;
-				
+
 			case Insane:
 				this.initialNbEnnemis = 16;
 				this.chanceTir = 50;
-				this.nbTir = 10; 
+				this.nbTir = 10;
 				break;
-				
+
 			default:
 				this.initialNbEnnemis = 8;
 				this.chanceTir = 75;
@@ -110,53 +117,49 @@ public class SpaceInvaders extends AbstractMinigameState {
     	defaite = new Image("ressources/images/spaceInvaders/defaite.png");
     	nbEnnemis=initialNbEnnemis;
     }
- 
+
     @Override
-    public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException     
+    public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException
     {
         // Call super method
         super.update(gc, game, delta);
-        
+
     	Input input = gc.getInput();
-    	
-    	// =================== Gestion des deplacements ==========================  	
+
+    	// =================== Gestion des deplacements ==========================
     	if(input.isKeyDown(Input.KEY_RIGHT))
     	{
     		if(tank.getX() < gc.getWidth() - tank.getImage().getWidth())
     			tank.setX(tank.getX() + (0.4f * delta));
     	}
-    	
+
     	if(input.isKeyDown(Input.KEY_LEFT))
     	{
     		if(tank.getX() > 0)
     			tank.setX(tank.getX() - (0.4f * delta));
     	}
-    	
+
     	// ========================  GESTION DES TIRS ============================
     	if(input.isKeyDown(Input.KEY_SPACE))
     	{
     		tank.tirer(tir);
     	}
-    	
+
     	if(tir.getY() > -100)
     		tir.setY(tir.getY() - 0.4f * delta);
-    	
-    	System.out.println("bla");
-    	
+
     	for(int t=0; t < nbTir; t++)
     	{
     		if(tirEnnemi[t].getY() < gc.getHeight())
         		tirEnnemi[t].setY(tirEnnemi[t].getY() + 0.4f * delta);
-        	
+
         	for(int i=0; i < 4; i++)
         	{
         		for(int j=0; j < multiple; j++)
         		{
-        			System.out.println("test");
         			if(ennemi[i][j] != null)
     				{
     	    			float tire = rand.nextInt(100);
-    	    			System.out.println(tire);
     	    			if(tire >= seuil)
     	    			{
         					ennemi[i][j].tirer(tirEnnemi[t],gc);
@@ -170,8 +173,8 @@ public class SpaceInvaders extends AbstractMinigameState {
         		}
         	}
     	}
-    	
-    	
+
+
     	// ========================== ENNEMIS ==============================
     	for(int i=0; i < 4; i++)
     	{
@@ -221,7 +224,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 			    		}
 		    		}
 		    	}
-		    	
+
 	    		if(ennemi[i][j] != null && ennemi[i][j].touche(tir))
     	    	{
     	    		xExplo = ennemi[i][j].getX();
@@ -237,7 +240,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	    		tir.setX(-100);
     	    		tir.setY(-100);
     	    	}
-	    		
+
 	    		if(ennemi[i][j] != null && ennemi[i][j].getY() + ennemi[i][j].getImage().getHeight() >= tank.getY())
 	    		{
 	    			tank.kill();
@@ -245,7 +248,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 
     		}
     	}
-    	
+
     	for(int i = 0; i < nbTir; i++)
     	{
 	    	if(tank.touche(tirEnnemi[i]) && invincibility <= 0)
@@ -265,34 +268,34 @@ public class SpaceInvaders extends AbstractMinigameState {
 	    		//feu.update(ps, 20);
 	    	}
     	}
-    	
+
     	if (invincibility > 0)
         {
             invincibility -= delta;
         }
-    	
+
     	if(nbEnnemis == 0)
     	{
     		//sVictoire.play();
     		//gc.pause();
     		scoreSpaceInvaders *= 2.75;
     		scoreSpaceInvaders += tank.getVies() * 200;
-    		this.score=scoreSpaceInvaders;    		
+    		this.score=scoreSpaceInvaders;
     		gameVictory();
     	}
-    	
+
     	if(tank.dead())
     	{
     		gameDefeat();
     	}
-    	
-    	
+
+
     }
- 
-    public void render(GameContainer gc, StateBasedGame game, Graphics g) 
-			throws SlickException 
+
+    public void render(GameContainer gc, StateBasedGame game, Graphics g)
+			throws SlickException
     {
-        
+
         // Call super method
         super.render(gc, game, g);
         if(invincibility > 0)
@@ -308,7 +311,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	{
     		g.drawImage(tirEnnemi[i].getImage(), tirEnnemi[i].getX(), tirEnnemi[i].getY());
     	}
-    	
+
     	for(int i =0; i < 4; i++)
     	{
     		for(int j=0; j < initialNbEnnemis/4;j++)
@@ -316,7 +319,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     			{
     				g.drawImage(ennemi[i][j].getImage(), ennemi[i][j].getX(), ennemi[i][j].getY());
     			}
-    	}	
+    	}
     	g.drawAnimation(explosion, xExplo, yExplo);
     	for(int i = 0; i < tank.getVies(); i++)
     	{
