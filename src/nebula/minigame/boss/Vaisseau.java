@@ -6,7 +6,7 @@ import nebula.minigame.spaceInvaders.Tir;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Vaisseau 
+public class Vaisseau
 {
 	private Image image = null;
 	private Image imageInvincibility = null;
@@ -23,7 +23,8 @@ public class Vaisseau
 		y = 600 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;
 	}
-	
+
+	/*
 	public void tirer(Tir tir)
 	{
 		if(tir.getY() < 0)
@@ -32,23 +33,23 @@ public class Vaisseau
 			tir.setY(this.getY() - tir.getImage().getHeight());
 			tir.getSon().play();
 		}
-	}
-	
+	}*/
+
 	public boolean touche(Tir tir)
 	{
 		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight()/3);
 	}
-	
+
 	public boolean dead()
 	{
 		return vies == 0;
 	}
-	
+
 	public void kill()
 	{
 		this.vies = 0;
 	}
-	
+
 	public void decrementeVie()
 	{
 		this.vies--;
@@ -57,7 +58,7 @@ public class Vaisseau
 	public Image getImage() {
 		return image;
 	}
-	
+
 	public Image getImageInv() {
 		return imageInvincibility;
 	}
@@ -81,10 +82,10 @@ public class Vaisseau
 	public void setY(float y) {
 		this.y = y;
 	}
-	
+
 	public int getVies()
 	{
 		return vies;
 	}
-	
+
 }
