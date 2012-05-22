@@ -47,8 +47,8 @@ public class BossGame extends AbstractMinigameState
 	        tourelle1.setY(tourelle1.getImage().getHeight());
 	        tourelle1.setViseX(gc.getWidth()/2 - tourelle1.getImage().getWidth()/2);
 	        tourelle1.setViseY(gc.getHeight());
-	        tourelle1.setCenterX(tourelle1.getX() + tourelle1.getImage().getWidth()/2);
-	        tourelle1.setCenterY(tourelle1.getY() + tourelle1.getImage().getHeight()/2);
+	        tourelle1.setCenterX(tourelle1.getViseX());
+	        tourelle1.setCenterY(tourelle1.getViseY());
 
 	    }
 

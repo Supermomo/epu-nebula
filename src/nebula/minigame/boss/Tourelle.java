@@ -21,15 +21,18 @@ public class Tourelle
 		image = new Image("ressources/images/boss/ship.png");
 	}
 	
-	public void rotate(float angle)
+	public void rotate(float angle, boolean droite)
 	{	 
-        	this.getImage().rotate(-angle);
+			this.getImage().rotate(-angle);
+			this.setViseX(this.getCenterX() * (float)Math.cos(Math.toRadians(this.getImage().getRotation())));
+	        this.setViseY(this.getCenterY() * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
 	}
 	
 	public void vise(Vaisseau v, float delta)
 	{
-		float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - this.getCenterX())/((v.getY() + v.getImage().getHeight()/2) - this.getCenterY()));
-		rotate(angle);
+		float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - this.getViseX())/((v.getY() + v.getImage().getHeight()/2) - this.getViseY()));
+		rotate(angle,false);
+		
 	}
 
 	public Image getImage() 
