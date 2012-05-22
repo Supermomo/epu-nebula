@@ -1,7 +1,6 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.core.config.NebulaConfig;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -11,7 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Options menu
  */
-public class OptionsMenuState extends AbstractMenuState
+public class CreditsMenuState extends AbstractMenuState
 {
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -29,11 +28,10 @@ public class OptionsMenuState extends AbstractMenuState
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
-        NebulaConfig.saveData();
         nebulaGame.enterState(NebulaState.MainMenu.id);
     }
 
 
     @Override
-    public int getID() { return NebulaState.OptionsMenu.id; }
+    public int getID() { return NebulaState.CreditsMenu.id; }
 }

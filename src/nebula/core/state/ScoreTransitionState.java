@@ -43,35 +43,7 @@ public class ScoreTransitionState extends AbstractMenuState
         resetMenu();
 
         // Save game
-        if (won && NebulaGame.isAdventureMode)
-        {
-            // Save score
-            NebulaConfig.setAdventureScore(
-                NebulaConfig.getAdventureScore() + score);
-
-            // Save current minigame
-            if (NebulaState.SpaceInvaders.id == lastState)
-                NebulaConfig.setAdventureMinigame(Minigame.SpaceInvaders);
-            else if (NebulaState.SpaceShepherd.id == lastState)
-                NebulaConfig.setAdventureMinigame(Minigame.SpaceShepherd);
-            else if (NebulaState.Asteroid.id == lastState)
-                NebulaConfig.setAdventureMinigame(Minigame.Asteroid);
-            else if (NebulaState.Gravity.id == lastState)
-                NebulaConfig.setAdventureMinigame(Minigame.Gravity);
-            else if (NebulaState.Breakout.id == lastState)
-                NebulaConfig.setAdventureMinigame(Minigame.Breakout);
-            else if (NebulaState.Boss.id == lastState)
-            {
-                // Adventure finished
-                NebulaConfig.setAdventureMinigame(null);
-
-                if (NebulaConfig.getAdventureScore() > NebulaConfig.getAdventureBestScore())
-                    NebulaConfig.setAdventureBestScore(NebulaConfig.getAdventureScore());
-
-            }
-
-            NebulaConfig.saveData();
-        }
+        saveGame(score, won, lastState);
 
         // Add menu items
         if (won) setMenuTitle("BRAVO !");
@@ -115,6 +87,54 @@ public class ScoreTransitionState extends AbstractMenuState
             default:
                 break;
         }
+    }
+
+    private void saveGame (int score, boolean won, int lastState)
+    {
+        // Return if lose
+        if (!won) return;
+
+        // Save current minigame
+        Minigame minigame = null;
+        if (NebulaState.SpaceInvaders.id == lastState)
+            minigame = Minigame.SpaceInvaders;
+        else if (NebulaState.SpaceShepherd.id == lastState)
+            minigame = Minigame.SpaceShepherd;
+        else if (NebulaState.Asteroid.id == lastState)
+            minigame = Minigame.Asteroid;
+        else if (NebulaState.Gravity.id == lastState)
+            minigame = Minigame.Gravity;
+        else if (NebulaState.Breakout.id == lastState)
+            minigame = Minigame.Breakout;
+        else if (NebulaState.Boss.id == lastState)
+            minigame = Minigame.Boss;
+
+        if (NebulaGame.isAdventureMode)
+        {
+            // Save score
+            NebulaConfig.setAdventureScore(
+                NebulaConfig.getAdventureScore() + score);
+
+            // Last minigame
+            if (Minigame.Boss.equals(minigame))
+            {
+                // Adventure finished
+                NebulaConfig.setAdventureMinigame(null);
+
+                if (NebulaConfig.getAdventureScore() > NebulaConfig.getAdventureBestScore())
+                    NebulaConfig.setAdventureBestScore(NebulaConfig.getAdventureScore());
+
+            }
+            else
+                NebulaConfig.setAdventureMinigame(minigame);
+        }
+        else
+        {
+            if (score > NebulaConfig.getRapidmodeScore(minigame))
+                NebulaConfig.setRapidmodeScore(minigame, score);
+        }
+
+        NebulaConfig.saveData();
     }
 
     @Override

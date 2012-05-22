@@ -203,4 +203,22 @@ public class NebulaConfig
     {
         dataContainer.setAdventureBestScore(score);
     }
+
+    /**
+     * Get the rapidmode score
+     * @return The rapidmode score
+     */
+    public static int getRapidmodeScore (Minigame minigame)
+    {
+        return dataContainer.getRapidmodeScore(minigame);
+    }
+
+    /**
+     * Set the rapidmode score
+     * @param difficulty The rapidmode score
+     */
+    public static void setRapidmodeScore (Minigame minigame, int score)
+    {
+        dataContainer.setRapidmodeScore(minigame, score);
+    }
 }

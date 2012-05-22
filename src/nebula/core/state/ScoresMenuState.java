@@ -1,6 +1,8 @@
 package nebula.core.state;
 
+import nebula.core.NebulaGame.Minigame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.config.NebulaConfig;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -21,6 +23,14 @@ public class ScoresMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Scores");
+
+        // Scores
+        addMenuItem("Aventure : " + NebulaConfig.getAdventureBestScore(), false);
+
+        for (Minigame mg : Minigame.values())
+            addMenuItem(mg.name + " : " + NebulaConfig.getRapidmodeScore(mg), false);
+
+        addMenuSpaces(2);
         addMenuItem("Retour", true);
     }
 
@@ -28,7 +38,6 @@ public class ScoresMenuState extends AbstractMenuState
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
-        // TODO
         nebulaGame.enterState(NebulaState.MainMenu.id);
     }
 
