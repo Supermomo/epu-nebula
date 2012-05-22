@@ -24,15 +24,28 @@ public class Tourelle
 	
 	public void rotate(float angle, boolean droite)
 	{	 
+		if(!droite)
+		{
 			this.getImage().rotate(-angle);
 			this.setViseX(this.getCenterX() * (float)Math.cos(Math.toRadians(this.getImage().getRotation())));
-	        this.setViseY(this.getCenterY() * (float)Math.sin(Math.toRadians(this.getImage().getRotation())));
+		}
+		else
+		{
+			this.getImage().rotate(-angle);
+			this.setViseX(this.getCenterX() * ((float)Math.cos(Math.toRadians(this.getImage().getRotation())) + 1));
+		}
+			
 	}
 	
 	public void vise(Vaisseau v,  Graphics g)
 	{
 		float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - this.getViseX())/((v.getY() + v.getImage().getHeight()/2) - this.getViseY()));
-		rotate(angle,false);
+		this.setViseY(v.getY() + v.getImage().getHeight()/2);
+		if(v.getX() < this.getCenterX())
+			rotate(angle,false);
+		else
+			rotate(angle, true);
+		
 		g.drawLine(getCenterX(), getCenterY(), viseX, viseY);
 		
 	}
