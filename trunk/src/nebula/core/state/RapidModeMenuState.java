@@ -1,5 +1,6 @@
 package nebula.core.state;
 
+import nebula.core.NebulaGame.Minigame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.core.config.NebulaConfig;
@@ -41,12 +42,9 @@ public class RapidModeMenuState extends AbstractMenuState
         addMenuSpaces(2);
 
         // Minigames
-        addMenuItem("Invasion", true);
-        addMenuItem("Berger", true);
-        addMenuItem("Astéroïdes", true);
-        addMenuItem("Gravité", true);
-        addMenuItem("Casse-briques", true);
-        addMenuItem("Boss", true);
+        for (Minigame mg : Minigame.values())
+            addMenuItem(mg.name, true);
+
         addMenuSpaces(1);
         addMenuItem("Retour", true);
     }

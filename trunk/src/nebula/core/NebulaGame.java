@@ -32,8 +32,8 @@ public class NebulaGame extends StateBasedGame
         Loading                 (0),
         MainMenu                (1),
         RapidModeMenu           (2),
-        OptionsMenu             (3),
-        ScoresMenu              (4),
+        ScoresMenu              (3),
+        CreditsMenu             (4),
 
         SetupAdventure          (50),
         LoadMenu                (51),
@@ -74,7 +74,15 @@ public class NebulaGame extends StateBasedGame
      */
     public static enum Minigame
     {
-        SpaceInvaders, SpaceShepherd, Asteroid, Gravity, Breakout, Boss
+        SpaceInvaders ("Invasion"),
+        SpaceShepherd ("Berger"),
+        Asteroid      ("Astéroïdes"),
+        Gravity       ("Gravité"),
+        Breakout      ("Casse-Briques"),
+        Boss          ("Boss");
+
+        public String name;
+        private Minigame (String name) { this.name = name; }
     }
 
     public static enum TransitionType

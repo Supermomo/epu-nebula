@@ -37,6 +37,10 @@ class DataContainer implements Serializable
         adventureScore = 0;
         adventureBestScore = 0;
         rapidmodeScores = new HashMap<Integer, Integer>();
+
+        // Default scores
+        for (int i = 0; i < Minigame.values().length; i++)
+            rapidmodeScores.put(Integer.valueOf(i), 0);
     }
 
 
@@ -88,6 +92,19 @@ class DataContainer implements Serializable
     public void setAdventureBestScore (int score)
     {
         this.adventureBestScore = score;
+    }
+
+    public int getRapidmodeScore (Minigame minigame)
+    {
+        Integer score = rapidmodeScores.get(minigame.ordinal());
+
+        if (score == null) return 0;
+        return score.intValue();
+    }
+
+    public void setRapidmodeScore (Minigame minigame, int score)
+    {
+        this.rapidmodeScores.put(Integer.valueOf(minigame.ordinal()), score);
     }
 
 
