@@ -266,6 +266,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		ambianceSound.stop();
 		plotSound.stop();
 	}
+	
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 	    throws SlickException {
 
@@ -323,5 +324,12 @@ public class SpaceShepherd extends AbstractMinigameState {
         return NebulaState.SpaceShepherd.id;
     }
 
+    @Override
+    public void leave(GameContainer container, StateBasedGame game)
+    		throws SlickException {
+
+    	super.leave(container, game);
+    	//stopAllSound();
+    }
 
 }
