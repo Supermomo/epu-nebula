@@ -132,8 +132,8 @@ public class LoadingState extends AbstractState
         // Menus
         states.add(new MainMenuState());
         states.add(new RapidModeMenuState());
-        states.add(new CreditsMenuState());
         states.add(new ScoresMenuState());
+        states.add(new CreditsState());
         states.add(new PauseMenuState());
         states.add(new DifficultyMenuState());
         states.add(new LoadMenuState());
