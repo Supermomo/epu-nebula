@@ -2,6 +2,7 @@ package nebula.core.state;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.NebulaGame.TransitionType;
 import nebula.core.config.NebulaConfig;
 
 import org.newdawn.slick.GameContainer;
@@ -26,7 +27,7 @@ public class MainMenuState extends AbstractMenuState
         addMenuItem("Mode Aventure", true);
         addMenuItem("Mode Rapide", true);
         addMenuItem("Scores", true);
-        addMenuItem("Options", true);
+        addMenuItem("Crédits", true);
         addMenuSpaces(1);
         addMenuItem("Quitter", true);
     }
@@ -54,9 +55,9 @@ public class MainMenuState extends AbstractMenuState
             case 2:
                 nebulaGame.initAndEnterState(NebulaState.ScoresMenu.id);
                 break;
-            // Options
+            // Crédits
             case 3:
-                nebulaGame.initAndEnterState(NebulaState.CreditsMenu.id);
+                nebulaGame.initAndEnterState(NebulaState.Credits.id, TransitionType.Fade);
                 break;
             // Quitter
             case 4:

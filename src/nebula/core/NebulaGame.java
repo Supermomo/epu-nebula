@@ -33,7 +33,7 @@ public class NebulaGame extends StateBasedGame
         MainMenu                (1),
         RapidModeMenu           (2),
         ScoresMenu              (3),
-        CreditsMenu             (4),
+        Credits                 (4),
 
         SetupAdventure          (50),
         LoadMenu                (51),
