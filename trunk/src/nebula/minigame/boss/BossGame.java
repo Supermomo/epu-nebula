@@ -5,6 +5,7 @@ import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
@@ -19,6 +20,7 @@ public class BossGame extends AbstractMinigameState
 		
 		int timerTir;
 		int time;
+		Image test;
 		
 	
 		/* Game ID */
@@ -55,6 +57,7 @@ public class BossGame extends AbstractMinigameState
 	        time = timerTir;
 	        tir1 = new Tir();
 	        tir2 = new Tir();
+	        test = new Image("ressources/images/boss/ship.png");
 
 	    }
 
@@ -120,6 +123,8 @@ public class BossGame extends AbstractMinigameState
 	    		tir2.setY(tir2.getY() - hip * (float)Math.cos(Math.toRadians(tir2.getImage().getRotation())));
 	    	}
 	    	
+	    	test.rotate(1);
+	    	
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -130,5 +135,6 @@ public class BossGame extends AbstractMinigameState
 	        boss.getImage().draw(boss.getX(), boss.getY());
 	        tir1.getImage().draw(tir1.getX(),tir1.getY());
 	        tir2.getImage().draw(tir2.getX(),tir2.getY());
+	        test.draw(100, 100);
 	    }
 }
