@@ -25,7 +25,7 @@ public class Ennemi
 		{
 			sonExp = new Sound("ressources/sons/spaceInvaders/explosion.ogg");
 
-			sonTir = new Sound[6];
+			sonTir = new Sound[4];
 			for (int i = 0; i < sonTir.length; i++)
 			    sonTir[i] = new Sound("ressources/sons/spaceInvaders/tirEnnemi.ogg");
 		}
