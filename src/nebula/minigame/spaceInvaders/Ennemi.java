@@ -14,7 +14,7 @@ public class Ennemi
 	private float y = 0;
 	private int pts = 0;
 	private static Sound sonExp = null;
-	private static Sound sonTir = null;
+	private static Sound[] sonTir = null;
 
 
 	public Ennemi(float x, float y) throws SlickException
@@ -24,7 +24,10 @@ public class Ennemi
 		if(sonExp == null)
 		{
 			sonExp = new Sound("ressources/sons/spaceInvaders/explosion.ogg");
-            sonTir = new Sound("ressources/sons/spaceInvaders/tirEnnemi.ogg");
+
+			sonTir = new Sound[6];
+			for (int i = 0; i < sonTir.length; i++)
+			    sonTir[i] = new Sound("ressources/sons/spaceInvaders/tirEnnemi.ogg");
 		}
 
 		this.x = x;
@@ -44,7 +47,15 @@ public class Ennemi
 			tir.setX(this.getX());
 			tir.setY(this.getY() + tir.getImage().getHeight());
 
-			if (!sonTir.playing()) sonTir.play();
+			// Play available sound
+			for (Sound s : sonTir)
+			{
+			    if (!s.playing())
+		        {
+			        s.play();
+			        break;
+		        }
+			}
 		}
 	}
 

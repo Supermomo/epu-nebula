@@ -40,7 +40,7 @@ public class Tank
 			tir.setX(this.getX() + this.getImage().getWidth()/2 - tir.getImage().getWidth()/2);
 			tir.setY(this.getY() - tir.getImage().getHeight());
 
-			if (!sonTir.playing()) sonTir.play();
+			sonTir.play();
 		}
 	}
 
