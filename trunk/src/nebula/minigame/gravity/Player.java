@@ -55,7 +55,7 @@ public class Player {
 		animation = animGravite.still(false);
 		isStill = -1;
 		this.nbrVies = 5;
-		this.vitesse = 0.25f;
+		this.vitesse = 0.275f;
 		this.enCourse = false;
 		this.peutIG = false;
 		this.isReversed = false;

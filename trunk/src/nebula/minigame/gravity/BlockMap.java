@@ -48,10 +48,7 @@ public class BlockMap {
 		for(int j=0; j<map.getObjectCount(id_layer_objet); j++) {
 			// Récupération du départ
 			if("start".equals(map.getObjectName(id_layer_objet,j))) {
-				setDepart(map.getObjectX(id_layer_objet, j)/tileHeight*tileHeight+tileHeight, map.getObjectY(id_layer_objet, j)/tileWidth*tileWidth+tileWidth);
-			} else if("warp".equals(map.getObjectName(id_layer_objet,j))) {
-				map.getObjectX(0, j);
-				map.getObjectY(0, j);
+				setDepart((map.getObjectX(id_layer_objet, j)+tileHeight/2)/tileHeight*tileHeight, (map.getObjectY(id_layer_objet, j)+tileWidth/2)/tileWidth*tileWidth);
 			}
 		}
 

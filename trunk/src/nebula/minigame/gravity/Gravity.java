@@ -64,24 +64,24 @@ public class Gravity extends AbstractMinigameState {
 		String prefixeChemin;
 		switch(difficulty) {
 		case Medium:
-			prefixeChemin = "m";
+			prefixeChemin = "medium/";
 			break;
 		case Hard:
-			prefixeChemin = "h";
+			prefixeChemin = "hard/";
 			break;
 		case Insane:
-			prefixeChemin = "i";
+			prefixeChemin = "insane/";
 			break;
 		case Easy:default:
-			prefixeChemin = "e";
+			prefixeChemin = "easy/";
 			break;
 		}
 		// --- Création de la liste des niveaux
 		Queue<String> listeNiveaux = new LinkedList<String>();
 		List<Integer> list = new ArrayList<Integer>();
-		for(int i = 0;i<3;) {
+		for(int i = 0;i<4;) {
 			// On veut boucler tant qu'il n'a pas ses trois map différentes
-			int choix = (int) (Math.random() * 3 + 1);
+			int choix = (int) (Math.random() * 4 + 1);
 			if(!list.contains(choix)) {
 				// On l'ajoute à la liste temporaire
 				list.add(choix);
@@ -152,7 +152,7 @@ public class Gravity extends AbstractMinigameState {
 			int newRender[] = modeleJeu.renderMap();
 			boolean stop = false;
 
-			float vitesseDeplacement = 5f;
+			float vitesseDeplacement = 4f;
 			// Traitement des X
 			if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
 				mapRender[2] -= vitesseDeplacement;
