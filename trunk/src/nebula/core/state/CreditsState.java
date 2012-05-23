@@ -65,6 +65,9 @@ public class CreditsState extends AbstractState
         // Font
         font  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
 
+        // Music
+        initMusic("ressources/sons/common/credits.ogg", 0.4f, true);
+
         // Split credits string
         strings = credits.split("\n");
 
