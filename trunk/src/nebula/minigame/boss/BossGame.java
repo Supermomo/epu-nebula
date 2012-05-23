@@ -13,7 +13,13 @@ import org.newdawn.slick.state.StateBasedGame;
 public class BossGame extends AbstractMinigameState
 {		
 		Vaisseau saucer = null; 
-		Tourelle tourelle1 = null;
+		Boss boss = null;
+		Tir tir1;
+		Tir tir2;
+		
+		int timerTir;
+		int time;
+		
 	
 		/* Game ID */
 		@Override public int getID () { return NebulaState.Boss.id; }
@@ -26,29 +32,29 @@ public class BossGame extends AbstractMinigameState
 	        switch (this.getDifficulty())
 	        {
 				case Easy:
-
+						timerTir = 40000;
 					break;
 
 				case Hard:
-
+						timerTir = 20000;
 					break;
 
 				case Insane:
-
+						timerTir = 10000;
 					break;
 
 				default:
-
+						timerTir = 30000;
 					break;
 			}
 	        saucer = new Vaisseau();
-	        tourelle1 = new Tourelle();
-	        tourelle1.setX(gc.getWidth()/2 - tourelle1.getImage().getWidth()/2);
-	        tourelle1.setY(tourelle1.getImage().getHeight());
-	        tourelle1.setViseX(tourelle1.getX() + tourelle1.getImage().getWidth()/2);
-	        tourelle1.setViseY(tourelle1.getY() + tourelle1.getImage().getHeight()/2);
-	        tourelle1.setCenterX(tourelle1.getViseX());
-	        tourelle1.setCenterY(tourelle1.getViseY());
+	        boss = new Boss();
+	        boss.setX(gc.getWidth()/2 - boss.getImage().getWidth()/2);
+	        boss.setY(0);
+	        // TIRS BOSS
+	        time = timerTir;
+	        tir1 = new Tir();
+	        tir2 = new Tir();
 
 	    }
 
@@ -57,7 +63,9 @@ public class BossGame extends AbstractMinigameState
 	    {
 	        // Call super method
 	        super.update(gc, game, delta);
-
+	        
+	        time -= delta;
+	        float hip = delta * 0.25f;
 	    	Input input = gc.getInput();
 
 	    	// =================== Gestion des deplacements ==========================
@@ -91,8 +99,27 @@ public class BossGame extends AbstractMinigameState
 
 	    	}
     	
-
+	    	if(time <= 0)
+	    	{
+	    		tir1.getImage().setRotation(0);
+	    		tir2.getImage().setRotation(0);
+	    		time = timerTir;
+	    		boss.tirer(tir1, true, saucer);
+	    		boss.tirer(tir2, false, saucer);
+	    	}
 	        
+	    	if(tir1.getTire())
+	    	{
+	    		tir1.setX(tir1.getX() + hip * (float)Math.sin(Math.toRadians(tir1.getImage().getRotation())));
+	    		tir1.setY(tir1.getY() - hip * (float)Math.cos(Math.toRadians(tir1.getImage().getRotation())));
+	    	}
+	    	
+	    	if(tir2.getTire())
+	    	{
+	    		tir2.setX(tir2.getX() + hip * (float)Math.sin(Math.toRadians(tir2.getImage().getRotation())));
+	    		tir2.setY(tir2.getY() - hip * (float)Math.cos(Math.toRadians(tir2.getImage().getRotation())));
+	    	}
+	    	
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -100,8 +127,8 @@ public class BossGame extends AbstractMinigameState
 	        // Call super method
 	        super.render(gc, game, g);
 	        saucer.getImage().draw(saucer.getX(), saucer.getY());
-	        tourelle1.getImage().draw(tourelle1.getX(), tourelle1.getY());
-	        tourelle1.vise(saucer,g);
-
+	        boss.getImage().draw(boss.getX(), boss.getY());
+	        tir1.getImage().draw(tir1.getX(),tir1.getY());
+	        tir2.getImage().draw(tir2.getX(),tir2.getY());
 	    }
 }

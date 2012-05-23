@@ -1,7 +1,9 @@
 package nebula.minigame.boss;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class Boss 
 {
@@ -13,10 +15,36 @@ public class Boss
 	
 	public Boss() throws SlickException
 	{
-		image = new Image("ressources/images/boss/saucer.png");
-		x = 300 - this.getImage().getWidth()/2;
-		y = 600 - 2 * this.getImage().getHeight() + 10;
+		image = new Image("ressources/images/boss/nebula-vaisseau-mere.png");
 		vies = 3;
+	}
+	
+	public void tirer(Tir tir, boolean droite, Vaisseau v)
+	{
+		int hip = 180;
+		if(droite)
+		{
+			if(v.getX() < tir.getX())
+			{
+				hip += 180;
+			}
+			tir.setX(620 + this.getX() - tir.getImage().getWidth()/2);
+			tir.setY(200 + this.getY() - tir.getImage().getHeight()/2);
+			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 620 + this.getX() - tir.getImage().getWidth()/2)/((v.getY() + v.getImage().getHeight()/2) - 200 + this.getY() - tir.getImage().getHeight()/2));
+			tir.getImage().setRotation(hip + (float)Math.toDegrees(angle));
+		}
+		else
+		{
+			if(v.getX() < tir.getX())
+			{
+				hip += 180;
+			}
+			tir.setX(180 + this.getX() - tir.getImage().getWidth()/2);
+			tir.setY(200 + this.getY() - tir.getImage().getHeight()/2);
+			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 180 + this.getX() - tir.getImage().getWidth()/2)/((v.getY() + v.getImage().getHeight()/2) - 200 + this.getY() - tir.getImage().getHeight()/2));
+			tir.getImage().setRotation(hip + (float)Math.toDegrees(angle));
+		}
+		tir.setTire(true);
 	}
 
 	public Image getImage() {
@@ -25,14 +53,6 @@ public class Boss
 
 	public void setImage(Image image) {
 		this.image = image;
-	}
-
-	public Image getImageInvincibility() {
-		return imageInvincibility;
-	}
-
-	public void setImageInvincibility(Image imageInvincibility) {
-		this.imageInvincibility = imageInvincibility;
 	}
 
 	public float getX() {
