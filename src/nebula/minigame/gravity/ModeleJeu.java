@@ -39,7 +39,6 @@ public class ModeleJeu {
 	 * @param map - Instance de map créé dans le jeu de base
 	 */
 	public ModeleJeu(Player hero, BlockMap map, int shownPixelsY, int shownPixelsX) {
-		//TODO
 		gravite=0.2f;
 		
 		setHero(hero);
@@ -268,7 +267,7 @@ public class ModeleJeu {
 		
 
 		// Nombre de Tiles par rapport au bord auquel il faut faire la transition
-		int delta = 3;
+		float delta = 2f;
 		int tileHeight = map.getTiledMap().getTileHeight();
 		int tileWidth = map.getTiledMap().getTileWidth();
 

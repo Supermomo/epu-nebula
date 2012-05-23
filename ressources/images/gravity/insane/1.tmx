@@ -2,7 +2,7 @@
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="16" height="30" tilewidth="80" tileheight="80">
  <tileset name="map" firstgid="1" tilewidth="80" tileheight="80">
-  <image source="map80.png"/>
+  <image source="../map80.png"/>
  </tileset>
  <layer name="block" width="16" height="30">
   <data encoding="base64" compression="gzip">
@@ -14,12 +14,12 @@
    H4sIAAAAAAAAAM2VwQqAIAyGzQTtYB2qa+//mBkojOGmmyAdvkvtc/W7LBhjdiUhsSUeJf7H/pKwmVXonzkbyC3s74HL1VD3IvAPZX6RcUfyL9lq56cnG6433htqf1u9Ida05wXvCwWXeWuN3jyoNSR51rIY9VvvzvnSWcC+pPfoHGJf2hv6Grf4s89fV3n+C1A7J/HcltpZ/x/H+Pjbr0HVfNdf9RPCcYAHAAA=
   </data>
  </layer>
- <layer name="death" width="16" height="30" visible="0">
+ <layer name="death" width="16" height="30">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgoBxIk6FHZlQ/Tv1SWNSji9Ha/VI42KTYL4VFrwwWdaS4nxL92PTCgCQaJlU/MW6iVD+xZhAKD0JmEBOe+MwYSP2UpgVK9NMrHWMDA6WXGvpHMgAAGkap0IAHAAA=
   </data>
  </layer>
- <layer name="end" width="16" height="30" visible="0">
+ <layer name="end" width="16" height="30">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgGAWjYBSMglEwCkYOkB1g/TAAAKT12WCABwAA
   </data>

@@ -2,7 +2,7 @@
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="13" height="8" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
-  <image source="map80.png"/>
+  <image source="../map80.png"/>
  </tileset>
  <layer name="block" width="13" height="10">
   <data encoding="base64" compression="gzip">
@@ -14,14 +14,14 @@
    H4sIAAAAAAAAAONgYGDgIAPzkYg5gViORDyY9YDCgIlETE44AwD+ogkPoAEAAA==
   </data>
  </layer>
- <layer name="end" width="13" height="10" visible="0">
+ <layer name="end" width="13" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGD5AdhDrGewAACGWCFoIAgAA
+   H4sIAAAAAAAAAGNgGJxAdpjpGewAAHyL0cEIAgAA
   </data>
  </layer>
  <layer name="death" width="13" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGJxAagDtlsSChzsAADEnIE8IAgAA
+   H4sIAAAAAAAAAGNgGAXoQBILHu4AAMMLwHYIAgAA
   </data>
  </layer>
  <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">

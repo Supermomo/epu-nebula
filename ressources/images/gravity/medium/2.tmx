@@ -2,16 +2,11 @@
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="13" height="30" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
-  <image source="map80.png"/>
+  <image source="../map80.png"/>
  </tileset>
  <layer name="block" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAABNnYGAQJwOTAgaTHnQ1hPRgk8enB5ccqeLocuhuxgXw2YNP/UDrITU88clhi2NC+miRdogxA5v7iNVDatgQysPE6CElLHHpo5Z/CAF66yFWHzllKb3LXgBiy4NbGAYAAA==
-  </data>
- </layer>
- <layer name="map" width="13" height="30" visible="0">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAM2USwrAIAxE7Qeq/bnovvc/ZhOo0EUSnYDQxWx0HpJJ4hZCOAHtpIV0A0o/YibSBTDsP4B3JL/FaH6LWR0ZaAy/H0EmOZhsMHw3OHqqcbWeSlzL7DCHzE5rPbOD4bMRzK30LQK5fRmJqzHl36jlll8fugtobr0YLVNJZeeiUa80e9r+9KjnASWfjjsYBgAA
+   H4sIAAAAAAAAAM2Uyw0AIQhE6YL+O927YT4YdCXxIPDUTHAyInJjdWKCcd5S7dHZJ5ks8i6z5l5hHO1VVHOguCmG5VUN3en8B6Ql4xmD+lyG1d05UIzS5baHdLzr7xlFfR3vnWA+IHc06BgGAAA=
   </data>
  </layer>
  <layer name="end" width="13" height="30">
@@ -19,9 +14,14 @@
    H4sIAAAAAAAAAGNgGAWjYBSMglEwnIEsCRgEAEs+GpUYBgAA
   </data>
  </layer>
+ <layer name="map" width="13" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAM2U3QqAIAxGtYTMfsHysvd/zAwUZGz+oVBw6ELOpuvLlTG2F7BYZstTwNTA4ZYLYYw4iqitOjvCvc8CB+v7F2dD5i6BcyJ1c3IgKpxULypv2nIXOh5DODJSEztf2Ee7WUIfzp/am6lwPBxZhw7c+5eDI+HArNTMuqUjGX1f5Pah7oQeGcW+0+CA/1zq3DJwUg90XizPv7gYBgAA
+  </data>
+ </layer>
  <layer name="death" width="13" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGNxAmop6JEnUI0lAnlz12NxBqj+xqZchUQ8+9TA5eumhpj58ZhCrj1yAL41hAzD3SJKgF91P6PqwhRs2MVLdik8fNfOpFBSToocce4jVAwo7cRzmoIcrIbuwxQOpeoj1D6HyAB8AAAQAykYYBgAA
+   H4sIAAAAAAAAAGNgGNxAmkI9lOqnhR4ZMswnR89A2iuFhNEBveJkoAEs7LC5HT1cJInQQ4496Oaj20vruMCVBqgBJAkrGVRAEgljA7QKJ3IAAOMG84kYBgAA
   </data>
  </layer>
  <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">

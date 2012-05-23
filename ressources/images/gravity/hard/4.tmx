@@ -2,11 +2,11 @@
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="20" height="10" tilewidth="80" tileheight="80">
  <tileset name="Untitled" firstgid="1" tilewidth="80" tileheight="80">
-  <image source="map80.png"/>
+  <image source="../map80.png"/>
  </tileset>
  <layer name="block" width="20" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAABNnoB4Qh2JS1aPrEUeTp8QOcvSS6gdqgoEyj9hwxhdnpLqdkrhEN4ea5iGbCwC4WZDiIAMAAA==
+   H4sIAAAAAAAAABNnoB4Qh2JS1aPrEUeTp8QOcvSS6gdqgoEyj9hwxhdnpLqdkrhEBrJUNg8GQGYBAFIGdUIgAwAA
   </data>
  </layer>
  <layer name="map" width="20" height="10" visible="0">
@@ -14,7 +14,7 @@
    H4sIAAAAAAAAAONkYGCQoxJmB2JOEtQLA7EIEIuiiYvhMU8Yi3pqu0+MBDNJ8e9gNg/dz7jCmQNHnJETL6SmF0Jup5Z5yO4DAP2phVogAwAA
   </data>
  </layer>
- <layer name="death" width="20" height="10" visible="0">
+ <layer name="death" width="20" height="10">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAAGNgYGCQohIeBaNgMABJKmEQAACmfAuVIAMAAA==
   </data>

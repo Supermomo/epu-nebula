@@ -2,7 +2,7 @@
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="13" height="30" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
-  <image source="map80.png"/>
+  <image source="../map80.png"/>
  </tileset>
  <layer name="block" width="13" height="30">
   <data encoding="base64" compression="gzip">
