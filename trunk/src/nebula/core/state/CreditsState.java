@@ -24,18 +24,17 @@ public class CreditsState extends AbstractState
     private static final String credits =
         "Crédits\n" +
         " \n" +
-        "BLAAAAAAAAAAf dfdfdf d fd AAAAAAAAAAAA\n" +
-        "BLAAAAAAAAAAA\n" +
         " \n" +
-        "dfd     djfs AAAAAAAA\n" +
-        "GWEEEN !\n" +
-        "BLAAAAAAAAAA dfgdjjyidyuyyAAAAA\n" +
-        "BLAAAAAAAAAAf dfdfdf d fd AAAAAAAAAAAA\n" +
-        "BLAAAAAAAAAAA\n" +
+        "Nebula - Projet DeViNT 2012\n" +
+        "Polytech'Nice-Sophia\n" +
         " \n" +
-        "dfd     djfs AAAAAAAA\n" +
-        "GWEEEN !\n" +
-        "BLAAAAAAAAAA dfgdjjyidyuyyAAAAA";
+        " \n" +
+        "Créateurs / Développeurs :\n" +
+        " \n" +
+        "Gwenn Aubert\n" +
+        "Thomas Di'Meco\n" +
+        "Matthieu Maugard\n" +
+        "Gaspard Perrot";
 
 
     // Credits properties
