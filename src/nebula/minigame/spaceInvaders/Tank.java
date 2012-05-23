@@ -64,6 +64,11 @@ public class Tank
 	{
 		this.vies--;
 	}
+	
+	public void addVie()
+	{
+		this.vies++;
+	}
 
 	public Image getImage() {
 		return image;
