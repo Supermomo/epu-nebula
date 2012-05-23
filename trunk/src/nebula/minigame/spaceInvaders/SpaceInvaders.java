@@ -17,7 +17,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -97,8 +96,9 @@ public class SpaceInvaders extends AbstractMinigameState {
         invincibility = 0;
         bonus = false;
         time = 0;
-    	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
-    	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
+        xnyan = -100;
+    	ynyan = -100;
+    	
     	tank = new Tank();
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
     	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
@@ -207,7 +207,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 
 
     	// ========================== ENNEMIS ==============================
-    	float hip = 0.2f * delta * (initialNbEnnemis / nbEnnemis);
+    	
+    	float hip = 0.2f * delta * (((initialNbEnnemis - nbEnnemis)/12)+1);
     	
     	for(int i=0; i < 4; i++)
     	{
@@ -311,10 +312,10 @@ public class SpaceInvaders extends AbstractMinigameState {
     		//sVictoire.play();
     		//gc.pause();
     		
-    		if(scoreSpaceInvaders - 1000 > scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (50 * (3.0/tank.getVies()))) - (3 - tank.getVies())*250)
+    		if(scoreSpaceInvaders - 1000 > scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (50 * (3.0f/tank.getVies()))) - (3 - tank.getVies())*250)
     			this.score = scoreSpaceInvaders - 1000;
     		else
-    			this.score = scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0/tank.getVies())) - (3 - tank.getVies())*250);
+    			this.score = scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0f/tank.getVies())) - (3 - tank.getVies())*250);
     		
     		gameVictory();
     	}
