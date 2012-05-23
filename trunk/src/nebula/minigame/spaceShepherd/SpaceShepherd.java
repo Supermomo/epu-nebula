@@ -78,6 +78,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private String pathTargetImg="ressources/images/spaceShepherd/vortex.png";
 
 	private Font font;
+	
+	private float powerTimer;
 
 
 
@@ -115,6 +117,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 			scoreCoef = 275.0f;
 			timeCoef=8.0f;
 			fenceCoef=8.0f;
+			powerTimer=1000;
 		}
 		else if(Difficulty.Hard.equals(difficulty)){
 			flockNumber=32;
@@ -124,6 +127,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 			scoreCoef = 130.0f;
 			timeCoef=12.0f;
 			fenceCoef=12.0f;
+			powerTimer=1000;
 		}
 		else if(Difficulty.Insane.equals(difficulty)){
 			flockNumber=64;
@@ -133,6 +137,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 			scoreCoef = 90.0f;
 			timeCoef=15.0f;
 			fenceCoef=15.0f;
+			powerTimer=1000;
 		}
 		else{//MEDIUM
 			flockNumber=16;
@@ -142,6 +147,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 			scoreCoef = 200.0f;
 			timeCoef=9.0f;
 			fenceCoef=9.0f;
+			powerTimer=1000;
 		}
 		
 		startingTime=remainingTime;
@@ -186,10 +192,7 @@ public class SpaceShepherd extends AbstractMinigameState {
         if(!wrongMoveSound.playing() && !ambianceSound.playing() && !flockSound.playing() && !plotSound.playing()){
         	ambianceSound.play();
         }
-		Input input = gc.getInput();
-
-		flock.moveRandom(delta, fences);
-		
+		Input input = gc.getInput();	
 
 		if (input.isKeyDown(Input.KEY_M)) {
 
@@ -226,8 +229,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 				plotSound.play();
 			}
 			else if (validDistanceFromLastPoint() && !flock.isDividing(new Line(lastPlot,plot))) {
-
-				System.out.println("x : "+x+" y : "+y);
+				
 				fences.add(new Line(lastPlot,plot));
 				lastPlot=null;
 				lastPlot=new Vector2f(x,y);
@@ -239,12 +241,21 @@ public class SpaceShepherd extends AbstractMinigameState {
 			}
 			else{
 				wrongMoveSound.play();
-				System.out.println("Divide");
 			}
-			System.out.println("x : "+x+"  y : "+y);
 
-			System.out.println("////////////////////////////////////////////////////////");
 		}
+		
+		if((input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) && powerTimer>0){
+			powerTimer-=delta;
+			flock.apply(flock.seek(new Vector2f(x,y)),delta,fences);
+			for(SteeringEntity se : flock.getFlockers()){
+				se.apply(se.seek(new Vector2f(x,y)),delta,fences);
+			}
+		}
+		else {
+			flock.moveRandom(delta, fences);
+		}
+		
 		
 		int nb=flock.getFlockers().size();
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){

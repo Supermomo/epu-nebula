@@ -89,7 +89,6 @@ public class SteeringEntity {
 		while(!isValidTrajectory(newPos, fences)){
 			//new position from a ramdom deplacement
 			newPos=moveRandomlyInternal(delta);
-			System.out.println("random move pb");
 			maxRotation*=3;
 			maxSpeed*=1.1f;
 		}//end while
@@ -101,10 +100,15 @@ public class SteeringEntity {
 	 * Apply the given velocity (scaled at max speed) to the steering entity, moving it to a new position
 	 * @param velocity
 	 */
-	public void apply(Vector2f velocity){
+	public void apply(Vector2f velocity, float delta,  ArrayList<Line> fences){
 		velocity.normalise();
-		velocity.scale(maxSpeed);
-		position.add(velocity);
+		velocity.scale(maxSpeed*delta);
+		Vector2f newPos=new Vector2f(position.x,position.y);
+		newPos.add(velocity);
+		if(isValidTrajectory(newPos, fences)){
+			position.add(velocity);
+		}
+		
 	}
 	
 	public boolean isValidTrajectory(Vector2f newPos, ArrayList<Line> fences){
