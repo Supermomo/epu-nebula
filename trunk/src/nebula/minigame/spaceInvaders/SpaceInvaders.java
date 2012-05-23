@@ -3,6 +3,7 @@ package nebula.minigame.spaceInvaders;
 import java.util.Random;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.helper.Collision;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.Utils;
 import nebula.core.helper.NebulaFont.FontName;
@@ -17,6 +18,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -54,6 +56,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 	boolean bonus;
 	int time;
 	private static Font font;
+	Sound sonNyan;
 	/* Game ID */
 	@Override public int getID () { return NebulaState.SpaceInvaders.id; }
 
@@ -98,6 +101,7 @@ public class SpaceInvaders extends AbstractMinigameState {
         time = 0;
         xnyan = -100;
     	ynyan = -100;
+    	sonNyan = new Sound("ressources/sons/spaceInvaders/nyan.ogg");
     	
     	tank = new Tank();
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
@@ -168,6 +172,15 @@ public class SpaceInvaders extends AbstractMinigameState {
     	if(bonus)
     	{
     		xnyan += 0.35f * delta;
+    	}
+    	
+    	if(bonus && Collision.rectangle(xnyan,ynyan, nyanCat.getWidth(), nyanCat.getHeight(), tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight()/3))
+    	{
+    		nyanCat.stop();
+    		xnyan = -100;
+    		ynyan = -100;
+    		tank.addVie();
+    		sonNyan.play();
     	}
     	
     	// ========================  GESTION DES TIRS ============================
