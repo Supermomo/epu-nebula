@@ -8,10 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class HistoryShepherdFlyState extends AbstractTransitionState
+public class HistoryEndFlyState extends AbstractTransitionState
 {
     /* Transition ID */
-    @Override public int getID () { return NebulaState.HistoryShepherdFly.id; }
+    @Override public int getID () { return NebulaState.HistoryEndFly.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -22,6 +22,7 @@ public class HistoryShepherdFlyState extends AbstractTransitionState
 
         this.setTransitionType(TransitionType.HorizontalSplit);
         this.setTransitionImage("ressources/images/histoire/fly.png");
-        this.setTransitionTime(3000.0f);
+        this.setTransitionVoice("ressources/sons/histoire/fly2.ogg");
+        this.setTransitionTime(8000.0f);
     }
 }

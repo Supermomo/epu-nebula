@@ -20,8 +20,9 @@ public class HistoryBreakout1State extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.Fade);
+        this.setTransitionType(TransitionType.HorizontalSplit);
         this.setTransitionImage("ressources/images/histoire/breakout1.png");
-        this.setTransitionTime(3000.0f);
+        this.setTransitionVoice("ressources/sons/histoire/breakout1.ogg");
+        this.setTransitionTime(7000.0f);
     }
 }

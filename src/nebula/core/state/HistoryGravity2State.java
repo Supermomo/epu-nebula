@@ -22,6 +22,7 @@ public class HistoryGravity2State extends AbstractTransitionState
 
         this.setTransitionType(TransitionType.Fade);
         this.setTransitionImage("ressources/images/histoire/gravity2.png");
-        this.setTransitionTime(3000.0f);
+        this.setTransitionVoice("ressources/sons/histoire/gravity2.ogg");
+        this.setTransitionTime(11000.0f);
     }
 }
