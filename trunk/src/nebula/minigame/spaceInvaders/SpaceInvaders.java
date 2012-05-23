@@ -41,7 +41,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 	Random rand;
 	int seuil;
 	Image coeur = null;
-	int scoreSpaceInvaders = 0;
+	int scoreSpaceInvaders;
 	Image defaite = null;
 	Sound sVictoire = null;
 	Sound sDefaite = null;
@@ -67,25 +67,24 @@ public class SpaceInvaders extends AbstractMinigameState {
 				this.initialNbEnnemis = 12;
 				this.chanceTir = 75;
 				this.nbTir = 6;
-				scoreSpaceInvaders = 3000;
+				scoreSpaceInvaders = 4000;
 				break;
 
 			case Insane:
 				this.initialNbEnnemis = 16;
 				this.chanceTir = 50;
 				this.nbTir = 10;
-				scoreSpaceInvaders = 4000;
+				scoreSpaceInvaders = 5000;
 				break;
 
 			default:
 				this.initialNbEnnemis = 8;
 				this.chanceTir = 75;
 				this.nbTir = 3;
-				scoreSpaceInvaders = 5000;
+				scoreSpaceInvaders = 3000;
 				break;
 		}
         seuil = chanceTir;
-        scoreSpaceInvaders = 0;
         invincibility = 0;
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
@@ -100,15 +99,10 @@ public class SpaceInvaders extends AbstractMinigameState {
     	}
     	victoire = new Image("ressources/images/spaceInvaders/victoire.png");
     	explo = new SpriteSheet("ressources/images/spaceInvaders/explosion17.png",64,64,0);
-    	explosion = new Animation();
+    	explosion = new Animation(explo,25);
     	explosion.setAutoUpdate(true);
-    	for(int i =0; i < 5; i++)
-    	{
-    		for(int j=0; j < 5; j++)
-    			explosion.addFrame(explo.getSprite(j,i),20);
-    	}
     	explosion.setLooping(false);
-    	explosion.stopAt(24);
+    	explosion.stopAt(26);
     	multiple = initialNbEnnemis/4;
     	ennemi = new Ennemi[4][multiple];
         for(int i =0; i < 4; i++)
@@ -238,7 +232,6 @@ public class SpaceInvaders extends AbstractMinigameState {
     	    			explosion.restart();
     	    		}
     	    		nbEnnemis--;
-    	    		scoreSpaceInvaders += ennemi[i][j].getPts();
     	    		ennemi[i][j].getSon().play();
     	    		ennemi[i][j] = null;
     	    		tir.setX(-100);
@@ -283,7 +276,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     		//sVictoire.play();
     		//gc.pause();
     		
-    		this.score= scoreSpaceInvaders - (3 - tank.getVies()) * 333;
+    		this.score = scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * 25;
     		gameVictory();
     	}
 

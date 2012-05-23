@@ -15,13 +15,14 @@ public class Tank
 	private float x;
 	private float y;
 	private int vies;
+	private int tirEffectue;
 
 	public Tank() throws SlickException
 	{
 		image = new Image("ressources/images/spaceInvaders/saucer.png");
 		imageInvincibility = new Image("ressources/images/spaceInvaders/saucer-inv.png");
         imageInvincibility.setAlpha(0.95f);
-
+        tirEffectue = 0;
         if (sonExp == null)
         {
             sonExp = new Sound("ressources/sons/spaceInvaders/explosion.ogg");
@@ -39,8 +40,8 @@ public class Tank
 		{
 			tir.setX(this.getX() + this.getImage().getWidth()/2 - tir.getImage().getWidth()/2);
 			tir.setY(this.getY() - tir.getImage().getHeight());
-
 			sonTir.play();
+			tirEffectue++;
 		}
 	}
 
@@ -100,5 +101,10 @@ public class Tank
 	public Sound getSon()
 	{
 		return sonExp;
+	}
+	
+	public int getTirEffectue()
+	{
+		return tirEffectue;
 	}
 }
