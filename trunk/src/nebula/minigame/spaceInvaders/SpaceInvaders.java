@@ -197,16 +197,16 @@ public class SpaceInvaders extends AbstractMinigameState {
     		if(tirEnnemi[t].getY() < gc.getHeight())
         		tirEnnemi[t].setY(tirEnnemi[t].getY() + 0.4f * delta);
 
-        	for(int i=0; i < 4; i++)
+        	for(int i=0; i < multiple; i++)
         	{
-        		for(int j=0; j < multiple; j++)
+        		for(int j=0; j < 4; j++)
         		{
-        			if(ennemi[i][j] != null)
+        			if(ennemi[j][i] != null)
     				{
     	    			float tire = rand.nextInt(100);
     	    			if(tire >= seuil)
     	    			{
-        					ennemi[i][j].tirer(tirEnnemi[t],gc);
+        					ennemi[j][i].tirer(tirEnnemi[t],gc);
         					seuil = chanceTir;
         				}
     	    			else
