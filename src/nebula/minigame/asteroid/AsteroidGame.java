@@ -69,7 +69,7 @@ public class AsteroidGame extends AbstractMinigameState
 
         // Initial properties
         lifes = 3;
-        score = lifes * 200 * (difficulty.ordinal() + 1);
+        score = 600 + 1000 * (difficulty.ordinal() + 1);
         time = initialTime;
         crystalTimer = 10 * 1000;
         invincibility = 0;
@@ -160,7 +160,7 @@ public class AsteroidGame extends AbstractMinigameState
                 if (objectTouched.isCrystal())
                 {
                     spaceObjects.remove(objectTouched);
-                    score += 100 * (difficulty.ordinal() + 3);
+                    score += 100;
                     sndCrystal.play();
                 }
                 else if (invincibility <= 0)
@@ -169,7 +169,7 @@ public class AsteroidGame extends AbstractMinigameState
 
                     // Asteroid touched
                     lifes--;
-                    score -= 200 * (difficulty.ordinal() + 1);
+                    score -= 200;
                     invincibility = 2 * 1000;
                     xExplosion = objectTouched.getCenterX() - animExplosion.getWidth()/2;
                     yExplosion = objectTouched.getCenterY() - animExplosion.getHeight()/2;
@@ -218,7 +218,7 @@ public class AsteroidGame extends AbstractMinigameState
 
         // Render lifes
         final float lifeImageSize = 24.0f;
-        for (int i = 0; i < lifes; i++)
+        for (int i = 0; i < lifes+1; i++)
             imgLife.draw(4.0f+i*(4.0f+lifeImageSize),
                            (gc.getHeight()-lifeImageSize-4.0f),
                            lifeImageSize, lifeImageSize);
