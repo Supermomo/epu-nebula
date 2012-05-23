@@ -108,7 +108,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	explosion.stopAt(26);
     	// ============= NYAN CAT ===============
     	nyan = new SpriteSheet("ressources/images/spaceInvaders/nyansprites.png",171,72,0);
-    	nyanCat = new Animation(nyan,275);
+    	nyanCat = new Animation(nyan,480);
     	nyanCat.setAutoUpdate(true);
     	nyanCat.setLooping(true);
     	nyanCat.stopAt(13);
@@ -159,7 +159,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	
     	if(bonus)
     	{
-    		xnyan += 0.6f * delta;
+    		xnyan += 0.35f * delta;
     	}
     	
     	// ========================  GESTION DES TIRS ============================
@@ -301,10 +301,10 @@ public class SpaceInvaders extends AbstractMinigameState {
     		//sVictoire.play();
     		//gc.pause();
     		
-    		if(scoreSpaceInvaders < scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (50 * (3.0/tank.getVies())))
+    		if(scoreSpaceInvaders < scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (50 * (3.0/tank.getVies()))) - (3 - tank.getVies())*250)
     			this.score = scoreSpaceInvaders - 1000;
     		else
-    			this.score = scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0/tank.getVies()));
+    			this.score = scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0/tank.getVies())) - (3 - tank.getVies())*250);
     		
     		gameVictory();
     	}
