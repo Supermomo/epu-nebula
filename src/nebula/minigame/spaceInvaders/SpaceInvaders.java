@@ -36,16 +36,18 @@ public class SpaceInvaders extends AbstractMinigameState {
 	Animation explosion = null;
 	float xExplo = -100;
 	float yExplo = -100;
+	// Le bonus
+	SpriteSheet nyan = null;
+	Animation nyanCat = null;
+	float xnyan = -100;
+	float ynyan = -100;
 	int nbEnnemis;
-	Image victoire = null;
 	Random rand;
 	int seuil;
 	Image coeur = null;
 	int scoreSpaceInvaders;
-	Image defaite = null;
-	Sound sVictoire = null;
-	Sound sDefaite = null;
-
+	boolean bonus;
+	int time;
 	/* Game ID */
 	@Override public int getID () { return NebulaState.SpaceInvaders.id; }
 
@@ -86,6 +88,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 		}
         seuil = chanceTir;
         invincibility = 0;
+        bonus = false;
+        time = 0;
     	//sVictoire = new Sound("assets/sound/spaceInvaders/victoire.ogg");
     	//sDefaite = new Sound("assets/sound/spaceInvaders/defaite.ogg");
     	tank = new Tank();
@@ -97,12 +101,17 @@ public class SpaceInvaders extends AbstractMinigameState {
     	{
     		tirEnnemi[i] = new Tir(1);
     	}
-    	victoire = new Image("ressources/images/spaceInvaders/victoire.png");
     	explo = new SpriteSheet("ressources/images/spaceInvaders/explosion17.png",64,64,0);
     	explosion = new Animation(explo,25);
     	explosion.setAutoUpdate(true);
     	explosion.setLooping(false);
     	explosion.stopAt(26);
+    	// ============= NYAN CAT ===============
+    	nyan = new SpriteSheet("ressources/images/spaceInvaders/nyansprites.png",171,72,0);
+    	nyanCat = new Animation(nyan,275);
+    	nyanCat.setAutoUpdate(true);
+    	nyanCat.setLooping(true);
+    	nyanCat.stopAt(13);
     	multiple = initialNbEnnemis/4;
     	ennemi = new Ennemi[4][multiple];
         for(int i =0; i < 4; i++)
@@ -112,7 +121,6 @@ public class SpaceInvaders extends AbstractMinigameState {
     	}
     	rand = new Random();
     	coeur = new Image("ressources/images/spaceInvaders/coeur.png");
-    	defaite = new Image("ressources/images/spaceInvaders/defaite.png");
     	nbEnnemis=initialNbEnnemis;
     }
 
@@ -121,7 +129,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     {
         // Call super method
         super.update(gc, game, delta);
-
+        time += delta;
     	Input input = gc.getInput();
 
     	// =================== Gestion des deplacements ==========================
@@ -136,7 +144,24 @@ public class SpaceInvaders extends AbstractMinigameState {
     		if(tank.getX() > 0)
     			tank.setX(tank.getX() - (0.4f * delta));
     	}
-
+    	// =========================== BONUS ====================================
+    	float alea = rand.nextInt(100);
+    	
+    	if (alea == 42 && !bonus && time > 12000)
+    	{
+    		nyanCat.stop();
+    		nyanCat.setCurrentFrame(0);
+    		nyanCat.start();
+    		xnyan = 0;
+    		ynyan = 0;
+    		bonus = true;
+    	}
+    	
+    	if(bonus)
+    	{
+    		xnyan += 0.6f * delta;
+    	}
+    	
     	// ========================  GESTION DES TIRS ============================
     	if(input.isKeyDown(Input.KEY_SPACE))
     	{
@@ -276,10 +301,10 @@ public class SpaceInvaders extends AbstractMinigameState {
     		//sVictoire.play();
     		//gc.pause();
     		
-    		if(scoreSpaceInvaders < scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (25 * (3/tank.getVies())))
+    		if(scoreSpaceInvaders < scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (50 * (3.0/tank.getVies())))
     			this.score = scoreSpaceInvaders - 1000;
     		else
-    			this.score = scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (25 * (3/tank.getVies()));
+    			this.score = scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0/tank.getVies()));
     		
     		gameVictory();
     	}
@@ -288,8 +313,6 @@ public class SpaceInvaders extends AbstractMinigameState {
     	{
     		gameDefeat();
     	}
-
-
     }
 
     public void render(GameContainer gc, StateBasedGame game, Graphics g)
@@ -321,6 +344,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     			}
     	}
     	g.drawAnimation(explosion, xExplo, yExplo);
+    	g.drawAnimation(nyanCat, xnyan, ynyan);
     	for(int i = 0; i < tank.getVies(); i++)
     	{
     		coeur.draw(10 + i * coeur.getWidth(), gc.getHeight() - coeur.getHeight());
