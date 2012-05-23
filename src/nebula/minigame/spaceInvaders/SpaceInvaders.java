@@ -276,7 +276,10 @@ public class SpaceInvaders extends AbstractMinigameState {
     		//sVictoire.play();
     		//gc.pause();
     		
-    		this.score = scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * 25;
+    		if(this.score < scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (25 * (3/tank.getVies())))
+    			this.score -= 1000;
+    		else
+    			this.score = scoreSpaceInvaders + (initialNbEnnemis - tank.getTirEffectue()) * (25 * (3/tank.getVies()));
     		gameVictory();
     	}
 
