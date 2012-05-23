@@ -60,24 +60,28 @@ public class SpaceInvaders extends AbstractMinigameState {
 				this.initialNbEnnemis = 4;
 				this.chanceTir = 75;
 				this.nbTir = 2;
+				scoreSpaceInvaders = 2000;
 				break;
 
 			case Hard:
 				this.initialNbEnnemis = 12;
 				this.chanceTir = 75;
 				this.nbTir = 6;
+				scoreSpaceInvaders = 3000;
 				break;
 
 			case Insane:
 				this.initialNbEnnemis = 16;
 				this.chanceTir = 50;
 				this.nbTir = 10;
+				scoreSpaceInvaders = 4000;
 				break;
 
 			default:
 				this.initialNbEnnemis = 8;
 				this.chanceTir = 75;
 				this.nbTir = 3;
+				scoreSpaceInvaders = 5000;
 				break;
 		}
         seuil = chanceTir;
@@ -278,9 +282,8 @@ public class SpaceInvaders extends AbstractMinigameState {
     	{
     		//sVictoire.play();
     		//gc.pause();
-    		scoreSpaceInvaders *= 2.75;
-    		scoreSpaceInvaders += tank.getVies() * 200;
-    		this.score=scoreSpaceInvaders;
+    		
+    		this.score= scoreSpaceInvaders - (3 - tank.getVies()) * 333;
     		gameVictory();
     	}
 
