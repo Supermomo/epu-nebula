@@ -22,6 +22,7 @@ public class HistoryShepherd1State extends AbstractTransitionState
 
         this.setTransitionType(TransitionType.HorizontalSplit);
         this.setTransitionImage("ressources/images/histoire/shepherd1.png");
-        this.setTransitionTime(3000.0f);
+        this.setTransitionVoice("ressources/sons/histoire/shepherd1.ogg");
+        this.setTransitionTime(7000.0f);
     }
 }

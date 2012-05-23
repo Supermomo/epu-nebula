@@ -22,6 +22,7 @@ public class HistoryAsteroidFlyState extends AbstractTransitionState
 
         this.setTransitionType(TransitionType.HorizontalSplit);
         this.setTransitionImage("ressources/images/histoire/fly.png");
-        this.setTransitionTime(3000.0f);
+        this.setTransitionVoice("ressources/sons/histoire/fly1.ogg");
+        this.setTransitionTime(16000.0f);
     }
 }

@@ -26,6 +26,7 @@ public class ScoresMenuState extends AbstractMenuState
 
         // Scores
         addMenuItem("Aventure : " + NebulaConfig.getAdventureBestScore(), false);
+        addMenuSpaces(1);
 
         for (Minigame mg : Minigame.values())
             addMenuItem(mg.name + " : " + NebulaConfig.getRapidmodeScore(mg), false);

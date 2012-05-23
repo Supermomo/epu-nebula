@@ -23,6 +23,6 @@ public class HistoryInvaders3State extends AbstractTransitionState
         this.setTransitionType(TransitionType.Fade);
         this.setTransitionImage("ressources/images/histoire/invaders3.png");
         this.setTransitionVoice("ressources/sons/histoire/invaders3.ogg");
-        this.setTransitionTime(12000.0f);
+        this.setTransitionTime(13000.0f);
     }
 }
