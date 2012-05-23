@@ -128,11 +128,10 @@ public class ScoreTransitionState extends AbstractMenuState
             else
                 NebulaConfig.setAdventureMinigame(minigame);
         }
-        else
-        {
-            if (score > NebulaConfig.getRapidmodeScore(minigame))
+
+        // Save best minigame score
+        if (score > NebulaConfig.getRapidmodeScore(minigame))
                 NebulaConfig.setRapidmodeScore(minigame, score);
-        }
 
         NebulaConfig.saveData();
     }

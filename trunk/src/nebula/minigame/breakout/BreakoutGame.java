@@ -66,7 +66,7 @@ public class BreakoutGame extends AbstractMinigameState
 
         // Initial life count and score
         lifes = 3;
-        score = lifes * 200 * (difficulty.ordinal() + 1);
+        score = 1000 * (difficulty.ordinal() + 1);
 
         // Game state and counters
         gameCounter = 1.0f;
@@ -168,11 +168,7 @@ public class BreakoutGame extends AbstractMinigameState
 
                         // If the brick is broken
                         if (b.isBroken())
-                        {
                             brickToRemove.add(b);
-                            score += 80;
-                        }
-
                     }
                 }
 
@@ -287,7 +283,7 @@ public class BreakoutGame extends AbstractMinigameState
 
         // Render lifes
         final float lifeImageSize = 20.0f;
-        for (int i = 0; i < lifes; i++)
+        for (int i = 0; i < lifes+1; i++)
             imgLife.draw(4.0f+i*(4.0f+lifeImageSize),
                            (gc.getHeight()-lifeImageSize-4.0f),
                            lifeImageSize, lifeImageSize);
@@ -296,13 +292,32 @@ public class BreakoutGame extends AbstractMinigameState
         //renderScore(gc, ScorePosition.BottomRight);
     }
 
+    @Override
+    protected void gameVictory ()
+    {
+        switch (lifes)
+        {
+            case 3:
+                score += 1000;
+                break;
+            case 2:
+                score += 666;
+                break;
+            case 1:
+                score += 333;
+                break;
+        }
+
+        // Game victory
+        super.gameVictory();
+    }
+
     /**
-     * Reduce life and start a new game
+     * Reduce life and start a new life
      */
     private void invokeDefeat ()
     {
         lifes--;
-        score -= 200 * (difficulty.ordinal() + 1);
         gameCounter = 1.0f;
         gameState = GameState.Inactive;
         racket.resetPosition();
