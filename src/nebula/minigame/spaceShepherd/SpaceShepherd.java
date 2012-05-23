@@ -180,7 +180,6 @@ public class SpaceShepherd extends AbstractMinigameState {
         remainingTime=remainingTime-delta;
 
         if(remainingTime<=0){
-        	stopAllSound();
         	this.gameDefeat();
         }
 
@@ -250,7 +249,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 		int nb=flock.getFlockers().size();
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){
 			score=computeScore();
-			stopAllSound();
 			this.gameVictory();
 		}
 		else if(nb!=flock.getFlockers().size()){
@@ -329,7 +327,7 @@ public class SpaceShepherd extends AbstractMinigameState {
     		throws SlickException {
 
     	super.leave(container, game);
-    	//stopAllSound();
+    	stopAllSound();
     }
 
 }
