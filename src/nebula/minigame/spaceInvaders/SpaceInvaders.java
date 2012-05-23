@@ -3,9 +3,15 @@ package nebula.minigame.spaceInvaders;
 import java.util.Random;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.Utils;
+import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -48,6 +54,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 	int scoreSpaceInvaders;
 	boolean bonus;
 	int time;
+	private static Font font;
 	/* Game ID */
 	@Override public int getID () { return NebulaState.SpaceInvaders.id; }
 
@@ -122,6 +129,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	rand = new Random();
     	coeur = new Image("ressources/images/spaceInvaders/coeur.png");
     	nbEnnemis=initialNbEnnemis;
+    	font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
     }
 
     @Override
@@ -199,6 +207,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 
 
     	// ========================== ENNEMIS ==============================
+    	float hip = 0.2f * delta * (initialNbEnnemis / nbEnnemis);
+    	
     	for(int i=0; i < 4; i++)
     	{
     		for(int j=0; j < multiple; j++)
@@ -209,7 +219,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 		    		{
 			    		if(ennemi[3-i][multiple-1-j].getX() < gc.getWidth() - 120)
 			    		{
-			    			ennemi[3-i][multiple-1-j].setX(ennemi[3-i][multiple-1-j].getX() + 0.2f * delta);
+			    			ennemi[3-i][multiple-1-j].setX(ennemi[3-i][multiple-1-j].getX() + hip);
 			    		}
 			    		else
 			    		{
@@ -231,7 +241,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 		    		{
 			    		if(ennemi[i][j].getX() > 40)
 			    		{
-			    			ennemi[i][j].setX(ennemi[i][j].getX() - 0.2f * delta);
+			    			ennemi[i][j].setX(ennemi[i][j].getX() - hip);
 			    		}
 			    		else
 			    		{
@@ -301,7 +311,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     		//sVictoire.play();
     		//gc.pause();
     		
-    		if(scoreSpaceInvaders < scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (50 * (3.0/tank.getVies()))) - (3 - tank.getVies())*250)
+    		if(scoreSpaceInvaders - 1000 > scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (50 * (3.0/tank.getVies()))) - (3 - tank.getVies())*250)
     			this.score = scoreSpaceInvaders - 1000;
     		else
     			this.score = scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0/tank.getVies())) - (3 - tank.getVies())*250);
@@ -349,5 +359,11 @@ public class SpaceInvaders extends AbstractMinigameState {
     	{
     		coeur.draw(10 + i * coeur.getWidth(), gc.getHeight() - coeur.getHeight());
     	}
+    	
+    	String timeStr = Utils.secondsToString(time/1000);
+
+        font.drawString(
+            gc.getWidth() - font.getWidth(timeStr) - 10,
+            gc.getHeight() - font.getHeight(timeStr) - 10, timeStr, Color.white);
     }
 }
