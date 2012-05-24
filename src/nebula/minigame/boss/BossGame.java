@@ -3,11 +3,13 @@ package nebula.minigame.boss;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.state.AbstractMinigameState;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -19,6 +21,11 @@ public class BossGame extends AbstractMinigameState
 		Tir tir2;
 		Missile miss1;
 		Missile miss2;
+		
+		private SpriteSheet explo = null;
+		private Animation explosion = null;
+		private float xExplo = -100;
+		private float yExplo = -100;
 		
 		int timerTir;
 		int timeT;
@@ -61,6 +68,13 @@ public class BossGame extends AbstractMinigameState
 	        tir2 = new Tir();
 	        miss1 = new Missile(timerTir);
 	        miss2 = new Missile(timerTir);
+	        
+	        // EXPLOSION
+	        explo = new SpriteSheet("ressources/images/boss/explosion17.png",64,64,0);
+			explosion = new Animation(explo,25);
+	    	explosion.setAutoUpdate(true);
+	    	explosion.setLooping(false);
+	    	explosion.stopAt(26);
 
 	    }
 
@@ -138,6 +152,17 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(miss1.getTire())
 	    	{
+	    		miss1.minusExplosion(delta);
+	    		if(miss1.getTimerExplosion() <= 0)
+	    		{
+	    			miss1.explode();
+	    			xExplo = miss1.getX() + miss1.getImage().getWidth()/2;
+	    			yExplo = miss1.getY() + miss1.getImage().getHeight()/2;
+	    			if(explosion.isStopped())
+    	    		{
+    	    			explosion.restart();
+    	    		}
+	    		}
 	    		miss1.vise(saucer);
 	    		miss1.setX(miss1.getX() + hip * (float)Math.sin(Math.toRadians(miss1.getImage().getRotation())));
 	    		miss1.setY(miss1.getY() - hip * (float)Math.cos(Math.toRadians(miss1.getImage().getRotation())));
@@ -145,10 +170,22 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(miss2.getTire())
 	    	{
+	    		miss2.minusExplosion(delta);
+	    		if(miss2.getTimerExplosion() <= 0)
+	    		{
+	    			miss2.explode();
+	    			xExplo = miss1.getX() + miss1.getImage().getWidth()/2;
+	    			yExplo = miss1.getY() + miss1.getImage().getHeight()/2;
+	    			if(explosion.isStopped())
+    	    		{
+    	    			explosion.restart();
+    	    		}
+	    		}
 	    		miss2.vise(saucer);
 	    		miss2.setX(miss2.getX() + hip * (float)Math.sin(Math.toRadians(miss2.getImage().getRotation())));
 	    		miss2.setY(miss2.getY() - hip * (float)Math.cos(Math.toRadians(miss2.getImage().getRotation())));
 	    	}
+	    	
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -161,5 +198,6 @@ public class BossGame extends AbstractMinigameState
 	        tir2.getImage().draw(tir2.getX(),tir2.getY());
 	        miss1.getImage().draw(miss1.getX(), miss1.getY());
 	        miss2.getImage().draw(miss2.getX(), miss2.getY());
+	        g.drawAnimation(explosion, xExplo, yExplo);
 	    }
 }
