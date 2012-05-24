@@ -144,7 +144,7 @@ public class BossGame extends AbstractMinigameState
 	    	xLaser = -1000;
 			yLaser = -1000;
 	    	
-	    	light = new SpriteSheet("ressources/images/boss/light_004.png", 500, 500, 0);
+	    	light = new SpriteSheet("ressources/images/boss/light_004.png", 300, 300, 0);
 	    	phatExplosion = new Animation(light, 60);
 	    	phatExplosion.setAutoUpdate(true);
 	    	phatExplosion.setLooping(false);
