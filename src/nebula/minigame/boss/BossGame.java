@@ -112,38 +112,51 @@ public class BossGame extends AbstractMinigameState
 	    	explosion.setAutoUpdate(true);
 	    	explosion.setLooping(false);
 	    	explosion.stopAt(20);
+	    	xExplo = -1000;
+			yExplo = -1000;
 	    	
 			explosion2 = new Animation(explo,75);
 	    	explosion2.setAutoUpdate(true);
 	    	explosion2.setLooping(false);
 	    	explosion2.stopAt(20);
+	    	xExplo2 = -1000;
+			yExplo2 = -1000;
 	    	
 	    	explosion3 = new Animation(explo,75);
 	    	explosion3.setAutoUpdate(true);
 	    	explosion3.setLooping(false);
 	    	explosion3.stopAt(20);
+	    	xExplo3 = -1000;
+			yExplo3 = -1000;
 	    	
 	    	explosion4 = new Animation(explo4,25);
 	    	explosion4.setAutoUpdate(true);
 	    	explosion4.setLooping(false);
 	    	explosion4.stopAt(26);
+	    	xExplo4 = -1000;
+			yExplo4 = -1000;
 	    	
 	    	laser = new SpriteSheet("ressources/images/boss/nebula-laser-animation.png",142,2100,0);
 	    	phatLaser = new Animation(laser, 200);
 	    	phatLaser.setAutoUpdate(true);
 	    	phatLaser.setLooping(false);
 	    	phatLaser.stopAt(12);
+	    	xLaser = -1000;
+			yLaser = -1000;
 	    	
 	    	light = new SpriteSheet("ressources/images/boss/light_004.png", 500, 500, 0);
 	    	phatExplosion = new Animation(light, 60);
 	    	phatExplosion.setAutoUpdate(true);
 	    	phatExplosion.setLooping(false);
 	    	phatExplosion.stopAt(25);
+	    	xPhat = -1000;
+			yPhat= -1000;
 	    	
 	    	// TIR SAUCER
 	    	tir = new Tir(false);
 	    	
 	    	font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
+	    	initMusic("ressources/sons/boss/music.ogg", 0.6f, true);
 	    }
 
 	    @Override
