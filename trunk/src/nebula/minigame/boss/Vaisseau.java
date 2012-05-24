@@ -42,12 +42,12 @@ public class Vaisseau
 
 	public boolean touche(Tir tir)
 	{
-		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX() + tir.getImage().getWidth()/4, tir.getY() + tir.getImage().getHeight()/4,3* tir.getImage().getWidth()/4, 3*tir.getImage().getHeight()/4);
+		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, this.getImage().getWidth()/2, this.getImage().getHeight()/2, tir.getX() + tir.getImage().getWidth()/4, tir.getY() + tir.getImage().getHeight()/4,tir.getImage().getWidth()/2, tir.getImage().getHeight()/2);
 	}
 	
 	public boolean hit(Missile m)
 	{
-		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, m.getX() + m.getImage().getWidth()/4, m.getY() + m.getImage().getHeight()/4,3* m.getImage().getWidth()/4, 3*m.getImage().getHeight()/4);
+		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, this.getImage().getWidth()/2, this.getImage().getHeight()/2, m.getX() + m.getImage().getWidth()/4, m.getY() + m.getImage().getHeight()/4,m.getImage().getWidth()/2, m.getImage().getHeight()/2);
 	}
 
 	public boolean dead()
