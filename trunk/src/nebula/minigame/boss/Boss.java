@@ -34,7 +34,7 @@ public class Boss
 			}
 			else
 			{
-				tir.getImage().setRotation(hip + (float)Math.toDegrees(angle));
+				tir.getImage().setRotation(2 * hip - (float)Math.toDegrees(angle));
 			}
 				
 		}
@@ -50,7 +50,7 @@ public class Boss
 			}
 			else
 			{
-				tir.getImage().setRotation(hip + (float)Math.toDegrees(angle));
+				tir.getImage().setRotation(2 * hip - (float)Math.toDegrees(angle));
 			}
 		}
 		tir.setTire(true);
