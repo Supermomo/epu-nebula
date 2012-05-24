@@ -12,11 +12,13 @@ public class Missile
 	private boolean tire;
 	private int timerExplosion;
 	private Sound son = null;
+	private Sound sonExplo = null;
 	
 	public Missile(int t) throws SlickException
 	{
 		image = new Image("ressources/images/boss/nebula-rocket.png");
 		son = new Sound("ressources/sons/boss/rocket.ogg");
+		sonExplo = new Sound("ressources/sons/boss/miss_explosion.ogg");
 		x = -1000;
 		y = -1000;
 		timerExplosion = t;
@@ -63,6 +65,7 @@ public class Missile
 		this.y = -1000;
 		tire = false;
 		timerExplosion = t;
+		sonExplo.play();
 	}
 
 	public void minusExplosion(int delta)
