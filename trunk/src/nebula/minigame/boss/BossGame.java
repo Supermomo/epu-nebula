@@ -133,7 +133,7 @@ public class BossGame extends AbstractMinigameState
 	    	{
 	    		miss1.getImage().setRotation(0);
 	    		miss1.getImage().setRotation(0);
-	    		timeM = timerTir;
+	    		timeM = timerTir * 2;
 	    		boss.launch(miss1, true, saucer);
 	    		boss.launch(miss2, false, saucer);
 	    	}
@@ -155,7 +155,7 @@ public class BossGame extends AbstractMinigameState
 	    		miss1.minusExplosion(delta);
 	    		if(miss1.getTimerExplosion() <= 0)
 	    		{
-	    			miss1.explode();
+	    			miss1.explode(timerTir);
 	    			xExplo = miss1.getX() + miss1.getImage().getWidth()/2;
 	    			yExplo = miss1.getY() + miss1.getImage().getHeight()/2;
 	    			if(explosion.isStopped())
@@ -171,6 +171,7 @@ public class BossGame extends AbstractMinigameState
 	    	if(miss2.getTire())
 	    	{
 	    		miss2.minusExplosion(delta);
+	    		/*
 	    		if(miss2.getTimerExplosion() <= 0)
 	    		{
 	    			miss2.explode();
@@ -181,6 +182,7 @@ public class BossGame extends AbstractMinigameState
     	    			explosion.restart();
     	    		}
 	    		}
+	    		*/
 	    		miss2.vise(saucer);
 	    		miss2.setX(miss2.getX() + hip * (float)Math.sin(Math.toRadians(miss2.getImage().getRotation())));
 	    		miss2.setY(miss2.getY() - hip * (float)Math.cos(Math.toRadians(miss2.getImage().getRotation())));

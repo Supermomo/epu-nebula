@@ -71,6 +71,7 @@ public class Boss
 			m.setY(100 + this.getY() - m.getImage().getHeight()/2);
 			m.vise(v);
 		}
+		
 		m.setTire(true);
 	}
 
