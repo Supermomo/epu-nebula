@@ -1,12 +1,8 @@
 package nebula.minigame.boss;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.Sound;
 
 public class Missile 
 {
@@ -15,10 +11,12 @@ public class Missile
 	private float y;
 	private boolean tire;
 	private int timerExplosion;
+	private Sound son = null;
 	
 	public Missile(int t) throws SlickException
 	{
 		image = new Image("ressources/images/boss/nebula-rocket.png");
+		son = new Sound("ressources/sons/boss/rocket.ogg");
 		x = -1000;
 		y = -1000;
 		timerExplosion = t;
@@ -27,12 +25,34 @@ public class Missile
 	public void vise(Vaisseau v)
 	{
 		float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - this.getX() - this.getImage().getWidth()/2 )/((v.getY() + v.getImage().getHeight()/2) - this.getY() - this.getImage().getHeight()/2));
-		if(v.getY() > this.getY() + 10)
+		if(v.getY() + v.getImage().getHeight()/2 >= this.getY() + this.getImage().getHeight()/2)
 		{
+			if(((v.getY() + v.getImage().getHeight()/2) - this.getY() - this.getImage().getHeight()/2) == 0)
+			{
+				if(v.getX() < this.getX())
+				{
+					angle = -90;
+				}
+				else
+				{
+					angle = 90;
+				}
+			}
 			this.getImage().setRotation(180 - (float)Math.toDegrees(angle));
 		}
 		else
 		{
+			if(((v.getY() + v.getImage().getHeight()/2) - this.getY() - this.getImage().getHeight()/2) == 0)
+			{
+				if(v.getX() < this.getX())
+				{
+					angle = 90;
+				}
+				else
+				{
+					angle = -90;
+				}
+			}
 			this.getImage().setRotation(360 - (float)Math.toDegrees(angle));
 		}
 	}
@@ -88,6 +108,11 @@ public class Missile
 	public boolean getTire()
 	{
 		return this.tire;
+	}
+	
+	public Sound getSon()
+	{
+		return this.son;
 	}
 	
 }
