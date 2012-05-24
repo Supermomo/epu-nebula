@@ -99,7 +99,6 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	// TIR SAUCER
 	    	tir = new Tir(false);
-
 	    }
 
 	    @Override
@@ -230,6 +229,21 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(tir.getY() > -100)
 	    		tir.setY(tir.getY() - 0.4f * delta);
+	    	
+	    	if(boss.touche(tir))
+	    	{
+	    		xExplo = boss.getX() + boss.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
+	    		yExplo = boss.getY() + boss.getImage().getHeight()/2 - explosion.getImage(0).getHeight()/2;
+	    		if(explosion.isStopped())
+	    		{
+	    			explosion.restart();
+	    		}
+	    		boss.loseLife();
+	    		boss.getSon().play();
+	    		
+	    		tir.setX(-100);
+	    		tir.setY(-100);
+	    	}
 	    	
 	    }
 

@@ -1,7 +1,10 @@
 package nebula.minigame.boss;
 
+import nebula.core.helper.Collision;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class Boss 
 {
@@ -9,11 +12,13 @@ public class Boss
 	private float x;
 	private float y;
 	private int vies;
+	private Sound son = null;
 	
 	public Boss() throws SlickException
 	{
 		image = new Image("ressources/images/boss/nebula-vaisseau-mere.png");
-		vies = 3;
+		son = new Sound("ressources/sons/boss/miss_explosion.ogg");
+		vies = 1000;
 	}
 	
 	public void tirer(Tir tir, boolean droite, Vaisseau v)
@@ -71,6 +76,11 @@ public class Boss
 		m.setTire(true);
 		m.getSon().play();
 	}
+	
+	public boolean touche(Tir tir)
+	{
+		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight()/2);
+	}
 
 	public Image getImage() {
 		return image;
@@ -104,4 +114,13 @@ public class Boss
 		this.vies = vies;
 	}
 	
+	public Sound getSon()
+	{
+		return this.son;
+	}
+	
+	public void loseLife()
+	{
+		this.vies -= 10;
+	}
 }
