@@ -32,7 +32,7 @@ public class Boss
 		}
 		else
 		{
-
+			//dflkesflkj
 			tir.setX(620 + this.getX());
 			tir.setY(200 + this.getY() - tir.getImage().getHeight()/2);
 			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 620 - this.getX())/((v.getY() + v.getImage().getHeight()/2) - 200 - this.getY()));
