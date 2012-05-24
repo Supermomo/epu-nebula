@@ -148,4 +148,9 @@ public class Boss
 			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere5.png");
 		}
 	}
+	
+	public boolean dead()
+	{
+		return vies <= 0;
+	}
 }

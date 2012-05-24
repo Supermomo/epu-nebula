@@ -10,6 +10,7 @@ public class Vaisseau
 {
 	private Image image = null;
 	private Image imageInvincibility = null;
+	private Image coeur = null;
 	private Sound son;
 	private float x;
 	private float y;
@@ -21,6 +22,7 @@ public class Vaisseau
 		image = new Image("ressources/images/boss/saucer.png");
 		imageInvincibility = new Image("ressources/images/boss/saucer-inv.png");
         imageInvincibility.setAlpha(0.95f);
+        coeur = new Image("ressources/images/boss/coeur.png");
         son = new Sound("ressources/sons/boss/explosion.ogg");
 		x = 300 - this.getImage().getWidth()/2;
 		y = 600 - 2 * this.getImage().getHeight() + 10;
@@ -41,6 +43,11 @@ public class Vaisseau
 	public boolean touche(Tir tir)
 	{
 		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight());
+	}
+	
+	public boolean hit(Missile m)
+	{
+		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, m.getX(), m.getY(), m.getImage().getWidth(), m.getImage().getHeight());
 	}
 
 	public boolean dead()
@@ -106,4 +113,13 @@ public class Vaisseau
 		return son;
 	}
 
+	public Image getCoeur() {
+		return coeur;
+	}
+
+	public void setCoeur(Image coeur) {
+		this.coeur = coeur;
+	}
+
+	
 }

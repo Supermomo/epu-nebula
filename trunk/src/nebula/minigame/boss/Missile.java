@@ -118,4 +118,9 @@ public class Missile
 		return this.son;
 	}
 	
+	public Sound getSonExplo()
+	{
+		return this.sonExplo;
+	}
+	
 }
