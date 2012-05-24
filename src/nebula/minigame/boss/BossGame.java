@@ -22,6 +22,7 @@ public class BossGame extends AbstractMinigameState
 		Missile miss2;
 		
 		private SpriteSheet explo = null;
+		private SpriteSheet explo4 = null;
 		
 		private Animation explosion = null;
 		private float xExplo = -1000;
@@ -34,6 +35,10 @@ public class BossGame extends AbstractMinigameState
 		private Animation explosion3 = null;
 		private float xExplo3 = -1000;
 		private float yExplo3 = -1000;
+		
+		private Animation explosion4 = null;
+		private float xExplo4 = -1000;
+		private float yExplo4 = -1000;
 		
 		private SpriteSheet laser = null;
 		private Animation phatLaser = null;
@@ -49,6 +54,7 @@ public class BossGame extends AbstractMinigameState
 		int timeT;
 		float timeM;
 		int unlockMove;
+		int invincibility;
 	
 		/* Game ID */
 		@Override public int getID () { return NebulaState.Boss.id; }
@@ -87,9 +93,12 @@ public class BossGame extends AbstractMinigameState
 	        tir2 = new Tir(true);
 	        miss1 = new Missile(timerTir);
 	        miss2 = new Missile(timerTir);
+	        invincibility = 0;
 	        
 	        // EXPLOSION
 	        explo = new SpriteSheet("ressources/images/boss/skybusterExplosion.png",320,240,0);
+	        explo4 = new SpriteSheet("ressources/images/boss/explosion17.png",64,64,0);
+	        
 			explosion = new Animation(explo,75);
 	    	explosion.setAutoUpdate(true);
 	    	explosion.setLooping(false);
@@ -104,6 +113,11 @@ public class BossGame extends AbstractMinigameState
 	    	explosion3.setAutoUpdate(true);
 	    	explosion3.setLooping(false);
 	    	explosion3.stopAt(20);
+	    	
+	    	explosion4 = new Animation(explo4,25);
+	    	explosion4.setAutoUpdate(true);
+	    	explosion4.setLooping(false);
+	    	explosion4.stopAt(26);
 	    	
 	    	laser = new SpriteSheet("ressources/images/boss/nebula-laser-animation.png",142,2100,0);
 	    	phatLaser = new Animation(laser, 200);
@@ -229,10 +243,9 @@ public class BossGame extends AbstractMinigameState
 	    		{
 	    			xExplo = miss1.getX() + miss1.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
 	    			yExplo = miss1.getY() + miss1.getImage().getHeight()/2 - explosion.getImage(0).getHeight()/2;
-	    			if(explosion.isStopped())
-    	    		{
-    	    			explosion.restart();
-    	    		}
+	    			explosion2.stop();
+		    		explosion2.setCurrentFrame(0);
+		    		explosion2.start();
 	    			miss1.explode(timerTir);
 	    		}
 	    		miss1.vise(saucer);
@@ -248,10 +261,9 @@ public class BossGame extends AbstractMinigameState
 	    			
 	    			xExplo2 = miss2.getX() + miss2.getImage().getWidth()/2 - explosion2.getImage(0).getWidth()/2;
 	    			yExplo2 = miss2.getY() + miss2.getImage().getHeight()/2 - explosion2.getImage(0).getHeight()/2;
-	    			if(explosion2.isStopped())
-    	    		{
-    	    			explosion2.restart();
-    	    		}
+	    			explosion2.stop();
+		    		explosion2.setCurrentFrame(0);
+		    		explosion2.start();
 	    			miss2.explode(timerTir);
 	    		}
 	    		miss2.vise(saucer);
@@ -266,16 +278,45 @@ public class BossGame extends AbstractMinigameState
 	    	{
 	    		xExplo3 = boss.getX() + boss.getImage().getWidth()/2 - explosion3.getImage(0).getWidth()/2;
 	    		yExplo3 = boss.getY() + boss.getImage().getHeight()/2 - explosion3.getImage(0).getHeight()/2;
-	    		if(explosion3.isStopped())
-	    		{
-	    			explosion3.restart();
-	    		}
+	    		explosion3.stop();
+	    		explosion3.setCurrentFrame(0);
+	    		explosion3.start();
 	    		boss.loseLife();
 	    		boss.getSon().play();
 	    		boss.getDestroy();
 	    		tir.setX(-100);
 	    		tir.setY(-100);
-	    	}	    	
+	    	}
+	    	
+	    	if(saucer.touche(tir1))
+	    	{
+	    		saucer.decrementeVie();
+	    		invincibility = 2000;
+	    		xExplo4 = saucer.getX();
+	    		yExplo4 = saucer.getY();
+	    		explosion4.stop();
+	    		explosion4.setCurrentFrame(0);
+	    		explosion4.start();
+	    		saucer.getSon().play();
+	    		tir1.setX(-100);
+	    		tir1.setY(-100);
+	    		tir1.setTire(false);
+	    	}
+	    	
+	    	if(saucer.touche(tir2))
+	    	{
+	    		saucer.decrementeVie();
+	    		invincibility = 2000;
+	    		xExplo4 = saucer.getX();
+	    		yExplo4 = saucer.getY();
+	    		explosion4.stop();
+	    		explosion4.setCurrentFrame(0);
+	    		explosion4.start();
+	    		saucer.getSon().play();
+	    		tir2.setX(-100);
+	    		tir2.setY(-100);
+	    		tir1.setTire(false);
+	    	}
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -295,5 +336,6 @@ public class BossGame extends AbstractMinigameState
 	        g.drawAnimation(phatExplosion, xPhat, yPhat);
 	        
 	        saucer.getImage().draw(saucer.getX(), saucer.getY());
+	        g.drawAnimation(explosion4, xExplo4, yExplo4);
 	    }
 }

@@ -143,7 +143,7 @@ public class Boss
 		{
 			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere4.png");
 		}
-		else
+		else if(this.vies <= 200 && this.vies > 0)
 		{
 			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere5.png");
 		}
