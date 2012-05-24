@@ -92,7 +92,7 @@ public class BossGame extends AbstractMinigameState
 
 	    	if(input.isKeyDown(Input.KEY_UP))
 	    	{
-	    		if(saucer.getY() > 0)
+	    		if(saucer.getY() > 250)
 	    			saucer.setY(saucer.getY() - (0.4f * delta));
 	    	}
 
