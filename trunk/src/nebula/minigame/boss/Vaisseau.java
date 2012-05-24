@@ -4,11 +4,13 @@ import nebula.core.helper.Collision;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class Vaisseau
 {
 	private Image image = null;
 	private Image imageInvincibility = null;
+	private Sound son;
 	private float x;
 	private float y;
 	private int vies;
@@ -19,6 +21,7 @@ public class Vaisseau
 		image = new Image("ressources/images/boss/saucer.png");
 		imageInvincibility = new Image("ressources/images/boss/saucer-inv.png");
         imageInvincibility.setAlpha(0.95f);
+        son = new Sound("ressources/sons/boss/explosion.ogg");
 		x = 300 - this.getImage().getWidth()/2;
 		y = 600 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;
@@ -96,6 +99,11 @@ public class Vaisseau
 	public void setMove(boolean b)
 	{
 		this.canMove = b;
+	}
+	
+	public Sound getSon()
+	{
+		return son;
 	}
 
 }
