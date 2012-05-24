@@ -25,7 +25,7 @@ public class Vaisseau
         coeur = new Image("ressources/images/boss/coeur.png");
         son = new Sound("ressources/sons/boss/explosion.ogg");
 		x = width/2 - this.getImage().getWidth()/2;
-		y = height/2 - 2 * this.getImage().getHeight() + 10;
+		y = height - 2 * this.getImage().getHeight();
 		vies = 3;
 		canMove = true;
 	}
@@ -42,12 +42,12 @@ public class Vaisseau
 
 	public boolean touche(Tir tir)
 	{
-		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight());
+		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX() + tir.getImage().getWidth()/4, tir.getY() + tir.getImage().getHeight()/4,3* tir.getImage().getWidth()/4, 3*tir.getImage().getHeight()/4);
 	}
 	
 	public boolean hit(Missile m)
 	{
-		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, m.getX(), m.getY(), m.getImage().getWidth(), m.getImage().getHeight()/2);
+		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, m.getX() + m.getImage().getWidth()/4, m.getY() + m.getImage().getHeight()/4,3* m.getImage().getWidth()/4, 3*m.getImage().getHeight()/4);
 	}
 
 	public boolean dead()
