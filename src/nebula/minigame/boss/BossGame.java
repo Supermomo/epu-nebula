@@ -105,6 +105,7 @@ public class BossGame extends AbstractMinigameState
 	        // TIRS BOSS
 	        timeT = timerTir;
 	        timeM = timerTir * 1.77f;
+	        timeK = kamoulox;
 	        timeL = 1000000000;
 	        tir1 = new Tir(true);
 	        tir2 = new Tir(true);
