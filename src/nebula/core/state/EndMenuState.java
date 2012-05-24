@@ -1,6 +1,7 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.NebulaGame.TransitionType;
 import nebula.core.config.NebulaConfig;
 
 import org.newdawn.slick.GameContainer;
@@ -21,7 +22,7 @@ public class EndMenuState extends AbstractMenuState
         super.init(gc, game);
 
         // Add menu items
-        setMenuTitle("Fin");
+        setMenuTitle("Félicitation !");
         addMenuItem("Bravo, tu as fini l'aventure !", false);
         addMenuSpaces(1);
         addMenuItem("Score : " + NebulaConfig.getAdventureScore(), false);
@@ -32,7 +33,7 @@ public class EndMenuState extends AbstractMenuState
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
-        nebulaGame.enterState(NebulaState.MainMenu.id);
+        nebulaGame.initAndEnterState(NebulaState.Credits.id, TransitionType.Fade);
     }
 
     @Override

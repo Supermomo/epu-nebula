@@ -34,7 +34,19 @@ public class CreditsState extends AbstractState
         "Gwenn Aubert\n" +
         "Thomas Di'Meco\n" +
         "Matthieu Maugard\n" +
-        "Gaspard Perrot";
+        "Gaspard Perrot\n" +
+        " \n" +
+        " \n" +
+        "Logiciels / Bibliothèques :\n" +
+        " \n" +
+        "Eclipse (IDE Java)\n" +
+        "Slick (bibliothèque graphique)\n" +
+        " \n" +
+        " \n" +
+        "Ressources :\n" +
+        " \n" +
+        "Sons : www.universal-soundbank.com/\n" +
+        "Musiques : www.audionautix.com/\n";
 
 
     // Credits properties
@@ -66,7 +78,7 @@ public class CreditsState extends AbstractState
         font  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
 
         // Music
-        initMusic("ressources/sons/common/credits.ogg", 0.4f, true);
+        initMusic("ressources/sons/common/credits.ogg", 0.5f, true);
 
         // Split credits string
         strings = credits.split("\n");
