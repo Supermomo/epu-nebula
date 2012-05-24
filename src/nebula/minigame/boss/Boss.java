@@ -26,7 +26,7 @@ public class Boss
 		{
 
 			tir.setX(180 + this.getX());
-			tir.setY(200 + this.getY());
+			tir.setY(200 + this.getY()-tir.getImage().getHeight()/2);
 			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 180 - this.getX())/((v.getY() + v.getImage().getHeight()/2) - 200 - this.getY()));
 			tir.getImage().setRotation(hip - (float)Math.toDegrees(angle));
 		}
