@@ -17,15 +17,15 @@ public class Vaisseau
 	private int vies;
 	private boolean canMove;
 
-	public Vaisseau() throws SlickException
+	public Vaisseau(int width, int height) throws SlickException
 	{
 		image = new Image("ressources/images/boss/saucer.png");
 		imageInvincibility = new Image("ressources/images/boss/saucer-inv.png");
         imageInvincibility.setAlpha(0.95f);
         coeur = new Image("ressources/images/boss/coeur.png");
         son = new Sound("ressources/sons/boss/explosion.ogg");
-		x = 300 - this.getImage().getWidth()/2;
-		y = 600 - 2 * this.getImage().getHeight() + 10;
+		x = width/2 - this.getImage().getWidth()/2;
+		y = height/2 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;
 		canMove = true;
 	}
