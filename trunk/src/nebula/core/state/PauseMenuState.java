@@ -2,6 +2,7 @@ package nebula.core.state;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -25,6 +26,7 @@ public class PauseMenuState extends AbstractMenuState
         // Add menu items
         setMenuTitle("Pause");
         addMenuItem("Retour au jeu", true);
+        addMenuItem("Recommencer", true);
         addMenuItem("Quitter", true);
     }
 
@@ -34,6 +36,9 @@ public class PauseMenuState extends AbstractMenuState
         switch (index)
         {
             case 1:
+                nebulaGame.initAndEnterState(lastState, TransitionType.Fade);
+                break;
+            case 2:
                 if (NebulaGame.isAdventureMode)
                     nebulaGame.enterState(NebulaState.MainMenu.id);
                 else
