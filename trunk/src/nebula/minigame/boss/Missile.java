@@ -1,8 +1,10 @@
 package nebula.minigame.boss;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -14,10 +16,9 @@ public class Missile
 	private boolean tire;
 	private int timerExplosion;
 	
-	
 	public Missile(int t) throws SlickException
 	{
-		image = new Image("ressources/images/boss/ship.png");
+		image = new Image("ressources/images/boss/nebula-rocket.png");
 		x = -100;
 		y = -100;
 		timerExplosion = t;
@@ -35,10 +36,22 @@ public class Missile
 			this.getImage().setRotation(360 - (float)Math.toDegrees(angle));
 		}
 	}
+	
+	public void explode()
+	{
+		this.x = -100;
+		this.y = -100;
+		tire = false;
+	}
 
 	public void minusExplosion(int delta)
 	{
 		this.timerExplosion -= delta;
+	}
+	
+	public int getTimerExplosion()
+	{
+		return timerExplosion;
 	}
 	
 	public Image getImage() 
