@@ -212,5 +212,6 @@ public class BossGame extends AbstractMinigameState
 	        miss1.getImage().draw(miss1.getX(), miss1.getY());
 	        miss2.getImage().draw(miss2.getX(), miss2.getY());
 	        g.drawAnimation(explosion, xExplo, yExplo);
+	        g.drawAnimation(explosion2, xExplo2, yExplo2);
 	    }
 }
