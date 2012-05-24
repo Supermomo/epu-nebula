@@ -2,7 +2,6 @@ package nebula.minigame.boss;
 
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
-import nebula.core.helper.Utils;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
 import nebula.core.state.AbstractMinigameState;
@@ -61,7 +60,7 @@ public class BossGame extends AbstractMinigameState
 		float timeM;
 		int unlockMove;
 		int invincibility;
-		int time;
+		String mess;
 	
 		private static Font font;
 		
@@ -76,19 +75,19 @@ public class BossGame extends AbstractMinigameState
 	        switch (this.getDifficulty())
 	        {
 				case Easy:
-						timerTir = 20000;
-					break;
-
-				case Hard:
 						timerTir = 10000;
 					break;
 
+				case Hard:
+						timerTir = 6000;
+					break;
+
 				case Insane:
-						timerTir = 5000;
+						timerTir = 3500;
 					break;
 
 				default:
-						timerTir = 15000;
+						timerTir = 5000;
 					break;
 			}
 	        saucer = new Vaisseau();
@@ -103,6 +102,7 @@ public class BossGame extends AbstractMinigameState
 	        miss1 = new Missile(timerTir);
 	        miss2 = new Missile(timerTir);
 	        invincibility = 0;
+	        mess = "KIKOO";
 	        
 	        // EXPLOSION
 	        explo = new SpriteSheet("ressources/images/boss/skybusterExplosion.png",320,240,0);
@@ -193,7 +193,7 @@ public class BossGame extends AbstractMinigameState
 	    		saucer.tirer(tir);
 	    	}
 	    	
-	    	if(input.isKeyDown(Input.KEY_LCONTROL))
+	    	if(input.isKeyDown(Input.KEY_LCONTROL) && saucer.getMove())
 	    	{
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
 	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight();
@@ -203,7 +203,7 @@ public class BossGame extends AbstractMinigameState
 	    			phatLaser.restart();
 	    		}
 	    		
-	    		if(saucer.getX() < boss.getX() + boss.getImage().getWidth() && saucer.getX() + saucer.getImage().getWidth() > boss.getX() && saucer.getMove())
+	    		if(saucer.getX() < boss.getX() + boss.getImage().getWidth() && saucer.getX() + saucer.getImage().getWidth() > boss.getX())
 	    		{
 	    			boss.hit();
 	    			xPhat = boss.getX() + boss.getImage().getWidth()/2 - phatExplosion.getImage(0).getWidth()/2;
@@ -254,9 +254,9 @@ public class BossGame extends AbstractMinigameState
 	    		{
 	    			xExplo = miss1.getX() + miss1.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
 	    			yExplo = miss1.getY() + miss1.getImage().getHeight()/2 - explosion.getImage(0).getHeight()/2;
-	    			explosion2.stop();
-		    		explosion2.setCurrentFrame(0);
-		    		explosion2.start();
+	    			explosion.stop();
+		    		explosion.setCurrentFrame(0);
+		    		explosion.start();
 	    			miss1.explode(timerTir);
 	    		}
 	    		miss1.vise(saucer);
@@ -326,7 +326,39 @@ public class BossGame extends AbstractMinigameState
 	    		saucer.getSon().play();
 	    		tir2.setX(-100);
 	    		tir2.setY(-100);
-	    		tir1.setTire(false);
+	    		tir2.setTire(false);
+	    	}
+	    	
+	    	if(saucer.hit(miss1) && invincibility <= 0)
+	    	{
+	    		saucer.decrementeVie();
+	    		invincibility = 2000;
+	    		xExplo = saucer.getX() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
+	    		yExplo = saucer.getY() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getHeight()/2;
+	    		explosion.stop();
+	    		explosion.setCurrentFrame(0);
+	    		explosion.start();
+	    		miss1.getSonExplo().play();
+	    		miss1.setX(-100);
+	    		miss1.setY(-100);
+	    		miss1.setTire(false);
+	    		miss1.explode(timerTir);
+	    	}
+	    	
+	    	if(saucer.hit(miss2) && invincibility <= 0)
+	    	{
+	    		saucer.decrementeVie();
+	    		invincibility = 2000;
+	    		xExplo2 = saucer.getX() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
+	    		yExplo2 = saucer.getY() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getHeight()/2;
+	    		explosion2.stop();
+	    		explosion2.setCurrentFrame(0);
+	    		explosion2.start();
+	    		miss2.getSonExplo().play();
+	    		miss2.setX(-100);
+	    		miss2.setY(-100);
+	    		miss2.setTire(false);
+	    		miss2.explode(timerTir);
 	    	}
 	    	
 	    	if(invincibility > 0)
@@ -334,7 +366,17 @@ public class BossGame extends AbstractMinigameState
 	    		invincibility -= delta;
 	    	}
 	    	
-	    	time = boss.getVies();
+	    	if(boss.dead())
+	    	{
+	    		gameVictory();
+	    	}
+	    	
+	    	if(saucer.dead())
+	    	{
+	    		gameDefeat();
+	    	}
+	    	
+	    	mess = "Vie du BOSS : " + Integer.toString(boss.getVies());
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -347,8 +389,6 @@ public class BossGame extends AbstractMinigameState
 	        tir.getImage().draw(tir.getX(), tir.getY());
 	        miss1.getImage().draw(miss1.getX(), miss1.getY());
 	        miss2.getImage().draw(miss2.getX(), miss2.getY());
-	        g.drawAnimation(explosion, xExplo, yExplo);
-	        g.drawAnimation(explosion2, xExplo2, yExplo2);
 	        g.drawAnimation(explosion3, xExplo3, yExplo3);
 	        g.drawAnimation(phatLaser, xLaser, yLaser);
 	        g.drawAnimation(phatExplosion, xPhat, yPhat);
@@ -361,13 +401,19 @@ public class BossGame extends AbstractMinigameState
 	        {
 	        	saucer.getImage().draw(saucer.getX(), saucer.getY());
 	        }
-	        
+	        g.drawAnimation(explosion, xExplo, yExplo);
+	        g.drawAnimation(explosion2, xExplo2, yExplo2);
 	        g.drawAnimation(explosion4, xExplo4, yExplo4);
 	        
-	        //String timeStr = Utils.secondsToString(time/1000);
+	        for(int i = 0; i < saucer.getVies(); i++)
+	    	{
+	    		saucer.getCoeur().draw(10 + i * saucer.getCoeur().getWidth(), gc.getHeight() - saucer.getCoeur().getHeight());
+	    	}
+	        
+	        
 
 	        font.drawString(
-	            gc.getWidth() - font.getWidth(Integer.toString(time)) - 10,
-	            gc.getHeight() - font.getHeight(Integer.toString(time)) - 10, Integer.toString(time), Color.white);
+	            gc.getWidth() - font.getWidth(mess) - 10,
+	            gc.getHeight() - font.getHeight(mess) - 10, mess, Color.white);
 	    }
 }
