@@ -1,7 +1,6 @@
 package nebula.minigame.boss;
 
 import nebula.core.helper.Collision;
-import nebula.minigame.spaceInvaders.Tir;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -24,7 +23,6 @@ public class Vaisseau
 		vies = 3;
 	}
 
-	/*
 	public void tirer(Tir tir)
 	{
 		if(tir.getY() < 0)
@@ -33,7 +31,7 @@ public class Vaisseau
 			tir.setY(this.getY() - tir.getImage().getHeight());
 			tir.getSon().play();
 		}
-	}*/
+	}
 
 	public boolean touche(Tir tir)
 	{

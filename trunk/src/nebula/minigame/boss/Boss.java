@@ -1,14 +1,11 @@
 package nebula.minigame.boss;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 
 public class Boss 
 {
 	private Image image = null;
-	private Image imageInvincibility = null;
 	private float x;
 	private float y;
 	private int vies;
@@ -36,11 +33,10 @@ public class Boss
 			{
 				tir.getImage().setRotation(2 * hip - (float)Math.toDegrees(angle));
 			}
-				
+			tir.getSon().play();
 		}
 		else
 		{
-			//dflkesflkj
 			tir.setX(620 + this.getX() - tir.getImage().getWidth()/2);
 			tir.setY(200 + this.getY() - tir.getImage().getHeight()/2);
 			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 620 - this.getX())/((v.getY() + v.getImage().getHeight()/2) - 200 - this.getY()));
@@ -73,6 +69,7 @@ public class Boss
 		}
 		
 		m.setTire(true);
+		m.getSon().play();
 	}
 
 	public Image getImage() {
