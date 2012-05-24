@@ -25,7 +25,7 @@ public class Boss
 		if(droite)
 		{
 
-			tir.setX(180 + this.getX());
+			tir.setX(180 + this.getX()-tir.getImage().getWidth()/2);
 			tir.setY(200 + this.getY()-tir.getImage().getHeight()/2);
 			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 180 - this.getX())/((v.getY() + v.getImage().getHeight()/2) - 200 - this.getY()));
 			tir.getImage().setRotation(hip - (float)Math.toDegrees(angle));
@@ -33,7 +33,7 @@ public class Boss
 		else
 		{
 			//dflkesflkj
-			tir.setX(620 + this.getX());
+			tir.setX(620 + this.getX()-tir.getImage().getWidth()/2);
 			tir.setY(200 + this.getY() - tir.getImage().getHeight()/2);
 			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 620 - this.getX())/((v.getY() + v.getImage().getHeight()/2) - 200 - this.getY()));
 			tir.getImage().setRotation(hip - (float)Math.toDegrees(angle));
