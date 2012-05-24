@@ -1,9 +1,15 @@
 package nebula.minigame.boss;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.helper.NebulaFont;
+import nebula.core.helper.Utils;
+import nebula.core.helper.NebulaFont.FontName;
+import nebula.core.helper.NebulaFont.FontSize;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -55,7 +61,10 @@ public class BossGame extends AbstractMinigameState
 		float timeM;
 		int unlockMove;
 		int invincibility;
+		int time;
 	
+		private static Font font;
+		
 		/* Game ID */
 		@Override public int getID () { return NebulaState.Boss.id; }
 
@@ -133,6 +142,8 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	// TIR SAUCER
 	    	tir = new Tir(false);
+	    	
+	    	font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
 	    }
 
 	    @Override
@@ -186,14 +197,13 @@ public class BossGame extends AbstractMinigameState
 	    	{
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
 	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight();
-	    		saucer.setMove(false);
 	    		unlockMove = 2000;
 	    		if(phatLaser.isStopped())
 	    		{
 	    			phatLaser.restart();
 	    		}
 	    		
-	    		if(saucer.getX() < boss.getX() + boss.getImage().getWidth() && saucer.getX() + saucer.getImage().getWidth() > boss.getX())
+	    		if(saucer.getX() < boss.getX() + boss.getImage().getWidth() && saucer.getX() + saucer.getImage().getWidth() > boss.getX() && saucer.getMove())
 	    		{
 	    			boss.hit();
 	    			xPhat = boss.getX() + boss.getImage().getWidth()/2 - phatExplosion.getImage(0).getWidth()/2;
@@ -204,6 +214,7 @@ public class BossGame extends AbstractMinigameState
 		    		}
 		    		boss.getDestroy();
 	    		}
+	    		saucer.setMove(false);
 	    	}
     	
 	    	if(timeT <= 0)
@@ -288,7 +299,7 @@ public class BossGame extends AbstractMinigameState
 	    		tir.setY(-100);
 	    	}
 	    	
-	    	if(saucer.touche(tir1))
+	    	if(saucer.touche(tir1) && invincibility <= 0)
 	    	{
 	    		saucer.decrementeVie();
 	    		invincibility = 2000;
@@ -303,7 +314,7 @@ public class BossGame extends AbstractMinigameState
 	    		tir1.setTire(false);
 	    	}
 	    	
-	    	if(saucer.touche(tir2))
+	    	if(saucer.touche(tir2) && invincibility <= 0)
 	    	{
 	    		saucer.decrementeVie();
 	    		invincibility = 2000;
@@ -317,6 +328,13 @@ public class BossGame extends AbstractMinigameState
 	    		tir2.setY(-100);
 	    		tir1.setTire(false);
 	    	}
+	    	
+	    	if(invincibility > 0)
+	    	{
+	    		invincibility -= delta;
+	    	}
+	    	
+	    	time = boss.getVies();
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -335,7 +353,21 @@ public class BossGame extends AbstractMinigameState
 	        g.drawAnimation(phatLaser, xLaser, yLaser);
 	        g.drawAnimation(phatExplosion, xPhat, yPhat);
 	        
-	        saucer.getImage().draw(saucer.getX(), saucer.getY());
+	        if(invincibility > 0)
+	        {
+	        	saucer.getImageInv().draw(saucer.getX(), saucer.getY());
+	        }
+	        else
+	        {
+	        	saucer.getImage().draw(saucer.getX(), saucer.getY());
+	        }
+	        
 	        g.drawAnimation(explosion4, xExplo4, yExplo4);
+	        
+	        //String timeStr = Utils.secondsToString(time/1000);
+
+	        font.drawString(
+	            gc.getWidth() - font.getWidth(Integer.toString(time)) - 10,
+	            gc.getHeight() - font.getHeight(Integer.toString(time)) - 10, Integer.toString(time), Color.white);
 	    }
 }
