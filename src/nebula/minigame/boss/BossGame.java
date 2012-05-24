@@ -57,12 +57,14 @@ public class BossGame extends AbstractMinigameState
 		
 		int timerTir;
 		int timeT;
+		int kamoulox;
 		float timeM;
 		float timeL;
 		float timeK;
 		int unlockMove;
 		int invincibility;
 		String mess;
+		String kamou;
 	
 		private static Font font;
 		
@@ -78,22 +80,22 @@ public class BossGame extends AbstractMinigameState
 	        {
 				case Easy:
 						timerTir = 10000;
-						timeK = 5000;
+						kamoulox = 5000;
 					break;
 
 				case Hard:
 						timerTir = 6000;
-						timeK = 10000;
+						kamoulox = 10000;
 					break;
 
 				case Insane:
 						timerTir = 3500;
-						timeK = 10000;
+						kamoulox = 10000;
 					break;
 
 				default:
 						timerTir = 5000;
-						timeK = 10000;
+						kamoulox = 10000;
 					break;
 			}
 	        saucer = new Vaisseau(gc.getWidth(),gc.getHeight());
@@ -217,6 +219,7 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(input.isKeyDown(Input.KEY_LCONTROL) && saucer.getMove() && timeK < 0)
 	    	{
+	    		timeK = kamoulox;
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
 	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight();
 	    		unlockMove = 2000;
@@ -405,6 +408,7 @@ public class BossGame extends AbstractMinigameState
 	    	}
 	    	
 	    	mess = "Vie du BOSS : " + Integer.toString(boss.getVies());
+	    	kamou = "KAMOULOX PRET";
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -438,6 +442,12 @@ public class BossGame extends AbstractMinigameState
 	    		saucer.getCoeur().draw(10 + i * saucer.getCoeur().getWidth(), gc.getHeight() - saucer.getCoeur().getHeight());
 	    	}
 	        
+	        if(timeK < 0)
+	        {
+	        	font.drawString(
+			            gc.getWidth() - font.getWidth(kamou)/2 - gc.getWidth()/2,
+			            gc.getHeight() - font.getHeight(kamou) - 10, kamou, Color.red);
+	        }
 	        
 
 	        font.drawString(
