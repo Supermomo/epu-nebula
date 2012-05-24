@@ -58,6 +58,7 @@ public class BossGame extends AbstractMinigameState
 		int timerTir;
 		int timeT;
 		float timeM;
+		float timeL;
 		int unlockMove;
 		int invincibility;
 		String mess;
@@ -90,17 +91,18 @@ public class BossGame extends AbstractMinigameState
 						timerTir = 5000;
 					break;
 			}
-	        saucer = new Vaisseau();
+	        saucer = new Vaisseau(gc.getWidth(),gc.getHeight());
 	        boss = new Boss();
 	        boss.setX(gc.getWidth()/2 - boss.getImage().getWidth()/2);
 	        boss.setY(0);
 	        // TIRS BOSS
 	        timeT = timerTir;
 	        timeM = timerTir * 1.77f;
+	        timeL = 1000000000;
 	        tir1 = new Tir(true);
 	        tir2 = new Tir(true);
-	        miss1 = new Missile(timerTir);
-	        miss2 = new Missile(timerTir);
+	        miss1 = new Missile(3500);
+	        miss2 = new Missile(3500);
 	        invincibility = 0;
 	        mess = "KIKOO";
 	        
@@ -167,6 +169,7 @@ public class BossGame extends AbstractMinigameState
 	        
 	        timeT -= delta;
 	        timeM -= delta;
+	        timeL -= delta;
 	        if(!saucer.getMove())
 	        	unlockMove -= delta;
 	        if(unlockMove < 0)
@@ -221,15 +224,21 @@ public class BossGame extends AbstractMinigameState
 	    			boss.hit();
 	    			xPhat = boss.getX() + boss.getImage().getWidth()/2 - phatExplosion.getImage(0).getWidth()/2;
 		    		yPhat = boss.getY() + boss.getImage().getHeight()/2 - phatExplosion.getImage(0).getHeight()/2;
-		    		if(phatExplosion.isStopped())
-		    		{
-		    			phatExplosion.restart();
-		    		}
+		    		timeL = 2000;
 		    		boss.getDestroy();
 	    		}
 	    		saucer.setMove(false);
 	    	}
-    	
+	    	
+	    	if(timeL <= 0)
+	    	{
+	    		if(phatExplosion.isStopped())
+	    		{
+	    			phatExplosion.restart();
+	    		}
+	    		timeL = 1000000000;
+	    	}
+	    	
 	    	if(timeT <= 0)
 	    	{
 	    		tir1.getImage().setRotation(0);

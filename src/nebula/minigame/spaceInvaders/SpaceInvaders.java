@@ -103,7 +103,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     	ynyan = -100;
     	sonNyan = new Sound("ressources/sons/spaceInvaders/nyan.ogg");
     	
-    	tank = new Tank();
+    	tank = new Tank(gc.getWidth(),gc.getHeight());
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
     	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
     	tir = new Tir(0);

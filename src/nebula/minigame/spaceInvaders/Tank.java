@@ -17,7 +17,7 @@ public class Tank
 	private int vies;
 	private int tirEffectue;
 
-	public Tank() throws SlickException
+	public Tank(int width, int height) throws SlickException
 	{
 		image = new Image("ressources/images/spaceInvaders/saucer.png");
 		imageInvincibility = new Image("ressources/images/spaceInvaders/saucer-inv.png");
@@ -29,8 +29,8 @@ public class Tank
             sonTir = new Sound("ressources/sons/spaceInvaders/tir.ogg");
         }
 
-        x = 300 - this.getImage().getWidth()/2;
-		y = 600 - 2 * this.getImage().getHeight() + 10;
+        x = width/2 - this.getImage().getWidth()/2;
+		y = height/2 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;
 	}
 
