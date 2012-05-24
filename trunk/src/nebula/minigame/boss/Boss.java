@@ -123,4 +123,9 @@ public class Boss
 	{
 		this.vies -= 10;
 	}
+	
+	public void hit()
+	{
+		this.vies -= 200;
+	}
 }
