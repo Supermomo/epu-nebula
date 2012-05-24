@@ -1,11 +1,11 @@
 /** Une classe abstraite � utiliser pour le menu de lancement du jeu
  *  La classe de menu de votre jeu doit h�riter de cette classe :
- *    - d�finir la m�thode nomOptions qui renvoie un tableau de String qui corresponds aux 
+ *    - d�finir la m�thode nomOptions qui renvoie un tableau de String qui corresponds aux
  *    options possibles de votre menu
- *    - d�finir la m�thode lancerOption(int i) qui associe des actions aux options de votre menu 
+ *    - d�finir la m�thode lancerOption(int i) qui associe des actions aux options de votre menu
  *    - d�finir les m�thodes wavAccueil et wavAide qui d�signent le fichier wave � lire pour l'accueil
  *    et l'aide.
- *    
+ *
  *  Ne pas modifier cette classe
  *  @author helene
  */
@@ -72,7 +72,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	protected JLabel lb1;
 	protected LineBorder buttonBorder;
 	protected LineBorder enteteBorder;
-	
+
 	ArrayList<Sound> son = new ArrayList<Sound>();
 
 	// -------------------------------------------------
@@ -95,7 +95,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	// -------------------------------------------------------
 	/**
 	 * constructeur,
-	 * 
+	 *
 	 * @param title  : le nom du jeu
 	*/
 	public MenuAbstrait(String title) {
@@ -103,7 +103,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		nomJeu = title;
 		optionCourante = -1;
 		// m�thode � rendre concr�te par h�ritage
-		nomOptions = nomOptions(); 
+		nomOptions = nomOptions();
 		nbOption = nomOptions.length;
 		// on r�cup�re les pr�f�rences
 		Preferences pref = Preferences.getData();
@@ -124,14 +124,14 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
     	this.requestFocus();
 		// lit le message d'accueil
     	try {
-			son.add(4,new Sound("ressources/sons/menu/accueil.ogg"));
+			son.add(2,new Sound("ressources/sons/menu/home.ogg"));
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	son.get(4).play();
- 
+
+    	son.get(2).play();
+
 	}
 
 	// -------------------------------------------------------
@@ -185,7 +185,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 
 	/**
 	 * creer les boutons associ�s aux noms d'options
-	 * @throws SlickException 
+	 * @throws SlickException
 	 */
 	private void creerOption(String[] noms) throws SlickException {
 		// cr�ation des boutons
@@ -207,12 +207,12 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		regles.gridy = 2;
 		placement.setConstraints(boutons, regles);
 		add(boutons);
-		
-		son.add(0,new Sound("ressources/sons/menu/jouer.ogg"));
-		son.add(1,new Sound("ressources/sons/menu/option.ogg"));
-		son.add(2,new Sound("ressources/sons/menu/score.ogg"));
-		son.add(3,new Sound("ressources/sons/menu/quitter.ogg"));
-		
+
+		son.add(0,new Sound("ressources/sons/menu/play.ogg"));
+		son.add(1,new Sound("ressources/sons/menu/quit.ogg"));
+		//son.add(1,new Sound("ressources/sons/menu/options.ogg"));
+		//son.add(2,new Sound("ressources/sons/menu/scores.ogg"));
+
 	}
 
 	// pour cr�er un bouton associ� � un texte
@@ -243,7 +243,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		// enter = s�lectionner l'option
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			// m�thode � rendre concr�te par h�ritage
-			lancerOption(optionCourante);  
+			lancerOption(optionCourante);
 		}
 		// se d�placer dans les options vers le bas
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -299,7 +299,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		boutonOption[i].setBackground(foregroundColor);
 		boutonOption[i].setForeground(backgroundColor);
 	}
-	
+
 	//-------------------------------------------
 	// m�thodes pour g�rer les couleurs des menus
 
@@ -322,8 +322,8 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	/**
 	 * Modifie les couleurs de fond et de premier plan pour les menus abstraits
 	 * Cette fonction est appel�e par la fonction "changeColor" de la classe "Preferences"
-	 * � chaque fois que l'on presse F3 
-	 * 
+	 * � chaque fois que l'on presse F3
+	 *
 	 * Cette fonction peut �tre r��crite dans les classes filles si besoin
 	 * @author LOGRE Ivan, MULLER Stephane, GUYADER Erwan, helen
 	 **/
@@ -333,7 +333,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		Preferences pref = Preferences.getData();
 		foregroundColor = pref.getCurrentForegroundColor();
 		backgroundColor = pref.getCurrentBackgroundColor();
-		
+
 		// et on met � jour le menu avec ces nouvelles couleurs
 		//ent�te
 		enteteBorder= new LineBorder(foregroundColor,8);
@@ -360,14 +360,13 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 			boutonOption[i].setBorder(buttonBorder);
 		}
 	}
-	
+
 	public void stopSound()
 	{
 		for(int i = 0; i < son.size(); i++)
 		{
 			if(son.get(i).playing())
 			{
-				System.out.println("plop");
 				son.get(i).stop();
 			}
 		}
