@@ -47,7 +47,7 @@ public class Vaisseau
 	
 	public boolean hit(Missile m)
 	{
-		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, m.getX(), m.getY(), m.getImage().getWidth(), m.getImage().getHeight());
+		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, m.getX(), m.getY(), m.getImage().getWidth(), m.getImage().getHeight()/2);
 	}
 
 	public boolean dead()
