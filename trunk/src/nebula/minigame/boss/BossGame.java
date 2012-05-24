@@ -18,6 +18,7 @@ public class BossGame extends AbstractMinigameState
 		Tir tir1;
 		Tir tir2;
 		Missile miss1;
+		Missile miss2;
 		
 		int timerTir;
 		int timeT;
@@ -34,19 +35,19 @@ public class BossGame extends AbstractMinigameState
 	        switch (this.getDifficulty())
 	        {
 				case Easy:
-						timerTir = 40000;
-					break;
-
-				case Hard:
 						timerTir = 20000;
 					break;
 
-				case Insane:
+				case Hard:
 						timerTir = 10000;
 					break;
 
+				case Insane:
+						timerTir = 5000;
+					break;
+
 				default:
-						timerTir = 30000;
+						timerTir = 15000;
 					break;
 			}
 	        saucer = new Vaisseau();
@@ -58,7 +59,8 @@ public class BossGame extends AbstractMinigameState
 	        timeM = timerTir * 2;
 	        tir1 = new Tir();
 	        tir2 = new Tir();
-	        miss1 = new Missile();
+	        miss1 = new Missile(timerTir);
+	        miss2 = new Missile(timerTir);
 
 	    }
 
@@ -116,8 +118,10 @@ public class BossGame extends AbstractMinigameState
 	    	if(timeM <= 0)
 	    	{
 	    		miss1.getImage().setRotation(0);
+	    		miss1.getImage().setRotation(0);
 	    		timeM = timerTir;
 	    		boss.launch(miss1, true, saucer);
+	    		boss.launch(miss2, false, saucer);
 	    	}
 	        
 	    	if(tir1.getTire())
@@ -138,6 +142,13 @@ public class BossGame extends AbstractMinigameState
 	    		miss1.setX(miss1.getX() + hip * (float)Math.sin(Math.toRadians(miss1.getImage().getRotation())));
 	    		miss1.setY(miss1.getY() - hip * (float)Math.cos(Math.toRadians(miss1.getImage().getRotation())));
 	    	}
+	    	
+	    	if(miss2.getTire())
+	    	{
+	    		miss2.vise(saucer);
+	    		miss2.setX(miss2.getX() + hip * (float)Math.sin(Math.toRadians(miss2.getImage().getRotation())));
+	    		miss2.setY(miss2.getY() - hip * (float)Math.cos(Math.toRadians(miss2.getImage().getRotation())));
+	    	}
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -149,5 +160,6 @@ public class BossGame extends AbstractMinigameState
 	        tir1.getImage().draw(tir1.getX(),tir1.getY());
 	        tir2.getImage().draw(tir2.getX(),tir2.getY());
 	        miss1.getImage().draw(miss1.getX(), miss1.getY());
+	        miss2.getImage().draw(miss2.getX(), miss2.getY());
 	    }
 }

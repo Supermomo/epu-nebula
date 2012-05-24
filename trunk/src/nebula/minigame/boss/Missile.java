@@ -15,12 +15,12 @@ public class Missile
 	private int timerExplosion;
 	
 	
-	public Missile() throws SlickException
+	public Missile(int t) throws SlickException
 	{
 		image = new Image("ressources/images/boss/ship.png");
 		x = -100;
 		y = -100;
-		timerExplosion = 3000;
+		timerExplosion = t;
 	}
 	
 	public void vise(Vaisseau v)
