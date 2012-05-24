@@ -31,6 +31,10 @@ public class BossGame extends AbstractMinigameState
 		private float xExplo2 = -1000;
 		private float yExplo2 = -1000;
 		
+		private Animation explosion3 = null;
+		private float xExplo3 = -1000;
+		private float yExplo3 = -1000;
+		
 		private SpriteSheet laser = null;
 		private Animation phatLaser = null;
 		private float xLaser = -2200;
@@ -95,6 +99,11 @@ public class BossGame extends AbstractMinigameState
 	    	explosion2.setAutoUpdate(true);
 	    	explosion2.setLooping(false);
 	    	explosion2.stopAt(20);
+	    	
+	    	explosion3 = new Animation(explo,75);
+	    	explosion3.setAutoUpdate(true);
+	    	explosion3.setLooping(false);
+	    	explosion3.stopAt(20);
 	    	
 	    	laser = new SpriteSheet("ressources/images/boss/nebula-laser-animation.png",142,2100,0);
 	    	phatLaser = new Animation(laser, 200);
@@ -179,6 +188,7 @@ public class BossGame extends AbstractMinigameState
 		    		{
 		    			phatExplosion.restart();
 		    		}
+		    		boss.getDestroy();
 	    		}
 	    	}
     	
@@ -254,15 +264,15 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(boss.touche(tir))
 	    	{
-	    		xPhat = boss.getX() + boss.getImage().getWidth()/2 - phatExplosion.getImage(0).getWidth()/2;
-	    		yPhat = boss.getY() + boss.getImage().getHeight()/2 - phatExplosion.getImage(0).getHeight()/2;
-	    		if(phatExplosion.isStopped())
+	    		xExplo3 = boss.getX() + boss.getImage().getWidth()/2 - explosion3.getImage(0).getWidth()/2;
+	    		yExplo3 = boss.getY() + boss.getImage().getHeight()/2 - explosion3.getImage(0).getHeight()/2;
+	    		if(explosion3.isStopped())
 	    		{
-	    			phatExplosion.restart();
+	    			explosion3.restart();
 	    		}
 	    		boss.loseLife();
 	    		boss.getSon().play();
-	    		
+	    		boss.getDestroy();
 	    		tir.setX(-100);
 	    		tir.setY(-100);
 	    	}	    	
@@ -280,6 +290,7 @@ public class BossGame extends AbstractMinigameState
 	        miss2.getImage().draw(miss2.getX(), miss2.getY());
 	        g.drawAnimation(explosion, xExplo, yExplo);
 	        g.drawAnimation(explosion2, xExplo2, yExplo2);
+	        g.drawAnimation(explosion3, xExplo3, yExplo3);
 	        g.drawAnimation(phatLaser, xLaser, yLaser);
 	        g.drawAnimation(phatExplosion, xPhat, yPhat);
 	        

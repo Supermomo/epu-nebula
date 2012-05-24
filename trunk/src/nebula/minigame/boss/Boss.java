@@ -128,4 +128,24 @@ public class Boss
 	{
 		this.vies -= 200;
 	}
+	
+	public void getDestroy() throws SlickException
+	{
+		if(this.vies <= 800 && this.vies > 600)
+		{
+			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere2.png");
+		}
+		else if(this.vies <= 600 && this.vies > 400)
+		{
+			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere3.png");
+		}
+		else if(this.vies <= 400 && this.vies > 200)
+		{
+			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere4.png");
+		}
+		else
+		{
+			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere5.png");
+		}
+	}
 }
