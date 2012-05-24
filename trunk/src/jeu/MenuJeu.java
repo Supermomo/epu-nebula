@@ -26,7 +26,7 @@ public class MenuJeu extends MenuAbstrait
      * vous pouvez d�finir autant d'options que vous voulez
      **/
 	protected String[] nomOptions() {
-		String[] noms = {"Jouer","Options","Scores","Quitter"};
+		String[] noms = {"Jouer","Quitter"};
 		return noms;
 	}
 
@@ -38,10 +38,7 @@ public class MenuJeu extends MenuAbstrait
 		case 0 :
 		    NebulaGame.startNebulaGame();
 			break;
-		case 1 : new Option(nomJeu + ": gestion des options");break;
-		//case 2 : new Fichier(nomJeu + ": pour �crire dans un fichier");break;
-		case 3 : System.exit(0);
-		default: System.err.println("action non d�finie");
+		case 1 : System.exit(0);
 		}
 	}
 
