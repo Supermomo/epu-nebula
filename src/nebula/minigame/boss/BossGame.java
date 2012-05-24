@@ -17,11 +17,11 @@ public class BossGame extends AbstractMinigameState
 		Boss boss = null;
 		Tir tir1;
 		Tir tir2;
+		Missile miss1;
 		
 		int timerTir;
-		int time;
-		Image test;
-		
+		int timeT;
+		int timeM;
 	
 		/* Game ID */
 		@Override public int getID () { return NebulaState.Boss.id; }
@@ -54,10 +54,11 @@ public class BossGame extends AbstractMinigameState
 	        boss.setX(gc.getWidth()/2 - boss.getImage().getWidth()/2);
 	        boss.setY(0);
 	        // TIRS BOSS
-	        time = timerTir;
+	        timeT = timerTir;
+	        timeM = timerTir * 2;
 	        tir1 = new Tir();
 	        tir2 = new Tir();
-	        test = new Image("ressources/images/boss/ship.png");
+	        miss1 = new Missile();
 
 	    }
 
@@ -67,7 +68,8 @@ public class BossGame extends AbstractMinigameState
 	        // Call super method
 	        super.update(gc, game, delta);
 	        
-	        time -= delta;
+	        timeT -= delta;
+	        timeM -= delta;
 	        float hip = delta * 0.25f;
 	    	Input input = gc.getInput();
 
@@ -92,7 +94,7 @@ public class BossGame extends AbstractMinigameState
 
 	    	if(input.isKeyDown(Input.KEY_UP))
 	    	{
-	    		if(saucer.getY() > 250)
+	    		if(saucer.getY() > 0)
 	    			saucer.setY(saucer.getY() - (0.4f * delta));
 	    	}
 
@@ -102,13 +104,20 @@ public class BossGame extends AbstractMinigameState
 
 	    	}
     	
-	    	if(time <= 0)
+	    	if(timeT <= 0)
 	    	{
 	    		tir1.getImage().setRotation(0);
 	    		tir2.getImage().setRotation(0);
-	    		time = timerTir;
+	    		timeT = timerTir;
 	    		boss.tirer(tir1, true, saucer);
 	    		boss.tirer(tir2, false, saucer);
+	    	}
+	    	
+	    	if(timeM <= 0)
+	    	{
+	    		miss1.getImage().setRotation(0);
+	    		timeM = timerTir;
+	    		boss.launch(miss1, true, saucer);
 	    	}
 	        
 	    	if(tir1.getTire())
@@ -123,8 +132,12 @@ public class BossGame extends AbstractMinigameState
 	    		tir2.setY(tir2.getY() - hip * (float)Math.cos(Math.toRadians(tir2.getImage().getRotation())));
 	    	}
 	    	
-	    	test.rotate(1);
-	    	
+	    	if(miss1.getTire())
+	    	{
+	    		miss1.vise(saucer);
+	    		miss1.setX(miss1.getX() + hip * (float)Math.sin(Math.toRadians(miss1.getImage().getRotation())));
+	    		miss1.setY(miss1.getY() - hip * (float)Math.cos(Math.toRadians(miss1.getImage().getRotation())));
+	    	}
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -135,6 +148,6 @@ public class BossGame extends AbstractMinigameState
 	        boss.getImage().draw(boss.getX(), boss.getY());
 	        tir1.getImage().draw(tir1.getX(),tir1.getY());
 	        tir2.getImage().draw(tir2.getX(),tir2.getY());
-	        test.draw(100, 100);
+	        miss1.getImage().draw(miss1.getX(), miss1.getY());
 	    }
 }
