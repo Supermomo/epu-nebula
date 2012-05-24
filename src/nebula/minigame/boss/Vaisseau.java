@@ -12,6 +12,7 @@ public class Vaisseau
 	private float x;
 	private float y;
 	private int vies;
+	private boolean canMove;
 
 	public Vaisseau() throws SlickException
 	{
@@ -21,6 +22,7 @@ public class Vaisseau
 		x = 300 - this.getImage().getWidth()/2;
 		y = 600 - 2 * this.getImage().getHeight() + 10;
 		vies = 3;
+		canMove = true;
 	}
 
 	public void tirer(Tir tir)
@@ -84,6 +86,16 @@ public class Vaisseau
 	public int getVies()
 	{
 		return vies;
+	}
+	
+	public boolean getMove()
+	{
+		return this.canMove;
+	}
+	
+	public void setMove(boolean b)
+	{
+		this.canMove = b;
 	}
 
 }

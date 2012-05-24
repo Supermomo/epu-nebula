@@ -31,9 +31,15 @@ public class BossGame extends AbstractMinigameState
 		private float xExplo2 = -1000;
 		private float yExplo2 = -1000;
 		
+		private SpriteSheet laser = null;
+		private Animation phatLaser = null;
+		private float xLaser = -2200;
+		private float yLaser = -100;
+		
 		int timerTir;
 		int timeT;
 		float timeM;
+		int unlockMove;
 	
 		/* Game ID */
 		@Override public int getID () { return NebulaState.Boss.id; }
@@ -85,6 +91,12 @@ public class BossGame extends AbstractMinigameState
 	    	explosion2.setLooping(false);
 	    	explosion2.stopAt(20);
 	    	
+	    	laser = new SpriteSheet("ressources/images/boss/nebula-laser-animation.png",142,2100,0);
+	    	phatLaser = new Animation(laser, 200);
+	    	phatLaser.setAutoUpdate(true);
+	    	phatLaser.setLooping(false);
+	    	phatLaser.stopAt(12);
+	    	
 	    	// TIR SAUCER
 	    	tir = new Tir(false);
 
@@ -98,29 +110,34 @@ public class BossGame extends AbstractMinigameState
 	        
 	        timeT -= delta;
 	        timeM -= delta;
+	        if(!saucer.getMove())
+	        	unlockMove -= delta;
+	        if(unlockMove < 0)
+	        	saucer.setMove(true);
+	        
 	        float hip = delta * 0.25f;
 	    	Input input = gc.getInput();
 
 	    	// =================== Gestion des deplacements ==========================
-	    	if(input.isKeyDown(Input.KEY_RIGHT))
+	    	if(input.isKeyDown(Input.KEY_RIGHT) && saucer.getMove())
 	    	{
 	    		if(saucer.getX() < gc.getWidth() - saucer.getImage().getWidth())
 	    			saucer.setX(saucer.getX() + (0.4f * delta));
 	    	}
 
-	    	if(input.isKeyDown(Input.KEY_LEFT))
+	    	if(input.isKeyDown(Input.KEY_LEFT) && saucer.getMove())
 	    	{
 	    		if(saucer.getX() > 0)
 	    			saucer.setX(saucer.getX() - (0.4f * delta));
 	    	}
 
-	    	if(input.isKeyDown(Input.KEY_DOWN))
+	    	if(input.isKeyDown(Input.KEY_DOWN) && saucer.getMove())
 	    	{
 	    		if(saucer.getY() + saucer.getImage().getHeight() < gc.getHeight())
 	    			saucer.setY(saucer.getY() + (0.4f * delta));
 	    	}
 
-	    	if(input.isKeyDown(Input.KEY_UP))
+	    	if(input.isKeyDown(Input.KEY_UP) && saucer.getMove())
 	    	{
 	    		if(saucer.getY() > 0)
 	    			saucer.setY(saucer.getY() - (0.4f * delta));
@@ -130,6 +147,18 @@ public class BossGame extends AbstractMinigameState
 	    	if(input.isKeyDown(Input.KEY_SPACE))
 	    	{
 	    		saucer.tirer(tir);
+	    	}
+	    	
+	    	if(input.isKeyDown(Input.KEY_LCONTROL))
+	    	{
+	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
+	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight();
+	    		saucer.setMove(false);
+	    		unlockMove = 2000;
+	    		if(phatLaser.isStopped())
+	    		{
+	    			phatLaser.restart();
+	    		}
 	    	}
     	
 	    	if(timeT <= 0)
@@ -216,6 +245,7 @@ public class BossGame extends AbstractMinigameState
 	        miss2.getImage().draw(miss2.getX(), miss2.getY());
 	        g.drawAnimation(explosion, xExplo, yExplo);
 	        g.drawAnimation(explosion2, xExplo2, yExplo2);
+	        g.drawAnimation(phatLaser, xLaser, yLaser);
 	        
 	        saucer.getImage().draw(saucer.getX(), saucer.getY());
 	    }
