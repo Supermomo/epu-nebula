@@ -114,9 +114,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 			remainingTime=120*1000;
 			speed=0.16f;
 			attractionCoef=0.003f;
-			scoreCoef = 275.0f;
-			timeCoef=8.0f;
-			fenceCoef=8.0f;
+			scoreCoef = 270.0f;
+			timeCoef=5.0f;
+			fenceCoef=10.0f;
 			powerTimer=1000;
 		}
 		else if(Difficulty.Hard.equals(difficulty)){
@@ -125,8 +125,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 			speed=0.3f;
 			attractionCoef=0.0015f;
 			scoreCoef = 130.0f;
-			timeCoef=12.0f;
-			fenceCoef=12.0f;
+			timeCoef=15.0f;
+			fenceCoef=15.0f;
 			powerTimer=1000;
 		}
 		else if(Difficulty.Insane.equals(difficulty)){
@@ -135,8 +135,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 			speed=0.4f;
 			attractionCoef=0.001f;
 			scoreCoef = 90.0f;
-			timeCoef=15.0f;
-			fenceCoef=15.0f;
+			timeCoef=25.0f;
+			fenceCoef=20.0f;
 			powerTimer=1000;
 		}
 		else{//MEDIUM
@@ -145,8 +145,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 			speed=0.2f;
 			attractionCoef=0.002f;
 			scoreCoef = 200.0f;
-			timeCoef=9.0f;
-			fenceCoef=9.0f;
+			timeCoef=10.0f;
+			fenceCoef=10.0f;
 			powerTimer=1000;
 		}
 		
@@ -320,7 +320,25 @@ public class SpaceShepherd extends AbstractMinigameState {
 	}
 
 	private int computeScore(){
-		return (int) ((flockNumber-flock.getFlockers().size())*scoreCoef+(remainingTime-startingTime)*timeCoef/1000 - fences.size()*fenceCoef);
+		int sco=(int) ((flockNumber-flock.getFlockers().size())*scoreCoef+(remainingTime-startingTime)/1000*timeCoef - fences.size()*fenceCoef);
+		
+		if(Difficulty.Easy.equals(difficulty)){
+			sco=Math.max(1000, sco);
+			sco=Math.min(sco, 2000);
+		}
+		else if(Difficulty.Hard.equals(difficulty)){
+			sco=Math.max(3000, sco);
+			sco=Math.min(sco, 4000);
+		}
+		else if(Difficulty.Insane.equals(difficulty)){
+			sco=Math.max(4000, sco);
+			sco=Math.min(sco, 5000);
+		}
+		else{//MEDIUM
+			sco=Math.max(2000, sco);
+			sco=Math.min(sco, 3000);
+		}
+		return sco;
 	}
 	private boolean validDistanceFromLastPoint() {
 		return (Math.abs(lastPlot.x - x) > plotRadius || Math.abs(lastPlot.y
