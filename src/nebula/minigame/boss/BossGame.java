@@ -36,6 +36,11 @@ public class BossGame extends AbstractMinigameState
 		private float xLaser = -2200;
 		private float yLaser = -100;
 		
+		private SpriteSheet light = null;
+		private Animation phatExplosion = null;
+		private float xPhat = -2000;
+		private float yPhat = -2000;
+		
 		int timerTir;
 		int timeT;
 		float timeM;
@@ -97,6 +102,12 @@ public class BossGame extends AbstractMinigameState
 	    	phatLaser.setLooping(false);
 	    	phatLaser.stopAt(12);
 	    	
+	    	light = new SpriteSheet("ressources/images/boss/light_004.png", 500, 500, 0);
+	    	phatExplosion = new Animation(light, 60);
+	    	phatExplosion.setAutoUpdate(true);
+	    	phatExplosion.setLooping(false);
+	    	phatExplosion.stopAt(25);
+	    	
 	    	// TIR SAUCER
 	    	tir = new Tir(false);
 	    }
@@ -157,6 +168,17 @@ public class BossGame extends AbstractMinigameState
 	    		if(phatLaser.isStopped())
 	    		{
 	    			phatLaser.restart();
+	    		}
+	    		
+	    		if(saucer.getX() < boss.getX() + boss.getImage().getWidth() && saucer.getX() + saucer.getImage().getWidth() > boss.getX())
+	    		{
+	    			boss.hit();
+	    			xPhat = boss.getX() + boss.getImage().getWidth()/2 - phatExplosion.getImage(0).getWidth()/2;
+		    		yPhat = boss.getY() + boss.getImage().getHeight()/2 - phatExplosion.getImage(0).getHeight()/2;
+		    		if(phatExplosion.isStopped())
+		    		{
+		    			phatExplosion.restart();
+		    		}
 	    		}
 	    	}
     	
@@ -232,19 +254,18 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(boss.touche(tir))
 	    	{
-	    		xExplo = boss.getX() + boss.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
-	    		yExplo = boss.getY() + boss.getImage().getHeight()/2 - explosion.getImage(0).getHeight()/2;
-	    		if(explosion.isStopped())
+	    		xPhat = boss.getX() + boss.getImage().getWidth()/2 - phatExplosion.getImage(0).getWidth()/2;
+	    		yPhat = boss.getY() + boss.getImage().getHeight()/2 - phatExplosion.getImage(0).getHeight()/2;
+	    		if(phatExplosion.isStopped())
 	    		{
-	    			explosion.restart();
+	    			phatExplosion.restart();
 	    		}
 	    		boss.loseLife();
 	    		boss.getSon().play();
 	    		
 	    		tir.setX(-100);
 	    		tir.setY(-100);
-	    	}
-	    	
+	    	}	    	
 	    }
 
 	    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException
@@ -260,6 +281,7 @@ public class BossGame extends AbstractMinigameState
 	        g.drawAnimation(explosion, xExplo, yExplo);
 	        g.drawAnimation(explosion2, xExplo2, yExplo2);
 	        g.drawAnimation(phatLaser, xLaser, yLaser);
+	        g.drawAnimation(phatExplosion, xPhat, yPhat);
 	        
 	        saucer.getImage().draw(saucer.getX(), saucer.getY());
 	    }
