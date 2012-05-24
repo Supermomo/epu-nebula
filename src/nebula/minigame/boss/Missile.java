@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Missile 
 {
-	private static Image image = null;
+	private Image image = null;
 	private float x;
 	private float y;
 	private boolean tire;
@@ -19,8 +19,8 @@ public class Missile
 	public Missile(int t) throws SlickException
 	{
 		image = new Image("ressources/images/boss/nebula-rocket.png");
-		x = -100;
-		y = -100;
+		x = -1000;
+		y = -1000;
 		timerExplosion = t;
 	}
 	
@@ -37,11 +37,12 @@ public class Missile
 		}
 	}
 	
-	public void explode()
+	public void explode(int t)
 	{
-		this.x = -100;
-		this.y = -100;
+		this.x = -1000;
+		this.y = -1000;
 		tire = false;
+		timerExplosion = t;
 	}
 
 	public void minusExplosion(int delta)
