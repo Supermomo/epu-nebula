@@ -59,6 +59,7 @@ public class BossGame extends AbstractMinigameState
 		int timeT;
 		float timeM;
 		float timeL;
+		float timeK;
 		int unlockMove;
 		int invincibility;
 		String mess;
@@ -77,18 +78,22 @@ public class BossGame extends AbstractMinigameState
 	        {
 				case Easy:
 						timerTir = 10000;
+						timeK = 5000;
 					break;
 
 				case Hard:
 						timerTir = 6000;
+						timeK = 10000;
 					break;
 
 				case Insane:
 						timerTir = 3500;
+						timeK = 10000;
 					break;
 
 				default:
 						timerTir = 5000;
+						timeK = 10000;
 					break;
 			}
 	        saucer = new Vaisseau(gc.getWidth(),gc.getHeight());
@@ -170,6 +175,7 @@ public class BossGame extends AbstractMinigameState
 	        timeT -= delta;
 	        timeM -= delta;
 	        timeL -= delta;
+	        timeK -= delta;
 	        if(!saucer.getMove())
 	        	unlockMove -= delta;
 	        if(unlockMove < 0)
@@ -209,7 +215,7 @@ public class BossGame extends AbstractMinigameState
 	    		saucer.tirer(tir);
 	    	}
 	    	
-	    	if(input.isKeyDown(Input.KEY_LCONTROL) && saucer.getMove())
+	    	if(input.isKeyDown(Input.KEY_LCONTROL) && saucer.getMove() && timeK < 0)
 	    	{
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
 	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight();
