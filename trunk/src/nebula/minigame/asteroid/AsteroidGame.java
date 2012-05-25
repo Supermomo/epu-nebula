@@ -132,10 +132,7 @@ public class AsteroidGame extends AbstractMinigameState
 
             // Create asteroid
             if (random.nextFloat() < getAsteroidProbability() * delta)
-            {
                 createObject(false);
-                System.out.println(spaceObjects.size());
-            }
 
             // Create crystal
             if (initialTime - time >= crystalTimer)
