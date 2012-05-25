@@ -34,7 +34,7 @@ public class Gravity extends AbstractMinigameState {
 	private ControleJeu controleJeu;
 
 	private Queue<String> listeNiveaux;
-	
+
 	private Image coeur;
 	private int[] mapRender;
 	private int timer;
@@ -116,7 +116,7 @@ public class Gravity extends AbstractMinigameState {
 
 		etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
 		timer = 0;
-		
+
 	} // *** Fin Init ***
 
 
@@ -152,7 +152,7 @@ public class Gravity extends AbstractMinigameState {
 			int newRender[] = modeleJeu.renderMap();
 			boolean stop = false;
 
-			
+
 			// Traitement des X
 			if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
 				mapRender[2] -= vitesseDeplacement;
@@ -208,7 +208,7 @@ public class Gravity extends AbstractMinigameState {
 		super.update(gameContainer, stateBasedGame, delta);
 
 		switch(etatActuel) {
-		case DEPLACEMENT_JOUEUR:	
+		case DEPLACEMENT_JOUEUR:
 			controleJeu.inputJoueur(gameContainer.getInput(), delta);
 			modeleJeu.getHero().incStill();
 			if(deplacementMap()) etatActuel = EtatJeu.DEPLACEMENT_MAP;
@@ -252,8 +252,8 @@ public class Gravity extends AbstractMinigameState {
 			init(gameContainer, stateBasedGame, this.listeNiveaux);
 			break;
 		}
-		
-		vitesseDeplacement = 0.3f*delta;
+
+		vitesseDeplacement = 0.4f * delta;
 	}
 
 	/**
