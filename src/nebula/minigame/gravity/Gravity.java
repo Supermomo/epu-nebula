@@ -34,11 +34,11 @@ public class Gravity extends AbstractMinigameState {
 	private ControleJeu controleJeu;
 
 	private Queue<String> listeNiveaux;
-
+	
 	private Image coeur;
-	private int[] mapRender = {0,0,0,0};
+	private int[] mapRender;
 	private int timer;
-
+	private float vitesseDeplacement;
 
 
 	/* Game ID */
@@ -58,7 +58,7 @@ public class Gravity extends AbstractMinigameState {
 
 
 		score = 0;
-
+		mapRender= new int[]{0,0,0,0};
 		// Chargement des niveaux pour le jeu
 		// --- Choix de la difficulté
 		String prefixeChemin;
@@ -116,7 +116,7 @@ public class Gravity extends AbstractMinigameState {
 
 		etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
 		timer = 0;
-
+		
 	} // *** Fin Init ***
 
 
@@ -152,7 +152,7 @@ public class Gravity extends AbstractMinigameState {
 			int newRender[] = modeleJeu.renderMap();
 			boolean stop = false;
 
-			float vitesseDeplacement = 4f;
+			
 			// Traitement des X
 			if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
 				mapRender[2] -= vitesseDeplacement;
@@ -252,6 +252,8 @@ public class Gravity extends AbstractMinigameState {
 			init(gameContainer, stateBasedGame, this.listeNiveaux);
 			break;
 		}
+		
+		vitesseDeplacement = 0.3f*delta;
 	}
 
 	/**
