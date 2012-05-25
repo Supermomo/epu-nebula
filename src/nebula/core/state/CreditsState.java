@@ -6,6 +6,7 @@ import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -22,14 +23,14 @@ public class CreditsState extends AbstractState
 {
     // Credits string
     private static final String credits =
-        "Crédits\n" +
+        "$==== Crédits ====\n" +
         " \n" +
         " \n" +
         "Nebula - Projet DeViNT 2012\n" +
         "Polytech'Nice-Sophia\n" +
         " \n" +
         " \n" +
-        "Créateurs / Développeurs :\n" +
+        "$==== Créateurs / Développeurs ====\n" +
         " \n" +
         "Gwenn Aubert\n" +
         "Thomas Di'Meco\n" +
@@ -37,16 +38,38 @@ public class CreditsState extends AbstractState
         "Gaspard Perrot\n" +
         " \n" +
         " \n" +
-        "Logiciels / Bibliothèques :\n" +
+        "$==== Casting ====\n" +
         " \n" +
-        "Eclipse (IDE Java)\n" +
+        "Bidibop : Matthieu Maugard\n" +
+        "Père de Bidibop : Matthieu Maugard\n" +
+        "Sage : Matthieu Maugard\n" +
+        "Farfafée : Matthieu Maugard\n" +
+        " \n" +
+        " \n" +
+        "$==== Bibliothèques ====\n" +
+        " \n" +
         "Slick (bibliothèque graphique)\n" +
         " \n" +
         " \n" +
-        "Ressources :\n" +
+        "$==== Audio ====\n" +
         " \n" +
-        "Sons : www.universal-soundbank.com/\n" +
-        "Musiques : www.audionautix.com/\n";
+        "Sons : www.universal-soundbank.com\n" +
+        "Musiques : www.audionautix.com\n" +
+        " \n" +
+        " \n" +
+        "$==== Remerciements ====\n" +
+        " \n" +
+        "Les élèves de Clément Ader\n" +
+        "Les enseignants de Polytech\n" +
+        "Bruce Springsteen\n" +
+        "Momo & Gwenn les gitans\n" +
+        "La fonction intersect() de Slick\n" +
+        "Moi\n" +
+        "Toi\n" +
+        " \n" +
+        " \n" +
+        " \n" +
+        "$- Merci -";
 
 
     // Credits properties
@@ -84,7 +107,7 @@ public class CreditsState extends AbstractState
         strings = credits.split("\n");
 
         y = gc.getHeight();
-        strHeight = font.getHeight("Azerty");
+        strHeight = font.getHeight("Azerty0123");
     }
 
 
@@ -126,11 +149,21 @@ public class CreditsState extends AbstractState
         {
             String str = strings[i];
 
+            // Colors
+            Color color = Color.white;
+
+            if (!str.isEmpty() && str.charAt(0) == '$')
+            {
+                str = str.substring(1, str.length());
+                color = Color.yellow;
+            }
+
             // Draw
             font.drawString(
                 gc.getWidth()/2 - font.getWidth(str)/2,
                 y + i*(strHeight + CREDITS_SPACE),
-                str);
+                str,
+                color);
         }
 
         // Render fades
