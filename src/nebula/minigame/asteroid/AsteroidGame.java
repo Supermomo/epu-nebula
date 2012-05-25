@@ -132,7 +132,10 @@ public class AsteroidGame extends AbstractMinigameState
 
             // Create asteroid
             if (random.nextFloat() < getAsteroidProbability() * delta)
+            {
                 createObject(false);
+                System.out.println(spaceObjects.size());
+            }
 
             // Create crystal
             if (initialTime - time >= crystalTimer)
@@ -143,6 +146,7 @@ public class AsteroidGame extends AbstractMinigameState
 
             // For each object
             SpaceObject objectTouched = null;
+            List<SpaceObject> objectsOutOfLimits = new ArrayList<SpaceObject>();
 
             for (SpaceObject obj : spaceObjects)
             {
@@ -152,6 +156,9 @@ public class AsteroidGame extends AbstractMinigameState
 
                 // Move
                 obj.step(delta);
+
+                // Delete if can be destroyed
+                if (obj.canBeDestroyed()) objectsOutOfLimits.add(obj);
             }
 
             // Object touched
@@ -177,6 +184,9 @@ public class AsteroidGame extends AbstractMinigameState
                     sndExplosion.play();
                 }
             }
+
+            // Remove objects out of limits
+            spaceObjects.removeAll(objectsOutOfLimits);
 
             // Decrease time
             time -= delta;
