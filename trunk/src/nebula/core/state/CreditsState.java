@@ -66,6 +66,7 @@ public class CreditsState extends AbstractState
         "La fonction intersect() de Slick\n" +
         "Moi\n" +
         "Toi\n" +
+        "Et tout ceux qui le veulent...\n" +
         " \n" +
         " \n" +
         " \n" +
