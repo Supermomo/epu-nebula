@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- f4 / Facile-Moyen / Sauts multiples 2 ou 3 pics -->
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="13" height="30" tilewidth="80" tileheight="80">
+<map version="1.0" orientation="orthogonal" width="13" height="13" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
   <image source="../map80.png"/>
  </tileset>
- <layer name="block" width="13" height="30">
+ <layer name="block" width="13" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAM2Uyw0AIQhE6YL+O927YT4YdCXxIPDUTHAyInJjdWKCcd5S7dHZJ5ks8i6z5l5hHO1VVHOguCmG5VUN3en8B6Ql4xmD+lyG1d05UIzS5baHdLzr7xlFfR3vnWA+IHc06BgGAAA=
+   H4sIAAAAAAAAABNnYGAQJwPDACE1uPSg04T0EAMo0YNuP7p5xPqZnHAiZA85/iFXDz53o/OJ0UMNDAB+9+QvpAIAAA==
   </data>
  </layer>
- <layer name="end" width="13" height="30">
+ <layer name="map" width="13" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAWjYBSMglEwnIEsCRgEAEs+GpUYBgAA
+   H4sIAAAAAAAAAONgYGDgg2IOPBhZnhOI5aCYHUkOmxp2LHoE0GheqF5+JD66HmIwO5l6QHYxATEzVIwFSjNiEUPWw4GkF5kGYREs4QQLI2wY5ncBBsr9Q4keZD/D+MhhA+OjxzE2v6KHCbkYAF5TMJCkAgAA
   </data>
  </layer>
- <layer name="map" width="13" height="30">
+ <layer name="end" width="13" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAM2U3QqAIAxGtYTMfsHysvd/zAwUZGz+oVBw6ELOpuvLlTG2F7BYZstTwNTA4ZYLYYw4iqitOjvCvc8CB+v7F2dD5i6BcyJ1c3IgKpxULypv2nIXOh5DODJSEztf2Ee7WUIfzp/am6lwPBxZhw7c+5eDI+HArNTMuqUjGX1f5Pah7oQeGcW+0+CA/1zq3DJwUg90XizPv7gYBgAA
+   H4sIAAAAAAAAAGNgGAWjgHwgSwc7AJklxmqkAgAA
   </data>
  </layer>
- <layer name="death" width="13" height="30">
+ <layer name="death" width="13" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGNxAmkI9lOqnhR4ZMswnR89A2iuFhNEBveJkoAEs7LC5HT1cJInQQ4496Oaj20vruMCVBqgBJAkrGVRAEgljA7QKJ3IAAOMG84kYBgAA
+   H4sIAAAAAAAAAGNgoB2QoqHZo2DwAUkopjYAAFTosCmkAgAA
   </data>
  </layer>
- <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
-  <object name="start" type="default" x="203" y="125" width="2" height="2"/>
+ <objectgroup name="ObjectGroup" width="0" height="0">
+  <object name="start" type="default" x="135" y="142" width="3" height="3"/>
  </objectgroup>
 </map>

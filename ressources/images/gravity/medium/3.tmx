@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Droits Avec pics / Facile-Moyen / Deux inversions, précision moyenne -->
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="30" height="15" tilewidth="80" tileheight="80">
+<map version="1.0" orientation="orthogonal" width="15" height="8" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
   <image source="../map80.png"/>
  </tileset>
- <layer name="block" width="30" height="15">
+ <layer name="block" width="15" height="8">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAN2TWwpAIQhE3UX73+n9FRnHsboFCZIE4/GBw8zGBTcQe8s0mXW4nhdr6TBRD0iHeoxxh1lxszfGrGbEq7gop7ILpR5lrjNzVLkrPf3NnTGmr/6Y7sSsbnGrfOwOX+MyhqpZ2duOW/X+AcMs/wEIBwAA
+   H4sIAAAAAAAAABNnYGAQpwDDAKV6sZmDz2xywEDrpUUYEsIA0hPIhuABAAA=
   </data>
  </layer>
- <layer name="map" width="30" height="15">
+ <layer name="map" width="15" height="8" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAL2USwuAIBCE7QHZocepo///Z2ZQIMM+Zgs6DIqZn7M7mFNKOajVEHtGEealEe7f4DtqCnCLwJX2esyWi2egF/SI80czwfS42qjVeSW8HkG/Xl40XlfVVw2GX6aHTO+k87H+bK7eMC3uotQuw5zNC8u9tDtrk/Lf0ztL0ZzjnaX/Ij16y82GFyn3mMsvXOYt+5srveF4n7ZW1/p4j142PL8et1UPo6YTqyrO6ggHAAA=
+   H4sIAAAAAAAAAONgYGDgg2IOEjEnEMtBMTsOc3CZjaxXAInNC1XPj0WMD4teYjED1I0DpRfkbiYsmBlJLSMWeUJxQEgdAEflaQrgAQAA
   </data>
  </layer>
- <layer name="end" width="30" height="15">
+ <layer name="end" width="15" height="8">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAWjYBQMZSA7au8oGAUUAQAcKdXfCAcAAA==
+   H4sIAAAAAAAAAGNgGBlAdgjqpQYAAKjaqELgAQAA
   </data>
  </layer>
- <layer name="death" width="30" height="15">
+ <layer name="death" width="15" height="8">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGDpAGo0vBcWjgHZAcqAdMIBAZojaK4mG0cVpAagRVuTkZXLsRS9H6AUGyl5CQBKNHqp2UAIA2c+HEggHAAA=
+   H4sIAAAAAAAAAGNgGBxACooJiQ1HIAnFtAAAvmCfr+ABAAA=
   </data>
  </layer>
- <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
-  <object name="start" type="default" x="2214" y="624" width="1" height="1"/>
+ <objectgroup name="ObjectGroup" width="0" height="0">
+  <object name="start" type="default" x="138" y="147" width="3" height="3"/>
  </objectgroup>
 </map>
