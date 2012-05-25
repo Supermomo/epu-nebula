@@ -109,8 +109,8 @@ public class BossGame extends AbstractMinigameState
 	        timeL = 1000000000;
 	        tir1 = new Tir(true);
 	        tir2 = new Tir(true);
-	        miss1 = new Missile(3500);
-	        miss2 = new Missile(3500);
+	        miss1 = new Missile(4000);
+	        miss2 = new Missile(4000);
 	        invincibility = 0;
 	        mess = "KIKOO";
 	        
@@ -222,7 +222,7 @@ public class BossGame extends AbstractMinigameState
 	    	{
 	    		timeK = kamoulox;
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
-	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight() - 100;
+	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight() + 100;
 	    		unlockMove = 2000;
 	    		if(phatLaser.isStopped())
 	    		{
