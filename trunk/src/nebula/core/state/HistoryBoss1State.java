@@ -8,10 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class HistoryEnd3State extends AbstractTransitionState
+public class HistoryBoss1State extends AbstractTransitionState
 {
     /* Transition ID */
-    @Override public int getID () { return NebulaState.HistoryEnd3.id; }
+    @Override public int getID () { return NebulaState.HistoryBoss1.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -21,8 +21,8 @@ public class HistoryEnd3State extends AbstractTransitionState
         super.init(gc, game);
 
         this.setTransitionType(TransitionType.Fade);
-        this.setTransitionImage("ressources/images/histoire/end3.png");
-        this.setTransitionVoice("ressources/sons/histoire/end3.ogg");
-        this.setTransitionTime(9000.0f);
+        this.setTransitionImage("ressources/images/histoire/boss1.png");
+        this.setTransitionVoice("ressources/sons/histoire/boss1.ogg");
+        this.setTransitionTime(10000.0f);
     }
 }

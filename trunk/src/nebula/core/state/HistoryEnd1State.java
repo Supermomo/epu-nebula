@@ -20,9 +20,9 @@ public class HistoryEnd1State extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.Fade);
+        this.setTransitionType(TransitionType.HorizontalSplit);
         this.setTransitionImage("ressources/images/histoire/end1.png");
         this.setTransitionVoice("ressources/sons/histoire/end1.ogg");
-        this.setTransitionTime(10000.0f);
+        this.setTransitionTime(8000.0f);
     }
 }
