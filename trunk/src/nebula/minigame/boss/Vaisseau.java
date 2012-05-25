@@ -1,5 +1,7 @@
 package nebula.minigame.boss;
 
+import java.util.ArrayList;
+
 import nebula.core.helper.Collision;
 
 import org.newdawn.slick.Image;
@@ -30,14 +32,13 @@ public class Vaisseau
 		canMove = true;
 	}
 
-	public void tirer(Tir tir)
+	public void tirer(ArrayList<Tir> tir) throws SlickException
 	{
-		if(tir.getY() < 0)
-		{
-			tir.setX(this.getX() + this.getImage().getWidth()/2 - tir.getImage().getWidth()/2);
-			tir.setY(this.getY() - tir.getImage().getHeight());
-			tir.getSon().play();
-		}
+		Tir t = new Tir(false);
+		t.setX(this.getX() + this.getImage().getWidth()/2 - t.getImage().getWidth()/2);
+		t.setY(this.getY() - t.getImage().getHeight());
+		t.getSon().play();
+		tir.add(t);
 	}
 
 	public boolean touche(Tir tir)

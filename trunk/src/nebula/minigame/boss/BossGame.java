@@ -1,5 +1,7 @@
 package nebula.minigame.boss;
 
+import java.util.ArrayList;
+
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
@@ -22,7 +24,7 @@ public class BossGame extends AbstractMinigameState
 		Boss boss = null;
 		Tir tir1;
 		Tir tir2;
-		Tir tir;
+		ArrayList<Tir> tir;
 		Missile miss1;
 		Missile miss2;
 		
@@ -61,6 +63,7 @@ public class BossGame extends AbstractMinigameState
 		float timeM;
 		float timeL;
 		float timeK;
+		float timeV;
 		int unlockMove;
 		int invincibility;
 		String mess;
@@ -112,7 +115,8 @@ public class BossGame extends AbstractMinigameState
 	        miss1 = new Missile(4000);
 	        miss2 = new Missile(4000);
 	        invincibility = 0;
-	        mess = "KIKOO";
+	        mess = "";
+	        timeV = 1500;
 	        
 	        // EXPLOSION
 	        explo = new SpriteSheet("ressources/images/boss/skybusterExplosion.png",320,240,0);
@@ -163,7 +167,7 @@ public class BossGame extends AbstractMinigameState
 			yPhat= -1000;
 	    	
 	    	// TIR SAUCER
-	    	tir = new Tir(false);
+	    	tir = new ArrayList<Tir>();
 	    	
 	    	font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
 	    	initMusic("ressources/sons/boss/music.ogg", 0.6f, true);
@@ -179,6 +183,7 @@ public class BossGame extends AbstractMinigameState
 	        timeM -= delta;
 	        timeL -= delta;
 	        timeK -= delta;
+	        timeV -= delta;
 	        if(!saucer.getMove())
 	        	unlockMove -= delta;
 	        if(unlockMove < 0)
@@ -213,8 +218,9 @@ public class BossGame extends AbstractMinigameState
 	    	}
 
 	    	// ========================  GESTION DES TIRS ============================
-	    	if(input.isKeyDown(Input.KEY_SPACE))
+	    	if(input.isKeyDown(Input.KEY_SPACE) && timeV <= 0)
 	    	{
+	    		timeV = 1500;
 	    		saucer.tirer(tir);
 	    	}
 	    	
@@ -231,11 +237,9 @@ public class BossGame extends AbstractMinigameState
 	    		
 	    		if(saucer.getX() < boss.getX() + boss.getImage().getWidth() && saucer.getX() + saucer.getImage().getWidth() > boss.getX())
 	    		{
-	    			boss.hit();
 	    			xPhat = boss.getX() + boss.getImage().getWidth()/2 - phatExplosion.getImage(0).getWidth()/2;
 		    		yPhat = boss.getY() + boss.getImage().getHeight()/2 - phatExplosion.getImage(0).getHeight()/2;
 		    		timeL = 2000;
-		    		boss.getDestroy();
 	    		}
 	    		saucer.setMove(false);
 	    	}
@@ -246,6 +250,8 @@ public class BossGame extends AbstractMinigameState
 	    		{
 	    			phatExplosion.restart();
 	    		}
+	    		boss.hit();
+	    		boss.getDestroy();
 	    		timeL = 1000000000;
 	    	}
 	    	
@@ -314,22 +320,25 @@ public class BossGame extends AbstractMinigameState
 	    		miss2.setY(miss2.getY() - hip * (float)Math.cos(Math.toRadians(miss2.getImage().getRotation())));
 	    	}
 	    	
-	    	if(tir.getY() > -100)
-	    		tir.setY(tir.getY() - 0.4f * delta);
-	    	
-	    	if(boss.touche(tir))
+	    	for(int i = 0; i < tir.size(); i++)
 	    	{
-	    		xExplo3 = boss.getX() + boss.getImage().getWidth()/2 - explosion3.getImage(0).getWidth()/2;
-	    		yExplo3 = boss.getY() + boss.getImage().getHeight()/2 - explosion3.getImage(0).getHeight()/2;
-	    		explosion3.stop();
-	    		explosion3.setCurrentFrame(0);
-	    		explosion3.start();
-	    		boss.loseLife();
-	    		boss.getSon().play();
-	    		boss.getDestroy();
-	    		tir.setX(-100);
-	    		tir.setY(-100);
+	    		if(tir.get(i).getY() > -100)
+	    			tir.get(i).setY(tir.get(i).getY() - 0.4f * delta);
+		    	
+		    	if(boss.touche(tir.get(i)))
+		    	{
+		    		xExplo3 = boss.getX() + boss.getImage().getWidth()/2 - explosion3.getImage(0).getWidth()/2;
+		    		yExplo3 = boss.getY() + boss.getImage().getHeight()/2 - explosion3.getImage(0).getHeight()/2;
+		    		explosion3.stop();
+		    		explosion3.setCurrentFrame(0);
+		    		explosion3.start();
+		    		boss.loseLife();
+		    		boss.getSon().play();
+		    		boss.getDestroy();
+		    		tir.remove(i);
+		    	}
 	    	}
+	    	
 	    	
 	    	if(saucer.touche(tir1) && invincibility <= 0)
 	    	{
@@ -416,14 +425,18 @@ public class BossGame extends AbstractMinigameState
 		{
 	        // Call super method
 	        super.render(gc, game, g);
+	        g.drawAnimation(phatLaser, xLaser, yLaser);
 	        boss.getImage().draw(boss.getX(), boss.getY());
 	        tir1.getImage().draw(tir1.getX(),tir1.getY());
 	        tir2.getImage().draw(tir2.getX(),tir2.getY());
-	        tir.getImage().draw(tir.getX(), tir.getY());
+	        for(int i = 0; i < tir.size(); i ++)
+	        {
+	        	tir.get(i).getImage().draw(tir.get(i).getX(), tir.get(i).getY());
+	        }
 	        miss1.getImage().draw(miss1.getX(), miss1.getY());
 	        miss2.getImage().draw(miss2.getX(), miss2.getY());
 	        g.drawAnimation(explosion3, xExplo3, yExplo3);
-	        g.drawAnimation(phatLaser, xLaser, yLaser);
+	        
 	        g.drawAnimation(phatExplosion, xPhat, yPhat);
 	        
 	        if(invincibility > 0)
