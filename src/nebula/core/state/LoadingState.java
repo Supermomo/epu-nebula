@@ -158,11 +158,11 @@ public class LoadingState extends AbstractState
         states.add(new HistoryBreakout1State());
         states.add(new HistoryBreakout2State());
         states.add(new BreakoutGame());
-        states.add(new HistoryEndFlyState());
-        states.add(new HistoryEnd1State());
+        states.add(new HistoryBossFlyState());
+        states.add(new HistoryBoss1State());
         states.add(new BossGame());
+        states.add(new HistoryEnd1State());
         states.add(new HistoryEnd2State());
-        states.add(new HistoryEnd3State());
 
     }
 

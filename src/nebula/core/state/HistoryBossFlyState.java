@@ -8,10 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class HistoryEndFlyState extends AbstractTransitionState
+public class HistoryBossFlyState extends AbstractTransitionState
 {
     /* Transition ID */
-    @Override public int getID () { return NebulaState.HistoryEndFly.id; }
+    @Override public int getID () { return NebulaState.HistoryBossFly.id; }
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
