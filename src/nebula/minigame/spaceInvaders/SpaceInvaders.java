@@ -4,13 +4,9 @@ import java.util.Random;
 
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.Collision;
-import nebula.core.helper.NebulaFont;
-import nebula.core.helper.NebulaFont.FontName;
-import nebula.core.helper.NebulaFont.FontSize;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -53,7 +49,6 @@ public class SpaceInvaders extends AbstractMinigameState {
 	int scoreSpaceInvaders;
 	boolean bonus;
 	int time;
-	private static Font font;
 	Sound sonNyan;
 	/* Game ID */
 	@Override public int getID () { return NebulaState.SpaceInvaders.id; }
@@ -131,7 +126,6 @@ public class SpaceInvaders extends AbstractMinigameState {
     	rand = new Random();
     	coeur = new Image("ressources/images/spaceInvaders/coeur.png");
     	nbEnnemis=initialNbEnnemis;
-    	font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
     }
 
     @Override
@@ -371,13 +365,5 @@ public class SpaceInvaders extends AbstractMinigameState {
     	{
     		coeur.draw(10 + i * coeur.getWidth(), gc.getHeight() - coeur.getHeight());
     	}
-
-    	/*
-    	String timeStr = Utils.secondsToString(time/1000);
-
-        font.drawString(
-            gc.getWidth() - font.getWidth(timeStr) - 10,
-            gc.getHeight() - font.getHeight(timeStr) - 10, timeStr, Color.white);
-        */
     }
 }
