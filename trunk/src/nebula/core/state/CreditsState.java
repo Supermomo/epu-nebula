@@ -61,9 +61,11 @@ public class CreditsState extends AbstractState
         " \n" +
         "Les élèves de Clément Ader\n" +
         "Les enseignants de Polytech\n" +
-        "Bruce Springsteen\n" +
         "Momo & Gwenn les gitans\n" +
         "La fonction intersect() de Slick\n" +
+        "Laura Martellotto\n" +
+        "Bruce Springsteen\n" +
+        "Les moustiques\n" +
         "Moi\n" +
         "Toi\n" +
         "Et tout ceux qui le veulent...\n" +
@@ -125,7 +127,7 @@ public class CreditsState extends AbstractState
         if (input.isKeyDown(Input.KEY_UP) ||
             input.isKeyDown(Input.KEY_LSHIFT) ||
             input.isKeyDown(Input.KEY_RSHIFT))
-            y -= CREDITS_SPEED * 4 * delta;
+            y -= CREDITS_SPEED * 5 * delta;
         else
             y -= CREDITS_SPEED * delta;
 
