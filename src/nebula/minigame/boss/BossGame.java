@@ -222,7 +222,7 @@ public class BossGame extends AbstractMinigameState
 	    	{
 	    		timeK = kamoulox;
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
-	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight();
+	    		yLaser = saucer.getY() - phatLaser.getImage(0).getHeight() - 100;
 	    		unlockMove = 2000;
 	    		if(phatLaser.isStopped())
 	    		{
