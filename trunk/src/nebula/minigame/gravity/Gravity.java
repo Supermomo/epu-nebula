@@ -38,7 +38,6 @@ public class Gravity extends AbstractMinigameState {
 	private Image coeur;
 	private int[] mapRender;
 	private int timer;
-	private float vitesseDeplacement;
 
 
 	/* Game ID */
@@ -79,9 +78,9 @@ public class Gravity extends AbstractMinigameState {
 		// --- Création de la liste des niveaux
 		Queue<String> listeNiveaux = new LinkedList<String>();
 		List<Integer> list = new ArrayList<Integer>();
-		for(int i = 0;i<4;) {
+		for(int i = 0;i<3;) {
 			// On veut boucler tant qu'il n'a pas ses trois map différentes
-			int choix = (int) (Math.random() * 4 + 1);
+			int choix = (int) (Math.random() * 5 + 1); // Choix des maps entre 1 et 5
 			if(!list.contains(choix)) {
 				// On l'ajoute à la liste temporaire
 				list.add(choix);
@@ -147,47 +146,11 @@ public class Gravity extends AbstractMinigameState {
 
 		// Affichage de l'image en fonction de l'état
 		switch(etatActuel) {
-		case DEPLACEMENT_MAP:
-
-			int newRender[] = modeleJeu.renderMap();
-			boolean stop = false;
-
-
-			// Traitement des X
-			if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
-				mapRender[2] -= vitesseDeplacement;
-			} else if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() > mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
-				mapRender[2] += vitesseDeplacement;
-			} else {
-				stop = true;
-				mapRender[0] += mapRender[2]/modeleJeu.getMap().getTiledMap().getTileWidth();
-				mapRender[2] = 0;
-			}
-
-			// Traitement des Y
-			if(newRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]) {
-				mapRender[3] -= vitesseDeplacement;
-				stop = false;
-			} else if(newRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth() > mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]) {
-				mapRender[3] += vitesseDeplacement;
-				stop = false;
-			} else {
-				mapRender[1] += mapRender[3]/modeleJeu.getMap().getTiledMap().getTileWidth();
-				mapRender[3] = 0;
-			}
-
-
-			if(stop) {
-				etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
-			}
-			break;
-
 		case DEPLACEMENT_JOUEUR:
 			// On vérifie si on a atteint un des états final
 			if(modeleJeu.getDefaite()) etatActuel = EtatJeu.DEFAITE;
 			if(modeleJeu.getVictoire()) etatActuel = EtatJeu.VICTOIRE;
 			break;
-
 		}
 
 
@@ -198,12 +161,17 @@ public class Gravity extends AbstractMinigameState {
 
 	/**
 	 * Méthode de gestion des contrôles joueur
+	 * Traitement de la fin du jeu
+	 * Calcul du déplacement de la map
 	 */
 	@Override
 	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta)
 			throws SlickException {
 
 
+		float vitesseDeplacement = 0.4f * delta;
+		
+		
 		// Call super method
 		super.update(gameContainer, stateBasedGame, delta);
 
@@ -251,9 +219,44 @@ public class Gravity extends AbstractMinigameState {
 		case CHANGEMENT_CARTE:
 			init(gameContainer, stateBasedGame, this.listeNiveaux);
 			break;
+			
+		case DEPLACEMENT_MAP:
+
+			int newRender[] = modeleJeu.renderMap();
+			boolean stop = false;
+
+
+			// Traitement des X
+			if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
+				mapRender[2] -= vitesseDeplacement;
+			} else if(newRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth() > mapRender[0]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[2]) {
+				mapRender[2] += vitesseDeplacement;
+			} else {
+				stop = true;
+				mapRender[0] += mapRender[2]/modeleJeu.getMap().getTiledMap().getTileWidth();
+				mapRender[2] = 0;
+			}
+
+			// Traitement des Y
+			if(newRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth() < mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]) {
+				mapRender[3] -= vitesseDeplacement;
+				stop = false;
+			} else if(newRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth() > mapRender[1]*modeleJeu.getMap().getTiledMap().getTileWidth()+mapRender[3]) {
+				mapRender[3] += vitesseDeplacement;
+				stop = false;
+			} else {
+				mapRender[1] += mapRender[3]/modeleJeu.getMap().getTiledMap().getTileWidth();
+				mapRender[3] = 0;
+			}
+
+
+			if(stop) {
+				etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
+			}
+			break;
 		}
 
-		vitesseDeplacement = 0.4f * delta;
+		
 	}
 
 	/**
