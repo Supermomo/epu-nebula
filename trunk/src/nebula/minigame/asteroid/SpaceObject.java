@@ -1,5 +1,7 @@
 package nebula.minigame.asteroid;
 
+import nebula.core.helper.Collision;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Ellipse;
@@ -31,6 +33,8 @@ class SpaceObject
     private float rotation;
     private float rotationSpeed;
     private float speed;
+    private boolean inScreen;
+    private boolean canBeDestroyed;
     private float[] direction = {0.0f, 0.0f};
     private double creationDistance;
     private Rectangle limits;
@@ -43,6 +47,8 @@ class SpaceObject
         this.isCrystal = isCrystal;
         this.limits = limits;
         this.speed = speed;
+        this.inScreen = false;
+        this.canBeDestroyed = false;
 
         if (isCrystal)
         {
@@ -102,11 +108,30 @@ class SpaceObject
     public void step (int delta)
     {
         // Move
-        x += direction[0] * delta * speed;
-        y += direction[1] * delta * speed;
+        if (inScreen)
+        {
+            x += direction[0] * delta * speed;
+            y += direction[1] * delta * speed;
+        }
+        else
+        {
+            x += direction[0] * delta * 0.2f;
+            y += direction[1] * delta * 0.2f;
+        }
 
         // Rotate
         image.rotate(rotation + rotationSpeed * delta);
+
+        // Check screen
+        Rectangle rect = new Rectangle(x, y, w, h);
+
+        if (!inScreen && Collision.rectangle(rect, limits))
+            inScreen = true;
+        else if (inScreen && !Collision.rectangle(rect, limits))
+        {
+            canBeDestroyed = true;
+            inScreen = false;
+        }
     }
 
     public void draw ()
@@ -117,6 +142,11 @@ class SpaceObject
     public boolean isCrystal ()
     {
         return isCrystal;
+    }
+
+    public boolean canBeDestroyed ()
+    {
+        return canBeDestroyed;
     }
 
     public void setX (float x)
