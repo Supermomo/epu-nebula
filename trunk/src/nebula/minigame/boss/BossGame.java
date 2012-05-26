@@ -67,6 +67,7 @@ public class BossGame extends AbstractMinigameState
 		float time;
 		int unlockMove;
 		int invincibility;
+		float coeff;
 		String mess;
 		String kamou;
 	
@@ -88,18 +89,21 @@ public class BossGame extends AbstractMinigameState
 						kamoulox = 5000;
 						saucer.setVies(5);
 						this.score = 2000;
+						coeff = 4.2f;
 					break;
 
 				case Hard:
 						timerTir = 6000;
 						kamoulox = 10000;
 						this.score = 4000;
+						coeff = 10f;
 					break;
 
 				case Insane:
 						timerTir = 3500;
 						kamoulox = 10000;
 						this.score = 5000;
+						coeff = 15f;
 					break;
 
 				default:
@@ -107,6 +111,7 @@ public class BossGame extends AbstractMinigameState
 						kamoulox = 10000;
 						saucer.setVies(4);
 						this.score = 3000;
+						coeff = 8.5f;
 					break;
 			}
 	        
@@ -124,7 +129,7 @@ public class BossGame extends AbstractMinigameState
 	        miss2 = new Missile(4000);
 	        invincibility = 0;
 	        mess = "";
-	        timeV = 1500;
+	        timeV = 1000;
 	        time = 0;
 	        
 	        // EXPLOSION
@@ -419,7 +424,14 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(boss.dead())
 	    	{
-	    		this.score -= (5/saucer.getVies()) * (time/50) - saucer.getVies();
+	    		if(1000 > (time/1000) * coeff - saucer.getVies() * 200)
+	    		{
+	    			this.score -= (time/1000) * coeff - saucer.getVies() * 200;
+	    		}
+	    		else
+	    		{
+	    			this.score -= 1000;
+	    		}
 	    		gameVictory();
 	    	}
 	    	
