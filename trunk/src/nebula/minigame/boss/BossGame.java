@@ -89,21 +89,21 @@ public class BossGame extends AbstractMinigameState
 						kamoulox = 5000;
 						saucer.setVies(5);
 						this.score = 2000;
-						coeff = 13.5f;
+						coeff = 9.7f;
 					break;
 
 				case Hard:
 						timerTir = 6000;
 						kamoulox = 10000;
 						this.score = 4000;
-						coeff = 14.7f;
+						coeff = 12.7f;
 					break;
 
 				case Insane:
 						timerTir = 3500;
 						kamoulox = 10000;
 						this.score = 5000;
-						coeff = 16.5f;
+						coeff = 13.7f;
 					break;
 
 				default:
@@ -111,7 +111,7 @@ public class BossGame extends AbstractMinigameState
 						kamoulox = 10000;
 						saucer.setVies(4);
 						this.score = 3000;
-						coeff = 12f;
+						coeff = 11.2f;
 					break;
 			}
 	        
