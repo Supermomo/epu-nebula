@@ -64,6 +64,7 @@ public class BossGame extends AbstractMinigameState
 		float timeL;
 		float timeK;
 		float timeV;
+		float time;
 		int unlockMove;
 		int invincibility;
 		String mess;
@@ -79,29 +80,36 @@ public class BossGame extends AbstractMinigameState
 
 	        // Call super method
 	        super.init(gc, game);
+	        saucer = new Vaisseau(gc.getWidth(),gc.getHeight());
 	        switch (this.getDifficulty())
 	        {
 				case Easy:
 						timerTir = 10000;
 						kamoulox = 5000;
+						saucer.setVies(5);
+						this.score = 1000;
 					break;
 
 				case Hard:
 						timerTir = 6000;
 						kamoulox = 10000;
+						this.score = 3000;
 					break;
 
 				case Insane:
 						timerTir = 3500;
 						kamoulox = 10000;
+						this.score = 4000;
 					break;
 
 				default:
 						timerTir = 5000;
 						kamoulox = 10000;
+						saucer.setVies(4);
+						this.score = 2000;
 					break;
 			}
-	        saucer = new Vaisseau(gc.getWidth(),gc.getHeight());
+	        
 	        boss = new Boss();
 	        boss.setX(gc.getWidth()/2 - boss.getImage().getWidth()/2);
 	        boss.setY(0);
@@ -117,6 +125,7 @@ public class BossGame extends AbstractMinigameState
 	        invincibility = 0;
 	        mess = "";
 	        timeV = 1500;
+	        time = 0;
 	        
 	        // EXPLOSION
 	        explo = new SpriteSheet("ressources/images/boss/skybusterExplosion.png",320,240,0);
@@ -184,6 +193,7 @@ public class BossGame extends AbstractMinigameState
 	        timeL -= delta;
 	        timeK -= delta;
 	        timeV -= delta;
+	        time += delta;
 	        if(!saucer.getMove())
 	        	unlockMove -= delta;
 	        if(unlockMove < 0)
@@ -409,6 +419,7 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(boss.dead())
 	    	{
+	    		this.score -= (5/saucer.getVies()) * (time/50);
 	    		gameVictory();
 	    	}
 	    	

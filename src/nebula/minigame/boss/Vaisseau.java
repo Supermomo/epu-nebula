@@ -122,5 +122,9 @@ public class Vaisseau
 		this.coeur = coeur;
 	}
 
+	public void setVies(int v)
+	{
+		this.vies = v;
+	}
 	
 }
