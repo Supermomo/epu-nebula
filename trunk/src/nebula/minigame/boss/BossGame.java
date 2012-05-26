@@ -228,7 +228,7 @@ public class BossGame extends AbstractMinigameState
 
 	    	if(input.isKeyDown(Input.KEY_DOWN) && saucer.getMove())
 	    	{
-	    		if(saucer.getY() + saucer.getImage().getHeight() < gc.getHeight())
+	    		if(saucer.getY() + saucer.getImage().getHeight() < gc.getHeight() - font.getHeight(kamou))
 	    			saucer.setY(saucer.getY() + (0.4f * delta));
 	    	}
 
