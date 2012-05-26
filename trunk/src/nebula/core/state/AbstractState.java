@@ -92,10 +92,10 @@ public abstract class AbstractState extends BasicGameState
 
 
     @Override
-    public void leave (GameContainer container, StateBasedGame game)
+    public void leave (GameContainer gc, StateBasedGame game)
         throws SlickException
     {
-        super.leave(container, game);
+        super.leave(gc, game);
 
         // Pause music
         if (music != null)

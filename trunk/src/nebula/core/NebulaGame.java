@@ -65,7 +65,8 @@ public class NebulaGame extends StateBasedGame
         EndMenu                 (122),
 
         PauseMenu               (200),
-        ScoreTransition         (201);
+        HelpMenu                (201),
+        ScoreTransition         (202);
 
         public int id;
         private NebulaState (int id) { this.id = id; }

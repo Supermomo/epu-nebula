@@ -101,8 +101,9 @@ public class AsteroidGame extends AbstractMinigameState
         // Font
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
 
-        // Music
+        // Music and help
         initMusic(sndPath + "music.ogg", 0.3f, true);
+        initHelp(sndPath + "help.ogg");
     }
 
     @Override

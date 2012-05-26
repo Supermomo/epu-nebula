@@ -36,6 +36,7 @@ public abstract class AbstractMinigameState extends AbstractState
     protected int score;
 
     private Font font;
+    private Sound sndHelp;
     private static Sound sndVictory;
     private static Sound sndDefeat;
 
@@ -80,8 +81,14 @@ public abstract class AbstractMinigameState extends AbstractState
         if (input.isKeyPressed(Input.KEY_ESCAPE))
             this.escapeMinigame();
 
+        // Help key
+        if (input.isKeyPressed(Input.KEY_F1))
+            this.helpMinigame();
+
         // Debug victory key
         if (input.isKeyPressed(Input.KEY_W) &&
+            input.isKeyPressed(Input.KEY_I) &&
+            input.isKeyPressed(Input.KEY_N) &&
             input.isKeyDown(Input.KEY_LSHIFT))
             this.gameVictory();
     }
@@ -147,10 +154,24 @@ public abstract class AbstractMinigameState extends AbstractState
      */
     protected void escapeMinigame ()
     {
-        ((PauseMenuState)nebulaGame.getState(NebulaState.PauseMenu.id))
-            .setLastState(this.getID());
+        PauseMenuState pauseState = (PauseMenuState)nebulaGame.getState(NebulaState.PauseMenu.id);
+        pauseState.setLastState(this.getID());
 
         nebulaGame.initAndEnterState(NebulaState.PauseMenu.id);
+    }
+
+    /**
+     * Help command
+     */
+    protected void helpMinigame ()
+    {
+        if (sndHelp == null) return;
+
+        HelpMenuState helpState = (HelpMenuState)nebulaGame.getState(NebulaState.HelpMenu.id);
+        helpState.setLastState(this.getID());
+        helpState.setHelp(sndHelp);
+
+        nebulaGame.initAndEnterState(NebulaState.HelpMenu.id);
     }
 
     /**
@@ -170,6 +191,17 @@ public abstract class AbstractMinigameState extends AbstractState
         score = 0;
         sndDefeat.play();
         nebulaGame.showScoreState(score, false, getID());
+    }
+
+    /**
+     * Set the minigame help sound
+     * @return The sound
+     */
+    public void initHelp (String helpFile)
+    {
+        if (helpFile != null)
+            try { sndHelp = new Sound(helpFile); }
+            catch (SlickException exc) { exc.printStackTrace(); }
     }
 
     /**
