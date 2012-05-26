@@ -194,10 +194,6 @@ public class SpaceShepherd extends AbstractMinigameState {
         }
 		Input input = gc.getInput();	
 
-		if (input.isKeyDown(Input.KEY_M)) {
-
-		}
-
 		if (input.isKeyDown(Input.KEY_LEFT) && x-(delta * pointerSpeed) > 0+borderMargin) {
 			x -= (delta * pointerSpeed);
 		}
