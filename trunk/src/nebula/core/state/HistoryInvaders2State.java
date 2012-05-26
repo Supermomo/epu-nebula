@@ -1,7 +1,6 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -20,7 +19,6 @@ public class HistoryInvaders2State extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.HorizontalSplit);
         this.setTransitionImage("ressources/images/histoire/invaders2.png");
         this.setTransitionVoice("ressources/sons/histoire/invaders2.ogg");
     	this.setTransitionTime(9000.0f);

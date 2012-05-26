@@ -1,7 +1,6 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -20,7 +19,6 @@ public class HistoryGravity2State extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.Fade);
         this.setTransitionImage("ressources/images/histoire/gravity2.png");
         this.setTransitionVoice("ressources/sons/histoire/gravity2.ogg");
         this.setTransitionTime(11000.0f);

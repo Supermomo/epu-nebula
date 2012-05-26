@@ -1,5 +1,6 @@
 package nebula.core.state;
 
+import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.core.config.NebulaConfig;
@@ -37,27 +38,9 @@ public class LoadMenuState extends AbstractMenuState
         {
             // Load game
             case 0:
-                int nextGame = -1;
-                switch (NebulaConfig.getAdventureMinigame())
-                {
-                    case SpaceInvaders:
-                        nextGame = NebulaState.SpaceInvaders.id;
-                        break;
-                    case SpaceShepherd:
-                        nextGame = NebulaState.SpaceShepherd.id;
-                        break;
-                    case Asteroid:
-                        nextGame = NebulaState.Asteroid.id;
-                        break;
-                    case Gravity:
-                        nextGame = NebulaState.Gravity.id;
-                        break;
-                    case Breakout:
-                        nextGame = NebulaState.Breakout.id;
-                        break;
-                    default:
-                        break;
-                }
+                int nextGame =
+                    NebulaGame.idFromMinigame(NebulaConfig.getAdventureMinigame());
+
                 if (nextGame > 0)
                     nebulaGame.enterState(nextGame + 1, TransitionType.Fade);
                 else

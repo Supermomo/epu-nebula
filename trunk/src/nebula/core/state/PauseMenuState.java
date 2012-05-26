@@ -27,6 +27,7 @@ public class PauseMenuState extends AbstractMenuState
         setMenuTitle("Pause");
         addMenuItem("Retour au jeu", sndPath + "resume.ogg", true);
         addMenuItem("Recommencer", sndPath + "retry.ogg", true);
+        addMenuItem("Aide", sndPath + "help.ogg", true);
         addMenuItem("Quitter", sndPath + "quit.ogg", true);
     }
 
@@ -36,9 +37,14 @@ public class PauseMenuState extends AbstractMenuState
         switch (index)
         {
             case 1:
-                nebulaGame.initAndEnterState(lastState, TransitionType.Fade);
+                nebulaGame.initAndEnterState(lastState, TransitionType.ShortFade);
                 break;
             case 2:
+                AbstractMinigameState mg =
+                    (AbstractMinigameState) nebulaGame.getState(lastState);
+                mg.helpMinigame();
+                break;
+            case 3:
                 if (NebulaGame.isAdventureMode)
                     nebulaGame.enterState(NebulaState.MainMenu.id);
                 else
@@ -46,7 +52,7 @@ public class PauseMenuState extends AbstractMenuState
                 break;
 
             default:
-                nebulaGame.enterState(lastState);
+                nebulaGame.enterState(lastState, TransitionType.ShortFade);
                 break;
         }
     }

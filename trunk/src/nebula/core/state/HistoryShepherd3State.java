@@ -1,7 +1,6 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -20,7 +19,6 @@ public class HistoryShepherd3State extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.Fade);
         this.setTransitionImage("ressources/images/histoire/shepherd3.png");
         this.setTransitionVoice("ressources/sons/histoire/shepherd3.ogg");
         this.setTransitionTime(9000.0f);

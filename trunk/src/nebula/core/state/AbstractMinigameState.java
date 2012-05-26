@@ -2,6 +2,7 @@ package nebula.core.state;
 
 import nebula.core.NebulaGame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.NebulaGame.TransitionType;
 import nebula.core.config.NebulaConfig;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
@@ -86,9 +87,9 @@ public abstract class AbstractMinigameState extends AbstractState
             this.helpMinigame();
 
         // Debug victory key
-        if (input.isKeyPressed(Input.KEY_W) &&
-            input.isKeyPressed(Input.KEY_I) &&
-            input.isKeyPressed(Input.KEY_N) &&
+        if (input.isKeyDown(Input.KEY_W) &&
+            input.isKeyDown(Input.KEY_I) &&
+            input.isKeyDown(Input.KEY_N) &&
             input.isKeyDown(Input.KEY_LSHIFT))
             this.gameVictory();
     }
@@ -157,13 +158,13 @@ public abstract class AbstractMinigameState extends AbstractState
         PauseMenuState pauseState = (PauseMenuState)nebulaGame.getState(NebulaState.PauseMenu.id);
         pauseState.setLastState(this.getID());
 
-        nebulaGame.initAndEnterState(NebulaState.PauseMenu.id);
+        nebulaGame.initAndEnterState(NebulaState.PauseMenu.id, TransitionType.ShortFade);
     }
 
     /**
      * Help command
      */
-    protected void helpMinigame ()
+    public void helpMinigame ()
     {
         if (sndHelp == null) return;
 
@@ -171,7 +172,7 @@ public abstract class AbstractMinigameState extends AbstractState
         helpState.setLastState(this.getID());
         helpState.setHelp(sndHelp);
 
-        nebulaGame.initAndEnterState(NebulaState.HelpMenu.id);
+        nebulaGame.initAndEnterState(NebulaState.HelpMenu.id, TransitionType.ShortFade);
     }
 
     /**

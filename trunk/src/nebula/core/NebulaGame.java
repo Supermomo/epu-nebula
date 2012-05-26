@@ -89,7 +89,7 @@ public class NebulaGame extends StateBasedGame
     }
 
     public static enum TransitionType
-        {None, Fade, LongFade, HorizontalSplit, VerticalSplit};
+        {None, ShortFade, Fade, LongFade, HorizontalSplit, VerticalSplit};
 
     public static boolean isAdventureMode;
 
@@ -121,7 +121,7 @@ public class NebulaGame extends StateBasedGame
     }
 
     /**
-     * Goto next state with the given transition
+     * Goto state with the given transition
      */
     public void enterState (int state, TransitionType transition)
     {
@@ -130,6 +130,8 @@ public class NebulaGame extends StateBasedGame
             enterState(state, null, new HorizontalSplitTransition(Color.black));
         else if (TransitionType.VerticalSplit.equals(transition))
             enterState(state, null, new VerticalSplitTransition(Color.black));
+        else if (TransitionType.ShortFade.equals(transition))
+            enterState(state, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
         else if (TransitionType.Fade.equals(transition))
             enterState(state, new FadeOutTransition(Color.black, 1000), new FadeInTransition(Color.black, 1000));
         else if (TransitionType.LongFade.equals(transition))
@@ -139,7 +141,7 @@ public class NebulaGame extends StateBasedGame
     }
 
     /**
-     * Goto next state with the default transition
+     * Goto state with the default transition
      */
     public void enterState (int state)
     {
@@ -147,22 +149,29 @@ public class NebulaGame extends StateBasedGame
     }
 
     /**
-     * Init and goto next state with the given transition
+     * Init and goto state with the given transition
      */
     public void initAndEnterState (int state, TransitionType transition)
     {
-        try { getState(state).init(this.getContainer(), this); }
-        catch (SlickException exc) { exc.printStackTrace(); }
-
+        initState(state);
         enterState(state, transition);
     }
 
     /**
-     * Init and goto next state with the default transition
+     * Init and goto state with the default transition
      */
     public void initAndEnterState (int state)
     {
         initAndEnterState(state, TransitionType.None);
+    }
+
+    /**
+     * Init state
+     */
+    public void initState (int state)
+    {
+        try { getState(state).init(this.getContainer(), this); }
+        catch (SlickException exc) { exc.printStackTrace(); }
     }
 
     /**
@@ -178,6 +187,59 @@ public class NebulaGame extends StateBasedGame
             .initScore(score, won, lastState);
 
         enterState(NebulaState.ScoreTransition.id, TransitionType.LongFade);
+    }
+
+
+    /**
+     * Returns the minigame from the id
+     * @param minigameId The minigame id
+     * @return The minigame
+     */
+    public static Minigame minigameFromId (int minigameId)
+    {
+        Minigame minigame = null;
+
+        if (NebulaState.SpaceInvaders.id == minigameId)
+            minigame = Minigame.SpaceInvaders;
+        else if (NebulaState.SpaceShepherd.id == minigameId)
+            minigame = Minigame.SpaceShepherd;
+        else if (NebulaState.Asteroid.id == minigameId)
+            minigame = Minigame.Asteroid;
+        else if (NebulaState.Gravity.id == minigameId)
+            minigame = Minigame.Gravity;
+        else if (NebulaState.Breakout.id == minigameId)
+            minigame = Minigame.Breakout;
+        else if (NebulaState.Boss.id == minigameId)
+            minigame = Minigame.Boss;
+
+        return minigame;
+    }
+
+
+    /**
+     * Returns the minigame state id from the minigame
+     * @param minigame The minigame
+     * @return The minigame state id
+     */
+    public static int idFromMinigame (Minigame minigame)
+    {
+        switch (minigame)
+        {
+            case SpaceInvaders:
+                return NebulaState.SpaceInvaders.id;
+            case SpaceShepherd:
+                return NebulaState.SpaceShepherd.id;
+            case Asteroid:
+                return NebulaState.Asteroid.id;
+            case Gravity:
+                return NebulaState.Gravity.id;
+            case Breakout:
+                return NebulaState.Breakout.id;
+            case Boss:
+                return NebulaState.Boss.id;
+        }
+
+        return -1;
     }
 
 
