@@ -5,6 +5,8 @@ import nebula.core.helper.Collision;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.geom.Ellipse;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Boss 
 {
@@ -79,7 +81,9 @@ public class Boss
 	
 	public boolean touche(Tir tir)
 	{
-		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight()/2);
+		Ellipse e1 = new Ellipse(this.getX() + this.getImage().getWidth()/2, this.getY(), this.getImage().getWidth()/2, this.getImage().getHeight());
+		Rectangle r1 = new Rectangle(tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight());
+		return e1.intersects(r1);
 	}
 
 	public Image getImage() {
