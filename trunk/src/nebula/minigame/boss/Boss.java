@@ -81,7 +81,7 @@ public class Boss
 	
 	public boolean touche(Tir tir)
 	{
-		Ellipse e1 = new Ellipse(this.getX() + this.getImage().getWidth()/2, this.getY(), this.getImage().getWidth()/2, this.getImage().getHeight());
+		Ellipse e1 = new Ellipse(this.getX() + this.getImage().getWidth()/2, this.getY(), this.getImage().getWidth()/2, 7*this.getImage().getHeight()/8);
 		Rectangle r1 = new Rectangle(tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight());
 		return e1.intersects(r1);
 	}
