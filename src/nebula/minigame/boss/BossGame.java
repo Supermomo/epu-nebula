@@ -96,14 +96,14 @@ public class BossGame extends AbstractMinigameState
 						timerTir = 6000;
 						kamoulox = 10000;
 						this.score = 4000;
-						coeff = 15.5f;
+						coeff = 14.7f;
 					break;
 
 				case Insane:
 						timerTir = 3500;
 						kamoulox = 10000;
 						this.score = 5000;
-						coeff = 18f;
+						coeff = 16.5f;
 					break;
 
 				default:
