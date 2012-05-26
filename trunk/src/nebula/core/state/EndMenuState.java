@@ -23,11 +23,11 @@ public class EndMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Félicitation !");
-        addMenuItem("Bravo, tu as fini l'aventure !", false);
+        addMenuItem("Bravo, tu as fini l'aventure !", null, false);
         addMenuSpaces(1);
-        addMenuItem("Score : " + NebulaConfig.getAdventureScore(), false);
+        addMenuItem("Score : " + NebulaConfig.getAdventureScore(), null, false);
         addMenuSpaces(2);
-        addMenuItem("Quitter", true);
+        addMenuItem("Retour", sndPath + "cancel.ogg", true);
     }
 
     @Override

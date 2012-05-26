@@ -25,14 +25,14 @@ public class ScoresMenuState extends AbstractMenuState
         setMenuTitle("Scores");
 
         // Scores
-        addMenuItem("Aventure : " + NebulaConfig.getAdventureBestScore(), false);
+        addMenuItem("Aventure : " + NebulaConfig.getAdventureBestScore(), null, false);
         addMenuSpaces(1);
 
         for (Minigame mg : Minigame.values())
-            addMenuItem(mg.name + " : " + NebulaConfig.getRapidmodeScore(mg), false);
+            addMenuItem(mg.name + " : " + NebulaConfig.getRapidmodeScore(mg), null, false);
 
         addMenuSpaces(2);
-        addMenuItem("Retour", true);
+        addMenuItem("Retour", sndPath + "cancel.ogg", true);
     }
 
 

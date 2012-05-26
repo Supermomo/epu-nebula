@@ -24,12 +24,12 @@ public class MainMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Bienvenue, " + NebulaConfig.getPlayerName());
-        addMenuItem("Mode Aventure", true);
-        addMenuItem("Mode Rapide", true);
-        addMenuItem("Scores", true);
-        addMenuItem("Crédits", true);
+        addMenuItem("Mode Aventure", sndPath + "adventuremode.ogg", true);
+        addMenuItem("Mode Rapide", sndPath + "rapidmode.ogg", true);
+        addMenuItem("Scores", sndPath + "scores.ogg", true);
+        addMenuItem("Crédits", sndPath + "credits.ogg", true);
         addMenuSpaces(1);
-        addMenuItem("Quitter", true);
+        addMenuItem("Quitter", sndPath + "quit.ogg", true);
     }
 
     @Override

@@ -38,15 +38,44 @@ public class RapidModeMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Mode Rapide");
-        addMenuItem("Difficulté : " + diffStr, true);
+        addMenuItem("Difficulté : " + diffStr, sndPath + "difficulty.ogg", true);
         addMenuSpaces(2);
 
         // Minigames
         for (Minigame mg : Minigame.values())
-            addMenuItem(mg.name, true);
+        {
+            String voiceFile = null;
+
+            switch (mg)
+            {
+                case SpaceInvaders:
+                    voiceFile = "spaceInvaders.ogg";
+                    break;
+                case SpaceShepherd:
+                    voiceFile = "spaceShepherd.ogg";
+                    break;
+                case Asteroid:
+                    voiceFile = "asteroid.ogg";
+                    break;
+                case Gravity:
+                    voiceFile = "gravity.ogg";
+                    break;
+                case Breakout:
+                    voiceFile = "breakout.ogg";
+                    break;
+                case Boss:
+                    voiceFile = "boss.ogg";
+                    break;
+            }
+
+            if (voiceFile != null)
+                voiceFile = sndPath + voiceFile;
+
+            addMenuItem(mg.name, voiceFile, true);
+        }
 
         addMenuSpaces(1);
-        addMenuItem("Retour", true);
+        addMenuItem("Retour", sndPath + "cancel.ogg", true);
     }
 
 

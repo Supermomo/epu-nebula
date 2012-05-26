@@ -25,9 +25,9 @@ public class PauseMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Pause");
-        addMenuItem("Retour au jeu", true);
-        addMenuItem("Recommencer", true);
-        addMenuItem("Quitter", true);
+        addMenuItem("Retour au jeu", sndPath + "resume.ogg", true);
+        addMenuItem("Recommencer", sndPath + "retry.ogg", true);
+        addMenuItem("Quitter", sndPath + "quit.ogg", true);
     }
 
     @Override
