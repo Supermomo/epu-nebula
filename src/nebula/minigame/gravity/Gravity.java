@@ -49,12 +49,8 @@ public class Gravity extends AbstractMinigameState {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame)
 			throws SlickException {
-
-
 		// Call super method
 		super.init(gameContainer, stateBasedGame);
-
-
 
 		score = 0;
 		mapRender= new int[]{0,0,0,0};
@@ -89,8 +85,7 @@ public class Gravity extends AbstractMinigameState {
 				i++; // L'incrémentation du compteur !!
 			}
 		}
-
-
+		
 		// Envoie de l'initialisation partielle suivant le niveau
 		init(gameContainer, stateBasedGame, listeNiveaux);
 	}
@@ -200,16 +195,16 @@ public class Gravity extends AbstractMinigameState {
 				// Application du taux score/difficulté
 				switch(difficulty) {
 				case Easy:
-					score *= 0.5;
+					score *= 0.58;
 					break;
 				case Medium:
 					score *= 0.85;
 					break;
 				case Hard:
-					score *= 1.17;
+					score *= 1.18;
 					break;
 				case Insane:
-					score *= 1.52;
+					score *= 1.53;
 					break;
 				}
 				// Fin du jeu

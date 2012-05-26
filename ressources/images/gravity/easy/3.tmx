@@ -5,9 +5,9 @@
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
   <image source="../map80.png"/>
  </tileset>
- <layer name="block" width="13" height="10">
+ <layer name="block" width="14" height="7">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAABNnYGAQJwMjA2LUieOg0QElesRJVEuqHmQ+un5Sw4xYQE7ckIMBdX4vuggCAAA=
+   H4sIAAAAAAAAABNnYGAQJxMjA2LUIfPRaXRAqT50+4lRT44+dDdiM4cYDABdjiO7iAEAAA==
   </data>
  </layer>
  <layer name="map" width="14" height="7">
@@ -15,17 +15,17 @@
    H4sIAAAAAAAAAONgYGDgQ8IceDCyGk4glkPC7GjmwDAnmhoYnwVKc6GZI4dFHFkfTFyAgD5GNHfisocFzTx2IvWhi6PrA/GZsGAOLHwQBgBcXrJPiAEAAA==
   </data>
  </layer>
- <layer name="end" width="13" height="10">
+ <layer name="end" width="14" height="7">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAXkAtmBdgAVAQDNfQRoCAIAAA==
+   H4sIAAAAAAAAAGNgGAXUBrJk6AEAK+54togBAAA=
   </data>
  </layer>
- <layer name="death" width="13" height="10">
+ <layer name="death" width="14" height="7" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgGAWjgIEBADzDR3YIAgAA
+   H4sIAAAAAAAAAGNgGAWDAQAALNcJcYgBAAA=
   </data>
  </layer>
- <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
+ <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1" visible="0">
   <object name="start" type="default" x="936" y="135" width="3" height="3"/>
  </objectgroup>
 </map>
