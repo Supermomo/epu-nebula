@@ -89,6 +89,7 @@ public class Gravity extends AbstractMinigameState {
 		// Music and help
 		initHelp("ressources/sons/gravity/help.ogg");
 
+
 		// Envoie de l'initialisation partielle suivant le niveau
 		init(gameContainer, stateBasedGame, listeNiveaux);
 	}
@@ -97,7 +98,7 @@ public class Gravity extends AbstractMinigameState {
 		this.listeNiveaux = listeNiveaux;
 		// Call super method
 		super.init(gameContainer, stateBasedGame);
-
+		initMusic("ressources/sons/gravity/music.ogg", 0.3f, true);
 
 		try {
 			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+this.listeNiveaux.poll()+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
