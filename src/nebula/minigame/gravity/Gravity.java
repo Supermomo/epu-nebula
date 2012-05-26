@@ -85,7 +85,10 @@ public class Gravity extends AbstractMinigameState {
 				i++; // L'incrémentation du compteur !!
 			}
 		}
-		
+
+		// Music and help
+		initHelp("ressources/sons/gravity/help.ogg");
+
 		// Envoie de l'initialisation partielle suivant le niveau
 		init(gameContainer, stateBasedGame, listeNiveaux);
 	}
@@ -165,8 +168,8 @@ public class Gravity extends AbstractMinigameState {
 
 
 		float vitesseDeplacement = 0.4f * delta;
-		
-		
+
+
 		// Call super method
 		super.update(gameContainer, stateBasedGame, delta);
 
@@ -214,7 +217,7 @@ public class Gravity extends AbstractMinigameState {
 		case CHANGEMENT_CARTE:
 			init(gameContainer, stateBasedGame, this.listeNiveaux);
 			break;
-			
+
 		case DEPLACEMENT_MAP:
 
 			int newRender[] = modeleJeu.renderMap();
@@ -251,7 +254,7 @@ public class Gravity extends AbstractMinigameState {
 			break;
 		}
 
-		
+
 	}
 
 	/**

@@ -78,7 +78,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private String pathTargetImg="ressources/images/spaceShepherd/vortex.png";
 
 	private Font font;
-	
+
 	private float powerTimer;
 
 
@@ -93,7 +93,7 @@ public class SpaceShepherd extends AbstractMinigameState {
         wrongMoveSound=new Sound(pathWrongMoveSound);
         ambianceSound=new Sound(pathAmbianceSound);
         plotSound=new Sound(pathPlotSound);
-        
+
         font = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
 
 	    lastPlot=null;
@@ -149,7 +149,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 			fenceCoef=10.0f;
 			powerTimer=1000;
 		}
-		
+
 		startingTime=remainingTime;
 
 		int valx=r.nextInt(gc.getWidth());
@@ -175,6 +175,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 		cursorImg=new Image(pathCursorImg);
 		targetImg=new Image(pathTargetImg);
 		plotLightImg=new Image(pathPlotLightImg);
+
+		// Music and help
+		initHelp("ressources/sons/spaceShepherd/help.ogg");
 	}
 
 	@Override
@@ -192,7 +195,7 @@ public class SpaceShepherd extends AbstractMinigameState {
         if(!wrongMoveSound.playing() && !ambianceSound.playing() && !flockSound.playing() && !plotSound.playing()){
         	ambianceSound.play();
         }
-		Input input = gc.getInput();	
+		Input input = gc.getInput();
 
 		if (input.isKeyDown(Input.KEY_LEFT) && x-(delta * pointerSpeed) > 0+borderMargin) {
 			x -= (delta * pointerSpeed);
@@ -209,7 +212,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		if (input.isKeyDown(Input.KEY_DOWN) && y+(delta * pointerSpeed) < gc.getHeight()-borderMargin) {
 			y += (delta * pointerSpeed);
 		}
-		
+
 		if(!input.isKeyDown(Input.KEY_SPACE)){
 			spaceReleased=true;
 		}
@@ -219,18 +222,18 @@ public class SpaceShepherd extends AbstractMinigameState {
 			stopAllSound();
 			spaceReleased=false;
 			Vector2f plot=new Vector2f(x,y);
-			
+
 			if(lastPlot==null){
 				lastPlot=new Vector2f(x,y);
 				plotSound.play();
 			}
 			else if (validDistanceFromLastPoint() && !flock.isDividing(new Line(lastPlot,plot))) {
-				
+
 				fences.add(new Line(lastPlot,plot));
 				lastPlot=null;
 				lastPlot=new Vector2f(x,y);
 				plotSound.play();
-				
+
 				if(flock.isEnded(fences, targetCenter)){
 					this.gameDefeat();
 				}
@@ -240,7 +243,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 			}
 
 		}
-		
+
 		if((input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) && powerTimer>0){
 			powerTimer-=delta;
 			flock.apply(flock.seek(new Vector2f(x,y)),delta,fences);
@@ -251,8 +254,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 		else {
 			flock.moveRandom(delta, fences);
 		}
-		
-		
+
+
 		int nb=flock.getFlockers().size();
 		if(flock.allInTheHole(targetCenter, targetRadius/2)){
 			score=computeScore();
@@ -271,7 +274,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		ambianceSound.stop();
 		plotSound.stop();
 	}
-	
+
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 	    throws SlickException {
 
@@ -300,11 +303,11 @@ public class SpaceShepherd extends AbstractMinigameState {
 		if(lastPlot!=null){
 			plotLightImg.draw(lastPlot.getX()-plotRadius/2, lastPlot.getY()-plotRadius/2, plotRadius, plotRadius);
 		}
-		
+
 		cursorImg.draw(x-cursorRadius/2, y-cursorRadius/2, cursorRadius, cursorRadius);
 		String sec=Utils.secondsToString(remainingTime/1000);
 		font.drawString(gc.getWidth()/2 -font.getWidth(sec)/2, 40, sec);
-		
+
 		for(SteeringEntity st : flock.getFlockers()){
 			flockImg.draw(st.getPosition().x-(flockRadius/2), st.getPosition().y-(flockRadius/2),
 					flockRadius, flockRadius);
@@ -317,7 +320,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 	private int computeScore(){
 		int sco=(int) ((flockNumber-flock.getFlockers().size())*scoreCoef+(remainingTime-startingTime)/1000*timeCoef - fences.size()*fenceCoef);
-		
+
 		if(Difficulty.Easy.equals(difficulty)){
 			sco=Math.max(1000, sco);
 			sco=Math.min(sco, 2000);

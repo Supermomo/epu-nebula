@@ -100,8 +100,9 @@ public class BreakoutGame extends AbstractMinigameState
             }
         }
 
-        // Musics
+        // Music and help
         initMusic(sndPath + "music.ogg", 0.6f, true);
+        initHelp(sndPath + "help.ogg");
     }
 
     @Override
@@ -214,7 +215,6 @@ public class BreakoutGame extends AbstractMinigameState
             // Launch ball event
             if (racket.haveAttachedBall() &&
                 ((!useMouse && input.isKeyDown(Input.KEY_SPACE)) ||
-                 (!useMouse && input.isKeyDown(Input.KEY_ENTER)) ||
                  (useMouse && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))))
             {
                 ballSpeed.setX(0.0f);

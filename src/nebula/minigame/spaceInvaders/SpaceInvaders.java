@@ -126,6 +126,9 @@ public class SpaceInvaders extends AbstractMinigameState {
     	rand = new Random();
     	coeur = new Image("ressources/images/spaceInvaders/coeur.png");
     	nbEnnemis=initialNbEnnemis;
+
+    	// Music and help
+    	initHelp("ressources/sons/spaceInvaders/help.ogg");
     }
 
     @Override

@@ -134,11 +134,12 @@ public class LoadingState extends AbstractState
         states.add(new RapidModeMenuState());
         states.add(new ScoresMenuState());
         states.add(new CreditsState());
-        states.add(new PauseMenuState());
         states.add(new DifficultyMenuState());
         states.add(new LoadMenuState());
         states.add(new ScoreTransitionState());
         states.add(new EndMenuState());
+        states.add(new PauseMenuState());
+        states.add(new HelpMenuState());
 
         // Adventure
         states.add(new HistoryInvaders1State());
