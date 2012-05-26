@@ -111,11 +111,11 @@ public class SpaceShepherd extends AbstractMinigameState {
 		float attractionCoef=0;
 		if(Difficulty.Easy.equals(difficulty)){
 			flockNumber=8;
-			remainingTime=120*1000;
+			remainingTime=180*1000;
 			speed=0.16f;
 			attractionCoef=0.003f;
 			scoreCoef = 270.0f;
-			timeCoef=5.0f;
+			timeCoef=3.0f;
 			fenceCoef=10.0f;
 			powerTimer=1000;
 		}
