@@ -63,7 +63,7 @@ public class SpaceInvaders extends AbstractMinigameState {
 			case Easy:
 				this.initialNbEnnemis = 4;
 				this.chanceTir = 75;
-				this.nbTir = 2;
+				this.nbTir = 1;
 				scoreSpaceInvaders = 2000;
 				break;
 
