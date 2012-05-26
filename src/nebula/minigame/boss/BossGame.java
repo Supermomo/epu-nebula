@@ -316,7 +316,7 @@ public class BossGame extends AbstractMinigameState
 	    			explosion.stop();
 		    		explosion.setCurrentFrame(0);
 		    		explosion.start();
-	    			miss1.explode(timerTir);
+	    			miss1.explode(4000);
 	    		}
 	    		miss1.vise(saucer);
 	    		miss1.setX(miss1.getX() + hip * (float)Math.sin(Math.toRadians(miss1.getImage().getRotation())));
@@ -334,7 +334,7 @@ public class BossGame extends AbstractMinigameState
 	    			explosion2.stop();
 		    		explosion2.setCurrentFrame(0);
 		    		explosion2.start();
-	    			miss2.explode(timerTir);
+	    			miss2.explode(4000);
 	    		}
 	    		miss2.vise(saucer);
 	    		miss2.setX(miss2.getX() + hip * (float)Math.sin(Math.toRadians(miss2.getImage().getRotation())));

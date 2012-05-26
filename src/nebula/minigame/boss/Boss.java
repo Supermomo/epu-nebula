@@ -1,7 +1,5 @@
 package nebula.minigame.boss;
 
-import nebula.core.helper.Collision;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
