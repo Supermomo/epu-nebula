@@ -96,14 +96,14 @@ public class BossGame extends AbstractMinigameState
 						timerTir = 6000;
 						kamoulox = 10000;
 						this.score = 4000;
-						coeff = 18f;
+						coeff = 16f;
 					break;
 
 				case Insane:
 						timerTir = 3500;
 						kamoulox = 10000;
 						this.score = 5000;
-						coeff = 25f;
+						coeff = 20f;
 					break;
 
 				default:
@@ -482,8 +482,8 @@ public class BossGame extends AbstractMinigameState
 	        if(timeK < 0)
 	        {
 	        	font.drawString(
-			            gc.getWidth() - font.getWidth(kamou)/2 - gc.getWidth()/2,
-			            gc.getHeight() - font.getHeight(kamou) - 10, kamou, Color.red);
+		            gc.getWidth() - font.getWidth(kamou)/2 - gc.getWidth()/2,
+		            gc.getHeight() - font.getHeight(kamou) - 10, kamou, Color.red);
 	        }
 	        
 
