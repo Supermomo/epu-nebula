@@ -23,10 +23,10 @@ public class LoadMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Mode aventure");
-        addMenuItem("Reprendre la partie", true);
-        addMenuItem("Nouvelle partie", true);
+        addMenuItem("Reprendre la partie", sndPath + "loadgame.ogg", true);
+        addMenuItem("Nouvelle partie", sndPath + "newgame.ogg", true);
         addMenuSpaces(1);
-        addMenuItem("Retour", true);
+        addMenuItem("Retour", sndPath + "cancel.ogg", true);
     }
 
 

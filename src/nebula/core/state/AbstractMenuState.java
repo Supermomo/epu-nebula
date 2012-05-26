@@ -13,6 +13,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -21,8 +22,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class AbstractMenuState extends AbstractState
 {
-    // Images path
-    public static String imgPath = "ressources/images/menus/";
+    // Paths
+    public static String sndPath = "ressources/sons/menu/";
 
     protected float itemsSpace = 16.0f;
     protected float titleSpace = 80.0f;
@@ -32,8 +33,9 @@ public abstract class AbstractMenuState extends AbstractState
     private String menuTitle;
 
     // Menu properties
-    private List<String> textList        = new ArrayList<String>();
+    private List<String>  textList       = new ArrayList<String>();
     private List<Boolean> selectableList = new ArrayList<Boolean>();
+    private List<Sound>   voicesList     = new ArrayList<Sound>();
 
 
     @Override
@@ -63,14 +65,26 @@ public abstract class AbstractMenuState extends AbstractState
 
         // Menu navigation
         if (input.isKeyPressed(Input.KEY_DOWN))
+        {
             selectNextIndex(selectedIndex+1);
+            playCurrentVoice();
+        }
         else if (input.isKeyPressed(Input.KEY_UP))
+        {
             selectPreviousIndex(selectedIndex-1);
+            playCurrentVoice();
+        }
         else if (input.isKeyPressed(Input.KEY_ENTER) ||
                  input.isKeyPressed(Input.KEY_SPACE))
+        {
+            stopAllVoices();
             indexSelectedEvent(trueIndex(selectedIndex), game);
+        }
         else if (input.isKeyPressed(Input.KEY_ESCAPE))
+        {
+            stopAllVoices();
             indexSelectedEvent(-1, game);
+        }
     }
 
 
@@ -119,6 +133,14 @@ public abstract class AbstractMenuState extends AbstractState
         }
     }
 
+    @Override
+    public void enter (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.enter(gc, game);
+        playCurrentVoice();
+    }
+
     /**
      * Refresh the menu
      */
@@ -126,6 +148,27 @@ public abstract class AbstractMenuState extends AbstractState
     {
         try { this.init(nebulaGame.getContainer(), nebulaGame); }
         catch (SlickException exc) { exc.printStackTrace(); }
+    }
+
+    /**
+     * Play the current voice if possible
+     */
+    private void playCurrentVoice ()
+    {
+        stopAllVoices();
+
+        if (selectedIndex < voicesList.size() && voicesList.get(selectedIndex) != null)
+            voicesList.get(selectedIndex).play();
+    }
+
+    /**
+     * Stop all voices
+     */
+    private void stopAllVoices ()
+    {
+        for (Sound s : voicesList)
+            if (s != null && s.playing())
+                s.stop();
     }
 
     /**
@@ -195,12 +238,19 @@ public abstract class AbstractMenuState extends AbstractState
     /**
      * Add a menu item to the list
      * @param text       The item text
+     * @param voiceFile  The optional voice file
      * @param selectable The item selectability
      */
-    protected void addMenuItem (String text, boolean selectable)
+    protected void addMenuItem (String text, String voiceFile, boolean selectable)
     {
         textList.add(text);
         selectableList.add(new Boolean(selectable));
+
+        if (voiceFile != null)
+            try { voicesList.add(new Sound(voiceFile)); }
+            catch (SlickException exc) { exc.printStackTrace(); }
+        else
+            voicesList.add(null);
 
         selectNextIndex(0);
     }
@@ -216,6 +266,7 @@ public abstract class AbstractMenuState extends AbstractState
         {
             textList.add("");
             selectableList.add(false);
+            voicesList.add(null);
         }
 
         selectNextIndex(0);
@@ -249,6 +300,7 @@ public abstract class AbstractMenuState extends AbstractState
     {
         textList.clear();
         selectableList.clear();
+        voicesList.clear();
         menuTitle = "";
     }
 

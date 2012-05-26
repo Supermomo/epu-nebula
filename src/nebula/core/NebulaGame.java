@@ -88,7 +88,7 @@ public class NebulaGame extends StateBasedGame
     }
 
     public static enum TransitionType
-        {None, Fade, HorizontalSplit, VerticalSplit};
+        {None, Fade, LongFade, HorizontalSplit, VerticalSplit};
 
     public static boolean isAdventureMode;
 
@@ -131,6 +131,8 @@ public class NebulaGame extends StateBasedGame
             enterState(state, null, new VerticalSplitTransition(Color.black));
         else if (TransitionType.Fade.equals(transition))
             enterState(state, new FadeOutTransition(Color.black, 1000), new FadeInTransition(Color.black, 1000));
+        else if (TransitionType.LongFade.equals(transition))
+            enterState(state, new FadeOutTransition(Color.black, 2000), new FadeInTransition(Color.black, 2000));
         else
             enterState(state, null, null);
     }
@@ -174,7 +176,7 @@ public class NebulaGame extends StateBasedGame
         ((ScoreTransitionState)getState(NebulaState.ScoreTransition.id))
             .initScore(score, won, lastState);
 
-        enterState(NebulaState.ScoreTransition.id, TransitionType.Fade);
+        enterState(NebulaState.ScoreTransition.id, TransitionType.LongFade);
     }
 
 

@@ -24,12 +24,12 @@ public class DifficultyMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Difficulté");
-        addMenuItem("Facile", true);
-        addMenuItem("Moyen", true);
-        addMenuItem("Difficile", true);
-        addMenuItem("Très difficile", true);
+        addMenuItem("Facile", sndPath + "easy.ogg", true);
+        addMenuItem("Moyen", sndPath + "medium.ogg", true);
+        addMenuItem("Difficile", sndPath + "hard.ogg", true);
+        addMenuItem("Très difficile", sndPath + "insane.ogg", true);
         addMenuSpaces(1);
-        addMenuItem("Retour", true);
+        addMenuItem("Retour", sndPath + "cancel.ogg", true);
         setSelectedIndex(1);
     }
 

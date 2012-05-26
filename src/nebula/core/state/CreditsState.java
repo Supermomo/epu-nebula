@@ -66,8 +66,8 @@ public class CreditsState extends AbstractState
         "Laura Martellotto\n" +
         "Bruce Springsteen\n" +
         "Les moustiques\n" +
-        "Moi\n" +
         "Toi\n" +
+        "Moi\n" +
         "Et tout ceux qui le veulent...\n" +
         " \n" +
         " \n" +

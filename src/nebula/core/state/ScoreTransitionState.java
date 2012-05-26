@@ -29,7 +29,7 @@ public class ScoreTransitionState extends AbstractMenuState
         lastState = NebulaState.MainMenu.id;
 
         // Music
-        initMusic("ressources/sons/common/fanfare.ogg", 0.3f, true);
+        initMusic("ressources/sons/common/fanfare.ogg", 0.2f, true);
     }
 
     public void initScore (int score, boolean won, int lastState)
@@ -51,16 +51,16 @@ public class ScoreTransitionState extends AbstractMenuState
 
         if (won)
         {
-            addMenuItem("Score : " + score, false);
+            addMenuItem("Score : " + score, null, false);
             addMenuSpaces(2);
         }
 
         if (NebulaGame.isAdventureMode && won)
-            addMenuItem("Continuer", true);
+            addMenuItem("Continuer", sndPath + "continue.ogg", true);
         else
-            addMenuItem("Recommencer", true);
+            addMenuItem("Recommencer", sndPath + "retry.ogg", true);
 
-        addMenuItem("Quitter", true);
+        addMenuItem("Quitter", sndPath + "quit.ogg", true);
     }
 
     @Override
