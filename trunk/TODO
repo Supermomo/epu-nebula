@@ -1,22 +1,8 @@
 TODO LIST - Nebula
 ==================
 
-
-SpaceInvaders :
-    - Plus de difficulté
-    - Tank et vaisseaux plus gros et d'une autre couleur
-    - Bruit quand on se fait toucher
-    - Tirs rafales
-
-Breakout :
-    
-Gravity :
-    - Plus de maps
-
-Divers :
-    - Menu: Couleur rouge en plus
-    - Aide / Tutoriel pour tous les jeux
-    - Saisie du joueur
+- Saisie du nom du joueur
+- Intégration CD Devint
 
 
 SCORES RANGES
@@ -26,11 +12,3 @@ Facile         : 1000 - 2000
 Moyen          : 2000 - 3000
 Difficile      : 3000 - 4000
 Très difficile : 4000 - 5000
-
-
-CE QU'IL RESTE A FAIRE
-
-- Saisie du nom du joueur
-- Enregistrement des voies de l'aide
-- Voix des menus
-- Intégration CD Devint
