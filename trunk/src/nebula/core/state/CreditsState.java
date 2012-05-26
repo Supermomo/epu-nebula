@@ -125,15 +125,14 @@ public class CreditsState extends AbstractState
 
         // Credits speed
         if (input.isKeyDown(Input.KEY_UP) ||
-            input.isKeyDown(Input.KEY_LSHIFT) ||
-            input.isKeyDown(Input.KEY_RSHIFT))
+            input.isKeyDown(Input.KEY_DOWN) ||
+            input.isKeyDown(Input.KEY_SPACE))
             y -= CREDITS_SPEED * 5 * delta;
         else
             y -= CREDITS_SPEED * delta;
 
         // Escape
         if (input.isKeyPressed(Input.KEY_ENTER) ||
-            input.isKeyPressed(Input.KEY_SPACE) ||
             input.isKeyPressed(Input.KEY_ESCAPE) ||
             y + strings.length * (CREDITS_SPACE + strHeight) < 0.0f)
             nebulaGame.enterState(NebulaState.MainMenu.id, TransitionType.Fade);
