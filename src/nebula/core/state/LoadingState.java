@@ -164,7 +164,6 @@ public class LoadingState extends AbstractState
         states.add(new BossGame());
         states.add(new HistoryEnd1State());
         states.add(new HistoryEnd2State());
-
     }
 
     @Override public int getID () { return NebulaState.Loading.id; }

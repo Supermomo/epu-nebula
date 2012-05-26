@@ -1,6 +1,9 @@
 package nebula.core.state;
 
+import nebula.core.NebulaGame;
+import nebula.core.NebulaGame.Minigame;
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -23,15 +26,24 @@ public class HelpMenuState extends AbstractMenuState
         // Call super method
         super.init(gc, game);
 
+        // Minigame
+        Minigame minigame = NebulaGame.minigameFromId(lastState);
+        String name = (minigame != null ? minigame.name : "Aide");
+
         // Add menu items
-        setMenuTitle("Aide");
-        addMenuItem("Retour", null, true);
+        setMenuTitle("Comment jouer ?");
+        addMenuItem("Aide du jeu \""+ name +"\"", null, false);
+        addMenuSpaces(2);
+        addMenuItem("Appuie sur F1 à tout moment pour", null, false);
+        addMenuItem("écouter l'aide pendant le jeu", null, false);
+        addMenuSpaces(3);
+        addMenuItem("Continuer", null, true);
     }
 
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
-        nebulaGame.enterState(lastState);
+        nebulaGame.enterState(lastState, TransitionType.ShortFade);
     }
 
     @Override

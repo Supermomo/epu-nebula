@@ -95,19 +95,7 @@ public class ScoreTransitionState extends AbstractMenuState
         if (!won) return;
 
         // Save current minigame
-        Minigame minigame = null;
-        if (NebulaState.SpaceInvaders.id == lastState)
-            minigame = Minigame.SpaceInvaders;
-        else if (NebulaState.SpaceShepherd.id == lastState)
-            minigame = Minigame.SpaceShepherd;
-        else if (NebulaState.Asteroid.id == lastState)
-            minigame = Minigame.Asteroid;
-        else if (NebulaState.Gravity.id == lastState)
-            minigame = Minigame.Gravity;
-        else if (NebulaState.Breakout.id == lastState)
-            minigame = Minigame.Breakout;
-        else if (NebulaState.Boss.id == lastState)
-            minigame = Minigame.Boss;
+        Minigame minigame = NebulaGame.minigameFromId(lastState);
 
         if (NebulaGame.isAdventureMode)
         {

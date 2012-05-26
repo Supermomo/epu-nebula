@@ -1,7 +1,6 @@
 package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.core.NebulaGame.TransitionType;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -20,7 +19,6 @@ public class HistoryAsteroid1State extends AbstractTransitionState
         // Call super method
         super.init(gc, game);
 
-        this.setTransitionType(TransitionType.Fade);
         this.setTransitionImage("ressources/images/histoire/asteroid1.png");
         this.setTransitionVoice("ressources/sons/histoire/asteroid1.ogg");
         this.setTransitionTime(12000.0f);

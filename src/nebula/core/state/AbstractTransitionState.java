@@ -19,7 +19,6 @@ import org.newdawn.slick.state.StateBasedGame;
 public abstract class AbstractTransitionState extends AbstractState
 {
     private float time = Float.NEGATIVE_INFINITY;
-    private TransitionType transitionType = TransitionType.None;
     private Image image;
     private Sound voice;
 
@@ -102,11 +101,20 @@ public abstract class AbstractTransitionState extends AbstractState
 
         if (next == null)
             nebulaGame.enterState(NebulaState.MainMenu.id);
-        else if (next instanceof AbstractMinigameState ||
-                 next instanceof AbstractMenuState)
-            nebulaGame.initAndEnterState(this.getID()+1, transitionType);
+        else if (next instanceof AbstractMenuState)
+            nebulaGame.initAndEnterState(this.getID()+1, TransitionType.ShortFade);
+        else if (next instanceof AbstractMinigameState)
+        {
+            // Show help
+            nebulaGame.initState(this.getID()+1);
+
+            AbstractMinigameState mg =
+                (AbstractMinigameState) nebulaGame.getState(this.getID()+1);
+
+            mg.helpMinigame();
+        }
         else
-            nebulaGame.enterState(this.getID()+1, transitionType);
+            nebulaGame.enterState(this.getID()+1, TransitionType.HorizontalSplit);
     }
 
 
@@ -147,15 +155,5 @@ public abstract class AbstractTransitionState extends AbstractState
         catch (SlickException exc) {
             exc.printStackTrace();
         }
-    }
-
-
-    /**
-     * Set transition end type
-     * @param transitionType The transition type
-     */
-    protected void setTransitionType (TransitionType transitionType)
-    {
-        this.transitionType = transitionType;
     }
 }
