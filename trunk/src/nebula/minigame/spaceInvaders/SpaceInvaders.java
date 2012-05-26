@@ -275,8 +275,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 
 	    		if(ennemi[i][j] != null && ennemi[i][j].touche(tir))
     	    	{
-    	    		xExplo = ennemi[i][j].getX();
-    	    		yExplo = ennemi[i][j].getY();
+    	    		xExplo = ennemi[i][j].getX()+ ennemi[i][j].getImage().getWidth()/2;
+    	    		yExplo = ennemi[i][j].getY()+ennemi[i][j].getImage().getHeight()/2;
     	    		if(explosion.isStopped())
     	    		{
     	    			explosion.restart();
