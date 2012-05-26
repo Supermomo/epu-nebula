@@ -108,7 +108,7 @@ public class BossGame extends AbstractMinigameState
 
 				default:
 						timerTir = 5000;
-						kamoulox = 10000;
+						kamoulox = 7000;
 						saucer.setVies(4);
 						this.score = 3000;
 						coeff = 11.2f;
@@ -239,7 +239,7 @@ public class BossGame extends AbstractMinigameState
 	    		saucer.tirer(tir);
 	    	}
 	    	
-	    	if(input.isKeyDown(Input.KEY_LCONTROL) && saucer.getMove() && timeK < 0)
+	    	if((input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) && saucer.getMove() && timeK < 0)
 	    	{
 	    		timeK = kamoulox;
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
@@ -358,7 +358,7 @@ public class BossGame extends AbstractMinigameState
 	    	if(saucer.touche(tir1) && invincibility <= 0)
 	    	{
 	    		saucer.decrementeVie();
-	    		invincibility = 2000;
+	    		invincibility = 3000;
 	    		xExplo4 = saucer.getX();
 	    		yExplo4 = saucer.getY();
 	    		explosion4.stop();
@@ -373,7 +373,7 @@ public class BossGame extends AbstractMinigameState
 	    	if(saucer.touche(tir2) && invincibility <= 0)
 	    	{
 	    		saucer.decrementeVie();
-	    		invincibility = 2000;
+	    		invincibility = 3000;
 	    		xExplo4 = saucer.getX();
 	    		yExplo4 = saucer.getY();
 	    		explosion4.stop();
@@ -388,7 +388,7 @@ public class BossGame extends AbstractMinigameState
 	    	if(saucer.hit(miss1) && invincibility <= 0)
 	    	{
 	    		saucer.decrementeVie();
-	    		invincibility = 2000;
+	    		invincibility = 3000;
 	    		xExplo = saucer.getX() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
 	    		yExplo = saucer.getY() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getHeight()/2;
 	    		explosion.stop();
@@ -404,7 +404,7 @@ public class BossGame extends AbstractMinigameState
 	    	if(saucer.hit(miss2) && invincibility <= 0)
 	    	{
 	    		saucer.decrementeVie();
-	    		invincibility = 2000;
+	    		invincibility = 3000;
 	    		xExplo2 = saucer.getX() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getWidth()/2;
 	    		yExplo2 = saucer.getY() + saucer.getImage().getWidth()/2 - explosion.getImage(0).getHeight()/2;
 	    		explosion2.stop();
