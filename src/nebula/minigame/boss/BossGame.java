@@ -87,26 +87,26 @@ public class BossGame extends AbstractMinigameState
 						timerTir = 10000;
 						kamoulox = 5000;
 						saucer.setVies(5);
-						this.score = 1000;
+						this.score = 2000;
 					break;
 
 				case Hard:
 						timerTir = 6000;
 						kamoulox = 10000;
-						this.score = 3000;
+						this.score = 4000;
 					break;
 
 				case Insane:
 						timerTir = 3500;
 						kamoulox = 10000;
-						this.score = 4000;
+						this.score = 5000;
 					break;
 
 				default:
 						timerTir = 5000;
 						kamoulox = 10000;
 						saucer.setVies(4);
-						this.score = 2000;
+						this.score = 3000;
 					break;
 			}
 	        
@@ -419,7 +419,7 @@ public class BossGame extends AbstractMinigameState
 	    	
 	    	if(boss.dead())
 	    	{
-	    		this.score -= (5/saucer.getVies()) * (time/50);
+	    		this.score -= (5/saucer.getVies()) * (time/50) - saucer.getVies();
 	    		gameVictory();
 	    	}
 	    	
