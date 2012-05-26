@@ -35,13 +35,13 @@ public class SpaceInvaders extends AbstractMinigameState {
 	// Image de la desctruction
 	SpriteSheet explo = null;
 	Animation explosion = null;
-	float xExplo = -100;
-	float yExplo = -100;
+	float xExplo;
+	float yExplo;
 	// Le bonus
 	SpriteSheet nyan = null;
 	Animation nyanCat = null;
-	float xnyan = -100;
-	float ynyan = -100;
+	float xnyan;
+	float ynyan;
 	int nbEnnemis;
 	Random rand;
 	int seuil;
@@ -96,6 +96,12 @@ public class SpaceInvaders extends AbstractMinigameState {
     	ynyan = -100;
     	sonNyan = new Sound("ressources/sons/spaceInvaders/nyan.ogg");
 
+    	
+    	xExplo = -100;
+    	yExplo = -100;
+    	xnyan = -100;
+    	ynyan = -100;
+    	
     	tank = new Tank(gc.getWidth(),gc.getHeight());
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
     	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
@@ -296,8 +302,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 	    	{
 	    		tank.decrementeVie();
 	    		invincibility = 2 * 1000;
-	    		xExplo = tank.getX();
-	    		yExplo = tank.getY();
+	    		xExplo = tank.getX()+tank.getImage().getWidth()/2;
+	    		yExplo = tank.getY()+tank.getImage().getHeight()/2;
 	    		if(explosion.isStopped())
 	    		{
 	    			explosion.restart();
@@ -362,7 +368,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     				g.drawImage(ennemi[i][j].getImage(), ennemi[i][j].getX(), ennemi[i][j].getY());
     			}
     	}
-    	g.drawAnimation(explosion, xExplo, yExplo);
+    	g.drawAnimation(explosion, xExplo-explosion.getWidth()/2, yExplo-explosion.getHeight()/2);
     	g.drawAnimation(nyanCat, xnyan, ynyan);
     	for(int i = 0; i < tank.getVies(); i++)
     	{
