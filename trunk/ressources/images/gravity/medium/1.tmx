@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- f3 / Facile / 2 inversions précision moyenne -->
+<!-- f3 / Facile / Deux inversion, feinte -->
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="13" height="7" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
@@ -10,9 +10,9 @@
    H4sIAAAAAAAAABNnYGAQJwPjA+hqsOlBN4sYPcQAWushJ6xgGABQYg1ubAEAAA==
   </data>
  </layer>
- <layer name="map" width="13" height="8" visible="0">
+ <layer name="map" width="13" height="8">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAONgYGDgw4M5oBiZzwnEcngwO5oadD4ICwOxCBCLQvm8QMxPQA8xmNZ6GIGYiUQ97EjhyEQkhqkHAJ4hzwCgAQAA
+   H4sIAAAAAAAAAONgYGDgw4M5oBiZzwnEcngwO5oadD4ICwOxCBCLQvm8QMxPQA8xmNZ6GIGYCRoOTERiDiRMqh4A5oR0saABAAA=
   </data>
  </layer>
  <layer name="end" width="13" height="7">
