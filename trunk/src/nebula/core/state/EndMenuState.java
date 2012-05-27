@@ -27,7 +27,10 @@ public class EndMenuState extends AbstractMenuState
         addMenuSpaces(1);
         addMenuItem("Score : " + NebulaConfig.getAdventureScore(), null, false);
         addMenuSpaces(2);
-        addMenuItem("Retour", sndPath + "cancel.ogg", true);
+        addMenuItem("Continuer", null, true);
+
+        // Music
+        initMusic("ressources/sons/common/party.ogg", 0.6f, false);
     }
 
     @Override
