@@ -85,37 +85,41 @@ public class Gravity extends AbstractMinigameState {
 				i++; // L'incrémentation du compteur !!
 			}
 		}
+		
+		controleJeu = new ControleJeu();
+		coeur = new Image(dossierData+"coeur.png");
 
 		// Music and help
         initMusic("ressources/sons/gravity/music.ogg", 0.3f, true);
         initHelp("ressources/sons/gravity/help.ogg");
 
 		// Envoie de l'initialisation partielle suivant le niveau
-		init(gameContainer, stateBasedGame, listeNiveaux);
-	}
-	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame, Queue<String> listeNiveaux)
+		chargement_carte(gameContainer, stateBasedGame, listeNiveaux);
+	} // *** Fin Init ***
+	
+	
+	public void chargement_carte(GameContainer gameContainer, StateBasedGame stateBasedGame, Queue<String> listeNiveaux)
 			throws SlickException {
+		
+		
 		this.listeNiveaux = listeNiveaux;
-		// Call super method
-		//super.init(gameContainer, stateBasedGame);
-		score = 0;
 
 		try {
 			modeleJeu = new ModeleJeu(new Player(dossierData+"heroSet.png",200,300), new BlockMap(dossierData+this.listeNiveaux.poll()+".tmx"), gameContainer.getHeight(),gameContainer.getWidth());
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		controleJeu = new ControleJeu(modeleJeu);
-		coeur = new Image(dossierData+"coeur.png");
+		controleJeu.setModele(modeleJeu);
+
 
 		int[] tempRender = modeleJeu.renderMap();
 		mapRender[0] = tempRender[0];
 		mapRender[1] = tempRender[1];
 
 		etatActuel = EtatJeu.DEPLACEMENT_JOUEUR;
-		timer = 0;
+		timer = 0; // Reset Timer pour la nouvelle map
 
-	} // *** Fin Init ***
+	}
 
 
 
@@ -125,8 +129,6 @@ public class Gravity extends AbstractMinigameState {
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g)
 			throws SlickException {
-
-
 		// Call super method
 		super.render(gameContainer, stateBasedGame, g);
 
@@ -168,55 +170,58 @@ public class Gravity extends AbstractMinigameState {
 			throws SlickException {
 
 
-		float vitesseDeplacement = 0.4f * delta;
-
+		float vitesseDeplacement = 0.4f * delta; // Vitesse de scroll de la map
 
 		// Call super method
 		super.update(gameContainer, stateBasedGame, delta);
 
 		switch(etatActuel) {
+		
 		case DEPLACEMENT_JOUEUR:
 			controleJeu.inputJoueur(gameContainer.getInput(), delta);
 			modeleJeu.getHero().incStill();
 			if(deplacementMap()) etatActuel = EtatJeu.DEPLACEMENT_MAP;
 			timer += delta; // On augmente le temps
 			break;
+			
 		case DEFAITE:
 			modeleJeu.arreterSon();
 			score = 100;
 			gameDefeat();
 			break;
+			
 		case VICTOIRE:
 			modeleJeu.arreterSon();
 			// Mise à jour du score
 			score += modeleJeu.getHero().getNbrVies()*500 + (1000 - timer/100);
-
 			// Appel à la fonction héritée
 			if(this.listeNiveaux.size() > 0) {
 				// Appel de la carte suivante
 				etatActuel = EtatJeu.CHANGEMENT_CARTE;
+				System.out.println("Score : "+score);
 			} else { // FIN
+				System.out.println("Fin Score : "+score);
 				// Application du taux score/difficulté
 				switch(difficulty) {
 				case Easy:
-					score *= 0.58;
+					score = (int) Math.max(score*0.58/3,1000);
 					break;
 				case Medium:
-					score *= 0.85;
+					score = (int) Math.max(score* 0.85/3,2000);
 					break;
 				case Hard:
-					score *= 1.18;
+					score = (int) Math.max(score* 1.18/3,3000);
 					break;
 				case Insane:
-					score *= 1.53;
+					score = (int) Math.max(score* 1.53/3,4000);
 					break;
 				}
-				// Fin du jeu
-				gameVictory();
+				gameVictory();// Fin du jeu
 			}
 			break;
+			
 		case CHANGEMENT_CARTE:
-			init(gameContainer, stateBasedGame, this.listeNiveaux);
+			chargement_carte(gameContainer, stateBasedGame, this.listeNiveaux);
 			break;
 
 		case DEPLACEMENT_MAP:
