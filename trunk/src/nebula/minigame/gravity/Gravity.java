@@ -85,7 +85,7 @@ public class Gravity extends AbstractMinigameState {
 				i++; // L'incrémentation du compteur !!
 			}
 		}
-		
+
 		controleJeu = new ControleJeu();
 		coeur = new Image(dossierData+"coeur.png");
 
@@ -96,12 +96,12 @@ public class Gravity extends AbstractMinigameState {
 		// Envoie de l'initialisation partielle suivant le niveau
 		chargement_carte(gameContainer, stateBasedGame, listeNiveaux);
 	} // *** Fin Init ***
-	
-	
+
+
 	public void chargement_carte(GameContainer gameContainer, StateBasedGame stateBasedGame, Queue<String> listeNiveaux)
 			throws SlickException {
-		
-		
+
+
 		this.listeNiveaux = listeNiveaux;
 
 		try {
@@ -176,20 +176,20 @@ public class Gravity extends AbstractMinigameState {
 		super.update(gameContainer, stateBasedGame, delta);
 
 		switch(etatActuel) {
-		
+
 		case DEPLACEMENT_JOUEUR:
 			controleJeu.inputJoueur(gameContainer.getInput(), delta);
 			modeleJeu.getHero().incStill();
 			if(deplacementMap()) etatActuel = EtatJeu.DEPLACEMENT_MAP;
 			timer += delta; // On augmente le temps
 			break;
-			
+
 		case DEFAITE:
 			modeleJeu.arreterSon();
 			score = 100;
 			gameDefeat();
 			break;
-			
+
 		case VICTOIRE:
 			modeleJeu.arreterSon();
 			// Mise à jour du score
@@ -198,9 +198,7 @@ public class Gravity extends AbstractMinigameState {
 			if(this.listeNiveaux.size() > 0) {
 				// Appel de la carte suivante
 				etatActuel = EtatJeu.CHANGEMENT_CARTE;
-				System.out.println("Score : "+score);
 			} else { // FIN
-				System.out.println("Fin Score : "+score);
 				// Application du taux score/difficulté
 				switch(difficulty) {
 				case Easy:
@@ -219,7 +217,7 @@ public class Gravity extends AbstractMinigameState {
 				gameVictory();// Fin du jeu
 			}
 			break;
-			
+
 		case CHANGEMENT_CARTE:
 			chargement_carte(gameContainer, stateBasedGame, this.listeNiveaux);
 			break;
