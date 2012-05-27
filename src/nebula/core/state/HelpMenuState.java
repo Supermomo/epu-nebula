@@ -38,12 +38,28 @@ public class HelpMenuState extends AbstractMenuState
         addMenuItem("écouter l'aide pendant le jeu", null, false);
         addMenuSpaces(3);
         addMenuItem("Continuer", null, true);
+        addMenuItem("Réécouter", null, true);
     }
 
     @Override
     protected void indexSelectedEvent (int index, StateBasedGame game)
     {
-        nebulaGame.enterState(lastState, TransitionType.ShortFade);
+        switch (index)
+        {
+            case 1:
+                if (sndHelp != null)
+                {
+                    if (sndHelp.playing())
+                        sndHelp.stop();
+
+                    sndHelp.play();
+                }
+                break;
+
+            default:
+                nebulaGame.enterState(lastState, TransitionType.ShortFade);
+                break;
+        }
     }
 
     @Override
