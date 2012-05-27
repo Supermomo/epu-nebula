@@ -131,7 +131,7 @@ public class NebulaGame extends StateBasedGame
         else if (TransitionType.VerticalSplit.equals(transition))
             enterState(state, null, new VerticalSplitTransition(Color.black));
         else if (TransitionType.ShortFade.equals(transition))
-            enterState(state, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+            enterState(state, new FadeOutTransition(Color.black, 200), new FadeInTransition(Color.black, 200));
         else if (TransitionType.Fade.equals(transition))
             enterState(state, new FadeOutTransition(Color.black, 1000), new FadeInTransition(Color.black, 1000));
         else if (TransitionType.LongFade.equals(transition))
@@ -186,7 +186,7 @@ public class NebulaGame extends StateBasedGame
         ((ScoreTransitionState)getState(NebulaState.ScoreTransition.id))
             .initScore(score, won, lastState);
 
-        enterState(NebulaState.ScoreTransition.id, TransitionType.LongFade);
+        enterState(NebulaState.ScoreTransition.id, TransitionType.Fade);
     }
 
 
