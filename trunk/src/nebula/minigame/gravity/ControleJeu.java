@@ -5,8 +5,16 @@ import org.newdawn.slick.Input;
 public class ControleJeu {
 
 	ModeleJeu modeleJeu;
-
+	
+	
+	public ControleJeu() {
+		this(null);
+	}
 	public ControleJeu(ModeleJeu modeleJeu) {
+		this.modeleJeu = modeleJeu;
+	}
+
+	public void setModele(ModeleJeu modeleJeu) {
 		this.modeleJeu = modeleJeu;
 	}
 
@@ -22,7 +30,7 @@ public class ControleJeu {
 		else if (input.isKeyDown(Input.KEY_RIGHT)) {
 			modeleJeu.deplacementDroite(delta);
 		}
-		else if (input.isKeyDown(Input.KEY_UP)) {
+		/*else if (input.isKeyDown(Input.KEY_UP)) {
 			
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN)) {
@@ -32,9 +40,9 @@ public class ControleJeu {
 		// Courrir
 		if(input.isKeyPressed(Input.KEY_LCONTROL)) {
 			//TODO Passer en KeyDown
-			modeleJeu.courrir();
+			//modeleJeu.courrir();
 		}
-		
+		*/
 		// Changer la gravité
 		if(input.isKeyPressed(Input.KEY_SPACE))
 			modeleJeu.inverserGravite();
