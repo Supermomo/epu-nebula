@@ -321,23 +321,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private int computeScore(){
 		int sco=(int) ((flockNumber-flock.getFlockers().size())*scoreCoef+(remainingTime-startingTime)/1000*timeCoef - fences.size()*fenceCoef);
 
-		if(Difficulty.Easy.equals(difficulty)){
-			sco=Math.max(1000, sco);
-			sco=Math.min(sco, 2000);
-		}
-		else if(Difficulty.Hard.equals(difficulty)){
-			sco=Math.max(3000, sco);
-			sco=Math.min(sco, 4000);
-		}
-		else if(Difficulty.Insane.equals(difficulty)){
-			sco=Math.max(4000, sco);
-			sco=Math.min(sco, 5000);
-		}
-		else{//MEDIUM
-			sco=Math.max(2000, sco);
-			sco=Math.min(sco, 3000);
-		}
-		return sco;
+		return Utils.checkScoreRange(sco, difficulty);
 	}
 	private boolean validDistanceFromLastPoint() {
 		return (Math.abs(lastPlot.x - x) > plotRadius || Math.abs(lastPlot.y

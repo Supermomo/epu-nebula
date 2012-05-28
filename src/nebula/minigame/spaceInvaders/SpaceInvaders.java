@@ -4,6 +4,7 @@ import java.util.Random;
 
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.Collision;
+import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.Animation;
@@ -96,12 +97,12 @@ public class SpaceInvaders extends AbstractMinigameState {
     	ynyan = -100;
     	sonNyan = new Sound("ressources/sons/spaceInvaders/nyan.ogg");
 
-    	
+
     	xExplo = -100;
     	yExplo = -100;
     	xnyan = -100;
     	ynyan = -100;
-    	
+
     	tank = new Tank(gc.getWidth(),gc.getHeight());
     	tank.setX(gc.getWidth()/2 - tank.getImage().getWidth()/2);
     	tank.setY(gc.getHeight() - 2*tank.getImage().getHeight());
@@ -331,6 +332,7 @@ public class SpaceInvaders extends AbstractMinigameState {
     		else
     			this.score = scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0f/tank.getVies())) - (3 - tank.getVies())*250);
 
+    		this.score = Utils.checkScoreRange(this.score, difficulty);
     		gameVictory();
     	}
 

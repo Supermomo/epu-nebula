@@ -6,6 +6,7 @@ import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
+import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.Animation;
@@ -72,8 +73,6 @@ public class BossGame extends AbstractMinigameState
 		float lifeCoef;
 		String mess;
 		String kamou;
-		int scoreMax;
-		int scoreMin;
 		Sound sndKamoulox, sndKamouloxReady;
 
 		private static Font font;
@@ -124,8 +123,6 @@ public class BossGame extends AbstractMinigameState
 					break;
 			}
 
-	        scoreMin=score;
-	        scoreMax=scoreMin+1000;
 	        boss = new Boss();
 	        boss.setX(gc.getWidth()/2 - boss.getImage().getWidth()/2);
 	        boss.setY(0);
@@ -450,8 +447,7 @@ public class BossGame extends AbstractMinigameState
 	    	if(boss.dead())
 	    	{
 	    		score += (int) (saucer.getVies()*lifeCoef-(time/1000)*timeCoeff);
-	    		score=Math.max(score, scoreMin);
-	    		score=Math.min(score, scoreMax);
+	    		score = Utils.checkScoreRange(score, difficulty);
 	    		gameVictory();
 	    	}
 
