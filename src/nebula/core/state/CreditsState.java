@@ -48,6 +48,7 @@ public class CreditsState extends AbstractState
         " \n" +
         "$==== Testeurs ====\n" +
         " \n" +
+        "Les élèves de Clément Ader\n" +
         "Laura Martellotto la Marmotte\n" +
         "Jessica Lionne la... Lionne\n" +
         "Brice Martini le Soumis\n" +
