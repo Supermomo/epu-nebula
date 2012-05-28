@@ -15,6 +15,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -73,6 +74,7 @@ public class BossGame extends AbstractMinigameState
 		String kamou;
 		int scoreMax;
 		int scoreMin;
+		Sound sndKamoulox, sndKamouloxReady;
 
 		private static Font font;
 
@@ -121,7 +123,7 @@ public class BossGame extends AbstractMinigameState
 						lifeCoef=300;
 					break;
 			}
-	        
+
 	        scoreMin=score;
 	        scoreMax=scoreMin+1000;
 	        boss = new Boss();
@@ -192,6 +194,10 @@ public class BossGame extends AbstractMinigameState
 	    	// TIR SAUCER
 	    	tir = new ArrayList<Tir>();
 
+	    	// Sounds
+	    	sndKamoulox = new Sound("ressources/sons/boss/kamoulox.ogg");
+	    	sndKamouloxReady = new Sound("ressources/sons/boss/kamoulox_ready.ogg");
+
 	    	font = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
 	    	initMusic("ressources/sons/boss/music.ogg", 0.6f, true);
 	        initHelp("ressources/sons/boss/help.ogg");
@@ -206,7 +212,6 @@ public class BossGame extends AbstractMinigameState
 	        timeT -= delta;
 	        timeM -= delta;
 	        timeL -= delta;
-	        timeK -= delta;
 	        timeV -= delta;
 	        time += delta;
 	        if(!saucer.getMove())
@@ -216,6 +221,15 @@ public class BossGame extends AbstractMinigameState
 
 	        float hip = delta * 0.25f;
 	    	Input input = gc.getInput();
+
+	    	// Kamoulox ready sound
+	    	if (timeK > 0 && timeK - delta <= 0)
+	    	{
+	    	    timeK = 0;
+	    	    sndKamouloxReady.play();
+	    	}
+	    	else if (timeK > 0)
+	    	    timeK -= delta;
 
 	    	// =================== Gestion des deplacements ==========================
 	    	if(input.isKeyDown(Input.KEY_RIGHT) && saucer.getMove())
@@ -249,7 +263,7 @@ public class BossGame extends AbstractMinigameState
 	    		saucer.tirer(tir);
 	    	}
 
-	    	if((input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) && saucer.getMove() && timeK < 0)
+	    	if((input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) && saucer.getMove() && timeK <= 0)
 	    	{
 	    		timeK = kamoulox;
 	    		xLaser = saucer.getX() + saucer.getImage().getWidth()/2 - phatLaser.getImage(0).getWidth()/2;
@@ -267,6 +281,7 @@ public class BossGame extends AbstractMinigameState
 		    		timeL = 2000;
 	    		}
 	    		saucer.setMove(false);
+	    		sndKamoulox.play();
 	    	}
 
 	    	if(timeL <= 0)
@@ -484,7 +499,7 @@ public class BossGame extends AbstractMinigameState
 	    		saucer.getCoeur().draw(10 + i * saucer.getCoeur().getWidth(), gc.getHeight() - saucer.getCoeur().getHeight());
 	    	}
 
-	        if(timeK < 0)
+	        if(timeK <= 0)
 	        {
 	        	font.drawString(
 		            gc.getWidth() - font.getWidth(kamou)/2 - gc.getWidth()/2,
