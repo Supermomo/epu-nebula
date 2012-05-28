@@ -37,9 +37,9 @@ public class ScoreTransitionState extends AbstractMenuState
 
         // Music
         if (won)
-            initMusic("ressources/sons/common/victory-fanfare.ogg", 0.5f, true);
+            initMusic("ressources/sons/common/victory-fanfare.ogg", 0.6f, false);
         else
-            initMusic("ressources/sons/common/defeat-fanfare.ogg", 0.5f, true);
+            initMusic("ressources/sons/common/defeat-fanfare.ogg", 0.6f, false);
 
         this.lastState = lastState;
         this.won = won;
