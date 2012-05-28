@@ -449,7 +449,7 @@ public class BossGame extends AbstractMinigameState
 
 	    	if(boss.dead())
 	    	{
-	    		score+=(int) (saucer.getVies()*lifeCoef-(time/1000)*timeCoeff);
+	    		score += (int) (saucer.getVies()*lifeCoef-(time/1000)*timeCoeff);
 	    		score=Math.max(score, scoreMin);
 	    		score=Math.min(score, scoreMax);
 	    		gameVictory();
