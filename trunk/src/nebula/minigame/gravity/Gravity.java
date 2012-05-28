@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 
 import nebula.core.NebulaGame.NebulaState;
+import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.GameContainer;
@@ -214,7 +215,8 @@ public class Gravity extends AbstractMinigameState {
 					score = (int) Math.max(score* 1.53/3,4000);
 					break;
 				}
-				gameVictory();// Fin du jeu
+				score = Utils.checkScoreRange(score, difficulty);
+				gameVictory(); // Fin du jeu
 			}
 			break;
 
