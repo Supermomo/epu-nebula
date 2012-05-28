@@ -80,16 +80,14 @@ public class LoadingState extends AbstractState
                 // Init current state
                 BasicGameState state = states.get(loadStep);
                 nebulaGame.addState(state);
-
-                try { state.init(nebulaGame.getContainer(), nebulaGame); }
-                catch (SlickException exc) { exc.printStackTrace(); }
+                state.init(nebulaGame.getContainer(), nebulaGame);
 
                 loadStep++;
             }
         }
         // Finish state
         else if (LoadState.Finish.equals(loadState))
-            nebulaGame.enterState(NebulaState.MainMenu.id, TransitionType.Fade);
+            nebulaGame.enterState(NebulaState.MainMenu.id, TransitionType.ShortFade);
     }
 
     @Override
