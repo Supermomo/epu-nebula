@@ -46,6 +46,14 @@ public class CreditsState extends AbstractState
         "Farfafée : Matthieu Maugard\n" +
         " \n" +
         " \n" +
+        "$==== Testeurs ====\n" +
+        " \n" +
+        "Laura Martellotto la Marmotte\n" +
+        "Jessica Lionne la... Lionne\n" +
+        "Brice Martini le Soumis\n" +
+        "Bruce Springsteen the Boss\n" +
+        " \n" +
+        " \n" +
         "$==== Bibliothèques ====\n" +
         " \n" +
         "Slick (bibliothèque graphique)\n" +
@@ -63,8 +71,6 @@ public class CreditsState extends AbstractState
         "Les enseignants de Polytech\n" +
         "Momo & Gwenn les gitans\n" +
         "La fonction intersect() de Slick\n" +
-        "Laura Martellotto\n" +
-        "Bruce Springsteen\n" +
         "Les moustiques\n" +
         "Toi\n" +
         "Moi\n" +
