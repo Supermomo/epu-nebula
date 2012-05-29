@@ -21,8 +21,8 @@ public class PlayerMenuState extends AbstractMenuState
 
         // Add menu items
         setMenuTitle("Choix du joueur");
-        addMenuItem("Ancien joueur", null, true);
-        addMenuItem("Nouveau joueur", null, true);
+        addMenuItem("Ancien joueur", sndPath + "oldplayer.ogg", true);
+        addMenuItem("Nouveau joueur", sndPath + "newplayer.ogg", true);
         addMenuSpaces(1);
         addMenuItem("Quitter", sndPath + "quit.ogg", true);
     }
