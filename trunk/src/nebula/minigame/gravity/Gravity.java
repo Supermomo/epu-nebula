@@ -71,6 +71,7 @@ public class Gravity extends AbstractMinigameState {
 			prefixeChemin = "easy/";
 			break;
 		}
+
 		// --- Création de la liste des niveaux
 		Queue<String> listeNiveaux = new LinkedList<String>();
 		List<Integer> list = new ArrayList<Integer>();
@@ -86,16 +87,19 @@ public class Gravity extends AbstractMinigameState {
 			}
 		}
 
+
+
+
 		controleJeu = new ControleJeu();
 		coeur = new Image(dossierData+"coeur.png");
 
 		// Load background
 		setUseDefaultBackground(false);
-        background = new Image(dossierData + "background.png");
+		background = new Image(dossierData + "background.png");
 
 		// Music and help
-        initMusic("ressources/sons/gravity/music.ogg", 0.3f, true);
-        initHelp("ressources/sons/gravity/help.ogg");
+		initMusic("ressources/sons/gravity/music.ogg", 0.3f, true);
+		initHelp("ressources/sons/gravity/help.ogg");
 
 		// Envoie de l'initialisation partielle suivant le niveau
 		chargement_carte(gameContainer, stateBasedGame, listeNiveaux);
@@ -137,9 +141,9 @@ public class Gravity extends AbstractMinigameState {
 		super.render(gameContainer, stateBasedGame, g);
 
 		// Render background
-        for (int x = 0; x < gameContainer.getWidth(); x += background.getWidth())
-            for (int y = 0; y < gameContainer.getHeight(); y += background.getHeight())
-                background.draw(x, y);
+		for (int x = 0; x < gameContainer.getWidth(); x += background.getWidth())
+			for (int y = 0; y < gameContainer.getHeight(); y += background.getHeight())
+				background.draw(x, y);
 
 		//// Default
 		// Render Map
