@@ -35,7 +35,7 @@ public class PlayerMenuState extends AbstractMenuState
         {
             // Ancien joueur
             case 0:
-                nebulaGame.initAndEnterState(NebulaState.PlayerName.id);
+                nebulaGame.initAndEnterState(NebulaState.PlayerSelectMenu.id);
                 break;
             // Nouveau joueur
             case 1:

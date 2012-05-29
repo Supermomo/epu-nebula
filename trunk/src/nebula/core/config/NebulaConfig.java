@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import nebula.core.NebulaGame.Minigame;
 import nebula.core.state.AbstractMinigameState.Difficulty;
@@ -69,7 +71,7 @@ public class NebulaConfig
     public static void saveData ()
     {
         // Make dirs
-        new File(getFileFolder()).mkdirs();
+        new File(getFolderName()).mkdirs();
 
         try
         {
@@ -101,10 +103,49 @@ public class NebulaConfig
     }
 
     /**
-     * Get the file folder
-     * @return The file folder
+     * Returns the list of existing players
+     * @return The list of players
      */
-    private static String getFileFolder ()
+    public static List<String> getPlayers ()
+    {
+        List<String> players = new ArrayList<String>();
+
+        // Get player list
+        File dir = new File(getFolderName());
+
+        for (String file : dir.list())
+        {
+            if (file.endsWith(SAVE_EXTENSION))
+            {
+                String player = file.substring(0, file.length() - SAVE_EXTENSION.length());
+
+                if (!player.isEmpty())
+                    players.add(player);
+            }
+        }
+
+        return players;
+    }
+
+    /**
+     * Check if the player already exists
+     * @param playerName The player name
+     * @return True/False
+     */
+    public static boolean playerExists (String playerName)
+    {
+        for (String p : getPlayers())
+            if (p.equalsIgnoreCase(playerName))
+                return true;
+
+        return false;
+    }
+
+    /**
+     * Get the folder name
+     * @return The folder name
+     */
+    private static String getFolderName ()
     {
         return
             System.getProperty("user.home") +
@@ -119,7 +160,7 @@ public class NebulaConfig
      */
     private static String getFileName ()
     {
-        return getFileFolder() + playerName + SAVE_EXTENSION;
+        return getFolderName() + playerName + SAVE_EXTENSION;
     }
 
     /**

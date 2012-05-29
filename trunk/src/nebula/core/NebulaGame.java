@@ -31,11 +31,12 @@ public class NebulaGame extends StateBasedGame
     {
         Loading                 (0),
         PlayerMenu              (1),
-        PlayerName              (2),
-        MainMenu                (3),
-        RapidModeMenu           (4),
-        ScoresMenu              (5),
-        Credits                 (6),
+        PlayerSelectMenu        (2),
+        PlayerName              (3),
+        MainMenu                (4),
+        RapidModeMenu           (5),
+        ScoresMenu              (6),
+        Credits                 (7),
 
         SetupAdventure          (50),
         LoadMenu                (51),
@@ -106,6 +107,9 @@ public class NebulaGame extends StateBasedGame
 
         // Load default config
         NebulaConfig.loadDefaults();
+
+        for (String s : NebulaConfig.getPlayers())
+            System.out.println(s);
     }
 
     /**

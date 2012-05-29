@@ -2,6 +2,7 @@ package nebula.core.state;
 
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
+import nebula.core.config.NebulaConfig;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
@@ -25,11 +26,12 @@ public class PlayerNameState extends AbstractState
     private static final int TEXTFIELD_MARGIN = 4;
 
     private static final String TITLE_TEXT = "Tape ton nom";
-    private static final String ERROR_TEXT = "Entre ton nom correctement";
+    private static final String ERROR1_TEXT = "Entre ton nom correctement";
+    private static final String ERROR2_TEXT = "Ce joueur existe déjà";
 
     private TextField textField;
     private Font font, fontTitle;
-    private boolean errorOccured;
+    private int errorOccured;
 
 
     @Override
@@ -39,7 +41,7 @@ public class PlayerNameState extends AbstractState
         // Call super method
         super.init(gc, game);
 
-        errorOccured = false;
+        errorOccured = 0;
 
         // Fonts
         font  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
@@ -72,7 +74,9 @@ public class PlayerNameState extends AbstractState
         if (input.isKeyPressed(Input.KEY_ENTER))
         {
             if (playerName == null || !playerName.matches("[a-z0-9]+"))
-                errorOccured = true;
+                errorOccured = 1;
+            else if (NebulaConfig.playerExists(playerName))
+                errorOccured = 2;
             else
             {
                 // Load game
@@ -112,10 +116,12 @@ public class PlayerNameState extends AbstractState
         fontTitle.drawString(gc.getWidth()/2 - titleWidth/2, gc.getHeight()/2 - titleHeight - 64.0f , TITLE_TEXT, Color.yellow);
 
         // Error message
-        if (errorOccured)
+        if (errorOccured > 0)
         {
-            int errorWidth = font.getWidth(ERROR_TEXT);
-            font.drawString(gc.getWidth()/2 - errorWidth/2, gc.getHeight()/2 + 64.0f , ERROR_TEXT, Color.red);
+            String errorText = (errorOccured == 1 ? ERROR1_TEXT : ERROR2_TEXT);
+            int errorWidth = font.getWidth(errorText);
+
+            font.drawString(gc.getWidth()/2 - errorWidth/2, gc.getHeight()/2 + 64.0f , errorText, Color.red);
         }
     }
 
