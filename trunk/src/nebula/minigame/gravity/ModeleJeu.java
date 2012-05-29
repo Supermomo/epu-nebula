@@ -191,11 +191,6 @@ public class ModeleJeu {
 		}
 	}
 
-	public void courrir() {
-		hero.courrir();
-	}
-
-
 
 
 
@@ -279,17 +274,6 @@ public class ModeleJeu {
 		int nbrTilesY = map.getTiledMap().getHeight();
 		int nbrTilesX = map.getTiledMap().getWidth();
 
-		/*//-- Mode Personnage Toujours Centré
-		mapRenderX = heroTileX - shownTileX/2;
-		mapRenderY = heroTileY - shownTileY/2;
-		
-		if(mapRenderX<0) mapRenderX = 0;
-		else if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
-		if(mapRenderY<0) mapRenderY = 0;
-		else if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
-		*/
-		
-		
 
 		//-- Pour avoir le fond fixé.
 		// Gestion des X

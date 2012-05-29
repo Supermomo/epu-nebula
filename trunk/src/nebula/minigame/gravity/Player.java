@@ -183,20 +183,7 @@ public class Player {
 		position.translate(0, dy*gravite);
 	}
 	
-	/**
-	 * Active ou désactive la course en fonction du boolean enCourse
-	 * Modifie la vitesse de déplacement du héro
-	 */
-	public void courrir() {
-		if(enCourse) {
-			vitesse =  0.15f;
-			enCourse = false;
-		} else {
-			vitesse = 0.5f;
-			enCourse = true;
-		}
-		System.out.println("*Player Vitesse : "+vitesse);
-	}
+
 	
 	//---
 	// Gestion de l'animation

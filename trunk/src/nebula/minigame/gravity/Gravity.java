@@ -77,7 +77,7 @@ public class Gravity extends AbstractMinigameState {
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i = 0;i<3;) {
 			// On veut boucler tant qu'il n'a pas ses trois map différentes
-			int choix = (int) (Math.random() * 5 + 1); // Choix des maps entre 1 et 5
+			int choix = (int) (Math.random() * 8 + 1); // Choix des maps entre 1 et 8
 			if(!list.contains(choix)) {
 				// On l'ajoute à la liste temporaire
 				list.add(choix);
@@ -203,19 +203,20 @@ public class Gravity extends AbstractMinigameState {
 				// Application du taux score/difficulté
 				switch(difficulty) {
 				case Easy:
-					score = (int) Math.max(score*0.58/3,1000);
+					score *= 0.58;
 					break;
 				case Medium:
-					score = (int) Math.max(score* 0.85/3,2000);
+					score *= 0.85;
 					break;
 				case Hard:
-					score = (int) Math.max(score* 1.18/3,3000);
+					score *= 1.18;
 					break;
 				case Insane:
-					score = (int) Math.max(score* 1.53/3,4000);
+					score *= 1.53;
 					break;
 				}
-				score = Utils.checkScoreRange(score, difficulty);
+				
+				score = Utils.checkScoreRange(score/3, difficulty);
 				gameVictory(); // Fin du jeu
 			}
 			break;
