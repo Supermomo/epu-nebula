@@ -107,9 +107,6 @@ public class NebulaGame extends StateBasedGame
 
         // Load default config
         NebulaConfig.loadDefaults();
-
-        for (String s : NebulaConfig.getPlayers())
-            System.out.println(s);
     }
 
     /**

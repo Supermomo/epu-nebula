@@ -8,6 +8,7 @@ import nebula.core.config.NebulaConfig;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -17,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class PlayerSelectMenuState extends AbstractMenuState
 {
     private List<String> players;
+    private static Sound sndSelect;
 
     @Override
     public void init (GameContainer gc, StateBasedGame game)
@@ -24,6 +26,10 @@ public class PlayerSelectMenuState extends AbstractMenuState
     {
         // Call super method
         super.init(gc, game);
+
+        // Sounds
+        if (sndSelect == null)
+            sndSelect = new Sound(sndPath + "selectplayer.ogg");
 
         // Get players
         players = NebulaConfig.getPlayers();
@@ -50,6 +56,24 @@ public class PlayerSelectMenuState extends AbstractMenuState
             nebulaGame.loadPlayer(players.get(index));
             nebulaGame.initAndEnterState(NebulaState.MainMenu.id, TransitionType.ShortFade);
         }
+    }
+
+
+    @Override
+    public void enter (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.enter(gc, game);
+        sndSelect.play();
+    }
+
+
+    @Override
+    public void leave (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.leave(gc, game);
+        sndSelect.stop();
     }
 
 

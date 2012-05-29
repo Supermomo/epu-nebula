@@ -28,8 +28,8 @@ public class MainMenuState extends AbstractMenuState
         addMenuItem("Mode Rapide", sndPath + "rapidmode.ogg", true);
         addMenuItem("Scores", sndPath + "scores.ogg", true);
         addMenuItem("Crédits", sndPath + "credits.ogg", true);
-        addMenuSpaces(2);
-        addMenuItem("Changer de joueur", null, true);
+        addMenuSpaces(1);
+        addMenuItem("Changer de joueur", sndPath + "changeplayer.ogg", true);
         addMenuItem("Quitter", sndPath + "quit.ogg", true);
     }
 

@@ -13,6 +13,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -29,9 +30,10 @@ public class PlayerNameState extends AbstractState
     private static final String ERROR1_TEXT = "Entre ton nom correctement";
     private static final String ERROR2_TEXT = "Ce joueur existe déjà";
 
+    private int errorOccured;
     private TextField textField;
     private Font font, fontTitle;
-    private int errorOccured;
+    private static Sound sndError1, sndError2;
 
 
     @Override
@@ -46,6 +48,13 @@ public class PlayerNameState extends AbstractState
         // Fonts
         font  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
         fontTitle  = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
+
+        // Sounds
+        if (sndError1 == null || sndError2 == null)
+        {
+            sndError1 = new Sound("ressources/sons/menu/typename.ogg");
+            sndError2 = new Sound("ressources/sons/menu/playerexists.ogg");
+        }
 
         // Text field
         int tfWidth = font.getWidth("W") * (PLAYERNAME_MAXSIZE+2) + 2 * TEXTFIELD_MARGIN;
@@ -74,9 +83,19 @@ public class PlayerNameState extends AbstractState
         if (input.isKeyPressed(Input.KEY_ENTER))
         {
             if (playerName == null || !playerName.matches("[a-z0-9]+"))
+            {
                 errorOccured = 1;
+
+                if (sndError1.playing()) sndError1.stop();
+                sndError1.play();
+            }
             else if (NebulaConfig.playerExists(playerName))
+            {
                 errorOccured = 2;
+
+                if (sndError2.playing()) sndError2.stop();
+                sndError2.play();
+            }
             else
             {
                 // Load game
@@ -123,6 +142,25 @@ public class PlayerNameState extends AbstractState
 
             font.drawString(gc.getWidth()/2 - errorWidth/2, gc.getHeight()/2 + 64.0f , errorText, Color.red);
         }
+    }
+
+
+    @Override
+    public void enter (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.enter(gc, game);
+        sndError1.play();
+    }
+
+
+    @Override
+    public void leave (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.leave(gc, game);
+        sndError1.stop();
+        sndError2.stop();
     }
 
 
