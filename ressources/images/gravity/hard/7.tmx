@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TH2 -->
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="9" height="22" tilewidth="80" tileheight="80">
+ <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
+  <image source="../map80.png"/>
+ </tileset>
+ <layer name="block" width="9" height="22">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAABNnYGAQJwLjA+SowWY2Nj4DATXUcg+larCppXUYjkQ1xIQzKWpwYQDbOlNiGAMAAA==
+  </data>
+ </layer>
+ <layer name="map" width="9" height="22">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAONgYGDgw4M5gJgTiOXwYHYy1DACMRMQM+NRI4BGk2sXrdWAwkgEiEXR5ISh4rQKw5GmBhSO6GkGOS1xIGF089jR5DmQzGPCoh8Age163hgDAAA=
+  </data>
+ </layer>
+ <layer name="end" width="9" height="22">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAGNgGNxAdqAdMApGJAAAhyDePhgDAAA=
+  </data>
+ </layer>
+ <layer name="death" width="9" height="22">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAGNgGAWEgCQUExIjBKRIFKcGkESj8dlPS3cQA6gVztQAANV411AYAwAA
+  </data>
+ </layer>
+ <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
+  <object name="start" type="default" x="274" y="110" width="2" height="2"/>
+ </objectgroup>
+</map>
