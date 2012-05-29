@@ -7,25 +7,24 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public class Player {
-	
+
 	private Point position;
 	private Point savedPosition;
 	private float savedGravity;
-	
+
 	private SpriteSheet sheet;
 
 	private int isStill;
 	private boolean isReversed;
 	private float vitesse;
-	private boolean enCourse;
 	private boolean peutIG;
-	
+
 	private int nbrVies;
-	
+
 	private Animation animation;
 	private AnimGravite animGravite;
 
-	
+
 	//---
 	// Constructeurs
 	////////////////
@@ -37,7 +36,7 @@ public class Player {
 	}
 	public Player(String reference, int x, int y) throws SlickException {
 		this(new SpriteSheet(reference,
-							Sprite.HAUTEUR.getValue(), 
+							Sprite.HAUTEUR.getValue(),
 							Sprite.LARGEUR.getValue(),
 							Sprite.ESPACE.getValue()),
 				x, y);
@@ -46,22 +45,21 @@ public class Player {
 	public Player(SpriteSheet ss, int x, int y) {
 		// Sprite Sheet Défaut
 		this.sheet = ss;
-		
+
 		// Emplacement du personnage
 		position = new Point(x,y);
-		
+
 		// -- Animation par défaut
 		animGravite = new AnimGravite(ss);
 		animation = animGravite.still(false);
 		isStill = -1;
 		this.nbrVies = 5;
 		this.vitesse = 0.275f;
-		this.enCourse = false;
 		this.peutIG = false;
 		this.isReversed = false;
 	}
-	
-	
+
+
 	//---
 	// Accesseurs
 	/////////////
@@ -73,7 +71,7 @@ public class Player {
 	public void setX(float x) {
 		position.setLocation(x, getY());
 	}
-	
+
 	public float getY() {
 		return (float) (position.getY());
 	}
@@ -114,7 +112,7 @@ public class Player {
 		p[1].translate(Sprite.LARGEUR.getValue()-10f, Sprite.HAUTEUR.getValue()+1.1f);
 		return p;
 	}
-	
+
 	// Images du hero
 	public Image getImage() {
 		return sheet;
@@ -122,14 +120,14 @@ public class Player {
 	public void setImage(SpriteSheet ss) {
 		this.sheet = ss;
 	}
-	
+
 	public int getSpriteHeight() {
 		return sheet.getHeight();
 	}
 	public int getSpriteWidth() {
 		return sheet.getWidth();
 	}
-	
+
 	// Animation et déplacement
 	public Animation getAnimation() {
 		return this.animation;
@@ -160,7 +158,7 @@ public class Player {
 	public boolean getPIG() {
 		return peutIG;
 	}
-	
+
 	//---
 	// toString
 	///////////
@@ -168,7 +166,7 @@ public class Player {
 	public String toString() {
 		return "";
 	}
-	
+
 	//---
 	// Gestion du déplacement
 	/////////////////////////
@@ -182,9 +180,9 @@ public class Player {
 	public void moveY(float dy, float gravite) {
 		position.translate(0, dy*gravite);
 	}
-	
 
-	
+
+
 	//---
 	// Gestion de l'animation
 	/////////////////////////
@@ -201,7 +199,7 @@ public class Player {
 		isStill = -1;
 		animation = animGravite.still(isReversed);
 	}
-	
+
 	public void setAnimRetourner(float g) {
 		if(g>0) {
 			isReversed = false;
@@ -211,7 +209,7 @@ public class Player {
 			animation = animGravite.retourner(animation);
 		}
 	}
-	
+
 	//---
 	// Gestion de la gravité au niveau du héro
 	//////////////////////////////////////////
@@ -222,7 +220,7 @@ public class Player {
 	//---
 	// Gestion de la vie du héro
 	////////////////////////////
-	
+
 	public int getNbrVies() {
 		return nbrVies;
 	}
@@ -235,7 +233,7 @@ public class Player {
 	public void domage() {
 		setNbrVies(getNbrVies()-1);
 	}
-	
+
 	//---
 	// Gestion des checkpoints
 	//////////////////////////

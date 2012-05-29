@@ -4,7 +4,6 @@ import java.util.Random;
 
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.Collision;
-import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.Animation;
@@ -332,7 +331,6 @@ public class SpaceInvaders extends AbstractMinigameState {
     		else
     			this.score = scoreSpaceInvaders + ((initialNbEnnemis - tank.getTirEffectue()) * (int)(50 * (3.0f/tank.getVies())) - (3 - tank.getVies())*250);
 
-    		this.score = Utils.checkScoreRange(this.score, difficulty);
     		gameVictory();
     	}
 
