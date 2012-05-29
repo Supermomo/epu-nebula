@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Cassure au milieu / Dur / Déplacement de la caméra deux fois rapproché. Niveau à la verticale -->
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" width="13" height="30" tilewidth="80" tileheight="80">
+<map version="1.0" orientation="orthogonal" width="30" height="13" tilewidth="80" tileheight="80">
  <tileset name="mapSet" firstgid="1" tilewidth="80" tileheight="80">
   <image source="../map80.png"/>
  </tileset>
- <layer name="block" width="13" height="30">
+ <layer name="block" width="30" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAABNnYGAQJwOTAuithxS3UtttuOyllj2E/EVIjhw91EgHQyXtDJQefOYg60Fn08oeUvWQkjYGMqwHs9toqYdUDACN4R1YGAYAAA==
+   H4sIAAAAAAAAAGNgoC4QR2PjwtQGxJhJL3vR/UlLe7GFKz3spVTNqL3Em4ke1wxofHphbPbiEqOlvfQGA20vrjxOStjhMhOXOAAsTWOvGAYAAA==
   </data>
  </layer>
- <layer name="map" width="13" height="30" visible="0">
+ <layer name="end" width="30" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAONgYGDgIwFzADEnEMuRgNnpqAfkPhEkLEpntwnjsJda9sDMZybDbVxk6OFFC08QZmIgPR3wkqGH3mlnIPWwEKkHFP+wtIUrPvHZQws96HkOhPkHaVgjh99gcxut9IDih4kEDFIPAC07iHEYBgAA
+   H4sIAAAAAAAAAGNgGAWjYBQMRiALxcMRCA60A0YBXgAA+qGVcBgGAAA=
   </data>
  </layer>
- <layer name="end" width="13" height="30">
+ <layer name="map" width="30" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgIA/IDmI9o2AUjIJRMArIBwALW9l9GAYAAA==
+   H4sIAAAAAAAAAN2T0QqAIAxFNaPmQxnUc///mU3YaIwJUWKRcBCv4gE3nas3AInITkzIbDBUdFreEmMjr0c2JDTwruTKJMqWBt4vvPMfvSC8PHp39hX3FHv5PP8tUBncoCNAzNHwJpHxX09q/ZSkvFfqUZs3vbIenai/V7lFMO70hX2ZZ+cB2hB3xRgGAAA=
   </data>
  </layer>
- <layer name="death" width="13" height="30">
+ <layer name="death" width="30" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNgoC2QGQR6pOlkz2DVIwXF1LKHVIDLbkJgoMONXD2SZNqDLZ0OhB5JNEwre6SwYGyAFnFKjn/IsYfWepDjiBr2wAAAaYzyZBgGAAA=
+   H4sIAAAAAAAAAGNgoD6QguJRQH8wkOE+Gue0A5ID7QAcAFteH00HtAWkpAVJNIxLHh0AAL7ReIoYBgAA
   </data>
  </layer>
- <objectgroup name="ObjectGroup" width="0" height="0" x="1" y="1">
-  <object name="start" type="default" x="57" y="2220" width="3" height="3"/>
+ <objectgroup name="objets" width="0" height="0" x="1" y="1">
+  <object name="start" type="default" x="62" y="809" width="5" height="5"/>
  </objectgroup>
 </map>
