@@ -128,6 +128,7 @@ public class LoadingState extends AbstractState
     private void addStates ()
     {
         states.add(new PlayerMenuState());
+        states.add(new PlayerSelectMenuState());
         states.add(new PlayerNameState());
         states.add(new MainMenuState());
         states.add(new RapidModeMenuState());
