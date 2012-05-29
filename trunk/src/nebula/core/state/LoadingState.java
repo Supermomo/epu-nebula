@@ -87,7 +87,7 @@ public class LoadingState extends AbstractState
         }
         // Finish state
         else if (LoadState.Finish.equals(loadState))
-            nebulaGame.enterState(NebulaState.MainMenu.id, TransitionType.ShortFade);
+            nebulaGame.enterState(NebulaState.PlayerMenu.id, TransitionType.ShortFade);
     }
 
     @Override
@@ -127,7 +127,8 @@ public class LoadingState extends AbstractState
      */
     private void addStates ()
     {
-        // Menus
+        states.add(new PlayerMenuState());
+        states.add(new PlayerNameState());
         states.add(new MainMenuState());
         states.add(new RapidModeMenuState());
         states.add(new ScoresMenuState());
