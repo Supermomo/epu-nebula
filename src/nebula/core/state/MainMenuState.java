@@ -28,7 +28,8 @@ public class MainMenuState extends AbstractMenuState
         addMenuItem("Mode Rapide", sndPath + "rapidmode.ogg", true);
         addMenuItem("Scores", sndPath + "scores.ogg", true);
         addMenuItem("Crédits", sndPath + "credits.ogg", true);
-        addMenuSpaces(1);
+        addMenuSpaces(2);
+        addMenuItem("Changer de joueur", null, true);
         addMenuItem("Quitter", sndPath + "quit.ogg", true);
     }
 
@@ -59,11 +60,13 @@ public class MainMenuState extends AbstractMenuState
             case 3:
                 nebulaGame.initAndEnterState(NebulaState.Credits.id, TransitionType.Fade);
                 break;
-            // Quitter
+            // Changer de joueur
             case 4:
-                nebulaGame.getContainer().exit();
+                nebulaGame.initAndEnterState(NebulaState.PlayerMenu.id);
                 break;
-            default:
+            // Quitter
+            case 5:
+                nebulaGame.quitGame();
                 break;
         }
     }

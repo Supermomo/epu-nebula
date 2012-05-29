@@ -16,9 +16,20 @@ import nebula.core.state.AbstractMinigameState.Difficulty;
  */
 public class NebulaConfig
 {
+    public static final String SAVE_EXTENSION = ".save";
+
     private static String playerName;
     private static DataContainer dataContainer;
 
+
+    /**
+     * Load the defaults data
+     */
+    public static void loadDefaults ()
+    {
+        playerName = "Joueur";
+        dataContainer = new DataContainer();
+    }
 
     /**
      * Load the player data from the database
@@ -108,10 +119,7 @@ public class NebulaConfig
      */
     private static String getFileName ()
     {
-        return
-            getFileFolder() +
-            playerName +
-            ".save";
+        return getFileFolder() + playerName + SAVE_EXTENSION;
     }
 
     /**

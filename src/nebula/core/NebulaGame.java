@@ -30,10 +30,12 @@ public class NebulaGame extends StateBasedGame
     public static enum NebulaState
     {
         Loading                 (0),
-        MainMenu                (1),
-        RapidModeMenu           (2),
-        ScoresMenu              (3),
-        Credits                 (4),
+        PlayerMenu              (1),
+        PlayerName              (2),
+        MainMenu                (3),
+        RapidModeMenu           (4),
+        ScoresMenu              (5),
+        Credits                 (6),
 
         SetupAdventure          (50),
         LoadMenu                (51),
@@ -98,10 +100,28 @@ public class NebulaGame extends StateBasedGame
      * Constructeur du jeu
      * @throws SlickException
      */
-    public NebulaGame (String playerName) throws SlickException
+    public NebulaGame () throws SlickException
     {
         super("Nebula");
 
+        // Load default config
+        NebulaConfig.loadDefaults();
+    }
+
+    /**
+     * Quit the game
+     */
+    public void quitGame ()
+    {
+        this.getContainer().exit();
+    }
+
+    /**
+     * Load the configuration of the player
+     * @param playerName Player name
+     */
+    public void loadPlayer (String playerName)
+    {
         // Load config for the player
         NebulaConfig.loadData(playerName);
     }
@@ -250,7 +270,7 @@ public class NebulaGame extends StateBasedGame
     {
         try {
             AppGameContainer app =
-                new AppGameContainer(new NebulaGame("Joueur"));
+                new AppGameContainer(new NebulaGame());
 
             app.setDisplayMode(
                 Toolkit.getDefaultToolkit().getScreenSize().width,
