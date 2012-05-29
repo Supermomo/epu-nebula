@@ -7,6 +7,7 @@ import nebula.core.config.NebulaConfig;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
+import nebula.core.helper.Utils;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -180,6 +181,9 @@ public abstract class AbstractMinigameState extends AbstractState
      */
     protected void gameVictory ()
     {
+        // Check score
+        score = Utils.checkScoreRange(score, difficulty);
+
         sndVictory.play();
         nebulaGame.showScoreState(score, true, getID());
     }

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Queue;
 
 import nebula.core.NebulaGame.NebulaState;
-import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.GameContainer;
@@ -36,7 +35,7 @@ public class Gravity extends AbstractMinigameState {
 
 	private Queue<String> listeNiveaux;
 
-	private Image coeur;
+	private Image coeur, background;
 	private int[] mapRender;
 	private int timer;
 
@@ -90,6 +89,10 @@ public class Gravity extends AbstractMinigameState {
 		controleJeu = new ControleJeu();
 		coeur = new Image(dossierData+"coeur.png");
 
+		// Load background
+		setUseDefaultBackground(false);
+        background = new Image(dossierData + "background.png");
+
 		// Music and help
         initMusic("ressources/sons/gravity/music.ogg", 0.3f, true);
         initHelp("ressources/sons/gravity/help.ogg");
@@ -132,6 +135,11 @@ public class Gravity extends AbstractMinigameState {
 			throws SlickException {
 		// Call super method
 		super.render(gameContainer, stateBasedGame, g);
+
+		// Render background
+        for (int x = 0; x < gameContainer.getWidth(); x += background.getWidth())
+            for (int y = 0; y < gameContainer.getHeight(); y += background.getHeight())
+                background.draw(x, y);
 
 		//// Default
 		// Render Map
@@ -215,8 +223,8 @@ public class Gravity extends AbstractMinigameState {
 					score *= 1.53;
 					break;
 				}
-				
-				score = Utils.checkScoreRange(score/3, difficulty);
+
+				score = score/3;
 				gameVictory(); // Fin du jeu
 			}
 			break;

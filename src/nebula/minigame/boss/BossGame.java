@@ -6,7 +6,6 @@ import nebula.core.NebulaGame.NebulaState;
 import nebula.core.helper.NebulaFont;
 import nebula.core.helper.NebulaFont.FontName;
 import nebula.core.helper.NebulaFont.FontSize;
-import nebula.core.helper.Utils;
 import nebula.core.state.AbstractMinigameState;
 
 import org.newdawn.slick.Animation;
@@ -447,7 +446,6 @@ public class BossGame extends AbstractMinigameState
 	    	if(boss.dead())
 	    	{
 	    		score += (int) (saucer.getVies()*lifeCoef-(time/1000)*timeCoeff);
-	    		score = Utils.checkScoreRange(score, difficulty);
 	    		gameVictory();
 	    	}
 
