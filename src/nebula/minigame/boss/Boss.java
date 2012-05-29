@@ -6,27 +6,27 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Boss 
+public class Boss
 {
 	private Image image = null;
 	private float x;
 	private float y;
 	private int vies;
 	private Sound son = null;
-	
+
 	public Boss() throws SlickException
 	{
 		image = new Image("ressources/images/boss/nebula-vaisseau-mere.png");
 		son = new Sound("ressources/sons/boss/miss_explosion.ogg");
 		vies = 1000;
 	}
-	
+
 	public void tirer(Tir tir, boolean droite, Vaisseau v)
 	{
 		int hip = 180;
 		if(droite)
 		{
-			
+
 			tir.setX(180 + this.getX() - tir.getImage().getWidth()/2);
 			tir.setY(200 + this.getY() - tir.getImage().getHeight()/2);
 			float angle = (float)Math.atan(((v.getX() + v.getImage().getWidth()/2) - 180 - this.getX())/((v.getY() + v.getImage().getHeight()/2) - 200 - this.getY()));
@@ -56,12 +56,12 @@ public class Boss
 		}
 		tir.setTire(true);
 	}
-	
+
 	public void launch(Missile m, boolean droite, Vaisseau v)
 	{
 		if(droite)
 		{
-			
+
 			m.setX(70 + this.getX() - m.getImage().getWidth()/2);
 			m.setY(100 + this.getY() - m.getImage().getHeight()/2);
 			m.vise(v);
@@ -72,16 +72,16 @@ public class Boss
 			m.setY(100 + this.getY() - m.getImage().getHeight()/2);
 			m.vise(v);
 		}
-		
+
 		m.setTire(true);
 		m.getSon().play();
 	}
-	
+
 	public boolean touche(Tir tir)
 	{
 		Ellipse e1 = new Ellipse(this.getX() + this.getImage().getWidth()/2, this.getY(), this.getImage().getWidth()/2, 3*this.getImage().getHeight()/4);
-		Rectangle r1 = new Rectangle(tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight());
-		return e1.intersects(r1);
+		Rectangle r1 = new Rectangle(tir.getX(), tir.getY(), tir.getImage().getWidth(), 2*tir.getImage().getHeight()/3);
+		return e1.contains(r1);
 	}
 
 	public Image getImage() {
@@ -115,22 +115,22 @@ public class Boss
 	public void setVies(int vies) {
 		this.vies = vies;
 	}
-	
+
 	public Sound getSon()
 	{
 		return this.son;
 	}
-	
+
 	public void loseLife()
 	{
 		this.vies -= 10;
 	}
-	
+
 	public void hit()
 	{
 		this.vies -= 200;
 	}
-	
+
 	public void getDestroy() throws SlickException
 	{
 		if(this.vies <= 800 && this.vies > 600)
@@ -150,7 +150,7 @@ public class Boss
 			this.image = new Image("ressources/images/boss/nebula-vaisseau-mere5.png");
 		}
 	}
-	
+
 	public boolean dead()
 	{
 		return vies <= 0;

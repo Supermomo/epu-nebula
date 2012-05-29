@@ -254,7 +254,7 @@ public class BossGame extends AbstractMinigameState
 	    	}
 
 	    	// ========================  GESTION DES TIRS ============================
-	    	if(input.isKeyDown(Input.KEY_SPACE) && timeV <= 0)
+	    	if(input.isKeyDown(Input.KEY_SPACE) && timeV <= 0 && saucer.getMove())
 	    	{
 	    		timeV = 1500;
 	    		saucer.tirer(tir);
