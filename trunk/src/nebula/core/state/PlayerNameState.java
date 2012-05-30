@@ -144,6 +144,9 @@ public class PlayerNameState extends AbstractState
 
         prevTextSize = textField.getText().length();
 
+        // Prevent cursor move
+        textField.setCursorPos(PLAYERNAME_MAXSIZE);
+
         // Set text field focus
         if (!textField.hasFocus())
             textField.setFocus(true);
@@ -162,6 +165,10 @@ public class PlayerNameState extends AbstractState
         super.render(gc, game, g);
 
         // Text field
+        g.resetFont();
+        g.resetLineWidth();
+        g.setColor(Color.white);
+        g.setLineWidth(4.0f);
         textField.render(gc, g);
 
         // Title
