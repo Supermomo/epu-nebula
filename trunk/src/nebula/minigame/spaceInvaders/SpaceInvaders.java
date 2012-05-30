@@ -43,7 +43,8 @@ public class SpaceInvaders extends AbstractMinigameState {
 	int nbTir;
 	int multiple;
 	int invincibility;
-	Boolean droite = true;
+	Boolean droite;
+	Boolean bas;
 	// Gestion du joueur avec position x,y et echelle
 	Tank tank = null;
 	// Image de l'arme
@@ -115,6 +116,8 @@ public class SpaceInvaders extends AbstractMinigameState {
     	ynyan = -100;
     	sonNyan = new Sound("ressources/sons/spaceInvaders/nyan.ogg");
 
+    	droite = true;
+    	bas = false;
 
     	xExplo = -100;
     	yExplo = -100;
@@ -242,6 +245,35 @@ public class SpaceInvaders extends AbstractMinigameState {
     	// ========================== ENNEMIS ==============================
 
     	float hip = 0.2f * delta * (((initialNbEnnemis - nbEnnemis)/12)+1);
+    	
+    	if(!droite)
+    	{
+    		hip = -hip;
+    	}
+    	
+    	if(bas)
+    	{
+    		bas = false;
+			for(int i=0; i < 4; i++)
+	    	{
+	    		for(int j=0; j < multiple; j++)
+	    		{
+	    			if(ennemi[i][j] != null)
+	    				ennemi[i][j].setY(ennemi[i][j].getY() + ennemi[i][j].getImage().getHeight());
+	    		}
+	    	}
+    	}
+    	else
+    	{
+    		for(int i=0; i < 4; i++)
+	    	{
+	    		for(int j=0; j < multiple; j++)
+	    		{
+	    			if(ennemi[i][j] != null)
+	    				ennemi[i][j].setX(ennemi[i][j].getX() + hip);
+	    		}
+	    	}
+    	}
 
     	for(int i=0; i < 4; i++)
     	{
@@ -249,46 +281,18 @@ public class SpaceInvaders extends AbstractMinigameState {
     		{
 		    	if(droite)
 		    	{
-		    		if(ennemi[3-i][multiple-1-j] != null)
+		    		if(ennemi[i][j] != null && !(ennemi[i][j].getX() < gc.getWidth() - 120))
 		    		{
-			    		if(ennemi[3-i][multiple-1-j].getX() < gc.getWidth() - 120)
-			    		{
-			    			ennemi[3-i][multiple-1-j].setX(ennemi[3-i][multiple-1-j].getX() + hip);
-			    		}
-			    		else
-			    		{
-			    			droite = false;
-			    			for(int lol=0; lol < 4; lol++)
-			    	    	{
-			    	    		for(int tg=0; tg < multiple; tg++)
-			    	    		{
-			    	    			if(ennemi[lol][tg] != null)
-			    	    				ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
-			    	    		}
-			    	    	}
-			    		}
+			    		bas = true;
+			    		droite = false;
 		    		}
 		    	}
 		    	else
 		    	{
-		    		if(ennemi[i][j] != null)
+		    		if(ennemi[i][j] != null && !(ennemi[i][j].getX() > 40))
 		    		{
-			    		if(ennemi[i][j].getX() > 40)
-			    		{
-			    			ennemi[i][j].setX(ennemi[i][j].getX() - hip);
-			    		}
-			    		else
-			    		{
-			    			droite = true;
-			    			for(int lol=0; lol < 4; lol++)
-			    	    	{
-			    	    		for(int tg=0; tg < multiple; tg++)
-			    	    		{
-			    	    			if(ennemi[lol][tg] != null)
-			    	    				ennemi[lol][tg].setY(ennemi[lol][tg].getY() + ennemi[lol][tg].getImage().getHeight());
-			    	    		}
-			    	    	}
-			    		}
+		    			bas = true;
+		    			droite = true;
 		    		}
 		    	}
 

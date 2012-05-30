@@ -36,6 +36,13 @@ public class Tank
 	private int vies;
 	private int tirEffectue;
 
+	/**
+	 * Crée un tank et le place en bas au centre de l'écran.
+	 * Il a pars defaut 3 vies
+	 * @param width
+	 * @param height
+	 * @throws SlickException
+	 */
 	public Tank(int width, int height) throws SlickException
 	{
 		image = new Image("ressources/images/spaceInvaders/saucer.png");
@@ -53,6 +60,11 @@ public class Tank
 		vies = 3;
 	}
 
+	/**
+	 * Tir le laser passé en paramétre
+	 * Le tir se place au niveau du tank quand il est tiré, joue le son, puis avance
+	 * @param tir
+	 */
 	public void tirer(Tir tir)
 	{
 		if(tir.getY() < 0)
@@ -64,6 +76,11 @@ public class Tank
 		}
 	}
 
+	/**
+	 * teste si le tir passsé en paramétre touche le tank
+	 * @param tir
+	 * @return
+	 */
 	public boolean touche(Tir tir)
 	{
 		return Collision.rectangle(this.getX(),this.getY(), 3*this.getImage().getWidth()/4, 3*this.getImage().getHeight()/4, tir.getX(), tir.getY(), tir.getImage().getWidth(), tir.getImage().getHeight()/3);
