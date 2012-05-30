@@ -36,6 +36,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class PlayerSelectMenuState extends AbstractMenuState
 {
+    private int offset = 0;
     private List<String> players;
     private static Sound sndSelect;
 
@@ -56,11 +57,34 @@ public class PlayerSelectMenuState extends AbstractMenuState
         // Add menu items
         setMenuTitle("Choix du joueur");
 
-        for (String p : players)
-            addMenuItem(p, null, true);
+        if (players.size() <= 7)
+        {
+            offset = 0;
 
-        addMenuSpaces(1);
-        addMenuItem("Retour", sndPath + "cancel.ogg", true);
+            for (String p : players)
+                addMenuItem(p, null, true);
+
+            // No players
+            if (players.isEmpty())
+                addMenuItem("Aucun joueur", null, false);
+
+            addMenuSpaces(1);
+            addMenuItem("Retour", sndPath + "cancel.ogg", true);
+        }
+        else
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                int j = offset - 3 + i;
+
+                if (j < 0 || j >= players.size())
+                    addMenuItem(" ", null, true);
+                else
+                    addMenuItem(players.get(j), null, true);
+            }
+
+            setSelectedIndex(3);
+        }
     }
 
 
@@ -72,9 +96,33 @@ public class PlayerSelectMenuState extends AbstractMenuState
         else if (0 <= index && index < players.size())
         {
             // Load game
-            nebulaGame.loadPlayer(players.get(index));
+            int playerIndex = (players.size() > 7 ? offset : index);
+            nebulaGame.loadPlayer(players.get(playerIndex));
             nebulaGame.initAndEnterState(NebulaState.MainMenu.id, TransitionType.ShortFade);
         }
+    }
+
+
+    @Override
+    protected void indexMovedEvent (int index, StateBasedGame game)
+    {
+        if (players.size() <= 7) return;
+
+        if (index > 3)
+            offset++;
+        else
+            offset--;
+
+        if (offset < 0) offset = players.size()-1;
+        if (offset >= players.size()) offset = 0;
+
+        refreshMenu();
+    }
+
+
+    public void resetOffset ()
+    {
+        offset = 0;
     }
 
 

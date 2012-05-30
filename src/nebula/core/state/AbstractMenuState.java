@@ -86,11 +86,13 @@ public abstract class AbstractMenuState extends AbstractState
         if (input.isKeyPressed(Input.KEY_DOWN))
         {
             selectNextIndex(selectedIndex+1);
+            indexMovedEvent(selectedIndex, game);
             playCurrentVoice();
         }
         else if (input.isKeyPressed(Input.KEY_UP))
         {
             selectPreviousIndex(selectedIndex-1);
+            indexMovedEvent(selectedIndex, game);
             playCurrentVoice();
         }
         else if (input.isKeyPressed(Input.KEY_ENTER) ||
@@ -321,6 +323,15 @@ public abstract class AbstractMenuState extends AbstractState
         selectableList.clear();
         voicesList.clear();
         menuTitle = "";
+    }
+
+
+    /**
+     * Called when the user move the selection
+     * @param index The new index selected
+     */
+    protected void indexMovedEvent (int index, StateBasedGame game)
+    {
     }
 
 
