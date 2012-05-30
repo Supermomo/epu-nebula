@@ -1,16 +1,12 @@
 /**
  * Nebula - Copyright (C) 2012
- * Gweimport java.util.List;
-
-import nebula.core.NebulaGame.NebulaState;
-import nebula.core.NebulaGame.TransitionType;
-import nebula.core.config.NebulaConfig;
-
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-import org.newdawn.slick.state.StateBasedGame;
-ense, or
+ * Gwenn Aubert, Thomas Di'Meco, Matthieu Maugard, Gaspard Perrot
+ *
+ * This file is part of project 'Nebula'
+ *
+ * 'Nebula' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * 'Nebula' is distributed in the hope that it will be useful,
