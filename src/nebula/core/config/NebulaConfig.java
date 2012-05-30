@@ -117,9 +117,9 @@ public class NebulaConfig
         {
             if (file.endsWith(SAVE_EXTENSION))
             {
-                String player = file.substring(0, file.length() - SAVE_EXTENSION.length());
+                String player = file.substring(0, file.length() - SAVE_EXTENSION.length()).toLowerCase();
 
-                if (!player.isEmpty())
+                if (!player.isEmpty() && !players.contains(player))
                     players.add(player);
             }
         }
