@@ -1,5 +1,8 @@
 package nebula.core.state;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
 import nebula.core.config.NebulaConfig;
@@ -30,10 +33,11 @@ public class PlayerNameState extends AbstractState
     private static final String ERROR1_TEXT = "Entre ton nom correctement";
     private static final String ERROR2_TEXT = "Ce joueur existe déjà";
 
-    private int errorOccured;
+    private int errorOccured, prevTextSize;
     private TextField textField;
     private Font font, fontTitle;
     private static Sound sndError1, sndError2;
+    private static Map<Character, Sound> sndCharacters;
 
 
     @Override
@@ -44,6 +48,7 @@ public class PlayerNameState extends AbstractState
         super.init(gc, game);
 
         errorOccured = 0;
+        prevTextSize = 0;
 
         // Fonts
         font  = NebulaFont.getFont(FontName.Batmfa, FontSize.Medium);
@@ -55,6 +60,9 @@ public class PlayerNameState extends AbstractState
             sndError1 = new Sound("ressources/sons/menu/typename.ogg");
             sndError2 = new Sound("ressources/sons/menu/playerexists.ogg");
         }
+
+        // Characters
+        initCharacters();
 
         // Text field
         int tfWidth = font.getWidth("W") * (PLAYERNAME_MAXSIZE+2) + 2 * TEXTFIELD_MARGIN;
@@ -107,6 +115,15 @@ public class PlayerNameState extends AbstractState
         // Format text field
         if (playerName != null && !playerName.matches("[a-z0-9]*"))
             textField.setText(playerName.substring(0, playerName.length()-1));
+
+        // Character sound
+        if (textField.getText().length() > prevTextSize)
+        {
+            char c = textField.getText().toLowerCase().charAt(textField.getText().length()-1);
+            playCharacter(c);
+        }
+
+        prevTextSize = textField.getText().length();
 
         // Set text field focus
         if (!textField.hasFocus())
@@ -161,6 +178,35 @@ public class PlayerNameState extends AbstractState
         super.leave(gc, game);
         sndError1.stop();
         sndError2.stop();
+    }
+
+
+    private void initCharacters () throws SlickException
+    {
+        if (sndCharacters != null) return;
+
+        sndCharacters = new HashMap<Character, Sound>();
+
+        for (int d = 48; d <= 122; d++)
+        {
+            // Jump to letters
+            if (d == 58) d = 97;
+
+            char c = (char)d;
+
+            String path = "ressources/sons/menu/characters/" +
+                String.valueOf(c) + ".ogg";
+
+            sndCharacters.put(Character.valueOf(c), new Sound(path));
+        }
+    }
+
+
+    private void playCharacter (char c)
+    {
+        // Check character
+        if (sndCharacters.containsKey(c))
+            sndCharacters.get(c).play();
     }
 
 
