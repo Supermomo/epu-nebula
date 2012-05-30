@@ -146,7 +146,7 @@ public abstract class AbstractMenuState extends AbstractState
             float x = gc.getWidth()/2 - itemFont.getWidth(textList.get(i))/2;
 
             if (i == selectedIndex)
-                itemFont.drawString(x, y, textList.get(i), Color.red);
+                itemFont.drawString(x, y, textList.get(i), Color.decode("#ff3300"));
             else
                 itemFont.drawString(x, y, textList.get(i), Color.white);
 

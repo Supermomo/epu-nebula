@@ -139,6 +139,9 @@ public class PlayerNameState extends AbstractState
         if (textField.getText().length() > prevTextSize)
         {
             char c = textField.getText().toLowerCase().charAt(textField.getText().length()-1);
+
+            sndError1.stop();
+            sndError2.stop();
             playCharacter(c);
         }
 
@@ -183,7 +186,7 @@ public class PlayerNameState extends AbstractState
             String errorText = (errorOccured == 1 ? ERROR1_TEXT : ERROR2_TEXT);
             int errorWidth = font.getWidth(errorText);
 
-            font.drawString(gc.getWidth()/2 - errorWidth/2, gc.getHeight()/2 + 64.0f , errorText, Color.red);
+            font.drawString(gc.getWidth()/2 - errorWidth/2, gc.getHeight()/2 + 64.0f , errorText, Color.decode("#ff3300"));
         }
     }
 
