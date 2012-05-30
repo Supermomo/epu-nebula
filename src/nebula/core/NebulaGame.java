@@ -295,7 +295,7 @@ public class NebulaGame extends StateBasedGame
             app.setDisplayMode(
                 Toolkit.getDefaultToolkit().getScreenSize().width,
                 Toolkit.getDefaultToolkit().getScreenSize().height,
-                false);
+                true);
             app.setTargetFrameRate(120);
             app.setVerbose(false);
             app.setShowFPS(false);
