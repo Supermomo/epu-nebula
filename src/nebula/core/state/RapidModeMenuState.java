@@ -1,5 +1,8 @@
 package nebula.core.state;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nebula.core.NebulaGame.Minigame;
 import nebula.core.NebulaGame.NebulaState;
 import nebula.core.NebulaGame.TransitionType;
@@ -8,6 +11,7 @@ import nebula.core.state.AbstractMinigameState.Difficulty;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -16,6 +20,9 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class RapidModeMenuState extends AbstractMenuState
 {
+    private static List<Sound> sndDifficulties;
+
+
     @Override
     public void init (GameContainer gc, StateBasedGame game)
         throws SlickException
@@ -76,6 +83,16 @@ public class RapidModeMenuState extends AbstractMenuState
 
         addMenuSpaces(1);
         addMenuItem("Retour", sndPath + "cancel.ogg", true);
+
+        // Sounds
+        if (sndDifficulties == null)
+        {
+            sndDifficulties = new ArrayList<Sound>();
+            sndDifficulties.add(new Sound(sndPath + "easy.ogg"));
+            sndDifficulties.add(new Sound(sndPath + "medium.ogg"));
+            sndDifficulties.add(new Sound(sndPath + "hard.ogg"));
+            sndDifficulties.add(new Sound(sndPath + "insane.ogg"));
+        }
     }
 
 
@@ -99,6 +116,10 @@ public class RapidModeMenuState extends AbstractMenuState
                     NebulaConfig.setRapidmodeDifficulty(Difficulty.Insane);
                 else if (Difficulty.Insane.equals(diff))
                     NebulaConfig.setRapidmodeDifficulty(Difficulty.Easy);
+
+                // Sound
+                stopSounds();
+                sndDifficulties.get(NebulaConfig.getRapidmodeDifficulty().ordinal()).play();
 
                 refreshMenu();
                 break;
@@ -146,8 +167,18 @@ public class RapidModeMenuState extends AbstractMenuState
     {
         super.leave(gc, game);
 
+        stopSounds();
+
         // Save user config
         NebulaConfig.saveData();
+    }
+
+
+    private void stopSounds()
+    {
+        for (Sound s : sndDifficulties)
+            if (s.playing())
+                s.stop();
     }
 
 
