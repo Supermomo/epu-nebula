@@ -133,6 +133,7 @@ public class NebulaGame extends StateBasedGame
      */
     public void quitGame ()
     {
+        this.getContainer().setForceExit(false);
         this.getContainer().exit();
     }
 
