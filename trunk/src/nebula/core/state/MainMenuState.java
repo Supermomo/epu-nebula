@@ -91,5 +91,15 @@ public class MainMenuState extends AbstractMenuState
     }
 
     @Override
+    public void enter (GameContainer gc, StateBasedGame game)
+        throws SlickException
+    {
+        super.enter(gc, game);
+
+        // Save user config
+        NebulaConfig.saveData();
+    }
+
+    @Override
     public int getID () { return NebulaState.MainMenu.id; }
 }

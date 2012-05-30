@@ -130,6 +130,7 @@ public class NebulaConfig
         List<String> players = new ArrayList<String>();
 
         // Get player list
+        new File(getFolderName()).mkdirs();
         File dir = new File(getFolderName());
 
         for (String file : dir.list())

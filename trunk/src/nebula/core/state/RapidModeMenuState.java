@@ -185,11 +185,7 @@ public class RapidModeMenuState extends AbstractMenuState
         throws SlickException
     {
         super.leave(gc, game);
-
         stopSounds();
-
-        // Save user config
-        NebulaConfig.saveData();
     }
 
 
