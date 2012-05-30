@@ -1,3 +1,22 @@
+/**
+ * Nebula - Copyright (C) 2012
+ * Gwenn Aubert, Thomas Di'Meco, Matthieu Maugard, Gaspard Perrot
+ *
+ * This file is part of project 'Nebula'
+ *
+ * 'Nebula' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Nebula' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with 'Nebula'. If not, see <http://www.gnu.org/licenses/>.
+ */
 package nebula.minigame.spaceShepherd;
 
 import java.util.ArrayList;
@@ -20,16 +39,16 @@ public class SteeringEntity {
 	private float maxSpeed;
 	/**The maximum roation in degree*/
 	private float maxRotation=5;
-	
+
 	private float InitialMaxRotation=5;
-	
+
 	private float InitialMaxSpeed=5;
 
 	private int Xfield;
 	private int Yfield;
 
 
-	
+
 	public SteeringEntity(int x, int y, float maxSpeed, int fieldx, int fieldy){
 		position = new Vector2f(x,y);
 		this.maxSpeed=maxSpeed;
@@ -40,7 +59,7 @@ public class SteeringEntity {
 		Yfield=fieldy;
 		InitialMaxSpeed=this.maxSpeed;
 	}
-	
+
 	protected Vector2f moveRandomlyInternal(float delta){
 
 		Random r=new Random();
@@ -58,23 +77,23 @@ public class SteeringEntity {
 		orientation+=rotation;
 		Vector2f orientationVector=new Vector2f(orientation);
 		orientationVector.normalise();
-		
+
 		velocity.set(orientationVector);
 		velocity.normalise();
 		velocity.scale(maxSpeed);
-		
+
 		Vector2f newPos=new Vector2f(position);
 		velocity.scale(delta);
 		newPos.add(velocity);
-		
+
 		return newPos;
 	}
-	
+
 	public void resetMaxSpeedAndMaxRotation(){
 		maxRotation=InitialMaxRotation;
 		maxSpeed=InitialMaxSpeed;
 	}
-	
+
 	/**
 	 * Get the position after a random move
 	 * @param delta
@@ -84,7 +103,7 @@ public class SteeringEntity {
 	protected Vector2f moveRandomly(float delta, ArrayList<Line> fences ){
 
 		Vector2f newPos=null;
-		newPos=moveRandomlyInternal(delta);		
+		newPos=moveRandomlyInternal(delta);
 		resetMaxSpeedAndMaxRotation();
 		while(!isValidTrajectory(newPos, fences)){
 			//new position from a ramdom deplacement
@@ -92,10 +111,10 @@ public class SteeringEntity {
 			maxRotation*=3;
 			maxSpeed*=1.1f;
 		}//end while
-		
+
 		return newPos;
 	}
-	
+
 	/**
 	 * Apply the given velocity (scaled at max speed) to the steering entity, moving it to a new position
 	 * @param velocity
@@ -108,13 +127,13 @@ public class SteeringEntity {
 		if(isValidTrajectory(newPos, fences)){
 			position.add(velocity);
 		}
-		
+
 	}
-	
+
 	public boolean isValidTrajectory(Vector2f newPos, ArrayList<Line> fences){
 
 		Line line;
-		
+
 		//check for out of area issues
 		if(newPos.x<10 || newPos.x+10>Xfield || newPos.y<10 || newPos.y+10>Yfield){
 			return false;
@@ -130,10 +149,10 @@ public class SteeringEntity {
 			}
 			//end for
 		}//end else
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Seek for the target
 	 * @param target
@@ -147,7 +166,7 @@ public class SteeringEntity {
 		}*/
 		return res;
 	}
-	
+
 	public Vector2f getPosition() {
 		return position;
 	}
@@ -187,7 +206,7 @@ public class SteeringEntity {
 	public void setMaxSpeed(float maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
-	
+
 
 	public int getXfield() {
 		return Xfield;

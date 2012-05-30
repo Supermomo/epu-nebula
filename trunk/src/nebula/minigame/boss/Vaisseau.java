@@ -1,3 +1,22 @@
+/**
+ * Nebula - Copyright (C) 2012
+ * Gwenn Aubert, Thomas Di'Meco, Matthieu Maugard, Gaspard Perrot
+ *
+ * This file is part of project 'Nebula'
+ *
+ * 'Nebula' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Nebula' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with 'Nebula'. If not, see <http://www.gnu.org/licenses/>.
+ */
 package nebula.minigame.boss;
 
 import java.util.ArrayList;
@@ -45,7 +64,7 @@ public class Vaisseau
 	{
 		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, this.getImage().getWidth()/2, this.getImage().getHeight()/2, tir.getX() + tir.getImage().getWidth()/4, tir.getY() + tir.getImage().getHeight()/4,tir.getImage().getWidth()/2, tir.getImage().getHeight()/2);
 	}
-	
+
 	public boolean hit(Missile m)
 	{
 		return Collision.rectangle(this.getX() + this.getImage().getWidth()/4,this.getY() + this.getImage().getHeight()/4, this.getImage().getWidth()/2, this.getImage().getHeight()/2, m.getX() + m.getImage().getWidth()/4, m.getY() + m.getImage().getHeight()/4,m.getImage().getWidth()/2, m.getImage().getHeight()/2);
@@ -98,17 +117,17 @@ public class Vaisseau
 	{
 		return vies;
 	}
-	
+
 	public boolean getMove()
 	{
 		return this.canMove;
 	}
-	
+
 	public void setMove(boolean b)
 	{
 		this.canMove = b;
 	}
-	
+
 	public Sound getSon()
 	{
 		return son;
@@ -126,5 +145,5 @@ public class Vaisseau
 	{
 		this.vies = v;
 	}
-	
+
 }

@@ -1,3 +1,22 @@
+/**
+ * Nebula - Copyright (C) 2012
+ * Gwenn Aubert, Thomas Di'Meco, Matthieu Maugard, Gaspard Perrot
+ *
+ * This file is part of project 'Nebula'
+ *
+ * 'Nebula' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Nebula' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with 'Nebula'. If not, see <http://www.gnu.org/licenses/>.
+ */
 package nebula.minigame.gravity;
 
 import org.newdawn.slick.SlickException;
@@ -22,7 +41,7 @@ public class ModeleJeu {
 	private Sound sonEnCours;
 	private Sound sonJump;
 	private Sound sonDomage;
-	
+
 	//--- Calcul de l'affichage de la carte
 	// Nombre de tiles affichées à l'écran
 	private int shownTileX;
@@ -40,7 +59,7 @@ public class ModeleJeu {
 	 */
 	public ModeleJeu(Player hero, BlockMap map, int shownPixelsY, int shownPixelsX) {
 		gravite=0.2f;
-		
+
 		setHero(hero);
 		setMap(map);
 		hero.setPosition((Point)map.getDepart().clone());
@@ -58,7 +77,7 @@ public class ModeleJeu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 
 		//--- Calcul pour la mise en place de la map au départ
 		int tileHeight = map.getTiledMap().getTileHeight();
@@ -70,7 +89,7 @@ public class ModeleJeu {
 
 		int heroY = (int) hero.getPosition().getY()/tileHeight;
 		int heroX = (int) hero.getPosition().getX()/tileWidth;
-		
+
 		mapRenderX = (int) (heroX / shownTileX * shownTileX);
 		mapRenderY = (int) (heroY / shownTileY * shownTileY);
 	}
@@ -259,7 +278,7 @@ public class ModeleJeu {
 	 * Dessine la partie de la map occupée par le personnage
 	 */
 	public int[] renderMap() {
-		
+
 
 		// Nombre de Tiles par rapport au bord auquel il faut faire la transition
 		float delta = 2f;
@@ -286,7 +305,7 @@ public class ModeleJeu {
 			// Pour ne pas afficher d'emplacement noir
 			if(mapRenderX>nbrTilesX-shownTileX) mapRenderX = nbrTilesX-shownTileX;
 		}
-		
+
 		// Gestion des Y
 		if(heroTileY<mapRenderY+delta) {
 			mapRenderY -= shownTileY*2/3;
@@ -297,8 +316,8 @@ public class ModeleJeu {
 			// Pour ne pas afficher d'emplacement noir
 			if(mapRenderY>nbrTilesY-shownTileY) mapRenderY = nbrTilesY-shownTileY;
 		}
-		
-		
+
+
 		// Inversion pour l'affichage
 		int i[] = {-mapRenderX, -mapRenderY};
 		return i;
