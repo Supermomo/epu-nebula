@@ -105,13 +105,20 @@ public class SteeringEntity {
 		Vector2f newPos=null;
 		newPos=moveRandomlyInternal(delta);
 		resetMaxSpeedAndMaxRotation();
-		while(!isValidTrajectory(newPos, fences)){
+		int cpt=0;
+		while(!isValidTrajectory(newPos, fences) && cpt<300){
 			//new position from a ramdom deplacement
 			newPos=moveRandomlyInternal(delta);
 			maxRotation*=3;
 			maxSpeed*=1.1f;
+			//System.out.println("pb");
+			cpt++;
 		}//end while
 
+		if(cpt>=300){
+			System.out.println("Ragequit");
+			newPos=position;
+		}
 		return newPos;
 	}
 

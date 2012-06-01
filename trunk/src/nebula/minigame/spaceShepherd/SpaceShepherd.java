@@ -99,6 +99,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private Font font;
 
 	private float powerTimer;
+	private float fenceTimer;
 
 
 
@@ -107,7 +108,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 	    // Call super method
         super.init(gc, game);
-
+        
+        fenceTimer=0;
+        
         flockSound=new Sound(pathFlockSound);
         wrongMoveSound=new Sound(pathWrongMoveSound);
         ambianceSound=new Sound(pathAmbianceSound);
@@ -151,7 +154,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 		else if(Difficulty.Insane.equals(difficulty)){
 			flockNumber=64;
 			remainingTime=45*1000;
-			speed=0.4f;
+			speed=0.3f;
 			attractionCoef=0.001f;
 			scoreCoef = 90.0f;
 			timeCoef=25.0f;
@@ -202,7 +205,8 @@ public class SpaceShepherd extends AbstractMinigameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 	    throws SlickException {
-
+		
+		fenceTimer+=delta;
 	    // Call super method
         super.update(gc, game, delta);
         remainingTime=remainingTime-delta;
@@ -236,8 +240,9 @@ public class SpaceShepherd extends AbstractMinigameState {
 			spaceReleased=true;
 		}
 
-		if (input.isKeyDown(Input.KEY_SPACE) && spaceReleased) {
+		if (input.isKeyDown(Input.KEY_SPACE) && spaceReleased ) {
 
+			fenceTimer=0;
 			stopAllSound();
 			spaceReleased=false;
 			Vector2f plot=new Vector2f(x,y);
@@ -312,7 +317,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 		for(Line l : fences){
 			g.drawLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
-			g.drawString(""+fences.indexOf(l), l.getX1()+20, l.getY1()+20);
 		}
 
 		for(Line l : fences){
