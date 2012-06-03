@@ -64,9 +64,9 @@ public abstract class AbstractTransitionState extends AbstractState
         Input input = gc.getInput();
 
         // Next state key
-        if (input.isKeyDown(Input.KEY_ENTER) ||
-            input.isKeyDown(Input.KEY_ESCAPE) ||
-            input.isKeyDown(Input.KEY_SPACE))
+        if (input.isKeyPressed(Input.KEY_ENTER) ||
+            input.isKeyPressed(Input.KEY_ESCAPE) ||
+            input.isKeyPressed(Input.KEY_SPACE))
             gotoNextState();
 
         // Transition time counter if needed

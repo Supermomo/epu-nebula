@@ -99,8 +99,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 	private Font font;
 
 	private float powerTimer;
-	private float fenceTimer;
-
 
 
 	@Override
@@ -108,9 +106,7 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 	    // Call super method
         super.init(gc, game);
-        
-        fenceTimer=0;
-        
+
         flockSound=new Sound(pathFlockSound);
         wrongMoveSound=new Sound(pathWrongMoveSound);
         ambianceSound=new Sound(pathAmbianceSound);
@@ -205,10 +201,10 @@ public class SpaceShepherd extends AbstractMinigameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 	    throws SlickException {
-		
-		fenceTimer+=delta;
+
 	    // Call super method
         super.update(gc, game, delta);
+
         remainingTime=remainingTime-delta;
 
         if(remainingTime<=0){
@@ -242,7 +238,6 @@ public class SpaceShepherd extends AbstractMinigameState {
 
 		if (input.isKeyDown(Input.KEY_SPACE) && spaceReleased ) {
 
-			fenceTimer=0;
 			stopAllSound();
 			spaceReleased=false;
 			Vector2f plot=new Vector2f(x,y);
