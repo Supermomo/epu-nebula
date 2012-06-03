@@ -55,7 +55,7 @@ public class PlayerNameState extends AbstractState
     private int errorOccured, prevTextSize;
     private TextField textField;
     private Font font, fontTitle;
-    private static Sound sndError1, sndError2;
+    private static Sound sndError1, sndError2, sndBackspace;
     private static Map<Character, Sound> sndCharacters;
 
 
@@ -74,10 +74,11 @@ public class PlayerNameState extends AbstractState
         fontTitle  = NebulaFont.getFont(FontName.Batmfa, FontSize.Large);
 
         // Sounds
-        if (sndError1 == null || sndError2 == null)
+        if (sndError1 == null || sndError2 == null || sndBackspace == null)
         {
             sndError1 = new Sound("ressources/sons/menu/typename.ogg");
             sndError2 = new Sound("ressources/sons/menu/playerexists.ogg");
+            sndBackspace = new Sound("ressources/sons/menu/characters/backspace.ogg");
         }
 
         // Characters
@@ -144,6 +145,8 @@ public class PlayerNameState extends AbstractState
             sndError2.stop();
             playCharacter(c);
         }
+        else if (textField.getText().length() < prevTextSize)
+            sndBackspace.play();
 
         prevTextSize = textField.getText().length();
 
