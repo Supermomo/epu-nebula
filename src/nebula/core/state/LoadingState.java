@@ -117,7 +117,7 @@ public class LoadingState extends AbstractState
         super.render(gc, game, g);
 
         // Render loading image
-        imgLoading.drawCentered(gc.getWidth()/2, gc.getHeight()/2 - imgLoading.getHeight()/2 - 12.0f);
+        imgLoading.drawCentered(gc.getWidth()/2, gc.getHeight()/2);
 
         // Render loading bar
         if (LoadState.Loading.equals(loadState) ||
@@ -127,13 +127,13 @@ public class LoadingState extends AbstractState
             g.setLineWidth(3.0f);
             g.drawRect(
                 gc.getWidth()/2 - LBAR_WIDTH/2,
-                gc.getHeight()/2 - LBAR_HEIGHT/2 + 12.0f,
+                gc.getHeight()/2 - LBAR_HEIGHT/2,
                 LBAR_WIDTH,
                 LBAR_HEIGHT
             );
             g.fillRect(
                 gc.getWidth()/2 - LBAR_WIDTH/2,
-                gc.getHeight()/2 - LBAR_HEIGHT/2 + 12.0f,
+                gc.getHeight()/2 - LBAR_HEIGHT/2,
                 ((float)loadStep/(float)states.size()) * LBAR_WIDTH,
                 LBAR_HEIGHT
             );
