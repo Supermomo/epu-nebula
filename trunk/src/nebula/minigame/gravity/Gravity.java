@@ -179,14 +179,14 @@ public class Gravity extends AbstractMinigameState {
 
 		// Affichage de l'image en fonction de l'état
 		switch(etatActuel) {
-		case DEPLACEMENT_JOUEUR:
-			// On vérifie si on a atteint un des états final
-			if(modeleJeu.getDefaite()) etatActuel = EtatJeu.DEFAITE;
-			if(modeleJeu.getVictoire()) etatActuel = EtatJeu.VICTOIRE;
-			break;
+		    case DEPLACEMENT_JOUEUR:
+    			// On vérifie si on a atteint un des états final
+    			if(modeleJeu.getDefaite()) etatActuel = EtatJeu.DEFAITE;
+    			if(modeleJeu.getVictoire()) etatActuel = EtatJeu.VICTOIRE;
+    			break;
+		    default:
+                break;
 		}
-
-
 
 	} // *** Fin Render ***
 
